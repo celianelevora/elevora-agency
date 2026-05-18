@@ -1,0 +1,190 @@
+import Hero from '@/components/Hero';
+import CTASection from '@/components/CTASection';
+
+export const metadata = {
+  title: 'Réalisations | Nos projets livrés',
+  description: 'Découvrez les projets réalisés par Elevora : sites web, refontes et outils de gestion pour indépendants et PME à Nantes.',
+};
+
+export default function RealisationsPage() {
+  return (
+    <>
+      <Hero
+        pillText="Réalisations"
+        title={`Nos projets.<br><span class="italic">Sans filtre.</span>`}
+        lead="Nous sommes une jeune agence. Nous n'avons pas 200 références à montrer, mais nous avons ce que nous avons livré — et nous l'assumons. Voici nos projets, présents et en cours."
+      />
+
+      <section>
+        <div className="container">
+
+          {/* Lala-K */}
+          <article style={{ marginBottom: 80 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+              <div style={{ background: 'var(--pink-light)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', background: '#FFF', borderRadius: 12, padding: 24, boxShadow: '0 20px 60px rgba(10,10,10,0.08)' }}>
+                  <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57' }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBD2E' }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840' }} />
+                  </div>
+                  <div style={{ height: 16, width: '35%', background: 'var(--pink)', borderRadius: 3, marginBottom: 14 }} />
+                  <div style={{ height: 9, width: '70%', background: 'var(--cream-warm)', borderRadius: 2, marginBottom: 8 }} />
+                  <div style={{ height: 9, width: '55%', background: 'var(--cream-warm)', borderRadius: 2, marginBottom: 20 }} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
+                    <div style={{ aspectRatio: 1, background: 'linear-gradient(135deg, var(--pink-light), #F4C0D1)', borderRadius: 6 }} />
+                    <div style={{ aspectRatio: 1, background: 'linear-gradient(135deg, var(--cream-warm), #E8D5C4)', borderRadius: 6 }} />
+                    <div style={{ aspectRatio: 1, background: 'linear-gradient(135deg, #F4C0D1, var(--pink))', borderRadius: 6 }} />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+                  <span className="tag">Refonte</span>
+                  <span className="tag">Site vitrine</span>
+                  <span className="tag">2026</span>
+                </div>
+                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Lala-K</h2>
+                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
+                  Refonte complète du site d'une créatrice indépendante. Nouvelle architecture, identité visuelle modernisée, mise en valeur des collections et amélioration des parcours de découverte.
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Mission</div>
+                    <div style={{ fontSize: 14 }}>Refonte complète</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Statut</div>
+                    <div style={{ fontSize: 14, color: 'var(--klein)' }}>Livré · En production</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          {/* Garage */}
+          <article style={{ marginBottom: 80 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+              <div style={{ order: 2 }}>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+                  <span className="tag">Site vitrine</span>
+                  <span className="tag">2026</span>
+                </div>
+                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Garage automobile</h2>
+                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
+                  Site vitrine pour un garage indépendant : présentation des services (entretien, réparation, contrôle), informations pratiques, prise de contact rapide. Conçu pour rassurer une clientèle locale qui veut un mécano de confiance.
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Mission</div>
+                    <div style={{ fontSize: 14 }}>Création vitrine</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Statut</div>
+                    <div style={{ fontSize: 14, color: 'var(--klein)' }}>Livré</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ order: 1, background: 'var(--klein)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', background: 'var(--klein-deep)', borderRadius: 12, padding: 24 }}>
+                  <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(245,240,232,0.3)' }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(245,240,232,0.3)' }} />
+                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(245,240,232,0.3)' }} />
+                  </div>
+                  <div style={{ height: 16, width: '45%', background: 'var(--pink)', borderRadius: 3, marginBottom: 14 }} />
+                  <div style={{ height: 9, width: '70%', background: 'rgba(245,240,232,0.25)', borderRadius: 2, marginBottom: 8 }} />
+                  <div style={{ height: 9, width: '55%', background: 'rgba(245,240,232,0.25)', borderRadius: 2, marginBottom: 20 }} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                    <div style={{ aspectRatio: 1.6, background: 'rgba(245,240,232,0.1)', borderRadius: 6 }} />
+                    <div style={{ aspectRatio: 1.6, background: 'rgba(245,240,232,0.1)', borderRadius: 6 }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          {/* Confidentiel */}
+          <article style={{ marginBottom: 80 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+              <div style={{ background: 'var(--cream-warm)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(10,10,10,0.02) 10px, rgba(10,10,10,0.02) 11px)' }} />
+                <div style={{ position: 'relative', textAlign: 'center' }}>
+                  <svg className="ic" width="48" height="48" viewBox="0 0 24 24" style={{ color: 'var(--ink-muted)', margin: '0 auto 16px', strokeWidth: 1.2 }}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 20, color: 'var(--ink-muted)' }}>Visuel confidentiel</div>
+                  <div style={{ fontSize: 13, color: 'var(--ink-muted)', marginTop: 6 }}>Sortie prévue Q2 2026</div>
+                </div>
+              </div>
+              <div>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+                  <span className="tag">En cours</span>
+                  <span className="tag">2026</span>
+                </div>
+                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Projet confidentiel</h2>
+                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
+                  Refonte d'envergure en cours pour une activité de service. Le projet est sous accord de confidentialité jusqu'à la mise en ligne — un nouveau cas viendra prendre cette place quand il sera officiel.
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Mission</div>
+                    <div style={{ fontSize: 14 }}>Refonte complète</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Statut</div>
+                    <div style={{ fontSize: 14, color: 'var(--pink)' }}>En développement</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          {/* Démo Elevora */}
+          <article>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+              <div style={{ order: 2 }}>
+                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+                  <span className="tag" style={{ background: 'var(--pink-light)', color: 'var(--pink-deep)' }}>Démo Elevora</span>
+                  <span className="tag">2026</span>
+                </div>
+                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Projet vitrine interne</h2>
+                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
+                  Une démonstration de notre savoir-faire, conçue librement pour montrer comment nous concevons un site quand on nous laisse carte blanche : architecture moderne, design soigné, performances optimales.
+                </p>
+              </div>
+              <div style={{ order: 1, background: 'var(--cream-warm)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', background: '#FFF', borderRadius: 12, padding: 24, boxShadow: '0 20px 60px rgba(10,10,10,0.06)' }}>
+                  <div style={{ display: 'flex', gap: 14 }}>
+                    <div style={{ width: 90, display: 'flex', flexDirection: 'column', gap: 10, borderRight: '0.5px solid var(--line)', paddingRight: 14 }}>
+                      <div style={{ height: 10, background: 'var(--klein)', borderRadius: 2 }} />
+                      <div style={{ height: 10, background: 'var(--cream-warm)', borderRadius: 2 }} />
+                      <div style={{ height: 10, background: 'var(--cream-warm)', borderRadius: 2 }} />
+                      <div style={{ height: 10, background: 'var(--cream-warm)', borderRadius: 2 }} />
+                    </div>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                      <div style={{ height: 14, width: '60%', background: 'var(--ink)', borderRadius: 2 }} />
+                      <div style={{ height: 8, width: '80%', background: 'var(--cream-warm)', borderRadius: 2 }} />
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
+                        <div style={{ aspectRatio: 1.4, background: 'var(--pink-light)', borderRadius: 6 }} />
+                        <div style={{ aspectRatio: 1.4, background: '#E6F1FB', borderRadius: 6 }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <CTASection
+        title={`Le prochain projet,<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">c'est le vôtre ?</span>`}
+        description="Premier échange gratuit. On comprend votre besoin et on vous dit honnêtement si on peut vous aider."
+        primaryLabel="Démarrer un projet"
+      />
+    </>
+  );
+}
