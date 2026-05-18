@@ -1,21 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, CSSProperties } from 'react';
 
-const formFieldStyle = {
+const formFieldStyle: CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   gap: 8,
 };
 
-const labelStyle = {
+const labelStyle: CSSProperties = {
   fontSize: 13,
   fontWeight: 500,
   color: 'var(--ink-soft)',
   letterSpacing: '0.01em',
 };
 
-const inputStyle = {
+const inputStyle: CSSProperties = {
   fontFamily: 'var(--sans)',
   fontSize: 15,
   background: '#FFF',

@@ -68,7 +68,12 @@ const ENGAGEMENTS = [
   },
 ];
 
-export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }) {
+interface EngagementsGridProps {
+  eyebrow?: string;
+  title?: React.ReactNode;
+}
+
+export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }: EngagementsGridProps) {
   return (
     <section id="engagements">
       <div className="container">

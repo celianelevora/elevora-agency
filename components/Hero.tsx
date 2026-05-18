@@ -1,6 +1,23 @@
 import Link from 'next/link';
 
-export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats }) {
+type CTAProp = { label: string; href: string };
+type StatProp = {
+  value: string;
+  label: string;
+  accent?: 'pink' | 'klein';
+  italic?: boolean;
+};
+
+interface HeroProps {
+  pillText: string;
+  title: string;
+  lead?: string;
+  primaryCTA?: CTAProp;
+  secondaryCTA?: CTAProp;
+  stats?: StatProp[];
+}
+
+export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats }: HeroProps) {
   return (
     <section style={{ padding: '100px 0 80px' }}>
       <div className="container">

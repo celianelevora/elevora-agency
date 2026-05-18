@@ -1,5 +1,16 @@
 import Link from 'next/link';
 
+interface CTASectionProps {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  showContactInfo?: boolean;
+}
+
 export default function CTASection({
   eyebrow,
   title,
@@ -9,7 +20,7 @@ export default function CTASection({
   secondaryLabel,
   secondaryHref,
   showContactInfo = false,
-}) {
+}: CTASectionProps) {
   return (
     <section style={{ background: 'var(--klein)', color: 'var(--cream)', padding: '120px 0' }}>
       <div className="container">
