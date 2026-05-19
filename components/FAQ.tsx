@@ -26,7 +26,7 @@ const FAQS = [
 ];
 
 export default function FAQ() {
-  const [openIdx, setOpenIdx] = useState(null);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
     <section>

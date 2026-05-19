@@ -36,14 +36,15 @@ const PROJECT_TYPES = [
 ];
 
 export default function ContactForm() {
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [selectedProject, setSelectedProject] = useState('');
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('loading');
 
-    const formData = new FormData(e.target);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
     try {
@@ -54,7 +55,7 @@ export default function ContactForm() {
       });
       if (!res.ok) throw new Error('Erreur');
       setStatus('success');
-      e.target.reset();
+      form.reset();
       setSelectedProject('');
     } catch (err) {
       setStatus('error');

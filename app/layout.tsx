@@ -20,6 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://elevora-agency.com"),
   title: {
     default: "Elevora — Agence digitale à Nantes",
     template: "%s — Elevora",
@@ -27,6 +28,19 @@ export const metadata: Metadata = {
   description: "Elevora, agence digitale nantaise. Sites web qui convertissent et outils de gestion sur mesure pour indépendants et PME.",
   keywords: ["agence web Nantes", "création site internet", "outils de gestion", "développement web", "CRM sur mesure"],
   authors: [{ name: "Elevora" }],
+  creator: "Elevora",
+  publisher: "Elevora",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "Elevora — Agence digitale à Nantes",
     description: "Sites web qui convertissent et outils de gestion sur mesure.",
@@ -34,6 +48,11 @@ export const metadata: Metadata = {
     siteName: "Elevora",
     locale: "fr_FR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Elevora — Agence digitale à Nantes",
+    description: "Sites web qui convertissent et outils de gestion sur mesure.",
   },
 };
 

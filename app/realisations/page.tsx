@@ -1,6 +1,34 @@
 import Hero from '@/components/Hero';
 import CTASection from '@/components/CTASection';
 import LalaKShowcase from '@/components/LalaKShowcase';
+import { ScrollTiltedGrid, type ScrollTiltedGridItem } from '@/components/ui/scroll-tilted-grid';
+
+/** Génère une data URL SVG avec un gradient stylisé Elevora */
+const gradientSVG = (color1: string, color2: string, label: string) => {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400' preserveAspectRatio='xMidYMid slice'>
+    <defs>
+      <linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'>
+        <stop offset='0%25' stop-color='${color1}'/>
+        <stop offset='100%25' stop-color='${color2}'/>
+      </linearGradient>
+    </defs>
+    <rect width='300' height='400' fill='url(%23g)'/>
+    <text x='50%25' y='52%25' text-anchor='middle' font-family='Georgia, serif' font-style='italic' font-size='18' fill='rgba(255,255,255,0.85)' letter-spacing='0.5'>${label}</text>
+    <line x1='30%25' y1='58%25' x2='70%25' y2='58%25' stroke='rgba(255,255,255,0.4)' stroke-width='0.5'/>
+  </svg>`;
+  return `data:image/svg+xml;charset=utf-8,${svg.replace(/\n/g, '').replace(/\s+/g, ' ')}`;
+};
+
+const GRID_ITEMS: ScrollTiltedGridItem[] = [
+  { src: gradientSVG('%230033A0', '%23002074', 'Bleu Klein'), caption: 'La signature' },
+  { src: gradientSVG('%23C9569E', '%23993556', 'Rose-violet'), caption: 'L\u2019accent' },
+  { src: gradientSVG('%23F5F0E8', '%23EFE8DC', 'Cr\u00e8me'), caption: 'Le fond' },
+  { src: gradientSVG('%230044CC', '%230033A0', 'Klein bright'), caption: 'L\u2019\u00e9clat' },
+  { src: gradientSVG('%23FBEAF0', '%23C9569E', 'Pink light'), caption: 'La douceur' },
+  { src: gradientSVG('%230A0A0A', '%232D2D2D', 'Encre'), caption: 'Le contraste' },
+  { src: gradientSVG('%23EFE8DC', '%23F5F0E8', 'Beige chaud'), caption: 'L\u2019\u00e9quilibre' },
+  { src: gradientSVG('%23002074', '%230A0A0A', 'Nuit profonde'), caption: 'La profondeur' },
+];
 
 export const metadata = {
   title: 'Réalisations | Nos projets livrés',
@@ -138,6 +166,38 @@ export default function RealisationsPage() {
           </article>
 
         </div>
+      </section>
+
+      {/* SCROLL TILTED GRID — Univers visuel */}
+      <section style={{ background: 'var(--cream-warm)', padding: '120px 0 0' }}>
+        <div className="container" style={{ textAlign: 'center', marginBottom: 40 }}>
+          <span className="eyebrow" style={{ display: 'inline-flex', marginBottom: 18 }}>
+            Notre univers
+          </span>
+          <h2 style={{ margin: '0 auto', maxWidth: 720 }}>
+            Inspirations &<br />
+            <span className="italic">références.</span>
+          </h2>
+          <p
+            style={{
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: 'var(--ink-soft)',
+              maxWidth: 600,
+              margin: '24px auto 0',
+            }}
+          >
+            Une sélection visuelle de l'univers dans lequel on évolue : couleurs, formes, ambiances qui nourrissent nos créations.
+          </p>
+        </div>
+
+        <ScrollTiltedGrid
+          items={GRID_ITEMS}
+          maxWidth="2xl"
+          gap={10}
+          aspectRatio="3/4"
+          rounded="12px"
+        />
       </section>
 
       <CTASection

@@ -1,63 +1,13 @@
 import Hero from '@/components/Hero';
 import Link from 'next/link';
+import FlowArt, { FlowSection } from '@/components/ui/story-scroll';
+import { DynamicIslandTOC } from '@/components/ui/dynamic-island-toc';
 
 export const metadata = {
   title: 'Méthode | Comment on travaille',
   description: "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre.",
 };
 
-const STEPS = [
-  {
-    n: '01',
-    label: 'Cadrage · 1 semaine',
-    title: "On comprend votre activité avant de toucher au design",
-    desc: "Premier rendez-vous (en visio ou à Nantes) : on parle de votre métier, de vos clients, de vos concurrents, de ce qui marche déjà et de ce qui coince. On définit ensemble les objectifs concrets du projet et les indicateurs qui diront si c'est réussi.",
-    deliverables: [
-      "Une note de cadrage qui synthétise tout ce qu'on a compris",
-      'Un planning prévisionnel détaillé',
-      'Un devis ferme, valable 30 jours',
-    ],
-    deliverableLabel: 'Ce que vous repartez avec',
-  },
-  {
-    n: '02',
-    label: 'Design · 2 semaines',
-    title: 'On dessine. Vous validez. Page par page.',
-    desc: "Maquettes interactives sur Figma : vous cliquez, vous naviguez, vous testez avant qu'une seule ligne de code soit écrite. Les retours sont rapides, gratuits et illimités à cette étape. Une fois la maquette validée, c'est elle qui fait foi pour le développement.",
-    deliverables: [
-      'Maquettes haute-fidélité de toutes les pages',
-      "Charte graphique appliquée à l'ensemble",
-      "Prototype cliquable pour anticiper l'expérience finale",
-    ],
-    deliverableLabel: 'Ce que vous validez',
-  },
-  {
-    n: '03',
-    label: 'Développement · 3 à 6 semaines',
-    title: 'On code, vous suivez en temps réel',
-    desc: "Accès à un environnement de test (URL privée) dès le premier jour. Vous voyez le site se construire. Points de synchro hebdomadaires. Code propre, performant, optimisé SEO. Aucun effet tunnel : vous n'attendez pas 6 semaines pour découvrir le résultat.",
-    deliverables: [
-      'Environnement de test accessible 24h/24',
-      'Point hebdomadaire de 30 min',
-      'Tests sur tous les navigateurs et appareils',
-      'Optimisation Core Web Vitals systématique',
-    ],
-    deliverableLabel: 'Comment ça se passe',
-  },
-  {
-    n: '04',
-    label: 'Livraison · + suivi 30 jours',
-    title: 'On livre, on forme, on reste joignables',
-    desc: "Mise en ligne sur votre domaine, redirections SEO si refonte, transfert des accès. Formation à la gestion du contenu en visio (1h enregistrée que vous gardez). Suivi gratuit pendant 30 jours : on corrige les bugs, on ajuste, on répond aux questions. Au-delà, vous êtes autonome — ou on prolonge avec un contrat de maintenance.",
-    deliverables: [
-      'Site en ligne sur votre domaine',
-      'Code source complet et documentation',
-      'Vidéo de formation à votre back-office',
-      '30 jours de support inclus',
-    ],
-    deliverableLabel: 'Ce que vous obtenez à la fin',
-  },
-];
 
 const NEVERS = [
   { title: "Vous facturer un changement qu'on aurait dû anticiper", desc: "Si on a mal cadré, c'est sur nous. Vous ne payez jamais notre approximation initiale." },
@@ -75,38 +25,294 @@ export default function MethodePage() {
         lead="Un projet digital se passe mal quand le client ne sait pas où il en est, ce qu'on attend de lui, et combien ça va coûter. On a structuré notre méthode pour que ces trois informations soient toujours sur la table."
       />
 
-      <section>
-        <div className="container">
-          {STEPS.map((s, i) => (
-            <div key={i} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 48, marginBottom: i < STEPS.length - 1 ? 80 : 0, alignItems: 'flex-start' }}>
-              <div style={{ fontSize: 80, fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--klein)', lineHeight: 0.9, fontWeight: 400 }}>
-                {s.n}
-              </div>
-              <div>
-                <div style={{ fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--pink-deep)', marginBottom: 12 }}>
-                  {s.label}
-                </div>
-                <h2 style={{ marginBottom: 18, fontSize: 'clamp(28px, 3.2vw, 38px)' }}>{s.title}</h2>
-                <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--ink-soft)', marginBottom: 24, maxWidth: 720 }}>
-                  {s.desc}
-                </p>
-                <div style={{ background: 'var(--cream-warm)', borderRadius: 'var(--radius-md)', padding: '24px 28px' }}>
-                  <div style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12 }}>
-                    {s.deliverableLabel}
-                  </div>
-                  <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                    {s.deliverables.map((d, j) => (
-                      <li key={j} style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                        <span style={{ color: 'var(--klein)' }}>→</span> {d}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+      {/* STORY SCROLL — Les 4 étapes en immersion */}
+      <article>
+        <FlowArt aria-label="Méthode Elevora — 4 étapes">
+          <FlowSection
+            aria-label="Étape 1 — Cadrage"
+            style={{ background: 'var(--cream-warm)' }}
+          >
+            <div className="flex flex-col gap-4 max-w-2xl">
+              <span
+                style={{
+                  fontSize: 13,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'var(--ink-muted)',
+                  fontWeight: 500,
+                }}
+              >
+                Étape 01 — Cadrage · 1 semaine
+              </span>
+              <h2
+                style={{
+                  fontSize: 'clamp(3rem, 9vw, 8rem)',
+                  fontFamily: 'var(--sans)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.95,
+                  color: 'var(--ink)',
+                  margin: 0,
+                }}
+              >
+                On comprend<br />
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--klein)' }}>
+                  avant
+                </span>{' '}
+                d'agir.
+              </h2>
+              <p
+                style={{
+                  fontSize: 19,
+                  lineHeight: 1.55,
+                  color: 'var(--ink-soft)',
+                  maxWidth: 600,
+                  marginTop: 16,
+                }}
+              >
+                Premier rendez-vous : on parle de votre métier, de vos clients, de vos concurrents. On définit les objectifs concrets et les indicateurs qui diront si c'est réussi.
+              </p>
             </div>
-          ))}
-        </div>
-      </section>
+            <div
+              className="self-end max-w-md"
+              style={{
+                background: 'rgba(0,51,160,0.06)',
+                borderRadius: 16,
+                padding: '24px 28px',
+              }}
+            >
+              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12 }}>
+                Ce que vous repartez avec
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--klein)' }}>→</span> Une note de cadrage qui synthétise tout
+                </li>
+                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--klein)' }}>→</span> Un planning prévisionnel détaillé
+                </li>
+                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--klein)' }}>→</span> Un devis ferme, valable 30 jours
+                </li>
+              </ul>
+            </div>
+          </FlowSection>
+
+          <FlowSection
+            aria-label="Étape 2 — Design"
+            style={{ background: 'var(--klein)' }}
+          >
+            <div className="flex flex-col gap-4 max-w-2xl">
+              <span
+                style={{
+                  fontSize: 13,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(245,240,232,0.6)',
+                  fontWeight: 500,
+                }}
+              >
+                Étape 02 — Design · 2 semaines
+              </span>
+              <h2
+                style={{
+                  fontSize: 'clamp(3rem, 9vw, 8rem)',
+                  fontFamily: 'var(--sans)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.95,
+                  color: 'var(--cream)',
+                  margin: 0,
+                }}
+              >
+                On dessine.<br />
+                Vous{' '}
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)' }}>
+                  validez.
+                </span>
+              </h2>
+              <p
+                style={{
+                  fontSize: 19,
+                  lineHeight: 1.55,
+                  color: 'rgba(245,240,232,0.8)',
+                  maxWidth: 600,
+                  marginTop: 16,
+                }}
+              >
+                Maquettes interactives sur Figma : vous cliquez, vous naviguez, vous testez avant qu'une seule ligne de code soit écrite. Retours gratuits et illimités à cette étape.
+              </p>
+            </div>
+            <div
+              className="self-end max-w-md"
+              style={{
+                background: 'rgba(245,240,232,0.08)',
+                borderRadius: 16,
+                padding: '24px 28px',
+                border: '0.5px solid rgba(245,240,232,0.15)',
+              }}
+            >
+              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.5)', marginBottom: 12 }}>
+                Ce que vous repartez avec
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink)' }}>→</span> Maquettes haute-fidélité de toutes les pages
+                </li>
+                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink)' }}>→</span> Charte graphique appliquée à l'ensemble
+                </li>
+                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink)' }}>→</span> Prototype cliquable
+                </li>
+              </ul>
+            </div>
+          </FlowSection>
+
+          <FlowSection
+            aria-label="Étape 3 — Développement"
+            style={{ background: 'var(--klein-deep)' }}
+          >
+            <div className="flex flex-col gap-4 max-w-2xl">
+              <span
+                style={{
+                  fontSize: 13,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(245,240,232,0.6)',
+                  fontWeight: 500,
+                }}
+              >
+                Étape 03 — Développement · 3 à 5 semaines
+              </span>
+              <h2
+                style={{
+                  fontSize: 'clamp(3rem, 9vw, 8rem)',
+                  fontFamily: 'var(--sans)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.95,
+                  color: 'var(--cream)',
+                  margin: 0,
+                }}
+              >
+                Du code{' '}
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)' }}>
+                  propre.
+                </span><br />
+                Pas de magie.
+              </h2>
+              <p
+                style={{
+                  fontSize: 19,
+                  lineHeight: 1.55,
+                  color: 'rgba(245,240,232,0.8)',
+                  maxWidth: 600,
+                  marginTop: 16,
+                }}
+              >
+                Développement par sprints hebdomadaires. Vous voyez le site progresser semaine après semaine sur une URL privée. Pas de surprise à la livraison.
+              </p>
+            </div>
+            <div
+              className="self-end max-w-md"
+              style={{
+                background: 'rgba(245,240,232,0.08)',
+                borderRadius: 16,
+                padding: '24px 28px',
+                border: '0.5px solid rgba(245,240,232,0.15)',
+              }}
+            >
+              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.5)', marginBottom: 12 }}>
+                Ce que vous repartez avec
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink)' }}>→</span> Démos de progression chaque semaine
+                </li>
+                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink)' }}>→</span> Code propre, commenté, archivé sur Git
+                </li>
+                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink)' }}>→</span> Performance et accessibilité auditées
+                </li>
+              </ul>
+            </div>
+          </FlowSection>
+
+          <FlowSection
+            aria-label="Étape 4 — Livraison"
+            style={{ background: 'var(--pink-light)' }}
+          >
+            <div className="flex flex-col gap-4 max-w-2xl">
+              <span
+                style={{
+                  fontSize: 13,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'var(--pink-deep)',
+                  fontWeight: 500,
+                }}
+              >
+                Étape 04 — Livraison · 1 semaine
+              </span>
+              <h2
+                style={{
+                  fontSize: 'clamp(3rem, 9vw, 8rem)',
+                  fontFamily: 'var(--sans)',
+                  fontWeight: 400,
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.95,
+                  color: 'var(--ink)',
+                  margin: 0,
+                }}
+              >
+                On vous{' '}
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink-deep)' }}>
+                  forme.
+                </span><br />
+                On reste là.
+              </h2>
+              <p
+                style={{
+                  fontSize: 19,
+                  lineHeight: 1.55,
+                  color: 'var(--ink-soft)',
+                  maxWidth: 600,
+                  marginTop: 16,
+                }}
+              >
+                Mise en ligne, formation à l'administration, suivi 30 jours. Vous êtes autonome avec votre outil, et on reste joignables sans facturation cachée.
+              </p>
+            </div>
+            <div
+              className="self-end max-w-md"
+              style={{
+                background: 'rgba(153,53,86,0.08)',
+                borderRadius: 16,
+                padding: '24px 28px',
+              }}
+            >
+              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12 }}>
+                Ce que vous repartez avec
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink-deep)' }}>→</span> Site en ligne avec votre nom de domaine
+                </li>
+                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink-deep)' }}>→</span> Vidéo de formation à l'administration
+                </li>
+                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
+                  <span style={{ color: 'var(--pink-deep)' }}>→</span> 30 jours de suivi inclus
+                </li>
+              </ul>
+            </div>
+          </FlowSection>
+        </FlowArt>
+      </article>
+
+      <DynamicIslandTOC selector="article h2" accentColor="var(--pink)" />
 
       {/* CE QU'ON NE FAIT PAS */}
       <section style={{ background: 'var(--klein)', color: 'var(--cream)' }}>

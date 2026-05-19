@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import CTASection from '@/components/CTASection';
+import { ContainerScroll } from '@/components/ui/container-scroll';
 
 export const metadata = {
   title: 'Sites web | Création de sites qui convertissent',
@@ -106,6 +107,147 @@ export default function SitesWebPage() {
         primaryCTA={{ label: 'Démarrer mon projet', href: '/contact' }}
         secondaryCTA={{ label: 'Voir nos sites livrés', href: '/realisations' }}
       />
+
+      {/* DÉMO VISUELLE — Container Scroll */}
+      <section style={{ padding: 0, background: 'var(--cream-warm)' }}>
+        <ContainerScroll
+          titleComponent={
+            <>
+              <span className="eyebrow" style={{ display: 'inline-flex', marginBottom: 18 }}>
+                Notre approche
+              </span>
+              <h2 style={{ marginBottom: 16, fontSize: 'clamp(32px, 4.5vw, 56px)' }}>
+                Du design qui se voit,<br />
+                <span className="italic">du résultat qui se mesure.</span>
+              </h2>
+              <p
+                style={{
+                  fontSize: 17,
+                  color: 'var(--ink-soft)',
+                  lineHeight: 1.6,
+                  maxWidth: 620,
+                  margin: '0 auto',
+                }}
+              >
+                Chaque site est pensé comme un outil commercial : performant, accessible, et fait pour convertir vos visiteurs.
+              </p>
+            </>
+          }
+        >
+          {/* Mockup d'un site Elevora-style */}
+          <div className="w-full h-full p-4 md:p-10 flex flex-col gap-6 overflow-hidden">
+            {/* Header simulé */}
+            <div className="flex items-center justify-between pb-4 border-b" style={{ borderColor: 'var(--line)' }}>
+              <div className="flex items-center gap-2">
+                <div
+                  style={{
+                    width: 28,
+                    height: 28,
+                    background: 'var(--klein)',
+                    borderRadius: 6,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--cream)',
+                    fontWeight: 600,
+                    fontSize: 13,
+                  }}
+                >
+                  E
+                </div>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 18, fontWeight: 500 }}>
+                  Studio Lumen
+                </span>
+              </div>
+              <div className="hidden md:flex items-center gap-6 text-xs" style={{ color: 'var(--ink-soft)' }}>
+                <span>Projets</span>
+                <span>Services</span>
+                <span>À propos</span>
+                <span>Contact</span>
+              </div>
+              <div
+                style={{
+                  background: 'var(--klein)',
+                  color: 'var(--cream)',
+                  padding: '6px 12px',
+                  borderRadius: 6,
+                  fontSize: 11,
+                  fontWeight: 500,
+                }}
+              >
+                Démarrer
+              </div>
+            </div>
+
+            {/* Hero simulé */}
+            <div className="flex-1 flex flex-col justify-center gap-4">
+              <div style={{ fontSize: 11, color: 'var(--ink-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                Studio créatif — Paris
+              </div>
+              <h3 style={{ fontSize: 'clamp(24px, 3vw, 42px)', fontWeight: 400, lineHeight: 1, letterSpacing: '-0.03em' }}>
+                Le design qui<br />
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)' }}>
+                  élève
+                </span>{' '}
+                votre marque.
+              </h3>
+              <p style={{ fontSize: 14, color: 'var(--ink-soft)', maxWidth: 480, lineHeight: 1.6 }}>
+                Identité visuelle, direction artistique, et création de sites web premium pour les marques exigeantes.
+              </p>
+              <div className="flex gap-3 mt-2">
+                <div
+                  style={{
+                    background: 'var(--klein)',
+                    color: 'var(--cream)',
+                    padding: '10px 18px',
+                    borderRadius: 8,
+                    fontSize: 12,
+                    fontWeight: 500,
+                  }}
+                >
+                  Découvrir →
+                </div>
+                <div
+                  style={{
+                    border: '0.5px solid var(--line-strong)',
+                    padding: '10px 18px',
+                    borderRadius: 8,
+                    fontSize: 12,
+                    fontWeight: 500,
+                  }}
+                >
+                  Portfolio
+                </div>
+              </div>
+            </div>
+
+            {/* Grille produits */}
+            <div className="grid grid-cols-3 gap-3">
+              <div
+                style={{
+                  aspectRatio: '4/3',
+                  background: 'linear-gradient(135deg, var(--pink-light), var(--cream-warm))',
+                  borderRadius: 8,
+                }}
+              />
+              <div
+                style={{
+                  aspectRatio: '4/3',
+                  background: 'linear-gradient(135deg, var(--klein), var(--klein-bright))',
+                  borderRadius: 8,
+                }}
+              />
+              <div
+                style={{
+                  aspectRatio: '4/3',
+                  background: 'linear-gradient(135deg, var(--cream-warm), var(--pink-light))',
+                  borderRadius: 8,
+                }}
+              />
+            </div>
+          </div>
+        </ContainerScroll>
+      </section>
 
       {/* FORMATS */}
       <section>

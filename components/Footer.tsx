@@ -40,6 +40,7 @@ export default function Footer() {
               <Link href="/agence">À propos</Link>
               <Link href="/methode">Méthode</Link>
               <Link href="/realisations">Réalisations</Link>
+              <Link href="/tarifs">Tarifs</Link>
               <Link href="/agence#engagements">Nos engagements</Link>
             </div>
           </div>
