@@ -1,4 +1,4 @@
-import Hero from '@/components/Hero';
+import HeroWithGooey from '@/components/HeroWithGooey';
 import Marquee from '@/components/Marquee';
 import ServicesGrid from '@/components/ServicesGrid';
 import EngagementsGrid from '@/components/EngagementsGrid';
@@ -17,18 +17,7 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      <Hero
-        pillText="Agence indépendante — Nantes"
-        title={`Le digital qui<br>fait <span class="italic">vraiment</span> tourner<br>votre entreprise.`}
-        lead="Sites web qui convertissent et outils de gestion sur mesure. Pour les indépendants et les PME qui veulent du concret, pas du flou."
-        primaryCTA={{ label: 'Parler de votre projet', href: '/contact' }}
-        secondaryCTA={{ label: 'Voir nos réalisations', href: '/realisations' }}
-        stats={[
-          { value: '2025', label: 'Fondée fin' },
-          { value: '100%', label: 'Made in Nantes' },
-          { value: 'A→Z', label: 'De la strat au déploiement', accent: 'pink', italic: true },
-        ]}
-      />
+      <HeroWithGooey />
 
       <Marquee
         items={[

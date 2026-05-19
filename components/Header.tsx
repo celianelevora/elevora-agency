@@ -35,6 +35,7 @@ export default function Header() {
           </div>
           <Link href="/realisations" className="nav-link">Réalisations</Link>
           <Link href="/methode" className="nav-link">Méthode</Link>
+          <Link href="/tarifs" className="nav-link">Tarifs</Link>
           <Link href="/agence" className="nav-link">Agence</Link>
           <Link href="/contact" className="nav-link">Contact</Link>
           <Link href="/contact" className="cta">

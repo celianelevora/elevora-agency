@@ -24,15 +24,8 @@ export const metadata: Metadata = {
     default: "Elevora — Agence digitale à Nantes",
     template: "%s — Elevora",
   },
-  description:
-    "Elevora, agence digitale nantaise. Sites web qui convertissent et outils de gestion sur mesure pour indépendants et PME.",
-  keywords: [
-    "agence web Nantes",
-    "création site internet",
-    "outils de gestion",
-    "développement web",
-    "CRM sur mesure",
-  ],
+  description: "Elevora, agence digitale nantaise. Sites web qui convertissent et outils de gestion sur mesure pour indépendants et PME.",
+  keywords: ["agence web Nantes", "création site internet", "outils de gestion", "développement web", "CRM sur mesure"],
   authors: [{ name: "Elevora" }],
   openGraph: {
     title: "Elevora — Agence digitale à Nantes",
@@ -44,11 +37,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${fraunces.variable} ${geist.variable}`}>
       <body>

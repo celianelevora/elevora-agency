@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import CTASection from '@/components/CTASection';
+import LalaKShowcase from '@/components/LalaKShowcase';
 
 export const metadata = {
   title: 'Réalisations | Nos projets livrés',
@@ -15,52 +16,11 @@ export default function RealisationsPage() {
         lead="Nous sommes une jeune agence. Nous n'avons pas 200 références à montrer, mais nous avons ce que nous avons livré — et nous l'assumons. Voici nos projets, présents et en cours."
       />
 
+      {/* Vitrine Lala-K — composant SectionWithMockup */}
+      <LalaKShowcase />
+
       <section>
         <div className="container">
-
-          {/* Lala-K */}
-          <article style={{ marginBottom: 80 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
-              <div style={{ background: 'var(--pink-light)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '100%', background: '#FFF', borderRadius: 12, padding: 24, boxShadow: '0 20px 60px rgba(10,10,10,0.08)' }}>
-                  <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FF5F57' }} />
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#FFBD2E' }} />
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#28C840' }} />
-                  </div>
-                  <div style={{ height: 16, width: '35%', background: 'var(--pink)', borderRadius: 3, marginBottom: 14 }} />
-                  <div style={{ height: 9, width: '70%', background: 'var(--cream-warm)', borderRadius: 2, marginBottom: 8 }} />
-                  <div style={{ height: 9, width: '55%', background: 'var(--cream-warm)', borderRadius: 2, marginBottom: 20 }} />
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-                    <div style={{ aspectRatio: 1, background: 'linear-gradient(135deg, var(--pink-light), #F4C0D1)', borderRadius: 6 }} />
-                    <div style={{ aspectRatio: 1, background: 'linear-gradient(135deg, var(--cream-warm), #E8D5C4)', borderRadius: 6 }} />
-                    <div style={{ aspectRatio: 1, background: 'linear-gradient(135deg, #F4C0D1, var(--pink))', borderRadius: 6 }} />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-                  <span className="tag">Refonte</span>
-                  <span className="tag">Site vitrine</span>
-                  <span className="tag">2026</span>
-                </div>
-                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Lala-K</h2>
-                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
-                  Refonte complète du site d'une créatrice indépendante. Nouvelle architecture, identité visuelle modernisée, mise en valeur des collections et amélioration des parcours de découverte.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Mission</div>
-                    <div style={{ fontSize: 14 }}>Refonte complète</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Statut</div>
-                    <div style={{ fontSize: 14, color: 'var(--klein)' }}>Livré · En production</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
 
           {/* Garage */}
           <article style={{ marginBottom: 80 }}>
