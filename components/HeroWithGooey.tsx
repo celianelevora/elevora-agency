@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { GooeyText } from "@/components/ui/gooey-text";
 
 const MORPH_WORDS = ["tourner", "convertir", "vendre", "scaler", "briller"];
@@ -9,11 +8,7 @@ const MORPH_WORDS = ["tourner", "convertir", "vendre", "scaler", "briller"];
 export default function HeroWithGooey() {
   return (
     <section className="hero-statue">
-      {/* Halo radial pour adoucir le fond */}
-      <div className="hero-statue-glow" aria-hidden="true" />
-
-      <div className="container hero-statue-grid">
-        {/* Colonne texte */}
+      <div className="container hero-statue-inner">
         <div className="hero-statue-text">
           <span className="hero-eyebrow">
             <span className="hero-eyebrow-dot" aria-hidden="true" />
@@ -52,18 +47,6 @@ export default function HeroWithGooey() {
               Voir nos réalisations
             </Link>
           </div>
-        </div>
-
-        {/* Colonne statue */}
-        <div className="hero-statue-image" aria-hidden="true">
-          <Image
-            src="/hero-statue.png"
-            alt=""
-            width={1280}
-            height={1280}
-            priority
-            sizes="(max-width: 1024px) 80vw, 50vw"
-          />
         </div>
       </div>
     </section>
