@@ -1,135 +1,69 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { GooeyText } from "@/components/ui/gooey-text";
 
 const MORPH_WORDS = ["tourner", "convertir", "vendre", "scaler", "briller"];
 
 export default function HeroWithGooey() {
   return (
-    <section style={{ padding: "100px 0 80px" }}>
-      <div className="container">
-        <span className="pill">
-          <span className="pill-dot"></span>
-          Agence indépendante — Nantes
-        </span>
+    <section className="hero-statue">
+      {/* Halo radial pour adoucir le fond */}
+      <div className="hero-statue-glow" aria-hidden="true" />
 
-        <h1 style={{ margin: "28px 0 28px", maxWidth: 920 }}>
-          Le digital qui fait{" "}
-          <GooeyText
-            texts={MORPH_WORDS}
-            morphTime={0.9}
-            cooldownTime={1.6}
-            className="min-w-[280px] sm:min-w-[380px] md:min-w-[480px]"
-          />
-          <br />
-          votre entreprise.
-        </h1>
+      <div className="container hero-statue-grid">
+        {/* Colonne texte */}
+        <div className="hero-statue-text">
+          <span className="hero-eyebrow">
+            <span className="hero-eyebrow-dot" aria-hidden="true" />
+            AGENCE INDÉPENDANTE — NANTES
+          </span>
 
-        <p className="lead" style={{ marginBottom: 44 }}>
-          Sites web qui convertissent et outils de gestion sur mesure. Pour les
-          indépendants et les PME qui veulent du concret, pas du flou.
-        </p>
+          <h1 className="hero-title">
+            <span className="hero-line">Le digital qui</span>
+            <span className="hero-line">
+              fait{" "}
+              <GooeyText
+                texts={MORPH_WORDS}
+                morphTime={0.9}
+                cooldownTime={1.8}
+                className="hero-morph"
+              />{" "}
+              votre
+            </span>
+            <span className="hero-line">entreprise.</span>
+          </h1>
 
-        <div
-          style={{
-            display: "flex",
-            gap: 14,
-            flexWrap: "wrap",
-            alignItems: "center",
-            marginBottom: 80,
-          }}
-        >
-          <Link href="/contact" className="cta-big">
-            Parler de votre projet
-            <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
-          <Link href="/realisations" className="cta-secondary">
-            Voir nos réalisations
-          </Link>
+          <p className="hero-lead">
+            Sites web qui convertissent et outils de gestion sur mesure. Pour
+            les PME qui veulent du concret, pas du flou.
+          </p>
+
+          <div className="hero-ctas">
+            <Link href="/contact" className="hero-cta-primary">
+              Parler de votre projet
+              <svg className="ic" width="16" height="16" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+            <Link href="/realisations" className="hero-cta-ghost">
+              Voir nos réalisations
+            </Link>
+          </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, auto)",
-            gap: 64,
-            borderTop: "0.5px solid var(--line)",
-            paddingTop: 28,
-            maxWidth: 680,
-          }}
-        >
-          <div>
-            <div
-              style={{
-                fontSize: 38,
-                fontWeight: 500,
-                letterSpacing: "-0.03em",
-                color: "var(--klein)",
-                lineHeight: 1,
-              }}
-            >
-              2025
-            </div>
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--ink-muted)",
-                marginTop: 6,
-              }}
-            >
-              Fondée fin
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: 38,
-                fontWeight: 500,
-                letterSpacing: "-0.03em",
-                color: "var(--klein)",
-                lineHeight: 1,
-              }}
-            >
-              100%
-            </div>
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--ink-muted)",
-                marginTop: 6,
-              }}
-            >
-              Made in Nantes
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: 38,
-                fontWeight: 500,
-                letterSpacing: "-0.03em",
-                color: "var(--pink)",
-                lineHeight: 1,
-                fontFamily: "var(--serif)",
-                fontStyle: "italic",
-              }}
-            >
-              A→Z
-            </div>
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--ink-muted)",
-                marginTop: 6,
-              }}
-            >
-              De la strat au déploiement
-            </div>
-          </div>
+        {/* Colonne statue */}
+        <div className="hero-statue-image" aria-hidden="true">
+          <Image
+            src="/hero-statue.png"
+            alt=""
+            width={1280}
+            height={1280}
+            priority
+            sizes="(max-width: 1024px) 80vw, 50vw"
+          />
         </div>
       </div>
     </section>
