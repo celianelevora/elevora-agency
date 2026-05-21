@@ -1,20 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import { useRef } from "react";
 import { GooeyText } from "@/components/ui/gooey-text";
 
 const MORPH_WORDS = ["tourner", "convertir", "vendre", "scaler", "briller"];
 
 export default function HeroWithGooey() {
+  const ghostRef = useRef<HTMLAnchorElement>(null);
+
+  // Glow qui suit la souris sur le bouton "Voir nos réalisations"
+  const handleGhostMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = ghostRef.current;
+    if (!el) return;
+    const glow = el.querySelector<HTMLElement>(".glow");
+    if (!glow) return;
+    const rect = el.getBoundingClientRect();
+    glow.style.left = `${e.clientX - rect.left}px`;
+    glow.style.top = `${e.clientY - rect.top}px`;
+  };
+
   return (
     <section className="hero-statue">
-      <div className="container hero-statue-inner">
+      <div className="hero-statue-inner">
         <div className="hero-statue-text">
-          <span className="hero-eyebrow">
-            <span className="hero-eyebrow-dot" aria-hidden="true" />
-            AGENCE INDÉPENDANTE — NANTES
-          </span>
-
           <h1 className="hero-title">
             <span className="hero-line">Le digital qui</span>
             <span className="hero-line">
@@ -24,9 +33,9 @@ export default function HeroWithGooey() {
                 morphTime={0.9}
                 cooldownTime={1.8}
                 className="hero-morph"
-              />{" "}
-              votre
+              />
             </span>
+            <span className="hero-line">votre</span>
             <span className="hero-line">entreprise.</span>
           </h1>
 
@@ -37,14 +46,20 @@ export default function HeroWithGooey() {
 
           <div className="hero-ctas">
             <Link href="/contact" className="hero-cta-primary">
-              Parler de votre projet
-              <svg className="ic" width="16" height="16" viewBox="0 0 24 24">
+              <span>Parler de votre projet</span>
+              <svg className="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </Link>
-            <Link href="/realisations" className="hero-cta-ghost">
-              Voir nos réalisations
+            <Link
+              href="/realisations"
+              className="hero-cta-ghost"
+              ref={ghostRef}
+              onMouseMove={handleGhostMove}
+            >
+              <span className="glow" aria-hidden="true" />
+              <span>Voir nos réalisations</span>
             </Link>
           </div>
         </div>
