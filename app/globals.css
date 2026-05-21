@@ -281,6 +281,7 @@ section {
 .hdr-logo {
   display: inline-flex;
   align-items: center;
+  gap: 12px;
   flex-shrink: 0;
   text-decoration: none;
   transition: transform 0.5s var(--ease-spring);
@@ -294,6 +295,21 @@ section {
   transition: height 0.55s var(--ease);
 }
 .hdr.scrolled .hdr-logo img { height: 15px; }
+.hdr-logo-tag {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding-left: 12px;
+  border-left: 1px solid rgba(10,10,10,0.15);
+  white-space: nowrap;
+  transition: opacity 0.4s var(--ease);
+}
+@media (max-width: 1180px) {
+  .hdr-logo-tag { display: none; }
+}
 
 .hdr-divider {
   width: 1px;
@@ -899,4 +915,55 @@ section {
 .service-card:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
+}
+
+/* ============================================
+   FAQ SECTION
+   ============================================ */
+.faq-head { max-width: 760px; margin: 0 auto 48px; text-align: center; }
+.faq-head .eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: 12px; letter-spacing: 0.18em;
+  color: var(--ink-soft); font-weight: 500; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.faq-head .eyebrow-dot { width: 7px; height: 7px; background: var(--klein); border-radius: 50%; display: inline-block; }
+.faq-title {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(32px, 4.5vw, 52px); line-height: 1.05;
+  letter-spacing: -0.02em; color: var(--ink); margin: 0 0 16px;
+}
+.faq-title em { font-style: italic; color: var(--klein); }
+.faq-sub { font-family: var(--sans); font-size: 16px; color: var(--ink-muted); margin: 0; }
+
+.faq-accordion { max-width: 760px; margin: 0 auto; }
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  padding: 0 22px;
+  background: #FFF;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  border-bottom: 1px solid var(--line) !important;
+}
+.faq-item:hover { border-color: var(--klein); box-shadow: 0 8px 24px rgba(0,51,160,0.06); }
+.faq-trigger {
+  font-family: var(--sans); font-size: 16px; font-weight: 500;
+  color: var(--ink); text-align: left;
+}
+.faq-trigger:hover { text-decoration: none !important; }
+.faq-content { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: var(--ink-muted); }
+.faq-foot { text-align: center; margin-top: 32px; font-family: var(--sans); font-size: 15px; color: var(--ink-muted); }
+.faq-link { color: var(--klein); font-weight: 500; text-decoration: none; }
+.faq-link:hover { text-decoration: underline; }
+
+/* ============================================
+   TESTIMONIALS SECTION
+   ============================================ */
+.testimonials-section { background: var(--cream-warm); }
+.testimonials-wrap { display: flex; justify-content: center; margin-top: 24px; }
+
+/* Masquer le footer global sur la page d'accueil (remplacé par CinematicFooter) */
+body:has(.home-with-cinematic-footer) > .footer {
+  display: none;
 }

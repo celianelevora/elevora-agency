@@ -4,9 +4,10 @@ import ServicesGrid from '@/components/ServicesGrid';
 import EngagementsGrid from '@/components/EngagementsGrid';
 import ProjectShowcase from '@/components/ProjectShowcase';
 import MethodSteps from '@/components/MethodSteps';
-import Testimonials from '@/components/Testimonials';
-import FAQ from '@/components/FAQ';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import { FaqsSection } from '@/components/FaqsSection';
 import CTASection from '@/components/CTASection';
+import { CinematicFooter } from '@/components/CinematicFooter';
 
 export const metadata = {
   title: 'Elevora — Agence digitale à Nantes | Sites web & outils de gestion',
@@ -16,7 +17,7 @@ export const metadata = {
 
 export default function HomePage() {
   return (
-    <>
+    <div className="home-with-cinematic-footer">
       <HeroWithGooey />
 
       <Marquee
@@ -39,9 +40,9 @@ export default function HomePage() {
 
       <MethodSteps />
 
-      <Testimonials />
+      <TestimonialsSection />
 
-      <FAQ />
+      <FaqsSection />
 
       <CTASection
         eyebrow="08 — Démarrer un projet"
@@ -52,6 +53,8 @@ export default function HomePage() {
         secondaryHref="tel:+33778435721"
         showContactInfo
       />
-    </>
+
+      <CinematicFooter />
+    </div>
   );
 }

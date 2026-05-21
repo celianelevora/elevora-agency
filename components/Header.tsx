@@ -32,6 +32,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="hdr-logo" onClick={closeMenu} aria-label="Elevora — Accueil">
             <Image src="/logo-elevora.png" alt="Elevora" width={300} height={42} priority />
+            <span className="hdr-logo-tag">Agence digitale Nantes</span>
           </Link>
 
           <div className="hdr-divider" aria-hidden="true" />
