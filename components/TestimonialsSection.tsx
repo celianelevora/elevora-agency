@@ -37,12 +37,12 @@ export default function TestimonialsSection() {
             testimonials={testimonials}
             autoplay={true}
             colors={{
-              name: "#0A0A0A",
+              name: "#1A1A2E",
               designation: "#6B6B6B",
-              testimony: "#2D2D2D",
-              arrowBackground: "#0033A0",
+              testimony: "#2E2E4A",
+              arrowBackground: "#1B4F8A",
               arrowForeground: "#F5F0E8",
-              arrowHoverBackground: "#0044CC",
+              arrowHoverBackground: "#2B6CC4",
             }}
             fontSizes={{
               name: "28px",

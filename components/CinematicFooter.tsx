@@ -14,19 +14,19 @@ if (typeof window !== "undefined") {
 const STYLES = `
 .cinematic-footer-wrapper {
   -webkit-font-smoothing: antialiased;
-  --cf-fg: #0A0A0A;
+  --cf-fg: #1A1A2E;
   --cf-bg: #F5F0E8;
-  --cf-klein: #0033A0;
-  --cf-pink: #C9569E;
+  --cf-klein: #1B4F8A;
+  --cf-pink: #C9266A;
   --pill-bg-1: rgba(10,10,10,0.03);
   --pill-bg-2: rgba(10,10,10,0.01);
   --pill-shadow: rgba(245,240,232,0.5);
   --pill-highlight: rgba(255,255,255,0.6);
   --pill-inset-shadow: rgba(255,255,255,0.5);
   --pill-border: rgba(10,10,10,0.08);
-  --pill-bg-1-hover: rgba(0,51,160,0.06);
+  --pill-bg-1-hover: rgba(27,79,138,0.06);
   --pill-bg-2-hover: rgba(10,10,10,0.02);
-  --pill-border-hover: rgba(0,51,160,0.2);
+  --pill-border-hover: rgba(27,79,138,0.2);
   --pill-shadow-hover: rgba(245,240,232,0.7);
   --pill-highlight-hover: rgba(255,255,255,0.8);
 }
@@ -50,7 +50,7 @@ const STYLES = `
 }
 .footer-aurora {
   background: radial-gradient(circle at 50% 50%,
-    rgba(0,51,160,0.12) 0%, rgba(201,86,158,0.10) 40%, transparent 70%);
+    rgba(27,79,138,0.12) 0%, rgba(201,38,106,0.10) 40%, transparent 70%);
 }
 .footer-glass-pill {
   background: linear-gradient(145deg, var(--pill-bg-1) 0%, var(--pill-bg-2) 100%);
@@ -139,10 +139,10 @@ MagneticButton.displayName = "MagneticButton";
 
 const MarqueeItem = () => (
   <div className="flex items-center space-x-12 px-6">
-    <span>Sites web qui convertissent</span> <span style={{ color: "rgba(0,51,160,0.5)" }}>✦</span>
-    <span>Outils de gestion sur mesure</span> <span style={{ color: "rgba(201,86,158,0.5)" }}>✦</span>
-    <span>Accompagnement de A à Z</span> <span style={{ color: "rgba(0,51,160,0.5)" }}>✦</span>
-    <span>Agence indépendante à Nantes</span> <span style={{ color: "rgba(201,86,158,0.5)" }}>✦</span>
+    <span>Sites web qui convertissent</span> <span style={{ color: "rgba(27,79,138,0.5)" }}>✦</span>
+    <span>Outils de gestion sur mesure</span> <span style={{ color: "rgba(201,38,106,0.5)" }}>✦</span>
+    <span>Accompagnement de A à Z</span> <span style={{ color: "rgba(27,79,138,0.5)" }}>✦</span>
+    <span>Agence indépendante à Nantes</span> <span style={{ color: "rgba(201,38,106,0.5)" }}>✦</span>
   </div>
 );
 
@@ -180,7 +180,7 @@ export function CinematicFooter() {
       <div ref={wrapperRef} className="relative h-screen w-full" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
         <footer
           className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden cinematic-footer-wrapper"
-          style={{ background: "#F5F0E8", color: "#0A0A0A" }}
+          style={{ background: "#F5F0E8", color: "#1A1A2E" }}
         >
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
@@ -203,13 +203,13 @@ export function CinematicFooter() {
 
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton as={Link} href="/contact" className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#fff", background: "linear-gradient(180deg, #0044CC, #0033A0)", border: "none" }}>
+                <MagneticButton as={Link} href="/contact" className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#fff", background: "linear-gradient(180deg, #2B6CC4, #1B4F8A)", border: "none" }}>
                   Démarrer un projet
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                   </svg>
                 </MagneticButton>
-                <MagneticButton as={Link} href="/realisations" className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#0A0A0A" }}>
+                <MagneticButton as={Link} href="/realisations" className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#1A1A2E" }}>
                   Voir nos réalisations
                 </MagneticButton>
               </div>

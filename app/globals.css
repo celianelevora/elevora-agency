@@ -204,9 +204,9 @@ section {
   background: linear-gradient(
     120deg,
     rgba(255,255,255,0.7) 0%,
-    rgba(201,86,158,0.35) 25%,
+    rgba(201,38,106,0.35) 25%,
     rgba(255,255,255,0.2) 50%,
-    rgba(0,51,160,0.3) 75%,
+    rgba(27,79,138,0.3) 75%,
     rgba(255,255,255,0.7) 100%
   );
   filter: blur(8px);
@@ -269,8 +269,8 @@ section {
   width: 280px; height: 100%;
   background: radial-gradient(
     ellipse at center,
-    rgba(201,86,158,0.16) 0%,
-    rgba(0,51,160,0.07) 45%,
+    rgba(201,38,106,0.16) 0%,
+    rgba(27,79,138,0.07) 45%,
     transparent 70%
   );
   pointer-events: none;
@@ -387,7 +387,7 @@ section {
   border-radius: 10px;
   transition: background 0.15s var(--ease);
 }
-.hdr-dropdown-item:hover { background: rgba(0,51,160,0.06); }
+.hdr-dropdown-item:hover { background: rgba(27,79,138,0.06); }
 .hdr-dropdown-item .item-title { font-size: 14px; color: var(--ink); font-weight: 500; }
 .hdr-dropdown-item .item-sub { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
 
@@ -409,7 +409,7 @@ section {
   flex-shrink: 0;
   box-shadow:
     0 1px 1px rgba(255,255,255,0.4) inset,
-    0 6px 18px rgba(0,51,160,0.35);
+    0 6px 18px rgba(27,79,138,0.35);
   transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease);
 }
 .hdr-cta::before {
@@ -425,7 +425,7 @@ section {
   transform: translateY(-2px);
   box-shadow:
     0 1px 1px rgba(255,255,255,0.5) inset,
-    0 10px 26px rgba(0,51,160,0.45);
+    0 10px 26px rgba(27,79,138,0.45);
 }
 .hdr-cta:hover::before { left: 130%; }
 .hdr-cta .ic { transition: transform 0.4s var(--ease-spring); position: relative; }
@@ -651,7 +651,7 @@ section {
   opacity: 0.45;
   z-index: 0;
 }
-.hero-cta-ghost:hover { color: var(--klein-deep); border-color: rgba(0,51,160,0.4); }
+.hero-cta-ghost:hover { color: var(--klein-deep); border-color: rgba(27,79,138,0.4); }
 .hero-cta-ghost:hover .glow { transform: translate(-50%, -50%) scale(1.2); }
 .hero-cta-ghost span:not(.glow) { position: relative; z-index: 1; }
 
@@ -946,7 +946,7 @@ section {
   transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
   border-bottom: 1px solid var(--line) !important;
 }
-.faq-item:hover { border-color: var(--klein); box-shadow: 0 8px 24px rgba(0,51,160,0.06); }
+.faq-item:hover { border-color: var(--klein); box-shadow: 0 8px 24px rgba(27,79,138,0.06); }
 .faq-trigger {
   font-family: var(--sans); font-size: 16px; font-weight: 500;
   color: var(--ink); text-align: left;
@@ -966,4 +966,32 @@ section {
 /* Masquer le footer global sur la page d'accueil (remplacé par CinematicFooter) */
 body:has(.home-with-cinematic-footer) > .footer {
   display: none;
+}
+
+/* ============================================
+   CHARTE GRAPHIQUE 2025 — OVERRIDE LANDING UNIQUEMENT
+   Bleu #1B4F8A · Framboise #C9266A · Nuit #1A1A2E
+   ============================================ */
+.home-with-cinematic-footer {
+  --klein: #1B4F8A;
+  --klein-deep: #0D2B50;
+  --klein-bright: #2B6CC4;
+  --pink: #C9266A;
+  --pink-deep: #8A1245;
+  --pink-light: #FBE4ED;
+  --ink: #1A1A2E;
+  --ink-soft: #2E2E4A;
+  --ink-muted: #7A7A7A;
+}
+
+/* Header : applique la charte 2025 quand on est sur la landing */
+body:has(.home-with-cinematic-footer) .hdr {
+  --klein: #1B4F8A;
+  --klein-deep: #0D2B50;
+  --klein-bright: #2B6CC4;
+  --pink: #C9266A;
+  --pink-deep: #8A1245;
+  --ink: #1A1A2E;
+  --ink-soft: #2E2E4A;
+  --ink-muted: #7A7A7A;
 }
