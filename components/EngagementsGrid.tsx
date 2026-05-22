@@ -76,38 +76,35 @@ interface EngagementsGridProps {
 export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }: EngagementsGridProps) {
   return (
     <section id="engagements" className="eng-section">
-      {/* Calque 0 — fond marbre */}
-      <div className="eng-bg" aria-hidden="true" />
-      {/* Calque 1 — buste complet (derrière les cartes) */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/statue-complete.png" alt="" className="eng-statue-back" aria-hidden="true" />
+      {/* Calque 0 — fond composé (marbre + buste) */}
+      <div className="eng-stage">
+        {/* Calque 2 — tête seule détourée, calée sur la tête du buste, devant le contenu */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/eng-tete.png" alt="" className="eng-tete" aria-hidden="true" />
 
-      {/* Calque 2 — contenu */}
-      <div className="eng-content">
-        <span className="eyebrow">{eyebrow}</span>
-        <h2 className="eng-title">
-          {title || (
-            <>
-              Une jeune agence,<br />
-              des engagements <span className="italic">fermes.</span>
-            </>
-          )}
-        </h2>
+        {/* Calque 1 — contenu */}
+        <div className="eng-content">
+          <span className="eyebrow">{eyebrow}</span>
+          <h2 className="eng-title">
+            {title || (
+              <>
+                Une jeune agence,<br />
+                des engagements <span className="italic">fermes.</span>
+              </>
+            )}
+          </h2>
 
-        <div className="eng-cards">
-          {ENGAGEMENTS.map((e, i) => (
-            <div key={i} className="eng-card">
-              <div className={`icon-box ${e.iconClass}`}>{e.icon}</div>
-              <h4 className="eng-card-title">{e.title}</h4>
-              <p className="eng-card-desc">{e.desc}</p>
-            </div>
-          ))}
+          <div className="eng-cards">
+            {ENGAGEMENTS.map((e, i) => (
+              <div key={i} className="eng-card">
+                <div className={`icon-box ${e.iconClass}`}>{e.icon}</div>
+                <h4 className="eng-card-title">{e.title}</h4>
+                <p className="eng-card-desc">{e.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Calque 3 — tête seule (devant le texte) */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/statue-tete.png" alt="" className="eng-statue-front" aria-hidden="true" />
     </section>
   );
 }
