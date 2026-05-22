@@ -1018,21 +1018,22 @@ body:has(.home-with-cinematic-footer) .hdr {
   position: relative;
   background:
     radial-gradient(ellipse 90% 50% at 80% 8%, rgba(201,38,106,0.04), transparent 55%),
-    radial-gradient(ellipse 70% 40% at 15% 30%, rgba(27,79,138,0.035), transparent 55%),
+    radial-gradient(ellipse 70% 40% at 15% 30%, rgba(27,79,138,0.04), transparent 55%),
     linear-gradient(180deg,
-      #C9C5C2 0%,
-      #C4C0BD 14%,
-      #CBC8C5 30%,
-      #C2BEBB 48%,
-      #C8C4C1 66%,
-      #BFBBB8 82%,
-      #C6C2BF 100%
+      #C2C2C2 0%,
+      #BDBDBD 16%,
+      #C4C4C4 32%,
+      #BABABA 50%,
+      #C0C0C0 68%,
+      #B6B6B6 84%,
+      #BEBEBE 100%
     );
 }
 
-/* Les sections de la landing deviennent transparentes (plus de bords) */
-.home-with-cinematic-footer > .section,
-.home-with-cinematic-footer > section {
+/* Les sections de la landing deviennent transparentes (plus de bords)
+   SAUF le hero qui garde son image de fond */
+.home-with-cinematic-footer > .section:not(.hero-statue),
+.home-with-cinematic-footer > section:not(.hero-statue) {
   background: transparent !important;
 }
 
@@ -1048,12 +1049,12 @@ body:has(.home-with-cinematic-footer) .hdr {
 
 /* Footer cinématique : fond gris assorti au lieu du crème */
 .home-with-cinematic-footer .cinematic-footer-wrapper {
-  background: linear-gradient(180deg, #C6C2BF 0%, #BFBBB8 100%) !important;
+  background: linear-gradient(180deg, #BEBEBE 0%, #B6B6B6 100%) !important;
 }
 
 /* Body en gris sur la landing (évite tout liseré crème) */
 body:has(.home-with-cinematic-footer) {
-  background: #C9C5C2 !important;
+  background: #C2C2C2 !important;
 }
 
 /* ============================================
@@ -1165,10 +1166,8 @@ body:has(.home-with-cinematic-footer) {
   .site-footer-cols { grid-template-columns: 1fr; gap: 32px; }
 }
 
-/* Masquer le footer global sur la home (remplacé par CinematicFooter) */
-body:has(.home-with-cinematic-footer) > .site-footer {
-  display: none;
-}
+/* Le footer 4 colonnes s'affiche partout, y compris sur la home
+   (après le footer cinématique) */
 
 /* ============================================
    VARIATIONS DE COULEURS — landing

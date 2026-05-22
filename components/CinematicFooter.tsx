@@ -15,19 +15,19 @@ const STYLES = `
 .cinematic-footer-wrapper {
   -webkit-font-smoothing: antialiased;
   --cf-fg: #1A1A2E;
-  --cf-bg: #C6C2BF;
+  --cf-bg: #BEBEBE;
   --cf-klein: #1B4F8A;
   --cf-pink: #C9266A;
   --pill-bg-1: rgba(10,10,10,0.03);
   --pill-bg-2: rgba(10,10,10,0.01);
-  --pill-shadow: rgba(198,194,191,0.5);
+  --pill-shadow: rgba(190,190,190,0.5);
   --pill-highlight: rgba(255,255,255,0.6);
   --pill-inset-shadow: rgba(255,255,255,0.5);
   --pill-border: rgba(10,10,10,0.08);
   --pill-bg-1-hover: rgba(27,79,138,0.06);
   --pill-bg-2-hover: rgba(10,10,10,0.02);
   --pill-border-hover: rgba(27,79,138,0.2);
-  --pill-shadow-hover: rgba(198,194,191,0.7);
+  --pill-shadow-hover: rgba(190,190,190,0.7);
   --pill-highlight-hover: rgba(255,255,255,0.8);
 }
 @keyframes footer-breathe {
@@ -118,31 +118,7 @@ export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> 
 const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
   ({ className, children, as: Component = "button", ...props }, forwardedRef) => {
     const localRef = useRef<HTMLElement>(null);
-    useEffect(() => {
-      if (typeof window === "undefined") return;
-      const element = localRef.current;
-      if (!element) return;
-      const ctx = gsap.context(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-          const rect = element.getBoundingClientRect();
-          const h = rect.width / 2;
-          const w = rect.height / 2;
-          const x = e.clientX - rect.left - h;
-          const y = e.clientY - rect.top - w;
-          gsap.to(element, { x: x * 0.4, y: y * 0.4, rotationX: -y * 0.15, rotationY: x * 0.15, scale: 1.05, ease: "power2.out", duration: 0.4 });
-        };
-        const handleMouseLeave = () => {
-          gsap.to(element, { x: 0, y: 0, rotationX: 0, rotationY: 0, scale: 1, ease: "elastic.out(1, 0.3)", duration: 1.2 });
-        };
-        element.addEventListener("mousemove", handleMouseMove as EventListener);
-        element.addEventListener("mouseleave", handleMouseLeave);
-        return () => {
-          element.removeEventListener("mousemove", handleMouseMove as EventListener);
-          element.removeEventListener("mouseleave", handleMouseLeave);
-        };
-      }, element);
-      return () => ctx.revert();
-    }, []);
+    // Effet magnétique désactivé : les boutons restent fixes, hover propre via CSS
     return (
       <Component
         ref={(node: HTMLElement) => {
@@ -203,7 +179,7 @@ export function CinematicFooter() {
       <div ref={wrapperRef} className="relative h-screen w-full" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
         <footer
           className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden cinematic-footer-wrapper"
-          style={{ background: "linear-gradient(180deg, #C6C2BF 0%, #BFBBB8 100%)", color: "#1A1A2E" }}
+          style={{ background: "linear-gradient(180deg, #BEBEBE 0%, #B6B6B6 100%)", color: "#1A1A2E" }}
         >
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
@@ -212,7 +188,7 @@ export function CinematicFooter() {
             ELEVORA
           </div>
 
-          <div className="absolute top-12 left-0 w-full overflow-hidden py-4 z-10 -rotate-2 scale-110 shadow-2xl" style={{ borderTop: "1px solid rgba(10,10,10,0.1)", borderBottom: "1px solid rgba(10,10,10,0.1)", background: "rgba(198,194,191,0.55)", backdropFilter: "blur(8px)" }}>
+          <div className="absolute top-12 left-0 w-full overflow-hidden py-4 z-10 -rotate-2 scale-110 shadow-2xl" style={{ borderTop: "1px solid rgba(10,10,10,0.1)", borderBottom: "1px solid rgba(10,10,10,0.1)", background: "rgba(190,190,190,0.55)", backdropFilter: "blur(8px)" }}>
             <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] uppercase" style={{ color: "#6B6B6B" }}>
               <MarqueeItem />
               <MarqueeItem />
