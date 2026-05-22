@@ -35,7 +35,7 @@ export default function HomePage() {
 
       <div className="sec-cream"><ServicesGrid /></div>
 
-      <div className="sec-white"><EngagementsGrid /></div>
+      <EngagementsGrid />
 
       <div className="sec-warm"><ProjectShowcase /></div>
 
