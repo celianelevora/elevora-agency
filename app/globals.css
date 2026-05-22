@@ -1019,29 +1019,34 @@ body:has(.home-with-cinematic-footer) .hdr {
   background: var(--cream);
 }
 
-/* Les sections de la landing deviennent transparentes (plus de bords)
-   SAUF le hero qui garde son image de fond */
-.home-with-cinematic-footer > .section:not(.hero-statue),
-.home-with-cinematic-footer > section:not(.hero-statue) {
+/* ============================================
+   ALTERNANCE DES FONDS — délimitation des sections
+   (inspiré Lala-K, couleurs charte Elevora)
+   ============================================ */
+.home-with-cinematic-footer .sec-cream { background: var(--cream) !important; }
+.home-with-cinematic-footer .sec-white { background: #FFFFFF !important; }
+.home-with-cinematic-footer .sec-warm { background: var(--cream-warm) !important; }
+.home-with-cinematic-footer .sec-night {
+  background: linear-gradient(180deg, #1A1A2E, #0D0D1A) !important;
+}
+/* La section racine à l'intérieur d'un wrapper .sec-* devient transparente
+   pour laisser voir le fond du wrapper */
+.home-with-cinematic-footer [class*="sec-"] > section,
+.home-with-cinematic-footer [class*="sec-"] > .section {
   background: transparent !important;
 }
 
-/* La section témoignages perd son fond crème-warm */
-.home-with-cinematic-footer .testimonials-section {
-  background: transparent !important;
-}
-
-/* Le hero garde son image mais on enlève le -76px qui peut créer un saut */
+/* Le hero garde son image */
 .home-with-cinematic-footer .hero-statue {
   background-blend-mode: normal;
 }
 
-/* Footer cinématique : fond gris assorti au lieu du crème */
+/* Footer cinématique : crème */
 .home-with-cinematic-footer .cinematic-footer-wrapper {
   background: var(--cream) !important;
 }
 
-/* Body en gris sur la landing (évite tout liseré crème) */
+/* Body crème sur la landing */
 body:has(.home-with-cinematic-footer) {
   background: var(--cream) !important;
 }
@@ -1337,3 +1342,33 @@ body:has(.home-with-cinematic-footer) {
   .method-card:nth-child(even) .method-card-dot,
   .method-card:nth-child(odd) .method-card-dot { left: -34px; right: auto; }
 }
+
+/* Réseaux sociaux dans le footer */
+.site-footer-socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+.site-footer-social {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: rgba(184,184,184,0.8);
+  border: 1px solid rgba(184,184,184,0.18);
+  transition: all 0.25s var(--ease);
+}
+.site-footer-social:hover {
+  color: #FFF;
+  background: linear-gradient(180deg, #2B6CC4, #1B4F8A);
+  border-color: transparent;
+  transform: translateY(-2px);
+}
+
+/* Marquee sur fond nuit : texte clair */
+.home-with-cinematic-footer .sec-night .marquee { background: transparent !important; }
+.home-with-cinematic-footer .sec-night .marquee-item { color: rgba(245,240,232,0.85) !important; }
+.home-with-cinematic-footer .sec-night .marquee-item::after,
+.home-with-cinematic-footer .sec-night .marquee-sep { color: var(--c-bleu-clair, #2B6CC4) !important; }

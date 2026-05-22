@@ -19,29 +19,31 @@ export default function HomePage() {
     <div className="home-with-cinematic-footer">
       <HeroWithGooey />
 
-      <Marquee
-        items={[
-          'Sites vitrines',
-          'E-commerce',
-          'Refontes complètes',
-          'CRM sur mesure',
-          'Outils de gestion',
-          'Extranets clients',
-          'Landing pages',
-        ]}
-      />
+      <div className="sec-night">
+        <Marquee
+          items={[
+            'Sites vitrines',
+            'E-commerce',
+            'Refontes complètes',
+            'CRM sur mesure',
+            'Outils de gestion',
+            'Extranets clients',
+            'Landing pages',
+          ]}
+        />
+      </div>
 
-      <ServicesGrid />
+      <div className="sec-cream"><ServicesGrid /></div>
 
-      <EngagementsGrid />
+      <div className="sec-white"><EngagementsGrid /></div>
 
-      <ProjectShowcase />
+      <div className="sec-warm"><ProjectShowcase /></div>
 
-      <MethodSteps />
+      <div className="sec-white"><MethodSteps /></div>
 
-      <TestimonialsSection />
+      <div className="sec-warm"><TestimonialsSection /></div>
 
-      <FaqsSection />
+      <div className="sec-white"><FaqsSection /></div>
 
       <CinematicFooter />
     </div>

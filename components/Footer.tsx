@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Server } from 'lucide-react';
+import { Mail, Phone, MapPin, Server, Instagram, Linkedin } from 'lucide-react';
 
 const serviceLinks = [
   { text: 'Sites web', href: '/services/sites-web' },
@@ -39,6 +39,26 @@ export default function Footer() {
             <div className="site-footer-server">
               <Server className="ic" size={14} />
               Hébergé en Suisse par Infomaniak
+            </div>
+            <div className="site-footer-socials">
+              <a
+                href="https://www.instagram.com/elevora_agency_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram Elevora"
+                className="site-footer-social"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/116063923/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn Elevora"
+                className="site-footer-social"
+              >
+                <Linkedin size={18} />
+              </a>
             </div>
           </div>
 
