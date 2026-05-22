@@ -6,7 +6,6 @@ import ProjectShowcase from '@/components/ProjectShowcase';
 import MethodSteps from '@/components/MethodSteps';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { FaqsSection } from '@/components/FaqsSection';
-import CTASection from '@/components/CTASection';
 import { CinematicFooter } from '@/components/CinematicFooter';
 
 export const metadata = {
@@ -43,16 +42,6 @@ export default function HomePage() {
       <TestimonialsSection />
 
       <FaqsSection />
-
-      <CTASection
-        eyebrow="08 — Démarrer un projet"
-        title={`Vous avez un projet ?<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">On en parle.</span>`}
-        description="Premier échange gratuit et sans engagement. On comprend votre besoin, on évalue la faisabilité, on vous propose un devis ferme sous 5 jours."
-        primaryLabel="Prendre contact"
-        secondaryLabel="07 78 43 57 21"
-        secondaryHref="tel:+33778435721"
-        showContactInfo
-      />
 
       <CinematicFooter />
     </div>

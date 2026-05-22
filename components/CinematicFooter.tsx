@@ -15,19 +15,19 @@ const STYLES = `
 .cinematic-footer-wrapper {
   -webkit-font-smoothing: antialiased;
   --cf-fg: #1A1A2E;
-  --cf-bg: #F5F0E8;
+  --cf-bg: #C6C2BF;
   --cf-klein: #1B4F8A;
   --cf-pink: #C9266A;
   --pill-bg-1: rgba(10,10,10,0.03);
   --pill-bg-2: rgba(10,10,10,0.01);
-  --pill-shadow: rgba(245,240,232,0.5);
+  --pill-shadow: rgba(198,194,191,0.5);
   --pill-highlight: rgba(255,255,255,0.6);
   --pill-inset-shadow: rgba(255,255,255,0.5);
   --pill-border: rgba(10,10,10,0.08);
   --pill-bg-1-hover: rgba(27,79,138,0.06);
   --pill-bg-2-hover: rgba(10,10,10,0.02);
   --pill-border-hover: rgba(27,79,138,0.2);
-  --pill-shadow-hover: rgba(245,240,232,0.7);
+  --pill-shadow-hover: rgba(198,194,191,0.7);
   --pill-highlight-hover: rgba(255,255,255,0.8);
 }
 @keyframes footer-breathe {
@@ -84,6 +84,29 @@ const STYLES = `
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+.footer-cta-title {
+  font-family: var(--serif), serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6.5vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--cf-fg);
+  margin-bottom: 1.5rem;
+}
+.footer-cta-em {
+  font-style: italic;
+  color: #1B4F8A;
+  white-space: nowrap;
+}
+.footer-cta-sub {
+  font-family: var(--sans), sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.95rem, 1.4vw, 1.125rem);
+  line-height: 1.6;
+  color: rgba(26,26,46,0.7);
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
 }
 `;
 
@@ -180,7 +203,7 @@ export function CinematicFooter() {
       <div ref={wrapperRef} className="relative h-screen w-full" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
         <footer
           className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden cinematic-footer-wrapper"
-          style={{ background: "#F5F0E8", color: "#1A1A2E" }}
+          style={{ background: "linear-gradient(180deg, #C6C2BF 0%, #BFBBB8 100%)", color: "#1A1A2E" }}
         >
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
@@ -189,17 +212,22 @@ export function CinematicFooter() {
             ELEVORA
           </div>
 
-          <div className="absolute top-12 left-0 w-full overflow-hidden py-4 z-10 -rotate-2 scale-110 shadow-2xl" style={{ borderTop: "1px solid rgba(10,10,10,0.1)", borderBottom: "1px solid rgba(10,10,10,0.1)", background: "rgba(245,240,232,0.6)", backdropFilter: "blur(8px)" }}>
+          <div className="absolute top-12 left-0 w-full overflow-hidden py-4 z-10 -rotate-2 scale-110 shadow-2xl" style={{ borderTop: "1px solid rgba(10,10,10,0.1)", borderBottom: "1px solid rgba(10,10,10,0.1)", background: "rgba(198,194,191,0.55)", backdropFilter: "blur(8px)" }}>
             <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] uppercase" style={{ color: "#6B6B6B" }}>
               <MarqueeItem />
               <MarqueeItem />
             </div>
           </div>
 
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 mt-20 w-full max-w-5xl mx-auto">
-            <h2 ref={headingRef} className="text-5xl md:text-8xl footer-text-glow tracking-tighter mb-12 text-center" style={{ fontWeight: 400 }}>
-              On démarre votre projet ?
+          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 w-full max-w-5xl mx-auto">
+            <h2 ref={headingRef} className="footer-cta-title text-center" style={{ fontWeight: 400 }}>
+              On démarre <span className="footer-cta-em">votre&nbsp;projet</span> ?
             </h2>
+
+            <p className="footer-cta-sub text-center">
+              Premier échange gratuit et sans engagement. On comprend votre besoin,
+              on évalue la faisabilité, on vous propose un devis ferme sous 5 jours.
+            </p>
 
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               <div className="flex flex-wrap justify-center gap-4 w-full">

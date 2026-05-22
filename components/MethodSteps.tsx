@@ -27,12 +27,12 @@ const STEPS = [
 
 export default function MethodSteps() {
   return (
-    <section style={{ background: '#FFF' }}>
+    <section style={{ background: 'transparent' }}>
       <div className="container">
         <span className="eyebrow">05 — Notre méthode</span>
-        <h2 style={{ margin: '18px 0 64px', maxWidth: 640 }}>
-          Quatre étapes,<br />
-          aucune <span className="italic">zone d'ombre.</span>
+        <h2 style={{ margin: '18px 0 64px', maxWidth: 720 }}>
+          De l'idée à la mise en ligne,<br />
+          un chemin <span className="italic">clair et balisé.</span>
         </h2>
 
         <div

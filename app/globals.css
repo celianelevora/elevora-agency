@@ -982,6 +982,20 @@ body:has(.home-with-cinematic-footer) > .footer {
   --ink: #1A1A2E;
   --ink-soft: #2E2E4A;
   --ink-muted: #7A7A7A;
+  --sans: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
+  /* Palette charte complète — nuances disponibles */
+  --c-bleu-clair: #2B6CC4;
+  --c-bleu: #1B4F8A;
+  --c-bleu-fonce: #0D2B50;
+  --c-rose: #E8527E;
+  --c-framboise: #C9266A;
+  --c-bordeaux: #8A1245;
+  --c-nuit-clair: #2E2E4A;
+  --c-nuit: #1A1A2E;
+  --c-nuit-fonce: #0D0D1A;
+  --c-gris-clair: #B8B8B8;
+  --c-gris: #7A7A7A;
+  --c-gris-fonce: #383838;
 }
 
 /* Header : applique la charte 2025 quand on est sur la landing */
@@ -995,3 +1009,182 @@ body:has(.home-with-cinematic-footer) .hdr {
   --ink-soft: #2E2E4A;
   --ink-muted: #7A7A7A;
 }
+
+/* ============================================
+   FOND GRIS CONTINU — LANDING UNIQUEMENT
+   Dégradé doux multi-teintes sans démarcations
+   ============================================ */
+.home-with-cinematic-footer {
+  position: relative;
+  background:
+    radial-gradient(ellipse 90% 50% at 80% 8%, rgba(201,38,106,0.04), transparent 55%),
+    radial-gradient(ellipse 70% 40% at 15% 30%, rgba(27,79,138,0.035), transparent 55%),
+    linear-gradient(180deg,
+      #C9C5C2 0%,
+      #C4C0BD 14%,
+      #CBC8C5 30%,
+      #C2BEBB 48%,
+      #C8C4C1 66%,
+      #BFBBB8 82%,
+      #C6C2BF 100%
+    );
+}
+
+/* Les sections de la landing deviennent transparentes (plus de bords) */
+.home-with-cinematic-footer > .section,
+.home-with-cinematic-footer > section {
+  background: transparent !important;
+}
+
+/* La section témoignages perd son fond crème-warm */
+.home-with-cinematic-footer .testimonials-section {
+  background: transparent !important;
+}
+
+/* Le hero garde son image mais on enlève le -76px qui peut créer un saut */
+.home-with-cinematic-footer .hero-statue {
+  background-blend-mode: normal;
+}
+
+/* Footer cinématique : fond gris assorti au lieu du crème */
+.home-with-cinematic-footer .cinematic-footer-wrapper {
+  background: linear-gradient(180deg, #C6C2BF 0%, #BFBBB8 100%) !important;
+}
+
+/* Body en gris sur la landing (évite tout liseré crème) */
+body:has(.home-with-cinematic-footer) {
+  background: #C9C5C2 !important;
+}
+
+/* ============================================
+   FOOTER 4 COLONNES — global (toutes pages)
+   DA Elevora : fond nuit foncé, accents charte
+   ============================================ */
+.site-footer {
+  background: linear-gradient(180deg, #1A1A2E 0%, #0D0D1A 100%);
+  color: #B8B8B8;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-top: 80px;
+}
+.site-footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 80px 40px 32px;
+}
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 2fr;
+  gap: 64px;
+}
+.site-footer-brand { max-width: 360px; }
+.site-footer-logo {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: #FFF;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.site-footer-desc {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(184,184,184,0.7);
+  margin-bottom: 24px;
+}
+.site-footer-server {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(184,184,184,0.5);
+  padding: 8px 14px;
+  border: 1px solid rgba(184,184,184,0.15);
+  border-radius: 999px;
+}
+.site-footer-server .ic { color: #2B6CC4; }
+
+.site-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.site-footer-col-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #FFF;
+  margin-bottom: 20px;
+}
+.site-footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.site-footer-col a, .site-footer-col address {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-style: normal;
+  color: rgba(184,184,184,0.7);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+.site-footer-col a:hover { color: #E8527E; }
+.site-footer-contact { display: inline-flex; align-items: center; gap: 8px; }
+.site-footer-contact .ic { color: #2B6CC4; flex-shrink: 0; }
+
+.site-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 56px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(184,184,184,0.12);
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(184,184,184,0.5);
+}
+.site-footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
+.site-footer-legal a {
+  color: rgba(184,184,184,0.5);
+  text-decoration: none;
+  transition: color 0.2s var(--ease);
+}
+.site-footer-legal a:hover { color: #B8B8B8; }
+
+@media (max-width: 900px) {
+  .site-footer-grid { grid-template-columns: 1fr; gap: 48px; }
+  .site-footer-inner { padding: 56px 24px 28px; }
+  .site-footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 560px) {
+  .site-footer-cols { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* Masquer le footer global sur la home (remplacé par CinematicFooter) */
+body:has(.home-with-cinematic-footer) > .site-footer {
+  display: none;
+}
+
+/* ============================================
+   VARIATIONS DE COULEURS — landing
+   Exploite les 3 nuances de chaque teinte
+   ============================================ */
+/* Icon box bleu clair → nuance charte */
+.home-with-cinematic-footer .icon-box-blue-light {
+  background: rgba(43,108,196,0.12);
+  color: var(--c-bleu);
+}
+/* Eyebrow dot : framboise sur FAQ, bleu clair sur témoignages (variation) */
+.home-with-cinematic-footer .faq-head .eyebrow-dot { background: var(--c-framboise); }
+.home-with-cinematic-footer .testimonials-section .eyebrow-dot { background: var(--c-bleu-clair); }
+/* Mot morphing hero : bleu principal (déjà via --klein) ; accent italique FAQ en framboise */
+.home-with-cinematic-footer .faq-title em { color: var(--c-framboise); }
+/* Hover liens footer cinématique : rose clair */
+.home-with-cinematic-footer .footer-glass-pill:hover { color: var(--c-rose) !important; }
+/* Bordures de cartes FAQ au hover : bleu clair */
+.home-with-cinematic-footer .faq-item:hover { border-color: var(--c-bleu-clair); }

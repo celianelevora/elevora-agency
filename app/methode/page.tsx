@@ -21,7 +21,7 @@ export default function MethodePage() {
     <>
       <Hero
         pillText="Notre méthode"
-        title={`Quatre étapes,<br>aucune <span class="italic">zone d'ombre.</span>`}
+        title={`De l'idée à la mise en ligne,<br>un chemin <span class="italic">clair et balisé.</span>`}
         lead="Un projet digital se passe mal quand le client ne sait pas où il en est, ce qu'on attend de lui, et combien ça va coûter. On a structuré notre méthode pour que ces trois informations soient toujours sur la table."
       />
 

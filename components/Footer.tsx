@@ -1,65 +1,92 @@
 import Link from 'next/link';
+import { Mail, Phone, MapPin, Server } from 'lucide-react';
+
+const serviceLinks = [
+  { text: 'Sites web', href: '/services/sites-web' },
+  { text: 'Outils de gestion', href: '/services/outils-de-gestion' },
+  { text: 'Refonte', href: '/services/sites-web' },
+  { text: 'E-commerce', href: '/services/sites-web' },
+];
+
+const agenceLinks = [
+  { text: 'À propos', href: '/agence' },
+  { text: 'Méthode', href: '/methode' },
+  { text: 'Réalisations', href: '/realisations' },
+  { text: 'Tarifs', href: '/tarifs' },
+  { text: 'Nos engagements', href: '/agence#engagements' },
+];
+
+const contactInfo = [
+  { icon: Mail, text: 'contact@elevora-agency.com', href: 'mailto:contact@elevora-agency.com' },
+  { icon: Phone, text: '07 78 43 57 21', href: 'tel:+33778435721' },
+  { icon: MapPin, text: 'Nantes, France', href: '#', isAddress: true },
+];
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="container">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <Link href="/" className="logo">
-              <span className="logo-mark">E</span>
-              <span style={{ color: 'var(--cream)' }}>Elevora</span>
+    <footer className="site-footer">
+      <div className="site-footer-inner">
+        <div className="site-footer-grid">
+          {/* Colonne marque */}
+          <div className="site-footer-brand">
+            <Link href="/" className="site-footer-logo">
+              ELEVORA
             </Link>
-            <p className="footer-tag">
-              Agence digitale nantaise. Sites web et outils de gestion pour les indépendants et les PME.
+            <p className="site-footer-desc">
+              Agence digitale nantaise. Sites web qui convertissent et outils de
+              gestion sur mesure pour les indépendants et les PME.
             </p>
-            <div className="footer-server">
-              <svg className="ic" width="14" height="14" viewBox="0 0 24 24">
-                <rect x="2" y="3" width="20" height="8" rx="1" />
-                <rect x="2" y="13" width="20" height="8" rx="1" />
-                <line x1="6" y1="7" x2="6.01" y2="7" />
-                <line x1="6" y1="17" x2="6.01" y2="17" />
-              </svg>
+            <div className="site-footer-server">
+              <Server className="ic" size={14} />
               Hébergé en Suisse par Infomaniak
             </div>
           </div>
 
-          <div>
-            <div className="footer-col-title">Services</div>
-            <div className="footer-links">
-              <Link href="/services/sites-web">Sites web</Link>
-              <Link href="/services/outils-de-gestion">Outils de gestion</Link>
-              <Link href="/services/sites-web">Refonte</Link>
-              <Link href="/services/sites-web">E-commerce</Link>
+          {/* Colonnes liens */}
+          <div className="site-footer-cols">
+            <div className="site-footer-col">
+              <p className="site-footer-col-title">Services</p>
+              <ul>
+                {serviceLinks.map(({ text, href }) => (
+                  <li key={text}><Link href={href}>{text}</Link></li>
+                ))}
+              </ul>
             </div>
-          </div>
 
-          <div>
-            <div className="footer-col-title">Agence</div>
-            <div className="footer-links">
-              <Link href="/agence">À propos</Link>
-              <Link href="/methode">Méthode</Link>
-              <Link href="/realisations">Réalisations</Link>
-              <Link href="/tarifs">Tarifs</Link>
-              <Link href="/agence#engagements">Nos engagements</Link>
+            <div className="site-footer-col">
+              <p className="site-footer-col-title">Agence</p>
+              <ul>
+                {agenceLinks.map(({ text, href }) => (
+                  <li key={text}><Link href={href}>{text}</Link></li>
+                ))}
+              </ul>
             </div>
-          </div>
 
-          <div>
-            <div className="footer-col-title">Contact</div>
-            <div className="footer-links">
-              <a href="mailto:contact@elevora-agency.com">contact@elevora-agency.com</a>
-              <a href="tel:+33778435721">07 78 43 57 21</a>
-              <span>Nantes, France</span>
+            <div className="site-footer-col">
+              <p className="site-footer-col-title">Contact</p>
+              <ul>
+                {contactInfo.map(({ icon: Icon, text, href, isAddress }) => (
+                  <li key={text}>
+                    <a href={href} className="site-footer-contact">
+                      <Icon className="ic" size={15} />
+                      {isAddress ? (
+                        <address>{text}</address>
+                      ) : (
+                        <span>{text}</span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
 
-        <div className="footer-bottom">
-          <span>© 2026 Elevora — Tous droits réservés</span>
-          <div className="footer-legal">
+        <div className="site-footer-bottom">
+          <p>© 2026 Elevora · Agence digitale à Nantes</p>
+          <div className="site-footer-legal">
             <Link href="/mentions-legales">Mentions légales</Link>
-            <Link href="/confidentialite">Politique de confidentialité</Link>
+            <Link href="/confidentialite">Confidentialité</Link>
             <Link href="/cgv">CGV</Link>
             <Link href="/cookies">Cookies</Link>
           </div>
