@@ -8,14 +8,14 @@ const testimonials = [
       "Le site franchement c'est vraiment super, visuellement c'est vraiment mon univers, c'est super bluffant.",
     name: "Lily",
     designation: "Lily Berry — Nail Artist · lala-k.elevora-agency.com",
-    src: "/testimonials/Testimonial1.png",
+    src: "/testimonials/Testimonial1.jpg",
   },
   {
     quote:
-      "Elevora a transformé notre présence en ligne. On a enfin un site qui nous ressemble et qui nous amène de vrais clients. L'accompagnement a été clair du début à la fin, sans jargon.",
-    name: "Marc Lefèvre",
-    designation: "Gérant — Atelier Bois & Co · Menuiserie",
-    src: "/testimonials/Testimonial2.png",
+      "Elevora a parfaitement capté l'univers de la marque. Le site est élégant, fluide, et reflète exactement le positionnement haut de gamme qu'on voulait. Un vrai bonheur de travailler avec eux.",
+    name: "Lala K",
+    designation: "Lala K — Institut beauté · lala-k.elevora-agency.com",
+    src: "/testimonials/Testimonial2.jpg",
   },
 ];
 

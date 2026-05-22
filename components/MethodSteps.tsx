@@ -1,98 +1,107 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
 const STEPS = [
   {
-    label: '01 — Cadrage',
+    num: '01',
+    label: 'Cadrage',
     title: 'On comprend votre activité',
     desc: "Atelier de découverte, objectifs business, contraintes techniques. On part de votre métier, pas d'un template.",
     duration: '~ 1 semaine',
   },
   {
-    label: '02 — Design',
+    num: '02',
+    label: 'Design',
     title: 'On dessine, vous validez',
     desc: 'Maquettes interactives, allers-retours, validation page par page avant la moindre ligne de code.',
     duration: '~ 2 semaines',
   },
   {
-    label: '03 — Développement',
+    num: '03',
+    label: 'Développement',
     title: 'On construit, vous suivez',
-    desc: "Code propre, performances optimisées, environnement de test partagé pour suivre l'avancement.",
+    desc: "Code propre, performances optimisées, environnement de test partagé pour suivre l'avancement en direct.",
     duration: '~ 3-6 semaines',
   },
   {
-    label: '04 — Livraison',
+    num: '04',
+    label: 'Livraison',
     title: 'On livre, on reste là',
-    desc: 'Mise en ligne, formation à la gestion, suivi sur 30 jours inclus. Vous repartez autonome.',
+    desc: 'Mise en ligne, formation à la gestion, suivi sur 30 jours inclus. Vous repartez totalement autonome.',
     duration: '+ suivi 30j',
   },
 ];
 
 export default function MethodSteps() {
-  return (
-    <section style={{ background: 'transparent' }}>
-      <div className="container">
-        <span className="eyebrow">05 — Notre méthode</span>
-        <h2 style={{ margin: '18px 0 64px', maxWidth: 720 }}>
-          De l'idée à la mise en ligne,<br />
-          un chemin <span className="italic">clair et balisé.</span>
-        </h2>
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState<boolean[]>(new Array(STEPS.length).fill(false));
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 0,
-            borderTop: '0.5px solid var(--line)',
-          }}
-        >
-          {STEPS.map((step, i) => {
-            const isLast = i === STEPS.length - 1;
-            return (
-              <div
-                key={i}
-                style={{
-                  padding: i === 0 ? '36px 28px 0 0' : isLast ? '36px 0 0 28px' : '36px 28px 0',
-                  borderRight: isLast ? 'none' : '0.5px solid var(--line)',
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 13,
-                    color: 'var(--pink)',
-                    fontWeight: 500,
-                    marginBottom: 16,
-                    letterSpacing: '0.04em',
-                    fontFamily: 'var(--serif)',
-                    fontStyle: 'italic',
-                  }}
-                >
-                  {step.label}
-                </div>
-                <h4 style={{ fontSize: 18, marginBottom: 12, letterSpacing: '-0.01em' }}>
-                  {step.title}
-                </h4>
-                <p
-                  style={{
-                    fontSize: 13,
-                    lineHeight: 1.65,
-                    color: 'var(--ink-soft)',
-                    marginBottom: 20,
-                  }}
-                >
-                  {step.desc}
-                </p>
-                <span
-                  style={{
-                    fontSize: 11,
-                    color: 'var(--ink-muted)',
-                    background: 'var(--cream)',
-                    padding: '5px 11px',
-                    borderRadius: 999,
-                  }}
-                >
-                  {step.duration}
-                </span>
+  useEffect(() => {
+    const items = sectionRef.current?.querySelectorAll('.method-card');
+    if (!items) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number((entry.target as HTMLElement).dataset.idx);
+            setVisible((prev) => {
+              const next = [...prev];
+              next[idx] = true;
+              return next;
+            });
+          }
+        });
+      },
+      { threshold: 0.25, rootMargin: '0px 0px -60px 0px' }
+    );
+    items.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="method-section" style={{ background: 'transparent' }}>
+      <div className="container">
+        <div className="method-head">
+          <span className="eyebrow">05 — Notre méthode</span>
+          <h2 className="method-title">
+            De l'idée à la mise en ligne,<br />
+            un chemin <span className="italic">clair et balisé.</span>
+          </h2>
+          <p className="method-intro">
+            Pas de zone d'ombre, pas de jargon. Chaque étape est cadrée, validée
+            avec vous, et vous savez en permanence où en est votre projet.
+          </p>
+        </div>
+
+        <div className="method-flow">
+          {/* ligne de progression verticale */}
+          <div className="method-line" aria-hidden="true">
+            <div
+              className="method-line-fill"
+              style={{
+                height: `${(visible.filter(Boolean).length / STEPS.length) * 100}%`,
+              }}
+            />
+          </div>
+
+          {STEPS.map((step, i) => (
+            <div
+              key={i}
+              className={`method-card ${visible[i] ? 'in' : ''}`}
+              data-idx={i}
+              style={{ transitionDelay: `${(i % 2) * 0.08}s` }}
+            >
+              <div className="method-card-num">{step.num}</div>
+              <div className="method-card-body">
+                <span className="method-card-label">{step.label}</span>
+                <h3 className="method-card-title">{step.title}</h3>
+                <p className="method-card-desc">{step.desc}</p>
+                <span className="method-card-duration">{step.duration}</span>
               </div>
-            );
-          })}
+              <div className="method-card-dot" aria-hidden="true" />
+            </div>
+          ))}
         </div>
       </div>
     </section>
