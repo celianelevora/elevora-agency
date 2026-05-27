@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 const ENGAGEMENTS = [
   {
     icon: (
@@ -48,23 +52,25 @@ const ENGAGEMENTS = [
   {
     icon: (
       <svg className="ic" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
       </svg>
     ),
     iconClass: 'icon-box-pink',
-    title: 'Suivi inclus après livraison',
-    desc: "On ne disparaît pas une fois le site en ligne. Bugs, ajustements, questions — on reste joignables.",
+    title: 'Stack moderne & maintenue',
+    desc: 'Next.js, TypeScript, Tailwind. Pas de bricolage WordPress, pas de plugin obscur.',
   },
   {
     icon: (
       <svg className="ic" viewBox="0 0 24 24">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
       </svg>
     ),
     iconClass: 'icon-box-blue',
-    title: 'Fondateurs accessibles',
-    desc: 'Pas de commercial intermédiaire. Vous parlez directement à ceux qui décident et qui livrent.',
+    title: 'Suivi 30 jours inclus',
+    desc: "Apres mise en ligne, on reste joignables : bugs, ajustements, formation. Vous n'etes pas largue.",
   },
 ];
 
@@ -74,9 +80,71 @@ interface EngagementsGridProps {
 }
 
 export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }: EngagementsGridProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Boucle video personnalisee (RECAP-PROJET.md) :
+  // joue 5.5s, fige sur la derniere image 5s, relance.
+  // IntersectionObserver : ne tourne que quand la section est visible.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    const PLAY_MS = 5500;
+    const PAUSE_MS = 5000;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let isVisible = false;
+
+    const playCycle = () => {
+      if (!isVisible) return;
+      v.currentTime = 0;
+      v.play().catch(() => {});
+      timer = setTimeout(() => {
+        v.pause();
+        timer = setTimeout(playCycle, PAUSE_MS);
+      }, PLAY_MS);
+    };
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          isVisible = e.isIntersecting;
+          if (isVisible && !timer) {
+            playCycle();
+          } else if (!isVisible && timer) {
+            clearTimeout(timer);
+            timer = null;
+            v.pause();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    obs.observe(v);
+
+    return () => {
+      obs.disconnect();
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <section id="engagements" className="eng-section">
       <div className="eng-stage">
+        {/* Video brumeuse en fond de la section (boucle 5.5s + pause 5s) */}
+        <video
+          ref={videoRef}
+          className="eng-video"
+          muted
+          playsInline
+          preload="auto"
+          poster="/eng-fond.png"
+        >
+          <source src="/eng-video.mp4" type="video/mp4" />
+        </video>
+        {/* Fondus de raccord haut/bas vers #EAE9EE */}
+        <div className="eng-fade eng-fade-top" aria-hidden="true" />
+        <div className="eng-fade eng-fade-bottom" aria-hidden="true" />
+
         <div className="eng-head">
           <span className="eng-eyebrow">{eyebrow}</span>
           <h2 className="eng-title">

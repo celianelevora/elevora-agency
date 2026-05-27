@@ -48,8 +48,16 @@ const questions = [
 
 export function FaqsSection() {
   return (
-    <section className="section">
-      <div className="container">
+    <>
+      {/* Transition chevauchement + statue qui depasse (RECAP-PROJET.md).
+          Aspect-ratio 1115/1091 = ratio exact de faq-fond.png, donc rien n'est rogne. */}
+      <div className="faq-transition" aria-hidden="true">
+        <div className="faq-fade faq-fade-top" />
+        <div className="faq-fade faq-fade-bottom" />
+      </div>
+
+      <section className="section faq-section">
+        <div className="container">
         <div className="faq-head">
           <span className="eyebrow">
             <span className="eyebrow-dot" aria-hidden="true" />
@@ -89,5 +97,6 @@ export function FaqsSection() {
         </p>
       </div>
     </section>
+    </>
   );
 }

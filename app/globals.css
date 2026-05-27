@@ -13,8 +13,13 @@
     --klein: #0033A0;
     --klein-deep: #002074;
     --klein-bright: #0044CC;
-    --cream: #F5F0E8;
-    --cream-warm: #EFE8DC;
+    /* === FOND GRIS CHARTE — RECAP-PROJET.md (decision cle) ===
+       #EAE9EE = gris de fond du site (rgb 234,233,238).
+       Toutes les images de transition sont calees sur ce gris exact.
+       Les anciens --cream/--cream-warm sont remappes ici pour basculer
+       toutes les references existantes d'un coup sans casser les composants. */
+    --cream: #EAE9EE;
+    --cream-warm: #EAE9EE;
     --pink: #C9569E;
     --pink-deep: #993556;
     --pink-light: #FBEAF0;
@@ -35,23 +40,23 @@
     --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    /* shadcn/ui tokens — mappés sur la DA Elevora */
-    --background: 38 36% 93%;       /* cream */
+    /* shadcn/ui tokens — mappés sur la DA Elevora (#EAE9EE) */
+    --background: 260 11% 92%;      /* #EAE9EE */
     --foreground: 0 0% 4%;          /* ink */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 4%;
     --primary: 222 100% 31%;        /* klein */
-    --primary-foreground: 38 36% 93%;
-    --secondary: 36 35% 90%;        /* cream-warm */
+    --primary-foreground: 260 11% 92%;
+    --secondary: 260 11% 92%;       /* #EAE9EE */
     --secondary-foreground: 0 0% 4%;
-    --muted: 36 35% 90%;
+    --muted: 260 11% 92%;
     --muted-foreground: 0 0% 37%;
     --accent: 322 51% 56%;          /* pink */
-    --accent-foreground: 38 36% 93%;
+    --accent-foreground: 260 11% 92%;
     --destructive: 0 65% 40%;
-    --destructive-foreground: 38 36% 93%;
+    --destructive-foreground: 260 11% 92%;
     --border: 0 0% 88%;
     --input: 0 0% 88%;
     --ring: 222 100% 31%;
@@ -514,12 +519,23 @@ section {
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-image: url('/hero-statue.png');
-  background-size: cover;
-  background-position: center right;
-  background-repeat: no-repeat;
+  /* Plus de background-image : remplace par <video class="hero-statue-video"> en JSX.
+     Couleur de fond de secours = fond charte. */
+  background-color: #EAE9EE;
   margin-top: -76px;
   padding-top: 80px;
+}
+
+.hero-statue-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Calage IDENTIQUE a la maquette (background-position 60% 0%). */
+  object-position: 60% 0%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hero-statue-inner {
@@ -1023,9 +1039,9 @@ body:has(.home-with-cinematic-footer) .hdr {
    ALTERNANCE DES FONDS — délimitation des sections
    (inspiré Lala-K, couleurs charte Elevora)
    ============================================ */
-.home-with-cinematic-footer .sec-cream { background: var(--cream) !important; }
-.home-with-cinematic-footer .sec-white { background: #FFFFFF !important; }
-.home-with-cinematic-footer .sec-warm { background: var(--cream-warm) !important; }
+.home-with-cinematic-footer .sec-cream { background: #EAE9EE !important; }
+.home-with-cinematic-footer .sec-white { background: #EAE9EE !important; }
+.home-with-cinematic-footer .sec-warm  { background: #EAE9EE !important; }
 .home-with-cinematic-footer .sec-night {
   background: linear-gradient(180deg, #1A1A2E, #0D0D1A) !important;
 }
@@ -1199,9 +1215,29 @@ body:has(.home-with-cinematic-footer) {
 .method-scene { position: absolute; inset: 0; pointer-events: none; }
 .method-scene-clip { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
 .method-bg {
+  /* Methode RECAP : "100% auto" + aspect-ratio image pour ne rien rogner.
+     L'image method-fond.png est portrait (1013x1553). On la cale sur 100%
+     largeur, hauteur auto, ancree en haut. Le fondu .method-fade ci-dessous
+     masque tout micro-ecart de couleur sur les bords haut/bas. */
   position: absolute; inset: 0;
-  background: url('/method-fond.png') center/cover no-repeat;
-  opacity: .9;
+  background: url('/method-fond.png') top center / 100% auto no-repeat;
+  background-color: #EAE9EE;
+  opacity: 1;
+}
+/* Fondus de raccord haut/bas vers #EAE9EE pour invisibiliser tout ecart
+   de couleur entre l'image generee et le fond du site (point critique
+   du RECAP-PROJET.md). */
+.method-fade {
+  position: absolute; left: 0; right: 0;
+  height: 12%; pointer-events: none; z-index: 1;
+}
+.method-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,0.6) 60%, rgba(234,233,238,0) 100%);
+}
+.method-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, #EAE9EE 0%, rgba(234,233,238,0.6) 60%, rgba(234,233,238,0) 100%);
 }
 .method-glow {
   position: absolute; border-radius: 50%; filter: blur(70px);
@@ -1221,7 +1257,6 @@ body:has(.home-with-cinematic-footer) {
   0% { transform: translate(0,0) scale(1); opacity: .4; }
   100% { transform: translate(3%,-2%) scale(1.08); opacity: .6; }
 }
-.method-particles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .9; }
 .statue { position: absolute; will-change: transform; }
 .statue img { display: block; width: 100%; height: auto; }
 .statue-left {
@@ -1430,18 +1465,42 @@ body:has(.home-with-cinematic-footer) {
   position: relative;
   width: 100%;
   aspect-ratio: 1672 / 941;
-  background-image: url('/eng-fond.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  /* Methode RECAP : 100% auto + aspect-ratio = rien n'est rogne sur la dechirure. */
+  background: url('/eng-fond.png') top center / 100% auto no-repeat;
+  background-color: #EAE9EE;
   container-type: size;
   container-name: stage;
+}
+/* Video brumeuse en fond, sous les cartes (z-index 1) mais devant l'image (z-index 0) */
+.eng-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  pointer-events: none;
+}
+/* Fondus de raccord haut/bas vers #EAE9EE (anti-ecart de couleur) */
+.eng-fade {
+  position: absolute; left: 0; right: 0;
+  height: 10%; pointer-events: none; z-index: 2;
+}
+.eng-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,0.5) 60%, rgba(234,233,238,0) 100%);
+}
+.eng-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, #EAE9EE 0%, rgba(234,233,238,0.5) 60%, rgba(234,233,238,0) 100%);
 }
 .eng-head {
   position: absolute;
   left: 8.2%;
   top: 11%;
   max-width: 52%;
+  z-index: 3;
 }
 .eng-eyebrow {
   display: inline-flex; align-items: center; gap: 12px;
@@ -1468,6 +1527,7 @@ body:has(.home-with-cinematic-footer) {
   grid-template-rows: repeat(2, 1fr);
   column-gap: 1.02%;
   row-gap: 2.53%;
+  z-index: 3;
 }
 .eng-card {
   padding: 1.6cqw 1.9cqw 1.6cqw 1.7cqw;
@@ -1535,3 +1595,30 @@ body:has(.home-with-cinematic-footer) {
 @media (max-width: 600px) {
   .eng-cards { grid-template-columns: 1fr; }
 }
+
+/* ============================================
+   INTEGRATION MAQUETTE -> NEXT (RECAP-PROJET.md)
+   FAQ : transition chevauchement + fondus de raccord
+   ============================================ */
+.faq-transition {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1115 / 1091;
+  /* Methode RECAP : 100% auto + aspect-ratio = rien rogne. */
+  background: url('/faq-fond.png') top center / 100% auto no-repeat;
+  background-color: #EAE9EE;
+  margin-bottom: -1px; /* anti-fissure sub-pixel avec la section FAQ */
+}
+.faq-fade {
+  position: absolute; left: 0; right: 0;
+  height: 12%; pointer-events: none;
+}
+.faq-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,0.5) 60%, rgba(234,233,238,0) 100%);
+}
+.faq-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, #EAE9EE 0%, rgba(234,233,238,0.6) 60%, rgba(234,233,238,0) 100%);
+}
+.faq-section { background: #EAE9EE; }

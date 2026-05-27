@@ -15,7 +15,7 @@ const STYLES = `
 .cinematic-footer-wrapper {
   -webkit-font-smoothing: antialiased;
   --cf-fg: #1A1A2E;
-  --cf-bg: #F5F0E8;
+  --cf-bg: #EAE9EE;
   --cf-klein: #1B4F8A;
   --cf-pink: #C9266A;
   --pill-bg-1: rgba(10,10,10,0.03);
@@ -179,7 +179,7 @@ export function CinematicFooter() {
       <div ref={wrapperRef} className="relative h-screen w-full" style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}>
         <footer
           className="fixed bottom-0 left-0 flex h-screen w-full flex-col justify-between overflow-hidden cinematic-footer-wrapper"
-          style={{ background: "#F5F0E8", color: "#1A1A2E" }}
+          style={{ background: "#EAE9EE", color: "#1A1A2E" }}
         >
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />

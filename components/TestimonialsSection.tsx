@@ -41,7 +41,7 @@ export default function TestimonialsSection() {
               designation: "#6B6B6B",
               testimony: "#2E2E4A",
               arrowBackground: "#1B4F8A",
-              arrowForeground: "#F5F0E8",
+              arrowForeground: "#EAE9EE",
               arrowHoverBackground: "#2B6CC4",
             }}
             fontSizes={{

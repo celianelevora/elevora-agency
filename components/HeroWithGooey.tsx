@@ -22,6 +22,19 @@ export default function HeroWithGooey() {
 
   return (
     <section className="hero-statue">
+      {/* Video brumeuse en fond — RECAP-PROJET.md (decision cle).
+          Calage identique a l'ancienne image : object-position 60% 0% / cover. */}
+      <video
+        className="hero-statue-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/hero-statue.png"
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </video>
       <div className="hero-statue-inner">
         <div className="hero-statue-text">
           <h1 className="hero-title">
