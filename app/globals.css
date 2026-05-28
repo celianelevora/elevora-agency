@@ -1468,8 +1468,9 @@ body:has(.home-with-cinematic-footer) {
 .eng-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 1672 / 941;
-  /* Methode RECAP : 100% auto + aspect-ratio = rien n'est rogne sur la dechirure. */
+  /* aspect-ratio = ratio EXACT de eng-fond.png (1448x1086), sinon le conteneur
+     est mal dimensionne et la dechirure cree une ligne horizontale nette. */
+  aspect-ratio: 1448 / 1086;
   background: url('/eng-fond.png') top center / 100% auto no-repeat;
   background-color: #EAE9EE;
   container-type: size;
@@ -1568,7 +1569,8 @@ body:has(.home-with-cinematic-footer) {
 
 /* Mobile / tablette : version classique empilée */
 @media (max-width: 1100px) {
-  .eng-stage { aspect-ratio: auto; min-height: 0; background-image: none; background: linear-gradient(180deg,#f3f0ec,#e9e5df); container-type: normal; padding: 56px 28px 64px; }
+  .eng-stage { aspect-ratio: auto; min-height: 0; background-image: none; background: #EAE9EE; container-type: normal; padding: 56px 28px 64px; }
+  .eng-video { display: none; } /* pas de video en fond sur mobile (cartes empilees) */
   .eng-head { position: relative; left: 0; top: 0; max-width: 100%; }
   .eng-eyebrow { font-size: 12px; margin-bottom: 16px; }
   .eng-eyebrow::before { width: 24px; }
