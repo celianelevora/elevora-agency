@@ -255,7 +255,7 @@ section {
     box-shadow 0.55s var(--ease);
 }
 .hdr.scrolled .bar {
-  padding: 9px 12px 9px 20px;
+  padding: 9px 32px 9px 20px;
   border-radius: 999px;
   background: linear-gradient(
     180deg,
@@ -1288,13 +1288,11 @@ body:has(.home-with-cinematic-footer) {
   transform-origin: 78% 22%;
 }
 .statue-right {
-  right: -14%; bottom: -6%;
-  width: 50vw; max-width: 720px; min-width: 380px;
-  transform-origin: 70% 50%;
+  right: -3%; bottom: -8%;
+  width: 44vw; max-width: 620px; min-width: 340px;
+  transform-origin: 50% 50%;
   z-index: 3;
 }
-/* Inclinaison de base de la statue droite (le parallax JS multiplie ensuite) */
-.statue-right img { transform: rotate(8deg); }
 @media (max-width: 900px) {
   .statue-left, .statue-right { width: 42vw; opacity: .5; }
 }
@@ -1521,8 +1519,8 @@ body:has(.home-with-cinematic-footer) {
    creait une bande grise visible. */
 .eng-head {
   position: absolute;
-  left: 8.2%;
-  top: 30%;
+  left: 8.5%;
+  top: 19%;
   max-width: 52%;
   z-index: 3;
 }
@@ -1542,26 +1540,27 @@ body:has(.home-with-cinematic-footer) {
 
 .eng-cards {
   position: absolute;
-  left: 8.19%;
-  top: 47%;
-  width: 67.17%;
+  left: 8.5%;
+  top: 36%;
+  width: 64%;
+  height: 31%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 1.02%;
-  row-gap: 1.6cqw;
+  grid-template-rows: repeat(2, 1fr);
+  column-gap: 2.6%;
+  row-gap: 2%;
   z-index: 3;
 }
 .eng-card {
   padding: 1.6cqw 1.9cqw 1.6cqw 1.7cqw;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: hidden;
-  background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.6);
-  border-radius: 1cqw;
+  /* PAS de fond ni bordure : les rectangles/widgets sont DEJA dessines dans
+     l'image eng-fond.png. On place uniquement le contenu (icone + texte) dessus. */
+  background: transparent;
+  border: none;
 }
 .eng-card .icon-box {
   width: 2.3cqw; height: 2.3cqw; min-width: 32px; min-height: 32px;
