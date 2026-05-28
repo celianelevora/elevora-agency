@@ -960,7 +960,6 @@ section {
   padding: 0 22px;
   background: #FFF;
   transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
-  border-bottom: 1px solid var(--line) !important;
 }
 .faq-item:hover { border-color: var(--klein); box-shadow: 0 8px 24px rgba(27,79,138,0.06); }
 .faq-trigger {
@@ -1193,10 +1192,10 @@ body:has(.home-with-cinematic-footer) {
 .home-with-cinematic-footer .testimonials-section .eyebrow-dot { background: var(--c-bleu-clair); }
 /* Mot morphing hero : bleu principal (déjà via --klein) ; accent italique FAQ en framboise */
 .home-with-cinematic-footer .faq-title em { color: var(--c-framboise); }
-/* Hover liens footer cinématique : rose clair */
-.home-with-cinematic-footer .footer-glass-pill:hover { color: var(--c-rose) !important; }
-/* Bordures de cartes FAQ au hover : bleu clair */
-.home-with-cinematic-footer .faq-item:hover { border-color: var(--c-bleu-clair); }
+/* Hover liens footer cinématique : bleu Klein (plus de rose criard) */
+.home-with-cinematic-footer .footer-glass-pill:hover { color: var(--klein) !important; }
+/* Bordures de cartes FAQ au hover : bleu Klein franc (tout le rectangle) */
+.home-with-cinematic-footer .faq-item:hover { border-color: var(--klein); }
 
 /* Dropdown services large : 2 colonnes pour 7 items */
 .hdr-dropdown-menu-wide {
@@ -1459,9 +1458,9 @@ body:has(.home-with-cinematic-footer) {
    ============================================ */
 .eng-section {
   position: relative;
-  /* Espace gris au-dessus pour separer proprement de la section precedente
-     (sinon la dechirure colle d'un coup). */
-  padding-top: 80px;
+  /* Espace gris genereux au-dessus pour separer proprement de Services
+     (la dechirure ne doit pas coller d'un coup a la section precedente). */
+  padding-top: 160px;
   padding-bottom: 0;
   background: #EAE9EE;
   overflow: hidden;

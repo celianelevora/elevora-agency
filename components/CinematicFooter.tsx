@@ -18,17 +18,17 @@ const STYLES = `
   --cf-bg: #EAE9EE;
   --cf-klein: #1B4F8A;
   --cf-pink: #C9266A;
-  --pill-bg-1: rgba(10,10,10,0.03);
-  --pill-bg-2: rgba(10,10,10,0.01);
-  --pill-shadow: rgba(245,240,232,0.5);
-  --pill-highlight: rgba(255,255,255,0.6);
-  --pill-inset-shadow: rgba(255,255,255,0.5);
-  --pill-border: rgba(10,10,10,0.08);
-  --pill-bg-1-hover: rgba(27,79,138,0.06);
-  --pill-bg-2-hover: rgba(10,10,10,0.02);
-  --pill-border-hover: rgba(27,79,138,0.2);
-  --pill-shadow-hover: rgba(245,240,232,0.7);
-  --pill-highlight-hover: rgba(255,255,255,0.8);
+  --pill-bg-1: rgba(255,255,255,0.55);
+  --pill-bg-2: rgba(255,255,255,0.25);
+  --pill-shadow: rgba(27,79,138,0.10);
+  --pill-highlight: rgba(255,255,255,0.9);
+  --pill-inset-shadow: rgba(255,255,255,0.6);
+  --pill-border: rgba(27,79,138,0.12);
+  --pill-bg-1-hover: rgba(43,108,196,0.10);
+  --pill-bg-2-hover: rgba(43,108,196,0.04);
+  --pill-border-hover: rgba(43,108,196,0.45);
+  --pill-shadow-hover: rgba(27,79,138,0.22);
+  --pill-highlight-hover: rgba(255,255,255,1);
 }
 @keyframes footer-breathe {
   0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
@@ -58,13 +58,28 @@ const STYLES = `
   border: 1px solid var(--pill-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .footer-glass-pill:hover {
   background: linear-gradient(145deg, var(--pill-bg-1-hover) 0%, var(--pill-bg-2-hover) 100%);
   border-color: var(--pill-border-hover);
-  box-shadow: 0 20px 40px -10px var(--pill-shadow-hover), inset 0 1px 1px var(--pill-highlight-hover);
+  box-shadow: 0 18px 38px -12px var(--pill-shadow-hover), inset 0 1px 1px var(--pill-highlight-hover);
   color: var(--cf-fg);
+  transform: translateY(-2px);
+}
+.footer-cta-primary {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-cta-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 20px 44px -8px rgba(27,79,138,0.65) !important;
+}
+.footer-cta-primary svg {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-cta-primary:hover svg {
+  transform: translateX(4px);
 }
 .footer-giant-bg-text {
   font-family: var(--serif), serif;
@@ -207,7 +222,7 @@ export function CinematicFooter() {
 
             <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
               <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton as={Link} href="/contact" className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#fff", background: "linear-gradient(180deg, #2B6CC4, #1B4F8A)", border: "none" }}>
+                <MagneticButton as={Link} href="/contact" className="footer-cta-primary px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#fff", background: "linear-gradient(180deg, #2B6CC4, #1B4F8A)", border: "none", boxShadow: "0 14px 34px -8px rgba(27,79,138,0.55)" }}>
                   Démarrer un projet
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
