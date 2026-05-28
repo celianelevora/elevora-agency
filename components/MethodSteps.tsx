@@ -132,6 +132,9 @@ export default function MethodSteps() {
       <div className="method-scene" aria-hidden="true">
         <div className="method-scene-clip">
           <div className="method-bg" />
+          {/* Fondus de raccord (le cover rogne les bords fondus de l'image) */}
+          <div className="method-fade method-fade-top" />
+          <div className="method-fade method-fade-bottom" />
           <div className="method-glow method-glow-tl" />
           <div className="method-glow method-glow-br" />
           <div ref={leftRef} className="statue statue-left">

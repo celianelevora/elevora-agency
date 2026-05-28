@@ -1222,8 +1222,20 @@ body:has(.home-with-cinematic-footer) {
   background-color: #EAE9EE;
   opacity: 1;
 }
-/* NOTE: pas de .method-fade — l'image Nova a deja sa transition vers #EAE9EE
-   integree sur ses bords. Un fondu CSS par-dessus creait une bande grise. */
+/* Fondus de raccord haut/bas : NECESSAIRES car le cover rogne les bords
+   deja fondus de l'image. Ils recreent la transition douce vers #EAE9EE. */
+.method-fade {
+  position: absolute; left: 0; right: 0;
+  height: 22%; pointer-events: none; z-index: 1;
+}
+.method-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,0.85) 35%, rgba(234,233,238,0.4) 70%, rgba(234,233,238,0) 100%);
+}
+.method-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, #EAE9EE 0%, rgba(234,233,238,0.85) 35%, rgba(234,233,238,0.4) 70%, rgba(234,233,238,0) 100%);
+}
 .method-glow {
   position: absolute; border-radius: 50%; filter: blur(70px);
   opacity: .5; pointer-events: none; mix-blend-mode: screen;
@@ -1445,7 +1457,15 @@ body:has(.home-with-cinematic-footer) {
 /* ============================================
    ENGAGEMENTS — texte calé sur l'image (cartes intégrées)
    ============================================ */
-.eng-section { position: relative; padding: 0; overflow: hidden; }
+.eng-section {
+  position: relative;
+  /* Espace gris au-dessus pour separer proprement de la section precedente
+     (sinon la dechirure colle d'un coup). */
+  padding-top: 80px;
+  padding-bottom: 0;
+  background: #EAE9EE;
+  overflow: hidden;
+}
 .eng-stage {
   position: relative;
   width: 100%;
@@ -1580,6 +1600,8 @@ body:has(.home-with-cinematic-footer) {
   position: relative;
   background: #EAE9EE;
   padding-top: 0;
+  /* Remonte la FAQ pour reduire l'espace avec la section Temoignages au-dessus. */
+  margin-top: -80px;
   overflow: hidden;
 }
 /* Image de transition placee en haut de la section. aspect-ratio = ratio exact
