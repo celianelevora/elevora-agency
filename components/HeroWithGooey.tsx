@@ -31,7 +31,6 @@ export default function HeroWithGooey() {
         loop
         playsInline
         preload="auto"
-        poster="/hero-statue.png"
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>

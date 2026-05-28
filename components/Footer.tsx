@@ -30,7 +30,8 @@ export default function Footer() {
           {/* Colonne marque */}
           <div className="site-footer-brand">
             <Link href="/" className="site-footer-logo">
-              ELEVORA
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-elevora-full.png" alt="Elevora" className="site-footer-logo-img" />
             </Link>
             <p className="site-footer-desc">
               Agence digitale nantaise. Sites web qui convertissent et outils de

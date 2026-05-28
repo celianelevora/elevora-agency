@@ -246,9 +246,6 @@ export function CinematicFooter() {
             <div className="text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1" style={{ color: "#6B6B6B" }}>
               © 2026 Elevora · Agence digitale à Nantes
             </div>
-            <div className="footer-glass-pill px-6 py-3 rounded-full flex items-center gap-2 order-1 md:order-2 cursor-default">
-              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest" style={{ color: "#6B6B6B" }}>contact@elevora-agency.com</span>
-            </div>
             <MagneticButton as="button" onClick={scrollToTop} className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center group order-3" style={{ color: "#6B6B6B" }} aria-label="Retour en haut">
               <svg className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
