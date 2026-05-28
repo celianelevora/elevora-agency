@@ -1293,6 +1293,17 @@ body:has(.home-with-cinematic-footer) {
   transform-origin: 50% 50%;
   z-index: 3;
 }
+/* Fondu en bas de la statue droite vers la transparence (mask CSS).
+   Indépendant de l'image : si method-statue-right.png est remplacee demain,
+   le fondu s'applique toujours sur la nouvelle image, pas besoin de la retoucher. */
+.statue-right img {
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+          mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+}
 @media (max-width: 900px) {
   .statue-left, .statue-right { width: 42vw; opacity: .5; }
 }
@@ -1541,7 +1552,7 @@ body:has(.home-with-cinematic-footer) {
 .eng-cards {
   position: absolute;
   left: 8.5%;
-  top: 38%;
+  top: 37%;
   width: 64%;
   height: 31%;
   display: grid;
@@ -1674,19 +1685,17 @@ body:has(.home-with-cinematic-footer) {
    ANIMATION D'APPARITION DE PAGE
    Joue a chaque chargement, rechargement et navigation Next.
    ============================================ */
+/* Animation = OPACITY UNIQUEMENT (pas de translateY).
+   Le translateY appliqué au wrapper global cassait les calculs de
+   ScrollTrigger (GSAP) dans le CinematicFooter, qui se déclenchait
+   immédiatement au lieu d'attendre le scroll. */
 @keyframes pageEnterIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 .page-enter {
-  animation: pageEnterIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-  will-change: opacity, transform;
+  animation: pageEnterIn 0.55s ease-out both;
+  will-change: opacity;
 }
 /* Accessibilite : pas d'animation pour les personnes qui en demandent moins */
 @media (prefers-reduced-motion: reduce) {
