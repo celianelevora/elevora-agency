@@ -1288,11 +1288,13 @@ body:has(.home-with-cinematic-footer) {
   transform-origin: 78% 22%;
 }
 .statue-right {
-  right: -8%; bottom: -22%;
+  right: -14%; bottom: -6%;
   width: 50vw; max-width: 720px; min-width: 380px;
-  transform-origin: 30% 35%;
+  transform-origin: 70% 50%;
   z-index: 3;
 }
+/* Inclinaison de base de la statue droite (le parallax JS multiplie ensuite) */
+.statue-right img { transform: rotate(8deg); }
 @media (max-width: 900px) {
   .statue-left, .statue-right { width: 42vw; opacity: .5; }
 }
@@ -1541,22 +1543,25 @@ body:has(.home-with-cinematic-footer) {
 .eng-cards {
   position: absolute;
   left: 8.19%;
-  top: 48%;
+  top: 47%;
   width: 67.17%;
-  height: 42%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
   column-gap: 1.02%;
-  row-gap: 2.53%;
+  row-gap: 1.6cqw;
   z-index: 3;
 }
 .eng-card {
   padding: 1.6cqw 1.9cqw 1.6cqw 1.7cqw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 1cqw;
 }
 .eng-card .icon-box {
   width: 2.3cqw; height: 2.3cqw; min-width: 32px; min-height: 32px;
@@ -1628,8 +1633,8 @@ body:has(.home-with-cinematic-footer) {
   position: relative;
   background: #EAE9EE;
   padding-top: 0;
-  /* Remonte la FAQ pour reduire l'espace avec Temoignages (~30% de moins). */
-  margin-top: -180px;
+  /* Remonte la FAQ pour reduire l'espace avec Temoignages, sans chevaucher le contenu. */
+  margin-top: -100px;
   overflow: hidden;
 }
 /* Image de transition placee en haut de la section. aspect-ratio = ratio exact
@@ -1642,6 +1647,15 @@ body:has(.home-with-cinematic-footer) {
   background: url('/faq-fond.png') top center / 100% auto no-repeat;
   background-color: #EAE9EE;
   z-index: 0;
+  pointer-events: none;
+}
+/* Fondu en haut de l'image FAQ -> raccord doux avec le fond gris des Temoignages */
+.faq-bg::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 18%;
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,0.7) 45%, rgba(234,233,238,0) 100%);
   pointer-events: none;
 }
 /* Contenu FAQ pousse vers le bas pour passer SOUS la zone de transition/statue */
