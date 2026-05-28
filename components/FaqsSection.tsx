@@ -48,16 +48,12 @@ const questions = [
 
 export function FaqsSection() {
   return (
-    <>
-      {/* Transition chevauchement + statue qui depasse (RECAP-PROJET.md).
-          Aspect-ratio 1115/1091 = ratio exact de faq-fond.png, donc rien n'est rogne. */}
-      <div className="faq-transition" aria-hidden="true">
-        <div className="faq-fade faq-fade-top" />
-        <div className="faq-fade faq-fade-bottom" />
-      </div>
-
-      <section className="section faq-section">
-        <div className="container">
+    <section className="section faq-section" id="faq">
+      {/* Image de transition (chevauchement + statue qui depasse) en FOND de
+          la section. Le contenu FAQ s'affiche par-dessus, sous la statue.
+          Reproduit le comportement de la maquette (pas d'image isolee + bord net). */}
+      <div className="faq-bg" aria-hidden="true" />
+      <div className="container faq-container">
         <div className="faq-head">
           <span className="eyebrow">
             <span className="eyebrow-dot" aria-hidden="true" />
@@ -97,6 +93,5 @@ export function FaqsSection() {
         </p>
       </div>
     </section>
-    </>
   );
 }

@@ -141,9 +141,6 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
         >
           <source src="/eng-video.mp4" type="video/mp4" />
         </video>
-        {/* Fondus de raccord haut/bas vers #EAE9EE */}
-        <div className="eng-fade eng-fade-top" aria-hidden="true" />
-        <div className="eng-fade eng-fade-bottom" aria-hidden="true" />
 
         <div className="eng-head">
           <span className="eng-eyebrow">{eyebrow}</span>

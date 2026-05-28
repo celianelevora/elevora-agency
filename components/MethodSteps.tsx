@@ -132,10 +132,6 @@ export default function MethodSteps() {
       <div className="method-scene" aria-hidden="true">
         <div className="method-scene-clip">
           <div className="method-bg" />
-          {/* Fondu de raccord HAUT et BAS vers #EAE9EE pour masquer tout
-              micro-ecart de couleur entre l'image et le fond du site */}
-          <div className="method-fade method-fade-top" />
-          <div className="method-fade method-fade-bottom" />
           <div className="method-glow method-glow-tl" />
           <div className="method-glow method-glow-br" />
           <div ref={leftRef} className="statue statue-left">
