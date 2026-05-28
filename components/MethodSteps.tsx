@@ -73,7 +73,7 @@ export default function MethodSteps() {
 
     const LEFT_FROM = 4,
       LEFT_TO = -16;
-    const RIGHT_FROM = -90,
+    const RIGHT_FROM = -35,
       RIGHT_TO = 0;
     const clamp = (v: number, a: number, b: number) =>
       Math.max(a, Math.min(b, v));

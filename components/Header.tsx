@@ -89,14 +89,17 @@ export default function Header() {
             <Link href="/contact" className="hdr-link" onClick={closeMenu}>Contact</Link>
           </nav>
 
-          {/* CTA droite */}
-          <Link href="/contact" className="hdr-cta" onClick={closeMenu}>
-            Démarrer un projet
-            <svg className="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
+          {/* CTA droite — affiche uniquement quand le header N'EST PAS scrolled
+              (evite que "Contact" soit colle au bord du header reduit). */}
+          {!scrolled && (
+            <Link href="/contact" className="hdr-cta" onClick={closeMenu}>
+              Démarrer un projet
+              <svg className="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
+          )}
 
           {/* Toggle mobile */}
           <button
