@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Fraunces, Inter, Roboto } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageEnter from "@/components/PageEnter";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -68,7 +69,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr" className={`${fraunces.variable} ${inter.variable} ${roboto.variable}`}>
       <body>
         <Header />
-        <main>{children}</main>
+        <main>
+          <PageEnter>{children}</PageEnter>
+        </main>
         <Footer />
       </body>
     </html>
