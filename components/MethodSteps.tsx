@@ -35,8 +35,6 @@ const STEPS = [
 
 export default function MethodSteps() {
   const sectionRef = useRef<HTMLElement>(null);
-  const leftRef = useRef<HTMLDivElement>(null);
-  const rightRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean[]>(
     new Array(STEPS.length).fill(false)
   );
@@ -64,91 +62,19 @@ export default function MethodSteps() {
     return () => obs.disconnect();
   }, []);
 
-  // Parallax « barriere qui pivote » au scroll (statues conservees)
-  useEffect(() => {
-    const section = sectionRef.current;
-    const sLeft = leftRef.current;
-    const sRight = rightRef.current;
-    if (!section || !sLeft || !sRight) return;
-
-    const LEFT_FROM = 4,
-      LEFT_TO = -16;
-    const RIGHT_FROM = -35,
-      RIGHT_TO = 0;
-    const clamp = (v: number, a: number, b: number) =>
-      Math.max(a, Math.min(b, v));
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-    let targetP = 0,
-      currentP = 0,
-      raf: number | null = null;
-
-    const computeProgress = () => {
-      const r = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = r.height + vh;
-      const seen = clamp(vh - r.top, 0, total);
-      return clamp(seen / total, 0, 1);
-    };
-
-    const tick = () => {
-      currentP += (targetP - currentP) * 0.05;
-      const aL = lerp(LEFT_FROM, LEFT_TO, currentP);
-      const aR = lerp(RIGHT_FROM, RIGHT_TO, currentP);
-      sLeft.style.transform = `rotate(${aL}deg)`;
-      sRight.style.transform = `rotate(${aR}deg)`;
-      if (Math.abs(targetP - currentP) > 0.001) {
-        raf = requestAnimationFrame(tick);
-      } else {
-        raf = null;
-      }
-    };
-
-    const onScroll = () => {
-      targetP = computeProgress();
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    onScroll();
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  // NOTE: l'effet constellation (canvas reseau de points) a ete RETIRE
-  // sur demande utilisateur. Les statues parallax sont conservees.
-
   return (
     <section
       ref={sectionRef}
       className="method-section"
       style={{ background: 'transparent' }}
     >
-      {/* decor : image de fond + statues parallax (constellation retiree) */}
+      {/* Decor : nouvelle image de fond (statues + nebuleuse integrees dans l'image) */}
       <div className="method-scene" aria-hidden="true">
         <div className="method-scene-clip">
           <div className="method-bg" />
           {/* Fondus de raccord (le cover rogne les bords fondus de l'image) */}
           <div className="method-fade method-fade-top" />
           <div className="method-fade method-fade-bottom" />
-          <div className="method-glow method-glow-tl" />
-          <div className="method-glow method-glow-br" />
-          <div ref={leftRef} className="statue statue-left">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/method-statue-left.png" alt="" />
-          </div>
-        </div>
-        <div ref={rightRef} className="statue statue-right">
-          {/* Deux copies superposees : nette en haut, floue qui fade en bas.
-              Donne un vrai flou progressif au lieu d'un mask plat. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/method-statue-right.png" alt="" className="statue-right-sharp" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/method-statue-right.png" alt="" aria-hidden="true" className="statue-right-blur" />
         </div>
       </div>
 

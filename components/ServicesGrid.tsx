@@ -4,25 +4,16 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 
 export default function ServicesGrid() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // IntersectionObserver pour : (1) jouer la video uniquement quand visible
-  // (2) declencher l'animation d'apparition des cards
+  // IntersectionObserver pour declencher l'animation d'apparition des cards
   useEffect(() => {
-    const v = videoRef.current;
     const s = sectionRef.current;
-    if (!v || !s) return;
-
+    if (!s) return;
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
-            v.play().catch(() => {});
-            s.classList.add('in-view');
-          } else {
-            v.pause();
-          }
+          if (e.isIntersecting) s.classList.add('in-view');
         });
       },
       { threshold: 0.1 }
@@ -33,20 +24,10 @@ export default function ServicesGrid() {
 
   return (
     <section ref={sectionRef} className="services-section">
-      {/* Vidéo cascade en background (derrière les cards) */}
+      {/* Image cascade en background (derrière les cards), opacité réduite */}
       <div className="services-bg" aria-hidden="true">
-        <video
-          ref={videoRef}
-          className="services-bg-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src="/transition-cascade.mp4" type="video/mp4" />
-        </video>
-        {/* Fondu haut/bas pour effacer les bords rectangulaires de la video */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="services-bg-img" src="/services-bg.jpg" alt="" />
         <div className="services-bg-fade-top" />
         <div className="services-bg-fade-bottom" />
       </div>

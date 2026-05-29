@@ -185,11 +185,11 @@ section {
   z-index: 100;
   display: flex;
   justify-content: center;
-  padding: 10px 24px;
+  padding: 26px 24px;
   transition: padding 0.55s var(--ease);
   pointer-events: none;
 }
-.hdr.scrolled { padding: 6px 24px; }
+.hdr.scrolled { padding: 8px 24px; }
 
 .bar-wrap {
   position: relative;
@@ -232,8 +232,8 @@ section {
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 4px 16px 4px 24px;
-  border-radius: 18px;
+  padding: 14px 16px 14px 24px;
+  border-radius: 26px;
   background: linear-gradient(
     180deg,
     rgba(255,255,255,0.20) 0%,
@@ -255,7 +255,7 @@ section {
     box-shadow 0.55s var(--ease);
 }
 .hdr.scrolled .bar {
-  padding: 3px 28px 3px 20px;
+  padding: 4px 28px 4px 20px;
   border-radius: 999px;
   background: linear-gradient(
     180deg,
@@ -294,7 +294,7 @@ section {
 }
 .hdr-logo:hover { transform: scale(1.03); }
 .hdr-logo img {
-  height: 16px;
+  height: 19px;
   width: auto;
   display: block;
   transition: height 0.55s var(--ease);
@@ -1666,14 +1666,15 @@ body:has(.home-with-cinematic-footer) {
   pointer-events: none;
   overflow: hidden;
 }
-.services-bg-video {
+.services-bg-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.85;
+  /* Opacite reduite de 20% (=0.8) pour rester en arriere-plan discret */
+  opacity: 0.8;
 }
 /* Fondus pour effacer les bords rectangulaires de la video et
    raccorder avec les sections voisines (#EAE9EE). */
@@ -1716,44 +1717,90 @@ body:has(.home-with-cinematic-footer) {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 440px;
-  padding: 44px 40px 36px;
+  min-height: 460px;
+  padding: 48px 44px 38px;
   border-radius: var(--radius-lg, 24px);
   text-decoration: none;
+  overflow: hidden;
   /* Apparition staggered au scroll */
   opacity: 0;
   transform: translateY(24px);
   transition:
     opacity 0.7s var(--ease),
-    transform 0.7s var(--ease),
+    transform 0.55s var(--ease),
     box-shadow 0.45s var(--ease),
     border-color 0.45s var(--ease);
 }
 .services-section.in-view .service-card { opacity: 1; transform: translateY(0); }
-.services-section.in-view .service-card:nth-child(2) { transition-delay: 120ms; }
+.services-section.in-view .service-card:nth-child(2) { transition-delay: 140ms; }
+
+/* Effet "spotlight" au hover : un halo lumineux suit la position de la souris.
+   Couplé à un grand cercle décoratif qui se révèle dans le coin haut-droit. */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 51, 160, 0.10) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  pointer-events: none;
+  z-index: 0;
+}
+.service-card:hover::before {
+  opacity: 1;
+  transform: scale(1.15);
+}
+.service-card > * { position: relative; z-index: 1; }
+
+/* Decoration discrete : un trait fin qui s'anime au hover */
+.service-card::after {
+  content: '';
+  position: absolute;
+  left: 44px;
+  bottom: 88px;
+  width: 32px;
+  height: 1px;
+  background: var(--klein);
+  opacity: 0.3;
+  transform-origin: left;
+  transition: width 0.55s var(--ease), opacity 0.55s var(--ease);
+  z-index: 1;
+}
+.service-card:hover::after { width: 64px; opacity: 0.7; }
 
 .service-card-light {
   background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
   border: 0.5px solid var(--line-soft);
   color: var(--ink);
   box-shadow: 0 14px 40px rgba(20, 20, 40, 0.06);
 }
 .service-card-light:hover {
   border-color: var(--klein);
-  box-shadow: 0 22px 56px rgba(27, 79, 138, 0.18);
-  transform: translateY(-4px);
+  box-shadow: 0 28px 64px rgba(27, 79, 138, 0.22);
+  transform: translateY(-6px);
 }
 .service-card-dark {
-  background: var(--klein);
+  background: linear-gradient(135deg, var(--klein) 0%, var(--klein-deep, #002074) 100%);
   color: var(--cream);
   border: 0.5px solid var(--klein);
   box-shadow: 0 14px 40px rgba(0, 51, 160, 0.22);
 }
+.service-card-dark::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 0%, transparent 70%);
+}
+.service-card-dark::after {
+  background: var(--pink);
+  opacity: 0.6;
+}
 .service-card-dark:hover {
-  box-shadow: 0 22px 60px rgba(0, 51, 160, 0.38);
-  transform: translateY(-4px);
+  box-shadow: 0 28px 72px rgba(0, 51, 160, 0.45);
+  transform: translateY(-6px);
 }
 
 .service-card-head {

@@ -177,7 +177,6 @@ export default function EngagementsGrid({ eyebrow = '02 — Pourquoi Elevora', t
         <div className="eng-cards" ref={cardsRef}>
           {ENGAGEMENTS.map((e, i) => (
             <div key={i} className="eng-card" style={{ ['--stagger-i' as any]: i }}>
-              <span className="eng-card-num">{String(i + 1).padStart(2, '0')}</span>
               <div className={`icon-box ${e.iconClass}`}>{e.icon}</div>
               <h4 className="eng-card-title">{e.title}</h4>
               <p className="eng-card-desc">{e.desc}</p>
