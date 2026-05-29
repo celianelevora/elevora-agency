@@ -338,7 +338,26 @@ section {
   padding-left: 12px;
   border-left: 1px solid rgba(10,10,10,0.15);
   white-space: nowrap;
-  transition: opacity 0.4s var(--ease);
+  /* Animation propre quand le tag se masque (au scroll + small screen). */
+  transition:
+    opacity 0.55s var(--ease),
+    max-width 0.55s var(--ease),
+    padding-left 0.55s var(--ease),
+    margin-left 0.55s var(--ease),
+    border-left-color 0.55s var(--ease);
+  overflow: hidden;
+}
+/* Cle du bug "Contact colle au bord" >= 1180px :
+   sur grand ecran, le tag "AGENCE DIGITALE NANTES" est visible et prend
+   ~200px a gauche. Quand le header se resserre a max-width 920px, la nav
+   n'a plus la place et "Contact" finit colle au bord. Solution : masquer
+   le tag aussi quand on scroll, comme ca la nav respire toujours. */
+.hdr.scrolled .hdr-logo-tag {
+  opacity: 0;
+  max-width: 0;
+  padding-left: 0;
+  margin-left: 0;
+  border-left-color: transparent;
 }
 @media (max-width: 1180px) {
   .hdr-logo-tag { display: none; }
@@ -349,6 +368,12 @@ section {
   height: 28px;
   background: linear-gradient(180deg, transparent, rgba(10,10,10,0.12), transparent);
   flex-shrink: 0;
+  transition: opacity 0.55s var(--ease), width 0.55s var(--ease), margin 0.55s var(--ease);
+}
+.hdr.scrolled .hdr-divider {
+  opacity: 0;
+  width: 0;
+  margin: 0;
 }
 
 /* Nav */
