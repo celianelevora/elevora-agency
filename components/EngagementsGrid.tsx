@@ -79,7 +79,7 @@ interface EngagementsGridProps {
   title?: React.ReactNode;
 }
 
-export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }: EngagementsGridProps) {
+export default function EngagementsGrid({ eyebrow = '02 — Pourquoi Elevora', title }: EngagementsGridProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
@@ -149,24 +149,6 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
 
   return (
     <section id="engagements" className="eng-section">
-      {/* Transition cascade : sort en haut de la section, deborde sur le Hero
-          au-dessus comme si l'eau coulait depuis le ciel. */}
-      <div className="eng-cascade" aria-hidden="true">
-        <video
-          className="eng-cascade-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src="/transition-cascade.mp4" type="video/mp4" />
-        </video>
-        {/* Fondus haut ET bas pour effacer les bords rectangulaires de la video :
-            le haut se fond vers le hero (transparent), le bas vers #EAE9EE. */}
-        <div className="eng-cascade-fade-top" />
-        <div className="eng-cascade-fade" />
-      </div>
       <div className="eng-stage">
         {/* Video brumeuse en fond de la section (boucle 5.5s + pause 5s) */}
         <video

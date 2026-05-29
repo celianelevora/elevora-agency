@@ -185,11 +185,11 @@ section {
   z-index: 100;
   display: flex;
   justify-content: center;
-  padding: 16px 24px;
+  padding: 10px 24px;
   transition: padding 0.55s var(--ease);
   pointer-events: none;
 }
-.hdr.scrolled { padding: 10px 24px; }
+.hdr.scrolled { padding: 6px 24px; }
 
 .bar-wrap {
   position: relative;
@@ -232,8 +232,8 @@ section {
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 8px 16px 8px 24px;
-  border-radius: 22px;
+  padding: 4px 16px 4px 24px;
+  border-radius: 18px;
   background: linear-gradient(
     180deg,
     rgba(255,255,255,0.20) 0%,
@@ -255,7 +255,7 @@ section {
     box-shadow 0.55s var(--ease);
 }
 .hdr.scrolled .bar {
-  padding: 6px 28px 6px 20px;
+  padding: 3px 28px 3px 20px;
   border-radius: 999px;
   background: linear-gradient(
     180deg,
@@ -294,12 +294,12 @@ section {
 }
 .hdr-logo:hover { transform: scale(1.03); }
 .hdr-logo img {
-  height: 19px;
+  height: 16px;
   width: auto;
   display: block;
   transition: height 0.55s var(--ease);
 }
-.hdr.scrolled .hdr-logo img { height: 15px; }
+.hdr.scrolled .hdr-logo img { height: 13px; }
 /* Header resserre au scroll : on masque proprement le CTA "Demarrer un projet".
    Animation FLUIDE validee sur HTML standalone (test-header.html) :
    - opacity + transform scale = GPU (lisse, pas saccade)
@@ -1649,58 +1649,189 @@ body:has(.home-with-cinematic-footer) {
   background: #EAE9EE;
   overflow: visible; /* la cascade doit pouvoir deborder vers le haut */
 }
-/* Cascade de transition : se positionne au-dessus de la section,
-   dépasse vers le haut pour aller chevaucher le bas du Hero. */
-.eng-cascade {
+/* ===========================================================
+   SERVICES SECTION : video cascade en background + 2 cards
+   =========================================================== */
+.services-section {
+  position: relative;
+  padding: 120px 0 160px;
+  background: var(--cream);
+  overflow: hidden;
+  isolation: isolate;
+}
+.services-bg {
   position: absolute;
-  left: 0; right: 0;
-  /* Top négatif : la cascade remonte au-dessus de la section Engagements,
-     dans la zone du Hero, pour creer l'effet "eau qui tombe du ciel". */
-  top: -280px;
-  width: 100%;
-  height: 480px;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
-  z-index: 5;
   overflow: hidden;
 }
-.eng-cascade img,
-.eng-cascade-video {
-  display: block;
+.services-bg-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center bottom;
+  object-position: center;
+  opacity: 0.85;
 }
-/* Fondu interne au container cascade : le bas de la video se fond vers
-   #EAE9EE pour eviter une coupure visible quand on rejoint eng-fond.png. */
-.eng-cascade-fade {
+/* Fondus pour effacer les bords rectangulaires de la video et
+   raccorder avec les sections voisines (#EAE9EE). */
+.services-bg-fade-top,
+.services-bg-fade-bottom {
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 40%;
-  background: linear-gradient(to bottom,
-    rgba(234,233,238,0) 0%,
-    rgba(234,233,238,0.5) 45%,
-    rgba(234,233,238,1) 100%);
+  left: 0; right: 0;
+  height: 180px;
   pointer-events: none;
-  z-index: 2;
 }
-/* Fondu en haut de la cascade : efface le bord rectangulaire superieur de
-   la video pour qu'elle apparaisse sans coupure nette avec la section
-   precedente (le hero ou services). */
-.eng-cascade-fade-top {
-  position: absolute;
-  left: 0; right: 0; top: 0;
-  height: 28%;
-  background: linear-gradient(to top,
-    rgba(234,233,238,0) 0%,
-    rgba(234,233,238,0.55) 55%,
-    rgba(234,233,238,1) 100%);
-  pointer-events: none;
-  z-index: 2;
+.services-bg-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.services-bg-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.services-container {
+  position: relative;
+  z-index: 1;
+}
+.services-title {
+  margin: 18px 0 64px;
+  max-width: 640px;
+}
+
+/* Grille 2 colonnes responsive */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
 }
 @media (max-width: 900px) {
-  .eng-cascade { top: -180px; height: 320px; }
+  .services-grid { grid-template-columns: 1fr; }
 }
+
+/* Cards Services : nouvelle structure plus polish */
+.service-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 440px;
+  padding: 44px 40px 36px;
+  border-radius: var(--radius-lg, 24px);
+  text-decoration: none;
+  /* Apparition staggered au scroll */
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease),
+    box-shadow 0.45s var(--ease),
+    border-color 0.45s var(--ease);
+}
+.services-section.in-view .service-card { opacity: 1; transform: translateY(0); }
+.services-section.in-view .service-card:nth-child(2) { transition-delay: 120ms; }
+
+.service-card-light {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 0.5px solid var(--line-soft);
+  color: var(--ink);
+  box-shadow: 0 14px 40px rgba(20, 20, 40, 0.06);
+}
+.service-card-light:hover {
+  border-color: var(--klein);
+  box-shadow: 0 22px 56px rgba(27, 79, 138, 0.18);
+  transform: translateY(-4px);
+}
+.service-card-dark {
+  background: var(--klein);
+  color: var(--cream);
+  border: 0.5px solid var(--klein);
+  box-shadow: 0 14px 40px rgba(0, 51, 160, 0.22);
+}
+.service-card-dark:hover {
+  box-shadow: 0 22px 60px rgba(0, 51, 160, 0.38);
+  transform: translateY(-4px);
+}
+
+.service-card-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.icon-box-pink-light {
+  background: var(--pink);
+  color: var(--cream);
+}
+.service-card-num {
+  font-size: 11px;
+  color: var(--ink-muted);
+  letter-spacing: 0.12em;
+  font-weight: 500;
+}
+.service-card-num-dark {
+  color: rgba(245, 240, 232, 0.62);
+}
+.service-card-title {
+  margin: 0 0 18px;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.4vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+.service-card-dark .service-card-title { color: var(--cream); }
+.service-card-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0 0 28px;
+  color: var(--ink-soft);
+}
+.service-card-dark .service-card-desc {
+  color: rgba(245, 240, 232, 0.82);
+}
+.service-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: auto;
+}
+.service-card-foot {
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 0.5px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.service-card-foot-dark {
+  border-top-color: rgba(245, 240, 232, 0.18);
+}
+.service-card-price {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+.service-card-dark .service-card-price {
+  color: rgba(245, 240, 232, 0.7);
+}
+.service-card-cta {
+  font-size: 13px;
+  color: var(--klein);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s var(--ease);
+}
+.service-card-cta-dark { color: var(--cream); }
+.service-card:hover .service-card-cta { gap: 10px; }
+
+/* ===========================================================
+   ENGAGEMENTS (cascade retiree : c'est services qui l'a maintenant)
+   =========================================================== */
 /* Fondu en bas de la section Engagements pour rejoindre proprement
    la section suivante sans cassure de couleur visible. */
 .eng-section-fade-bottom {
