@@ -22,6 +22,16 @@ const testimonials = [
 export default function TestimonialsSection() {
   return (
     <section className="section testimonials-section">
+      {/* Éléments décoratifs fixes : guillemets, halos, étoiles, frises grecques */}
+      <div className="testi-decor" aria-hidden="true">
+        <span className="testi-quote testi-quote-1">"</span>
+        <span className="testi-quote testi-quote-2">"</span>
+        <div className="testi-halo testi-halo-1" />
+        <div className="testi-halo testi-halo-2" />
+        <div className="testi-grec testi-grec-top" />
+        <div className="testi-grec testi-grec-bottom" />
+        <div className="testi-stars" />
+      </div>
       <div className="container">
         <div className="faq-head">
           <span className="eyebrow">

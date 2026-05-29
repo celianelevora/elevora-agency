@@ -34,6 +34,12 @@ export default function HeroWithGooey() {
       >
         <source src="/hero-video.mp4" type="video/mp4" />
       </video>
+      {/* Halos et particules d'ambiance (fixes, pas d'animation lourde) */}
+      <div className="hero-ambient" aria-hidden="true">
+        <div className="hero-halo hero-halo-1" />
+        <div className="hero-halo hero-halo-2" />
+        <div className="hero-stars" />
+      </div>
       <div className="hero-statue-inner">
         <div className="hero-statue-text">
           <h1 className="hero-title">

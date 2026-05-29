@@ -129,6 +129,12 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
 
   return (
     <section id="engagements" className="eng-section">
+      {/* Transition cascade : sort en haut de la section, deborde sur le Hero
+          au-dessus comme si l'eau coulait depuis le ciel. */}
+      <div className="eng-cascade" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/transition-cascade.png" alt="" />
+      </div>
       <div className="eng-stage">
         {/* Video brumeuse en fond de la section (boucle 5.5s + pause 5s) */}
         <video
