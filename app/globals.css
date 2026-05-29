@@ -300,21 +300,34 @@ section {
   transition: height 0.55s var(--ease);
 }
 .hdr.scrolled .hdr-logo img { height: 15px; }
-/* Header resserre au scroll : on masque proprement le CTA "Demarrer un projet"
-   (sinon il deborde/se coupe a droite dans la barre plus etroite). */
+/* Header resserre au scroll : on masque proprement le CTA "Demarrer un projet".
+   Animation FLUIDE validee sur HTML standalone (test-header.html) :
+   - opacity + transform scale = GPU (lisse, pas saccade)
+   - width + margin + padding sync sur 0.55s (homogene avec le reste du header)
+   Resultat : pas de saut visuel, "Contact" reste a distance equilibree du bord. */
 .hdr-cta {
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), max-width 0.4s var(--ease);
+  transform-origin: right center;
+  overflow: hidden;
+  transition:
+    opacity 0.55s var(--ease),
+    transform 0.55s var(--ease),
+    width 0.55s var(--ease),
+    margin 0.55s var(--ease),
+    padding 0.55s var(--ease);
 }
 .hdr.scrolled .hdr-cta {
   opacity: 0;
-  pointer-events: none;
-  max-width: 0;
+  transform: scale(0.7);
+  width: 0;
+  margin-left: 0;
   padding-left: 0;
   padding-right: 0;
-  margin: 0;
-  overflow: hidden;
-  white-space: nowrap;
+  pointer-events: none;
 }
+/* Petite marge droite sur la nav quand scrolled pour parfaitement equilibrer
+   l'espace de Contact vs le bord arrondi de la pill. */
+.hdr-nav { transition: margin-right 0.55s var(--ease); }
+.hdr.scrolled .hdr-nav { margin-right: 8px; }
 .hdr-logo-tag {
   font-family: var(--sans);
   font-size: 10px;
