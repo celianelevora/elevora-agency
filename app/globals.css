@@ -185,11 +185,11 @@ section {
   z-index: 100;
   display: flex;
   justify-content: center;
-  padding: 26px 24px;
+  padding: 16px 24px;
   transition: padding 0.55s var(--ease);
   pointer-events: none;
 }
-.hdr.scrolled { padding: 14px 24px; }
+.hdr.scrolled { padding: 10px 24px; }
 
 .bar-wrap {
   position: relative;
@@ -232,8 +232,8 @@ section {
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 14px 16px 14px 24px;
-  border-radius: 26px;
+  padding: 8px 16px 8px 24px;
+  border-radius: 22px;
   background: linear-gradient(
     180deg,
     rgba(255,255,255,0.20) 0%,
@@ -255,7 +255,7 @@ section {
     box-shadow 0.55s var(--ease);
 }
 .hdr.scrolled .bar {
-  padding: 9px 28px 9px 20px;
+  padding: 6px 28px 6px 20px;
   border-radius: 999px;
   background: linear-gradient(
     180deg,
@@ -1674,15 +1674,41 @@ body:has(.home-with-cinematic-footer) {
   z-index: 5;
   overflow: hidden;
 }
-.eng-cascade img {
+.eng-cascade img,
+.eng-cascade-video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center bottom;
 }
+/* Fondu interne au container cascade : le bas de la video se fond vers
+   #EAE9EE pour eviter une coupure visible quand on rejoint eng-fond.png. */
+.eng-cascade-fade {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 35%;
+  background: linear-gradient(to bottom,
+    rgba(234,233,238,0) 0%,
+    rgba(234,233,238,0.55) 50%,
+    rgba(234,233,238,1) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
 @media (max-width: 900px) {
   .eng-cascade { top: -180px; height: 320px; }
+}
+/* Fondu en bas de la section Engagements pour rejoindre proprement
+   la section suivante sans cassure de couleur visible. */
+.eng-section-fade-bottom {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 140px;
+  background: linear-gradient(to bottom,
+    rgba(234,233,238,0) 0%,
+    rgba(234,233,238,1) 100%);
+  pointer-events: none;
+  z-index: 4;
 }
 .eng-stage {
   position: relative;

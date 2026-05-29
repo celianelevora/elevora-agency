@@ -132,8 +132,19 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
       {/* Transition cascade : sort en haut de la section, deborde sur le Hero
           au-dessus comme si l'eau coulait depuis le ciel. */}
       <div className="eng-cascade" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/transition-cascade.png" alt="" />
+        <video
+          className="eng-cascade-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        >
+          <source src="/transition-cascade.mp4" type="video/mp4" />
+        </video>
+        {/* Fondu doux du bas de la cascade vers #EAE9EE pour eviter
+            une cassure nette entre la video et le haut de eng-fond.png. */}
+        <div className="eng-cascade-fade" />
       </div>
       <div className="eng-stage">
         {/* Video brumeuse en fond de la section (boucle 5.5s + pause 5s) */}
@@ -170,6 +181,9 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
           ))}
         </div>
       </div>
+      {/* Fondu de raccord vers la section suivante (#EAE9EE pur)
+          pour effacer toute difference de couleur visible. */}
+      <div className="eng-section-fade-bottom" aria-hidden="true" />
     </section>
   );
 }
