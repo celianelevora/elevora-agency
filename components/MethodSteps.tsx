@@ -143,8 +143,12 @@ export default function MethodSteps() {
           </div>
         </div>
         <div ref={rightRef} className="statue statue-right">
+          {/* Deux copies superposees : nette en haut, floue qui fade en bas.
+              Donne un vrai flou progressif au lieu d'un mask plat. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/method-statue-right.png" alt="" />
+          <img src="/method-statue-right.png" alt="" className="statue-right-sharp" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/method-statue-right.png" alt="" aria-hidden="true" className="statue-right-blur" />
         </div>
       </div>
 

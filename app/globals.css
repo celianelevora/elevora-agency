@@ -1079,75 +1079,34 @@ section {
 .testimonials-section .container { position: relative; z-index: 1; }
 .testimonials-wrap { display: flex; justify-content: center; margin-top: 24px; position: relative; z-index: 1; }
 
-/* ========== Décorations fixes de la section Témoignages ========== */
-.testi-decor {
+/* ========== Fond image sanctuaire céleste ========== */
+.testi-bg {
   position: absolute;
   inset: 0;
+  background-image: url('/testi-fond.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--cream);
   pointer-events: none;
   z-index: 0;
-  overflow: hidden;
 }
-/* Énormes guillemets décoratifs en arrière-plan */
-.testi-quote {
+/* Fondus haut/bas pour rejoindre proprement les sections voisines */
+.testi-bg::before,
+.testi-bg::after {
+  content: '';
   position: absolute;
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: 480px;
-  line-height: 0.8;
-  color: rgba(27, 79, 138, 0.06);
-  user-select: none;
+  left: 0; right: 0;
+  height: 120px;
+  pointer-events: none;
 }
-.testi-quote-1 { top: -20px; left: 3%; }
-.testi-quote-2 { bottom: -60px; right: 3%; transform: scaleX(-1); }
-/* Halos lumineux bleu et rose en arrière-plan */
-.testi-halo {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.35;
+.testi-bg::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
 }
-.testi-halo-1 {
-  width: 520px; height: 520px;
-  top: 10%; left: -120px;
-  background: radial-gradient(circle, rgba(27, 79, 138, 0.4) 0%, transparent 70%);
-}
-.testi-halo-2 {
-  width: 580px; height: 580px;
-  bottom: 5%; right: -140px;
-  background: radial-gradient(circle, rgba(201, 86, 158, 0.32) 0%, transparent 70%);
-}
-/* Frises grecques décoratives (motif géométrique simple en SVG inline encodé) */
-.testi-grec {
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  height: 18px;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 18' preserveAspectRatio='xMidYMid meet'><path d='M0 9 L10 9 L10 3 L22 3 L22 15 L34 15 L34 3 L46 3 L46 15 L58 15 L58 3 L70 3 L70 9 L80 9' fill='none' stroke='%231B4F8A' stroke-width='1' stroke-opacity='0.18'/></svg>");
-  background-repeat: repeat-x;
-  background-size: 80px 18px;
-  opacity: 0.7;
-}
-.testi-grec-top { top: 40px; }
-.testi-grec-bottom { bottom: 40px; }
-/* Champ d'étoiles fixe (ambiance cosmique discrète) */
-.testi-stars {
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(1.5px 1.5px at 15% 20%, rgba(27, 79, 138, 0.35), transparent 60%),
-    radial-gradient(1px 1px at 30% 65%, rgba(201, 86, 158, 0.3), transparent 60%),
-    radial-gradient(2px 2px at 50% 28%, rgba(27, 79, 138, 0.3), transparent 60%),
-    radial-gradient(1px 1px at 68% 78%, rgba(201, 86, 158, 0.28), transparent 60%),
-    radial-gradient(1.5px 1.5px at 80% 30%, rgba(27, 79, 138, 0.32), transparent 60%),
-    radial-gradient(1px 1px at 88% 55%, rgba(201, 86, 158, 0.3), transparent 60%),
-    radial-gradient(1.5px 1.5px at 22% 88%, rgba(27, 79, 138, 0.28), transparent 60%),
-    radial-gradient(2px 2px at 90% 12%, rgba(201, 86, 158, 0.35), transparent 60%);
-  opacity: 0.6;
-}
-@media (max-width: 900px) {
-  .testi-quote { font-size: 280px; }
-  .testi-halo-1, .testi-halo-2 { width: 320px; height: 320px; }
-  .testi-grec { left: 4%; right: 4%; }
+.testi-bg::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
 }
 
 /* Masquer le footer global sur la page d'accueil (remplacé par CinematicFooter) */
@@ -1421,11 +1380,13 @@ body:has(.home-with-cinematic-footer) {
 }
 .method-glow {
   position: absolute; border-radius: 50%; filter: blur(70px);
-  opacity: .5; pointer-events: none; mix-blend-mode: screen;
+  opacity: .3; pointer-events: none; mix-blend-mode: screen;
 }
 .method-glow-tl {
-  top: 2%; left: 2%; width: 36%; height: 34%;
-  background: radial-gradient(circle, rgba(120,90,220,.55), rgba(80,140,230,.25) 55%, transparent 72%);
+  /* Deplace plus a gauche et plus haut pour ne PAS chevaucher la tete
+     de la statue gauche (qui est a left:-4% top:7.5%). */
+  top: -8%; left: -10%; width: 32%; height: 30%;
+  background: radial-gradient(circle, rgba(120,90,220,.45), rgba(80,140,230,.2) 55%, transparent 72%);
   animation: methodGlowDrift 14s ease-in-out infinite alternate;
 }
 .method-glow-br {
@@ -1443,6 +1404,9 @@ body:has(.home-with-cinematic-footer) {
   left: -4%; top: 7.5%;
   width: 30vw; max-width: 440px; min-width: 240px;
   transform-origin: 78% 22%;
+  /* z-index eleve pour passer au-dessus des method-glow et eviter
+     qu'ils "diffusent" sur la tete de la statue. */
+  z-index: 4;
 }
 .statue-right {
   right: -3%; bottom: -8%;
@@ -1450,16 +1414,41 @@ body:has(.home-with-cinematic-footer) {
   transform-origin: 50% 50%;
   z-index: 3;
 }
-/* Fondu en bas de la statue droite vers la transparence (mask CSS).
-   Indépendant de l'image : si method-statue-right.png est remplacee demain,
-   le fondu s'applique toujours sur la nouvelle image, pas besoin de la retoucher. */
-.statue-right img {
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
-          mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 100%);
+/* Statue droite : VRAI flou progressif via deux images superposees.
+   - .statue-right-sharp : nette, mask qui coupe tot dans le bas
+   - .statue-right-blur  : meme image floutee, prend le relais et se dilue dans le vide */
+.statue-right-sharp,
+.statue-right-blur {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: auto;
+}
+/* On a besoin que le conteneur ait une hauteur : on rend la 1ere image
+   relative pour qu'elle definisse la taille, la 2e est absolue dessus. */
+.statue-right-sharp {
+  position: relative;
+  -webkit-mask-image: linear-gradient(to bottom,
+    black 0%, black 35%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.3) 78%, transparent 95%);
+          mask-image: linear-gradient(to bottom,
+    black 0%, black 35%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.3) 78%, transparent 95%);
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
+}
+.statue-right-blur {
+  filter: blur(22px);
+  /* Cette couche prend le relais en bas, plus floue, fond vers transparent */
+  -webkit-mask-image: linear-gradient(to bottom,
+    transparent 20%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.35) 75%, transparent 100%);
+          mask-image: linear-gradient(to bottom,
+    transparent 20%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.35) 75%, transparent 100%);
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  opacity: 0.85;
 }
 @media (max-width: 900px) {
   .statue-left, .statue-right { width: 42vw; opacity: .5; }
@@ -1687,10 +1676,24 @@ body:has(.home-with-cinematic-footer) {
 .eng-cascade-fade {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: 35%;
+  height: 40%;
   background: linear-gradient(to bottom,
     rgba(234,233,238,0) 0%,
-    rgba(234,233,238,0.55) 50%,
+    rgba(234,233,238,0.5) 45%,
+    rgba(234,233,238,1) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+/* Fondu en haut de la cascade : efface le bord rectangulaire superieur de
+   la video pour qu'elle apparaisse sans coupure nette avec la section
+   precedente (le hero ou services). */
+.eng-cascade-fade-top {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 28%;
+  background: linear-gradient(to top,
+    rgba(234,233,238,0) 0%,
+    rgba(234,233,238,0.55) 55%,
     rgba(234,233,238,1) 100%);
   pointer-events: none;
   z-index: 2;
@@ -1777,10 +1780,37 @@ body:has(.home-with-cinematic-footer) {
      horizontale meme si les descriptions ont des longueurs differentes. */
   justify-content: flex-start;
   overflow: hidden;
+  position: relative;
   /* PAS de fond ni bordure : les rectangles/widgets sont DEJA dessines dans
      l'image eng-fond.png. On place uniquement le contenu (icone + texte) dessus. */
   background: transparent;
   border: none;
+  /* Animation staggered : invisible par defaut, fade-up quand .in-view */
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: calc(var(--stagger-i, 0) * 90ms);
+}
+.eng-cards.in-view .eng-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Numero discret en haut a droite de chaque card (01 -> 06). */
+.eng-card-num {
+  position: absolute;
+  top: 0.9cqw;
+  right: 1.2cqw;
+  font-family: var(--serif);
+  font-size: 0.95cqw;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: rgba(10, 10, 10, 0.18);
+  font-style: italic;
+  pointer-events: none;
+  transition: color 0.4s var(--ease);
+}
+.eng-card:hover .eng-card-num {
+  color: rgba(10, 10, 10, 0.42);
 }
 .eng-card .icon-box {
   width: 2.3cqw; height: 2.3cqw; min-width: 32px; min-height: 32px;
@@ -1815,8 +1845,22 @@ body:has(.home-with-cinematic-footer) {
 }
 .eng-card:hover .icon-box-pink { box-shadow: 0 0.7cqw 1.4cqw rgba(201,38,106,0.32); }
 .eng-card:hover .ic { transform: scale(1.12); }
-.eng-card-title { font-family: var(--serif); font-size: 1.18cqw; font-weight: 500; margin-bottom: 0.45cqw; color: var(--ink); }
-.eng-card-desc { font-family: var(--sans); font-size: 0.84cqw; line-height: 1.5; color: var(--ink-soft); }
+.eng-card-title {
+  font-family: var(--serif);
+  font-size: 1.18cqw;
+  font-weight: 500;
+  margin-bottom: 0.45cqw;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+  transition: color 0.35s var(--ease);
+}
+.eng-card:hover .eng-card-title { color: var(--klein); }
+.eng-card-desc {
+  font-family: var(--sans);
+  font-size: 0.84cqw;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
 
 /* Mobile / tablette : version classique empilée */
 @media (max-width: 1100px) {
@@ -1831,7 +1875,8 @@ body:has(.home-with-cinematic-footer) {
     grid-template-columns: repeat(2, 1fr); grid-template-rows: auto;
     gap: 14px;
   }
-  .eng-card { background: #fff; border-radius: 16px; box-shadow: 0 8px 26px rgba(20,20,40,0.06); padding: 24px; }
+  .eng-card { background: #fff; border-radius: 16px; box-shadow: 0 8px 26px rgba(20,20,40,0.06); padding: 24px; position: relative; }
+  .eng-card-num { top: 14px; right: 16px; font-size: 13px; }
   .eng-card .icon-box { width: 38px; height: 38px; border-radius: 9px; margin-bottom: 14px; }
   .eng-card .icon-box::after { animation: none; }
   .eng-card .ic { width: 18px; height: 18px; }

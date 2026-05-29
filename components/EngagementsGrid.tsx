@@ -81,6 +81,26 @@ interface EngagementsGridProps {
 
 export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }: EngagementsGridProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  // Animation staggered des cards quand elles apparaissent dans le viewport
+  useEffect(() => {
+    const el = cardsRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            el.classList.add('in-view');
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   // Boucle video personnalisee (RECAP-PROJET.md) :
   // joue 5.5s, fige sur la derniere image 5s, relance.
@@ -142,8 +162,9 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
         >
           <source src="/transition-cascade.mp4" type="video/mp4" />
         </video>
-        {/* Fondu doux du bas de la cascade vers #EAE9EE pour eviter
-            une cassure nette entre la video et le haut de eng-fond.png. */}
+        {/* Fondus haut ET bas pour effacer les bords rectangulaires de la video :
+            le haut se fond vers le hero (transparent), le bas vers #EAE9EE. */}
+        <div className="eng-cascade-fade-top" />
         <div className="eng-cascade-fade" />
       </div>
       <div className="eng-stage">
@@ -171,9 +192,10 @@ export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', t
           </h2>
         </div>
 
-        <div className="eng-cards">
+        <div className="eng-cards" ref={cardsRef}>
           {ENGAGEMENTS.map((e, i) => (
-            <div key={i} className="eng-card">
+            <div key={i} className="eng-card" style={{ ['--stagger-i' as any]: i }}>
+              <span className="eng-card-num">{String(i + 1).padStart(2, '0')}</span>
               <div className={`icon-box ${e.iconClass}`}>{e.icon}</div>
               <h4 className="eng-card-title">{e.title}</h4>
               <p className="eng-card-desc">{e.desc}</p>
