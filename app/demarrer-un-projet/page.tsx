@@ -7,10 +7,7 @@ export default function StartProjectPage() {
     <main className="form-page">
       <div className="container">
         <header className="form-page-head">
-          <span className="form-page-pill">
-            <span className="form-page-pill-dot" />
-            Lancer votre projet
-          </span>
+          {/* Pill retiree sur demande utilisateur */}
           <h1>
             Parlons de <span className="italic">votre projet</span>.
           </h1>

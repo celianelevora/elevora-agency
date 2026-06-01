@@ -24,10 +24,7 @@ export default function LegalLayout({
       {/* Hero */}
       <section className="legal-hero">
         <div className="container" style={{ maxWidth: 980 }}>
-          <span className="pill legal-pill">
-            <span className="pill-dot legal-pill-dot" />
-            {pillText}
-          </span>
+          {/* Pill pillText retiree sur demande utilisateur */}
           <h1
             className="legal-h1"
             dangerouslySetInnerHTML={{ __html: title }}

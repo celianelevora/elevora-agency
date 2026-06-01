@@ -1231,7 +1231,10 @@ body:has(.home-with-cinematic-footer) {
   color: #B8B8B8;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  margin-top: 80px;
+  /* PAS de margin-top : sinon une bande de fond #EAE9EE apparait entre
+     la section CTA (fond nuit) et le footer (fond nuit aussi).
+     Le CTA lui-meme a deja un padding bas de 140px. */
+  margin-top: 0;
 }
 .site-footer-inner {
   max-width: 1240px;
@@ -3271,22 +3274,17 @@ body:has(.home-with-cinematic-footer) {
   z-index: -1;
   pointer-events: none;
 }
-.reali-projects-bg::before,
-.reali-projects-bg::after {
+.reali-projects-bg::before {
   content: '';
   position: absolute;
   left: 0; right: 0;
+  top: 0;
   height: 140px;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
   pointer-events: none;
 }
-.reali-projects-bg::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
-}
-.reali-projects-bg::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
-}
+/* PAS de fondu en bas : sinon une bande #EAE9EE pure apparait au raccord
+   avec la section Inspirations qui suit. Les deux sections doivent fusionner. */
 .reali-projects .container { position: relative; z-index: 1; }
 .reali-project {
   display: grid;
@@ -3482,49 +3480,48 @@ body:has(.home-with-cinematic-footer) {
   background-repeat: no-repeat;
   z-index: -1;
 }
-.inspirations-bg::before,
 .inspirations-bg::after {
   content: '';
   position: absolute;
   left: 0; right: 0;
+  bottom: 0;
   height: 140px;
+  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
   pointer-events: none;
 }
-.inspirations-bg::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
-}
-.inspirations-bg::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
-}
+/* PAS de fondu haut : continue directement le fond Realisations sans bande blanche */
 .inspirations-head {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 56px;
   position: relative;
   z-index: 1;
 }
 .inspirations-eyebrow {
   display: inline-flex;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
+  /* +30% : 11px -> 14px, letter-spacing 0.14 -> 0.16 */
+  font-size: 14px !important;
+  letter-spacing: 0.16em !important;
 }
 .inspirations-title {
   font-family: var(--serif);
-  font-size: clamp(36px, 4.6vw, 56px);
+  /* +30% : clamp(36px, 4.6vw, 56px) -> clamp(47px, 6vw, 73px) */
+  font-size: clamp(47px, 6vw, 73px);
   line-height: 1.06;
   letter-spacing: -0.022em;
   font-weight: 400;
   margin: 0 auto;
-  max-width: 720px;
+  max-width: 940px;
   color: var(--ink);
 }
 .inspirations-title .italic { color: var(--klein); font-style: italic; }
 .inspirations-lead {
-  font-size: 17px;
-  line-height: 1.6;
+  /* +30% : 17px -> 22px, max-width 600 -> 780 */
+  font-size: 22px;
+  line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 600px;
-  margin: 24px auto 0;
+  max-width: 780px;
+  margin: 32px auto 0;
 }
 
 /* ===========================================================

@@ -24,6 +24,7 @@ export default function MethodePage() {
         title={`De l'idée à la mise en ligne,<br>un chemin <span class="italic">clair et balisé.</span>`}
         lead="Un projet digital se passe mal quand le client ne sait pas où il en est, ce qu'on attend de lui, et combien ça va coûter. On a structuré notre méthode pour que ces trois informations soient toujours sur la table."
         bgImage="/method-fond.jpg"
+        leftOffsetPercent={15}
       />
 
       {/* STORY SCROLL — Les 4 étapes en immersion */}

@@ -9,10 +9,7 @@ export default function ContactPage() {
       <div className="form-page-bg" aria-hidden="true" />
       <div className="container">
         <header className="form-page-head">
-          <span className="form-page-pill">
-            <span className="form-page-pill-dot" />
-            Contact rapide
-          </span>
+          {/* Pill retiree sur demande utilisateur */}
           <h1>
             Une question, <span className="italic">un échange</span> ?
           </h1>
