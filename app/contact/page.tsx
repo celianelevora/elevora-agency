@@ -4,7 +4,9 @@ export const metadata = { title: 'Contact — Elevora Agency' };
 
 export default function ContactPage() {
   return (
-    <main className="form-page">
+    <main className="form-page form-page-contact">
+      {/* Fond decoratif Fond_Contact.jpg */}
+      <div className="form-page-bg" aria-hidden="true" />
       <div className="container">
         <header className="form-page-head">
           <span className="form-page-pill">

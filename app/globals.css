@@ -3125,3 +3125,607 @@ body:has(.home-with-cinematic-footer) {
   }
   .guarantees-slide { width: 100%; min-height: 0; padding: 28px 24px; }
 }
+
+/* ===========================================================
+   PROJECTS SECTION — landing page Realisations
+   =========================================================== */
+.projects-section {
+  padding: 100px 0 120px;
+  background: var(--cream);
+}
+.projects-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.projects-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.6vw, 56px);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 18px 0 0;
+  color: var(--ink);
+}
+.projects-title .italic { color: var(--klein); font-style: italic; }
+.projects-cta {
+  font-size: 14px;
+  color: var(--klein);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: gap 0.25s var(--ease);
+}
+.projects-cta:hover { gap: 12px; }
+
+.projects-grid { display: flex; flex-direction: column; gap: 20px; }
+.projects-row {
+  display: grid;
+  gap: 20px;
+}
+.projects-row-1 { grid-template-columns: 1.45fr 1fr; }
+.projects-row-2 { grid-template-columns: 1fr 1.45fr; }
+@media (max-width: 900px) {
+  .projects-row-1, .projects-row-2 { grid-template-columns: 1fr; }
+}
+
+.project-card {
+  position: relative;
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  background: var(--project-bg, #fff);
+  border: 0.5px solid var(--line-soft);
+  box-shadow: 0 14px 40px rgba(20, 20, 40, 0.06);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 64px rgba(20, 20, 40, 0.18);
+}
+.project-cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--project-bg, #fff);
+}
+.project-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.8s var(--ease);
+}
+.project-card:hover .project-cover img { transform: scale(1.04); }
+
+.project-info {
+  padding: 24px 28px 28px;
+  background: #fff;
+  border-top: 0.5px solid var(--line-soft);
+}
+.project-info-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.project-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--klein);
+  font-weight: 500;
+}
+.project-arrow {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.project-card:hover .project-arrow {
+  background: var(--klein);
+  color: #fff;
+  border-color: var(--klein);
+}
+.project-name {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+.project-catchphrase {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ===========================================================
+   PAGE REALISATIONS — projets détaillés
+   =========================================================== */
+.reali-projects {
+  padding: 80px 0 120px;
+  background: var(--cream);
+}
+.reali-project {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: center;
+  margin-bottom: 120px;
+}
+.reali-project.is-reversed {
+  grid-template-columns: 1fr 1.1fr;
+}
+.reali-project.is-reversed .reali-project-media {
+  order: 2;
+}
+@media (max-width: 900px) {
+  .reali-project, .reali-project.is-reversed {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .reali-project.is-reversed .reali-project-media { order: 0; }
+}
+
+.reali-project-media {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.reali-project-cover {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--p-bg, #fff);
+  box-shadow: 0 24px 60px rgba(20, 20, 40, 0.10);
+  border: 0.5px solid var(--line-soft);
+}
+.reali-project-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.reali-project-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.reali-project-details img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--p-bg, #fff);
+  border: 0.5px solid var(--line-soft);
+  box-shadow: 0 12px 30px rgba(20, 20, 40, 0.06);
+}
+
+.reali-project-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.tag-status { font-weight: 500; }
+.tag-status-live { background: rgba(27, 79, 138, 0.12); color: var(--klein); }
+.tag-status-wip { background: rgba(201, 38, 106, 0.12); color: var(--pink); }
+.tag-status-done { background: rgba(122, 122, 122, 0.18); color: var(--ink-soft); }
+
+.reali-project-tagline {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--klein);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.reali-project-name {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.4vw, 54px);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  margin: 0 0 22px;
+  color: var(--ink);
+}
+.reali-project-intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+}
+.reali-project-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reali-project-bullets li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.reali-project-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 12px; height: 1.5px;
+  background: var(--klein);
+}
+.reali-project-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 22px 24px;
+  background: #fff;
+  border-radius: 12px;
+  border: 0.5px solid var(--line-soft);
+}
+@media (max-width: 600px) {
+  .reali-project-highlights { grid-template-columns: 1fr; gap: 14px; padding: 20px; }
+}
+.reali-project-highlight { display: flex; flex-direction: column; gap: 4px; }
+.reali-project-highlight-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.reali-project-highlight-value {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* ===========================================================
+   INSPIRATIONS section — fond charte V2 custom
+   =========================================================== */
+.inspirations-section {
+  position: relative;
+  padding: 120px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cream);
+}
+.inspirations-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/inspirations-bg.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+.inspirations-bg::before,
+.inspirations-bg::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 140px;
+  pointer-events: none;
+}
+.inspirations-bg::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.inspirations-bg::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.inspirations-head {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+.inspirations-eyebrow {
+  display: inline-flex;
+  margin-bottom: 18px;
+}
+.inspirations-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.6vw, 56px);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 0 auto;
+  max-width: 720px;
+  color: var(--ink);
+}
+.inspirations-title .italic { color: var(--klein); font-style: italic; }
+.inspirations-lead {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 600px;
+  margin: 24px auto 0;
+}
+
+/* ===========================================================
+   FORM PAGE — fond image pour Contact
+   =========================================================== */
+.form-page-contact {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.form-page-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/fond-contact.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  opacity: 0.85;
+}
+.form-page-bg::before,
+.form-page-bg::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 200px;
+  pointer-events: none;
+}
+.form-page-bg::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.form-page-bg::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+
+/* ===========================================================
+   PAGE TARIFS — refonte visuelle
+   =========================================================== */
+.tarifs-pricing {
+  position: relative;
+  isolation: isolate;
+  padding: 20px 0 100px;
+  overflow: hidden;
+  background: var(--cream);
+}
+.tarifs-pricing-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 25%, rgba(27, 79, 138, 0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(201, 38, 106, 0.08) 0%, transparent 55%);
+}
+
+/* Banner d'aide au choix */
+.tarifs-helper {
+  background: var(--cream);
+  padding: 0 0 80px;
+}
+.tarifs-helper-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px 36px;
+  background: linear-gradient(135deg, var(--klein-deep), var(--klein));
+  color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(13, 43, 80, 0.30);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+@media (max-width: 800px) { .tarifs-helper-card { flex-direction: column; align-items: flex-start; gap: 18px; padding: 24px 22px; } }
+.tarifs-helper-icon {
+  width: 56px; height: 56px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-radius: 14px;
+}
+.tarifs-helper-content { flex: 1; }
+.tarifs-helper-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  margin: 0 0 6px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.tarifs-helper-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+.tarifs-helper-desc strong { color: #fff; font-weight: 600; }
+.tarifs-helper-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: var(--pink);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(201, 38, 106, 0.35);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease);
+  flex-shrink: 0;
+}
+.tarifs-helper-cta:hover {
+  background: var(--pink-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(201, 38, 106, 0.45);
+}
+
+/* Inclus dans toutes les offres — cards icônes */
+.tarifs-included {
+  background: #fff;
+  padding: 100px 0;
+  position: relative;
+}
+.tarifs-included-head {
+  text-align: center;
+  margin-bottom: 64px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tarifs-included-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.6vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 18px 0 0;
+  color: var(--ink);
+}
+.tarifs-included-title .italic { color: var(--klein); font-style: italic; }
+.tarifs-included-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .tarifs-included-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .tarifs-included-grid { grid-template-columns: 1fr; } }
+.tarifs-included-card {
+  padding: 32px 28px;
+  background: var(--cream);
+  border-radius: 16px;
+  border: 0.5px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.tarifs-included-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(20, 20, 40, 0.10);
+}
+.tarifs-included-card-klein:hover { border-color: var(--klein); }
+.tarifs-included-card-pink:hover { border-color: var(--pink); }
+.tarifs-included-icon {
+  width: 48px; height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.tarifs-included-card-klein .tarifs-included-icon {
+  background: rgba(27, 79, 138, 0.10);
+  color: var(--klein);
+}
+.tarifs-included-card-pink .tarifs-included-icon {
+  background: rgba(201, 38, 106, 0.10);
+  color: var(--pink);
+}
+.tarifs-included-card-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.tarifs-included-card-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* FAQ Tarifs — numéros + cards */
+.tarifs-faq {
+  background: var(--cream);
+  padding: 100px 0;
+  position: relative;
+}
+.tarifs-faq-head {
+  text-align: center;
+  margin-bottom: 64px;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tarifs-faq-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.6vw, 52px);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 18px 0 0;
+  color: var(--ink);
+}
+.tarifs-faq-title .italic { color: var(--klein); font-style: italic; }
+.tarifs-faq-list {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tarifs-faq-item {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 26px 28px;
+  background: #fff;
+  border-radius: 14px;
+  border: 0.5px solid var(--line-soft);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.tarifs-faq-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(20, 20, 40, 0.06);
+}
+@media (max-width: 600px) {
+  .tarifs-faq-item { grid-template-columns: 1fr; padding: 22px 20px; gap: 8px; }
+}
+.tarifs-faq-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 36px;
+  color: var(--klein);
+  opacity: 0.85;
+  line-height: 1;
+}
+.tarifs-faq-q {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 10px;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+}
+.tarifs-faq-a {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0;
+}

@@ -1,9 +1,8 @@
 import Hero from '@/components/Hero';
 import CTASection from '@/components/CTASection';
-import LalaKShowcase from '@/components/LalaKShowcase';
 import { ScrollTiltedGrid, type ScrollTiltedGridItem } from '@/components/ui/scroll-tilted-grid';
 
-/** Génère une data URL SVG avec un gradient stylisé Elevora */
+/** Generation de tuiles colorees pour la grille Inspirations (charte V2) */
 const gradientSVG = (color1: string, color2: string, label: string) => {
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400' preserveAspectRatio='xMidYMid slice'>
     <defs>
@@ -13,27 +12,154 @@ const gradientSVG = (color1: string, color2: string, label: string) => {
       </linearGradient>
     </defs>
     <rect width='300' height='400' fill='url(%23g)'/>
-    <text x='50%25' y='52%25' text-anchor='middle' font-family='Georgia, serif' font-style='italic' font-size='18' fill='rgba(255,255,255,0.85)' letter-spacing='0.5'>${label}</text>
-    <line x1='30%25' y1='58%25' x2='70%25' y2='58%25' stroke='rgba(255,255,255,0.4)' stroke-width='0.5'/>
+    <text x='50%25' y='52%25' text-anchor='middle' font-family='Cochin, Georgia, serif' font-style='italic' font-size='18' fill='rgba(255,255,255,0.92)' letter-spacing='0.5'>${label}</text>
+    <line x1='30%25' y1='58%25' x2='70%25' y2='58%25' stroke='rgba(255,255,255,0.5)' stroke-width='0.5'/>
   </svg>`;
   return `data:image/svg+xml;charset=utf-8,${svg.replace(/\n/g, '').replace(/\s+/g, ' ')}`;
 };
 
+// Charte V2 : Bleu / Framboise / Nuit / Gris
 const GRID_ITEMS: ScrollTiltedGridItem[] = [
-  { src: gradientSVG('%230033A0', '%23002074', 'Bleu Klein'), caption: 'La signature' },
-  { src: gradientSVG('%23C9569E', '%23993556', 'Rose-violet'), caption: 'L\u2019accent' },
-  { src: gradientSVG('%23F5F0E8', '%23EFE8DC', 'Cr\u00e8me'), caption: 'Le fond' },
-  { src: gradientSVG('%230044CC', '%230033A0', 'Klein bright'), caption: 'L\u2019\u00e9clat' },
-  { src: gradientSVG('%23FBEAF0', '%23C9569E', 'Pink light'), caption: 'La douceur' },
-  { src: gradientSVG('%230A0A0A', '%232D2D2D', 'Encre'), caption: 'Le contraste' },
-  { src: gradientSVG('%23EFE8DC', '%23F5F0E8', 'Beige chaud'), caption: 'L\u2019\u00e9quilibre' },
-  { src: gradientSVG('%23002074', '%230A0A0A', 'Nuit profonde'), caption: 'La profondeur' },
+  { src: gradientSVG('%231B4F8A', '%230D2B50', 'Bleu Klein'), caption: 'La signature' },
+  { src: gradientSVG('%23C9266A', '%238A1245', 'Framboise'), caption: "L'accent" },
+  { src: gradientSVG('%23EAE9EE', '%23B8B8B8', 'Gris perle'), caption: 'Le fond' },
+  { src: gradientSVG('%232B6CC4', '%231B4F8A', 'Bleu clair'), caption: "L'éclat" },
+  { src: gradientSVG('%23E8527E', '%23C9266A', 'Rose framboise'), caption: 'La douceur' },
+  { src: gradientSVG('%231A1A2E', '%230D0D1A', 'Nuit'), caption: 'Le contraste' },
+  { src: gradientSVG('%23383838', '%237A7A7A', 'Gris foncé'), caption: "L'équilibre" },
+  { src: gradientSVG('%230D2B50', '%231A1A2E', 'Nuit profonde'), caption: 'La profondeur' },
 ];
 
 export const metadata = {
   title: 'Réalisations | Nos projets livrés',
-  description: 'Découvrez les projets réalisés par Elevora : sites web, refontes et outils de gestion pour indépendants et PME à Nantes.',
+  description: "Découvrez les projets réalisés par Elevora : sites vitrine, refontes premium et outils de gestion sur mesure.",
 };
+
+type Project = {
+  slug: string;
+  name: string;
+  tag: string;
+  year: string;
+  type: 'Site' | 'Outil métier';
+  mission: string;
+  status: 'En production' | 'En développement' | 'Livré';
+  intro: string;
+  bullets: string[];
+  highlights: { label: string; value: string }[];
+  cover: string;
+  details?: string[];
+  bg: string;
+  reversed?: boolean;
+};
+
+const PROJECTS: Project[] = [
+  {
+    slug: 'lily-berry',
+    name: 'Lily Berry',
+    tag: 'Nail Artist · Nantes',
+    year: '2026',
+    type: 'Site',
+    mission: 'Site vitrine complet',
+    status: 'En production',
+    intro:
+      "Site vitrine kawaii pour une prothésiste ongulaire nantaise, pensé pour transformer ses visiteuses en rendez-vous fermes. Univers visuel cocon (couleurs pastel, photos rondes, micro-illustrations fraise) totalement personnalisé, et un système de cartes cadeaux qui ouvre un nouveau canal de vente.",
+    bullets: [
+      "Page d'accueil chaleureuse avec présentation \"Moi c'est Lily\"",
+      "Catalogue détaillé des prestations avec photos avant/après",
+      'Grille tarifaire claire (3 niveaux par prestation)',
+      'Module de cartes cadeaux personnalisables',
+      'Section Press On avec livraison France métropolitaine',
+    ],
+    highlights: [
+      { label: 'Pages', value: '6' },
+      { label: 'Mission', value: 'Vitrine + cartes cadeaux' },
+      { label: 'Délai', value: '5 semaines' },
+    ],
+    cover: '/projets/lily-berry-cover.jpg',
+    details: ['/projets/lily-berry-prestations.jpg', '/projets/lily-berry-tarifs.jpg'],
+    bg: '#FFE7EC',
+  },
+  {
+    slug: 'mace-freddy',
+    name: 'Garage Macé Freddy',
+    tag: 'Garage automobile · Saint-Nazaire',
+    year: '2026',
+    type: 'Site',
+    mission: 'Site vitrine local',
+    status: 'En production',
+    intro:
+      "Site sombre et impactant pour un garage indépendant agréé assurances de l'agglomération nazairienne. Direction artistique radicale (fond noir, accent orange, photo grand format) pour casser les codes du garage \"site Wix moyen\". L'appel direct et la note Google sont mis en avant dès le hero.",
+    bullets: [
+      'Hero immersif avec photo grand format du mécanicien',
+      'Bouton d\'appel direct toujours visible (mobile-first)',
+      'Affichage de la note Google (4,5★) et nombre d\'avis (32)',
+      "Section périmètre d'intervention (agglomération)",
+      'Formulaire devis rapide pour intervention sur assurance',
+    ],
+    highlights: [
+      { label: 'Pages', value: '4' },
+      { label: 'Mission', value: 'Vitrine locale' },
+      { label: 'Délai', value: '4 semaines' },
+    ],
+    cover: '/projets/mace-freddy-cover.jpg',
+    bg: '#0B0B0F',
+    reversed: true,
+  },
+  {
+    slug: 'lala-k',
+    name: 'Lala·K Beauty',
+    tag: 'Institut & soins coréens · Paris',
+    year: '2026',
+    type: 'Site',
+    mission: 'Refonte premium',
+    status: 'En production',
+    intro:
+      "Refonte premium pour un institut parisien spécialisé en soins coréens (K-Beauty, Hydrafacial, Peau de verre). DA bordeaux profond + or, typographie Cochin italique, galerie immersive avec cartes inclinées 3D pour révéler l'institut en images. Mise en scène d'une technologie phare unique par carrousel élégant.",
+    bullets: [
+      "Hero éditorial \"Vos soins signature\" avec mosaïque verticale",
+      "Carrousel \"Technicité & technologie\" (K-Beauty / Hydrafacial / Peau de verre)",
+      "Galerie immersive \"L'institut en images\" avec cartes 3D",
+      "Diagnostic 20 MP mis en avant (4 lumières spécialisées)",
+      'Système de prise de rendez-vous intégré',
+    ],
+    highlights: [
+      { label: 'Pages', value: '8' },
+      { label: 'Mission', value: 'Refonte premium' },
+      { label: 'Délai', value: '8 semaines' },
+    ],
+    cover: '/projets/lala-k-cover.jpg',
+    details: ['/projets/lala-k-soins.jpg', '/projets/lala-k-coreenne.jpg'],
+    bg: '#1A0A0F',
+  },
+  {
+    slug: 'pole-embal',
+    name: 'Pôle Embal',
+    tag: "CRM gestion d'entrepôt · Loire-Atlantique",
+    year: '2026',
+    type: 'Outil métier',
+    mission: 'CRM sur mesure',
+    status: 'En production',
+    intro:
+      "Outil métier complet pour piloter un entrepôt en temps réel : commandes du jour, picking en cours, expéditions, taux d'erreur, classement opérateurs, heatmap d'activité. Conçu pour remplacer trois logiciels qui ne se parlaient pas. Interface dense mais lisible, alertes critiques toujours visibles, KPIs hebdo exportables PDF.",
+    bullets: [
+      "Tableau de bord temps réel (commandes, picking, expéditions)",
+      "Suivi opérateurs avec scoring de performance individuel",
+      "Heatmap d'activité picking par jour et créneau horaire",
+      "Top 10 SKUs avec alertes ruptures stock en rouge",
+      'Rapports hebdomadaires PDF et personnalisables',
+      "Alertes critiques (retard, rupture, incident matériel)",
+    ],
+    highlights: [
+      { label: 'Type', value: 'Web app interne' },
+      { label: 'Mission', value: 'CRM/WMS sur mesure' },
+      { label: 'Délai', value: '14 semaines' },
+    ],
+    cover: '/projets/pole-embal-cover.jpg',
+    details: ['/projets/pole-embal-detail.jpg'],
+    bg: '#0F1729',
+    reversed: true,
+  },
+];
 
 export default function RealisationsPage() {
   return (
@@ -41,153 +167,76 @@ export default function RealisationsPage() {
       <Hero
         pillText="Réalisations"
         title={`Nos projets.<br><span class="italic">Sans filtre.</span>`}
-        lead="Nous sommes une jeune agence. Nous n'avons pas 200 références à montrer, mais nous avons ce que nous avons livré — et nous l'assumons. Voici nos projets, présents et en cours."
+        lead="Voici les projets que nous avons livrés et ceux en cours. Sites vitrines, refontes premium, outils métier — chaque cas est documenté avec honnêteté : ce qu'on a fait, dans quel délai, pour quoi faire."
       />
 
-      {/* Vitrine Lala-K — composant SectionWithMockup */}
-      <LalaKShowcase />
-
-      <section>
+      <section className="reali-projects">
         <div className="container">
+          {PROJECTS.map((p) => (
+            <article
+              key={p.slug}
+              className={`reali-project ${p.reversed ? 'is-reversed' : ''}`}
+              style={{ ['--p-bg' as any]: p.bg }}
+            >
+              <div className="reali-project-media">
+                <div className="reali-project-cover">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.cover} alt={p.name} />
+                </div>
+                {p.details && p.details.length > 0 && (
+                  <div className="reali-project-details">
+                    {p.details.map((src, i) => (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img key={i} src={src} alt={`${p.name} — détail ${i + 1}`} />
+                    ))}
+                  </div>
+                )}
+              </div>
 
-          {/* Garage */}
-          <article style={{ marginBottom: 80 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
-              <div style={{ order: 2 }}>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-                  <span className="tag">Site vitrine</span>
-                  <span className="tag">2026</span>
+              <div className="reali-project-content">
+                <div className="reali-project-meta">
+                  <span className="tag">{p.type}</span>
+                  <span className="tag">{p.year}</span>
+                  <span className={`tag tag-status tag-status-${p.status === 'En production' ? 'live' : p.status === 'En développement' ? 'wip' : 'done'}`}>
+                    {p.status}
+                  </span>
                 </div>
-                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Garage automobile</h2>
-                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
-                  Site vitrine pour un garage indépendant : présentation des services (entretien, réparation, contrôle), informations pratiques, prise de contact rapide. Conçu pour rassurer une clientèle locale qui veut un mécano de confiance.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Mission</div>
-                    <div style={{ fontSize: 14 }}>Création vitrine</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Statut</div>
-                    <div style={{ fontSize: 14, color: 'var(--klein)' }}>Livré</div>
-                  </div>
-                </div>
-              </div>
-              <div style={{ order: 1, background: 'var(--klein)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '100%', background: 'var(--klein-deep)', borderRadius: 12, padding: 24 }}>
-                  <div style={{ display: 'flex', gap: 6, marginBottom: 16 }}>
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(245,240,232,0.3)' }} />
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(245,240,232,0.3)' }} />
-                    <div style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(245,240,232,0.3)' }} />
-                  </div>
-                  <div style={{ height: 16, width: '45%', background: 'var(--pink)', borderRadius: 3, marginBottom: 14 }} />
-                  <div style={{ height: 9, width: '70%', background: 'rgba(245,240,232,0.25)', borderRadius: 2, marginBottom: 8 }} />
-                  <div style={{ height: 9, width: '55%', background: 'rgba(245,240,232,0.25)', borderRadius: 2, marginBottom: 20 }} />
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                    <div style={{ aspectRatio: 1.6, background: 'rgba(245,240,232,0.1)', borderRadius: 6 }} />
-                    <div style={{ aspectRatio: 1.6, background: 'rgba(245,240,232,0.1)', borderRadius: 6 }} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+                <span className="reali-project-tagline">{p.tag}</span>
+                <h2 className="reali-project-name">{p.name}</h2>
+                <p className="reali-project-intro">{p.intro}</p>
 
-          {/* Confidentiel */}
-          <article style={{ marginBottom: 80 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
-              <div style={{ background: 'var(--cream-warm)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(10,10,10,0.02) 10px, rgba(10,10,10,0.02) 11px)' }} />
-                <div style={{ position: 'relative', textAlign: 'center' }}>
-                  <svg className="ic" width="48" height="48" viewBox="0 0 24 24" style={{ color: 'var(--ink-muted)', margin: '0 auto 16px', strokeWidth: 1.2 }}>
-                    <rect x="3" y="11" width="18" height="11" rx="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                  <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 20, color: 'var(--ink-muted)' }}>Visuel confidentiel</div>
-                  <div style={{ fontSize: 13, color: 'var(--ink-muted)', marginTop: 6 }}>Sortie prévue Q2 2026</div>
-                </div>
-              </div>
-              <div>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-                  <span className="tag">En cours</span>
-                  <span className="tag">2026</span>
-                </div>
-                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Projet confidentiel</h2>
-                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
-                  Refonte d'envergure en cours pour une activité de service. Le projet est sous accord de confidentialité jusqu'à la mise en ligne — un nouveau cas viendra prendre cette place quand il sera officiel.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 28 }}>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Mission</div>
-                    <div style={{ fontSize: 14 }}>Refonte complète</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 6 }}>Statut</div>
-                    <div style={{ fontSize: 14, color: 'var(--pink)' }}>En développement</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
+                <ul className="reali-project-bullets">
+                  {p.bullets.map((b, i) => (
+                    <li key={i}>{b}</li>
+                  ))}
+                </ul>
 
-          {/* Démo Elevora */}
-          <article>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
-              <div style={{ order: 2 }}>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-                  <span className="tag" style={{ background: 'var(--pink-light)', color: 'var(--pink-deep)' }}>Démo Elevora</span>
-                  <span className="tag">2026</span>
-                </div>
-                <h2 style={{ marginBottom: 16, fontSize: 'clamp(28px, 3.5vw, 42px)' }}>Projet vitrine interne</h2>
-                <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink-soft)', marginBottom: 24 }}>
-                  Une démonstration de notre savoir-faire, conçue librement pour montrer comment nous concevons un site quand on nous laisse carte blanche : architecture moderne, design soigné, performances optimales.
-                </p>
-              </div>
-              <div style={{ order: 1, background: 'var(--cream-warm)', borderRadius: 'var(--radius-lg)', padding: 48, aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '100%', background: '#FFF', borderRadius: 12, padding: 24, boxShadow: '0 20px 60px rgba(10,10,10,0.06)' }}>
-                  <div style={{ display: 'flex', gap: 14 }}>
-                    <div style={{ width: 90, display: 'flex', flexDirection: 'column', gap: 10, borderRight: '0.5px solid var(--line)', paddingRight: 14 }}>
-                      <div style={{ height: 10, background: 'var(--klein)', borderRadius: 2 }} />
-                      <div style={{ height: 10, background: 'var(--cream-warm)', borderRadius: 2 }} />
-                      <div style={{ height: 10, background: 'var(--cream-warm)', borderRadius: 2 }} />
-                      <div style={{ height: 10, background: 'var(--cream-warm)', borderRadius: 2 }} />
+                <div className="reali-project-highlights">
+                  {p.highlights.map((h) => (
+                    <div key={h.label} className="reali-project-highlight">
+                      <span className="reali-project-highlight-label">{h.label}</span>
+                      <span className="reali-project-highlight-value">{h.value}</span>
                     </div>
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                      <div style={{ height: 14, width: '60%', background: 'var(--ink)', borderRadius: 2 }} />
-                      <div style={{ height: 8, width: '80%', background: 'var(--cream-warm)', borderRadius: 2 }} />
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
-                        <div style={{ aspectRatio: 1.4, background: 'var(--pink-light)', borderRadius: 6 }} />
-                        <div style={{ aspectRatio: 1.4, background: '#E6F1FB', borderRadius: 6 }} />
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </article>
-
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* SCROLL TILTED GRID — Univers visuel */}
-      <section style={{ background: 'var(--cream-warm)', padding: '120px 0 0' }}>
-        <div className="container" style={{ textAlign: 'center', marginBottom: 40 }}>
-          <span className="eyebrow" style={{ display: 'inline-flex', marginBottom: 18 }}>
-            Notre univers
-          </span>
-          <h2 style={{ margin: '0 auto', maxWidth: 720 }}>
+      {/* INSPIRATIONS : sur fond charte V2 */}
+      <section className="inspirations-section">
+        <div className="inspirations-bg" aria-hidden="true" />
+        <div className="container inspirations-head">
+          <span className="eyebrow inspirations-eyebrow">Notre univers</span>
+          <h2 className="inspirations-title">
             Inspirations &<br />
             <span className="italic">références.</span>
           </h2>
-          <p
-            style={{
-              fontSize: 17,
-              lineHeight: 1.6,
-              color: 'var(--ink-soft)',
-              maxWidth: 600,
-              margin: '24px auto 0',
-            }}
-          >
-            Une sélection visuelle de l'univers dans lequel on évolue : couleurs, formes, ambiances qui nourrissent nos créations.
+          <p className="inspirations-lead">
+            Une sélection visuelle de l'univers dans lequel on évolue :
+            couleurs, formes, ambiances qui nourrissent nos créations.
           </p>
         </div>
 
