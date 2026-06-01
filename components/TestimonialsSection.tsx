@@ -28,7 +28,7 @@ export default function TestimonialsSection() {
         <div className="faq-head">
           <span className="eyebrow">
             <span className="eyebrow-dot" aria-hidden="true" />
-            05 — Ils nous font confiance
+            06 — Ils nous font confiance
           </span>
           <h2 className="faq-title">
             Ce qu'en disent <em>nos clients</em>.

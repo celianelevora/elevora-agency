@@ -2679,3 +2679,388 @@ body:has(.home-with-cinematic-footer) {
 .phone-dropdown-name { flex: 1; }
 .phone-dropdown-code { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .phone-dropdown-empty { padding: 18px; text-align: center; color: var(--ink-muted); font-size: 13px; }
+
+/* ===========================================================
+   WHY NOW — section "Pourquoi un site, pourquoi maintenant"
+   =========================================================== */
+.whynow-section {
+  background: var(--cream);
+  padding: 120px 0;
+  position: relative;
+}
+.whynow-head {
+  max-width: 720px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.whynow-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 24px 0 24px;
+  color: var(--ink);
+}
+.whynow-title .italic { color: var(--klein); font-style: italic; }
+.whynow-lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 580px;
+  margin: 0 auto;
+}
+.whynow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) { .whynow-grid { grid-template-columns: 1fr; } }
+.whynow-card {
+  position: relative;
+  padding: 36px 32px 32px;
+  background: #fff;
+  border-radius: 20px;
+  border: 0.5px solid var(--line-soft);
+  box-shadow: 0 12px 36px rgba(20, 20, 40, 0.05);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), box-shadow 0.4s var(--ease);
+  transition-delay: calc(var(--stagger-i, 0) * 120ms);
+}
+.whynow-section.in-view .whynow-card { opacity: 1; transform: translateY(0); }
+.whynow-card:hover { box-shadow: 0 20px 50px rgba(20, 20, 40, 0.1); }
+.whynow-num {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 32px;
+  color: rgba(27, 79, 138, 0.18);
+  line-height: 1;
+}
+.whynow-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--klein);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+.whynow-card-title {
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 500;
+  margin: 0 0 14px;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.whynow-card-body {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ===========================================================
+   FOR WHO — section "Pour qui on travaille"
+   =========================================================== */
+.forwho-section {
+  background: var(--cream);
+  padding: 120px 0;
+  position: relative;
+}
+.forwho-head {
+  max-width: 800px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.forwho-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.6vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 24px 0 24px;
+  color: var(--ink);
+}
+.forwho-title .italic { color: var(--klein); font-style: italic; }
+.forwho-lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin: 0 auto;
+}
+.forwho-lead strong { color: var(--ink); font-weight: 600; }
+.forwho-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto 64px;
+}
+@media (max-width: 700px) { .forwho-grid { grid-template-columns: 1fr; } }
+.forwho-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 32px;
+  background: #fff;
+  border-radius: 18px;
+  border: 0.5px solid var(--line-soft);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), transform 0.4s var(--ease);
+  transition-delay: calc(var(--stagger-i, 0) * 100ms);
+}
+.forwho-section.in-view .forwho-card { opacity: 1; transform: translateY(0); }
+.forwho-card:hover { transform: translateY(-4px) !important; }
+.forwho-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+.forwho-card-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.forwho-card-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.forwho-notfor {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 36px 40px;
+  background: rgba(192, 57, 43, 0.04);
+  border-radius: 16px;
+  border-left: 3px solid rgba(192, 57, 43, 0.55);
+}
+.forwho-notfor-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin: 0 0 16px;
+  color: #8E1F12;
+}
+.forwho-notfor-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+.forwho-notfor-list li {
+  position: relative;
+  padding: 5px 0 5px 24px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.forwho-notfor-list li::before {
+  content: '✕';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  color: #C0392B;
+  font-weight: 700;
+}
+.forwho-notfor-foot {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink-muted);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ===========================================================
+   MANIFESTO — section "Notre manifeste"
+   =========================================================== */
+.manifesto-section {
+  background: linear-gradient(180deg, var(--cream) 0%, #fff 40%, #fff 60%, var(--cream) 100%);
+  padding: 140px 0;
+  position: relative;
+}
+.manifesto-container {
+  max-width: 860px;
+}
+.manifesto-section .eyebrow {
+  display: block;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.manifesto-title {
+  font-family: var(--serif);
+  text-align: center;
+  font-size: clamp(40px, 5.4vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+  margin: 0 0 56px;
+  color: var(--ink);
+}
+.manifesto-title .italic { color: var(--klein); font-style: italic; }
+.manifesto-body { max-width: 720px; margin: 0 auto; }
+.manifesto-lead {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0 0 56px;
+  letter-spacing: -0.005em;
+}
+.manifesto-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 56px 0;
+  padding: 36px 0;
+  border-top: 0.5px solid var(--line-soft);
+  border-bottom: 0.5px solid var(--line-soft);
+}
+@media (max-width: 700px) { .manifesto-duo { grid-template-columns: 1fr; gap: 36px; } }
+.manifesto-pillar { padding: 8px 0; }
+.manifesto-pillar-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 36px;
+  color: var(--klein);
+  opacity: 0.8;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+.manifesto-pillar-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0 0 12px;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.manifesto-pillar p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.manifesto-pillar strong { color: var(--ink); font-weight: 600; }
+.manifesto-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+.manifesto-text strong { color: var(--ink); font-weight: 600; }
+.manifesto-signature {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 0.5px solid var(--line-soft);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.manifesto-signature-text { display: flex; flex-direction: column; gap: 2px; }
+.manifesto-signature-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.manifesto-signature-role {
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* ===========================================================
+   GUARANTEES — section engagements post-livraison
+   =========================================================== */
+.guarantees-section {
+  background: var(--cream);
+  padding: 120px 0;
+  position: relative;
+}
+.guarantees-head {
+  max-width: 760px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.guarantees-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 4.6vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin: 24px 0 24px;
+  color: var(--ink);
+}
+.guarantees-title .italic { color: var(--klein); font-style: italic; }
+.guarantees-lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 600px;
+  margin: 0 auto;
+}
+.guarantees-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+@media (max-width: 900px) { .guarantees-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .guarantees-grid { grid-template-columns: 1fr; } }
+.guarantees-card {
+  padding: 30px 28px;
+  background: #fff;
+  border-radius: 18px;
+  border: 0.5px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
+  transition-delay: calc(var(--stagger-i, 0) * 80ms);
+}
+.guarantees-section.in-view .guarantees-card { opacity: 1; transform: translateY(0); }
+.guarantees-card:hover {
+  border-color: var(--klein);
+  box-shadow: 0 18px 46px rgba(27, 79, 138, 0.12);
+}
+.guarantees-icon {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 79, 138, 0.08);
+  color: var(--klein);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.guarantees-card-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.guarantees-card-desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}

@@ -1,11 +1,14 @@
 import HeroWithGooey from '@/components/HeroWithGooey';
 import Marquee from '@/components/Marquee';
-import ServicesGrid from '@/components/ServicesGrid';
+import WhyNow from '@/components/WhyNow';
+import ForWho from '@/components/ForWho';
 import EngagementsGrid from '@/components/EngagementsGrid';
+import Manifesto from '@/components/Manifesto';
 import ProjectShowcase from '@/components/ProjectShowcase';
 import MethodSteps from '@/components/MethodSteps';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { FaqsSection } from '@/components/FaqsSection';
+import Guarantees from '@/components/Guarantees';
 import { CinematicFooter } from '@/components/CinematicFooter';
 
 export const metadata = {
@@ -33,16 +36,31 @@ export default function HomePage() {
         />
       </div>
 
-      <div className="sec-cream"><ServicesGrid /></div>
+      {/* 01 — Le constat */}
+      <WhyNow />
 
+      {/* 02 — Pour qui */}
+      <ForWho />
+
+      {/* 03 — Pourquoi Elevora (engagements) */}
       <EngagementsGrid />
 
+      {/* Manifeste */}
+      <Manifesto />
+
+      {/* 04 — Réalisations */}
       <div className="sec-warm"><ProjectShowcase /></div>
 
+      {/* 05 — Méthode */}
       <div className="sec-white"><MethodSteps /></div>
 
+      {/* 06 — Témoignages */}
       <div className="sec-warm"><TestimonialsSection /></div>
 
+      {/* Garanties post-livraison */}
+      <Guarantees />
+
+      {/* FAQ */}
       <div className="sec-white"><FaqsSection /></div>
 
       <CinematicFooter />

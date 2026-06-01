@@ -15,7 +15,7 @@ export default function ProjectShowcase() {
           }}
         >
           <div>
-            <span className="eyebrow">03 — Réalisations</span>
+            <span className="eyebrow">04 — Réalisations</span>
             <h2 style={{ marginTop: 18 }}>
               Ce qu'on a livré<br />
               <span className="italic">jusqu'ici.</span>
