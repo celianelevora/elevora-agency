@@ -171,10 +171,12 @@ export default function RealisationsPage() {
       />
 
       <section className="reali-projects">
+        <div className="reali-projects-bg" aria-hidden="true" />
         <div className="container">
           {PROJECTS.map((p) => (
             <article
               key={p.slug}
+              data-project={p.slug}
               className={`reali-project ${p.reversed ? 'is-reversed' : ''}`}
               style={{ ['--p-bg' as any]: p.bg }}
             >

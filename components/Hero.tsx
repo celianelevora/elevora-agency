@@ -15,12 +15,69 @@ interface HeroProps {
   primaryCTA?: CTAProp;
   secondaryCTA?: CTAProp;
   stats?: StatProp[];
+  /** Image de fond optionnelle (URL absolue, ex. /method-fond.jpg).
+      Quand fournie, l'image s'affiche en cover derriere le contenu. */
+  bgImage?: string;
+  /** Marge superieure du contenu pour ne pas chevaucher le header fixe. */
+  topPadding?: number;
 }
 
-export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats }: HeroProps) {
+export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding }: HeroProps) {
+  const padTop = topPadding ?? 100;
   return (
-    <section style={{ padding: '100px 0 80px' }}>
-      <div className="container">
+    <section
+      style={{
+        padding: `${padTop}px 0 80px`,
+        position: 'relative',
+        overflow: 'hidden',
+        background: '#EAE9EE',
+      }}
+    >
+      {bgImage && (
+        <>
+          {/* Image de fond, decalee vers le bas pour laisser passer le header
+              et garantir #EAE9EE sous la pill du header. */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: 110, /* espace pour le header */
+              left: 0, right: 0, bottom: 0,
+              backgroundImage: `url(${bgImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: '#EAE9EE',
+              zIndex: 0,
+            }}
+          />
+          {/* Fondu doux haut/bas pour raccord transparent avec le reste */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: 110,
+              left: 0, right: 0,
+              height: 80,
+              background: 'linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,0) 100%)',
+              zIndex: 1,
+              pointerEvents: 'none',
+            }}
+          />
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              bottom: 0, left: 0, right: 0,
+              height: 100,
+              background: 'linear-gradient(to top, #EAE9EE 0%, rgba(234,233,238,0) 100%)',
+              zIndex: 1,
+              pointerEvents: 'none',
+            }}
+          />
+        </>
+      )}
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <span className="pill">
           <span className="pill-dot"></span>
           {pillText}

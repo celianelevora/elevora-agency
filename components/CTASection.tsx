@@ -22,8 +22,33 @@ export default function CTASection({
   showContactInfo = false,
 }: CTASectionProps) {
   return (
-    <section style={{ background: 'var(--klein)', color: 'var(--cream)', padding: '120px 0' }}>
-      <div className="container">
+    <section
+      className="cta-section"
+      style={{
+        background:
+          'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
+        color: 'var(--cream)',
+        padding: '120px 0 140px',
+        position: 'relative',
+        /* Marge negative bas : la section "mord" sur le footer pour eviter
+           toute bande blanche/grise visible entre CTA et footer. */
+        marginBottom: '-1px',
+      }}
+    >
+      {/* Halos ambient luxe (framboise + bleu klein) */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          background:
+            'radial-gradient(ellipse at 18% 30%, rgba(43,108,196,0.30) 0%, transparent 55%),' +
+            'radial-gradient(ellipse at 85% 75%, rgba(201,38,106,0.22) 0%, transparent 55%),' +
+            'radial-gradient(circle at 50% 100%, rgba(232,82,126,0.12) 0%, transparent 45%)',
+        }}
+      />
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: 640 }}>
           {eyebrow && (
             <span className="eyebrow" style={{ color: 'rgba(245,240,232,0.6)' }}>
@@ -50,16 +75,18 @@ export default function CTASection({
             <Link
               href={primaryHref}
               style={{
-                background: 'var(--cream)',
-                color: 'var(--klein)',
+                background: 'var(--pink)',
+                color: '#fff',
                 padding: '16px 28px',
-                borderRadius: 10,
+                borderRadius: 999,
                 fontSize: 15,
                 fontWeight: 500,
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
-                transition: 'transform 0.22s var(--ease)',
+                transition: 'transform 0.22s var(--ease), box-shadow 0.22s var(--ease), background 0.22s var(--ease)',
+                boxShadow: '0 14px 36px rgba(201,38,106,0.40)',
+                textDecoration: 'none',
               }}
             >
               {primaryLabel}

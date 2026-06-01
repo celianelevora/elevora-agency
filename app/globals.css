@@ -3258,7 +3258,36 @@ body:has(.home-with-cinematic-footer) {
 .reali-projects {
   padding: 80px 0 120px;
   background: var(--cream);
+  position: relative;
+  isolation: isolate;
 }
+.reali-projects-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/reali-projects-bg.svg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: -1;
+  pointer-events: none;
+}
+.reali-projects-bg::before,
+.reali-projects-bg::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 140px;
+  pointer-events: none;
+}
+.reali-projects-bg::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.reali-projects-bg::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
+}
+.reali-projects .container { position: relative; z-index: 1; }
 .reali-project {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -3297,6 +3326,12 @@ body:has(.home-with-cinematic-footer) {
 .reali-project-cover img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center;
+}
+/* Cadrage specifique : Mace Freddy a un texte important en bas/gauche,
+   on remonte legerement le cadrage pour bien voir le titre du hero. */
+[data-project="mace-freddy"] .reali-project-cover img {
+  object-position: 60% 20%;
 }
 .reali-project-details {
   display: grid;
@@ -3307,11 +3342,15 @@ body:has(.home-with-cinematic-footer) {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  object-position: center top;
   border-radius: 12px;
   background: var(--p-bg, #fff);
   border: 0.5px solid var(--line-soft);
   box-shadow: 0 12px 30px rgba(20, 20, 40, 0.06);
 }
+/* Si un seul detail, il prend toute la largeur */
+.reali-project-details:has(img:only-child) { grid-template-columns: 1fr; }
+.reali-project-details:has(img:only-child) img { aspect-ratio: 16/9; }
 
 .reali-project-meta {
   display: flex;
@@ -3374,28 +3413,54 @@ body:has(.home-with-cinematic-footer) {
 .reali-project-highlights {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 22px 24px;
-  background: #fff;
-  border-radius: 12px;
-  border: 0.5px solid var(--line-soft);
+  gap: 16px;
+  padding: 22px 20px;
+  /* Glasswing : verre teinté avec backdrop-blur, bord lumineux, ombre interne */
+  background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.35) 100%);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 1px rgba(255,255,255,0.85) inset,
+    0 -1px 1px rgba(27,79,138,0.04) inset,
+    0 18px 50px rgba(27, 79, 138, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+.reali-project-highlights::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 0%, rgba(201,38,106,0.10) 0%, transparent 50%);
+  pointer-events: none;
 }
 @media (max-width: 600px) {
   .reali-project-highlights { grid-template-columns: 1fr; gap: 14px; padding: 20px; }
 }
-.reali-project-highlight { display: flex; flex-direction: column; gap: 4px; }
+.reali-project-highlight {
+  display: flex;
+  flex-direction: column;
+  /* Centrage horizontal du texte */
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
 .reali-project-highlight-label {
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.14em;
   color: var(--ink-muted);
   font-weight: 500;
 }
 .reali-project-highlight-value {
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   color: var(--ink);
+  letter-spacing: -0.005em;
 }
 
 /* ===========================================================
