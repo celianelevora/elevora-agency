@@ -320,8 +320,7 @@ section {
   transform: scale(0.7);
   width: 0;
   margin-left: 0;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0;
   pointer-events: none;
 }
 /* Petite marge droite sur la nav quand scrolled pour parfaitement equilibrer
@@ -375,6 +374,7 @@ section {
 .hdr.scrolled .hdr-divider {
   opacity: 0;
   width: 0;
+  height: 0;
   margin: 0;
 }
 
