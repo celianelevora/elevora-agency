@@ -21,7 +21,7 @@ export default function Manifesto() {
   return (
     <section ref={ref} className="manifesto-section">
       <div className="container manifesto-container">
-        <span className="eyebrow">Notre manifeste</span>
+        <span className="eyebrow">04 — Notre manifeste</span>
         <h2 className="manifesto-title">
           On fait deux choses.<br />
           <span className="italic">On les fait bien.</span>

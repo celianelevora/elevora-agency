@@ -57,7 +57,7 @@ export function FaqsSection() {
         <div className="faq-head">
           <span className="eyebrow">
             <span className="eyebrow-dot" aria-hidden="true" />
-            07 — Questions fréquentes
+            09 — Questions fréquentes
           </span>
           <h2 className="faq-title">
             Tout ce que vous vous <em>demandez</em>.

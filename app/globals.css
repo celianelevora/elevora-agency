@@ -9,28 +9,45 @@
 
 @layer base {
   :root {
-    /* Variables Elevora (legacy, compat composants existants) */
-    --klein: #0033A0;
-    --klein-deep: #002074;
-    --klein-bright: #0044CC;
-    /* === FOND GRIS CHARTE — RECAP-PROJET.md (decision cle) ===
+    /* === COULEURS — CHARTE GRAPHIQUE V2 (2025) ===
+       BLEU principal #1B4F8A (clair: #2B6CC4, fonce: #0D2B50)
+       FRAMBOISE     #C9266A (clair rose: #E8527E, fonce bordeaux: #8A1245)
+       NUIT          #1A1A2E (clair: #2E2E4A, fonce: #0D0D1A)
+       GRIS          #7A7A7A (clair: #B8B8B8, fonce: #383838) */
+    --klein: #1B4F8A;
+    --klein-bright: #2B6CC4;
+    --klein-deep: #0D2B50;
+    --pink: #C9266A;
+    --pink-light: #E8527E;
+    --pink-deep: #8A1245;
+    --pink-soft: #FBEAF0;
+    --night: #1A1A2E;
+    --night-light: #2E2E4A;
+    --night-deep: #0D0D1A;
+    /* === FOND GRIS DE BASE — RECAP-PROJET.md ===
        #EAE9EE = gris de fond du site (rgb 234,233,238).
-       Toutes les images de transition sont calees sur ce gris exact.
-       Les anciens --cream/--cream-warm sont remappes ici pour basculer
-       toutes les references existantes d'un coup sans casser les composants. */
+       Toutes les images de transition sont calees sur ce gris exact. */
     --cream: #EAE9EE;
     --cream-warm: #EAE9EE;
-    --pink: #C9569E;
-    --pink-deep: #993556;
-    --pink-light: #FBEAF0;
-    --ink: #0A0A0A;
-    --ink-soft: #2C2C2A;
-    --ink-muted: #5F5E5A;
-    --line: rgba(10, 10, 10, 0.1);
-    --line-soft: rgba(10, 10, 10, 0.06);
-    --line-strong: rgba(10, 10, 10, 0.18);
-    --serif: var(--font-fraunces), 'Fraunces', Georgia, serif;
-    --sans: var(--font-geist), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Encres : on remappe sur la palette NUIT de la charte */
+    --ink: #1A1A2E;
+    --ink-soft: #2E2E4A;
+    --ink-muted: #7A7A7A;
+    --line: rgba(26, 26, 46, 0.10);
+    --line-soft: rgba(26, 26, 46, 0.06);
+    --line-strong: rgba(26, 26, 46, 0.18);
+    /* === TYPOGRAPHIE — CHARTE V2 ===
+       Titres : Cochin (commercial, present sur Mac/iOS) -> fallback Playfair Display
+       Corps  : Roboto */
+    --serif: 'Cochin', 'Nicolas Cochin', var(--font-playfair), 'Playfair Display', Georgia, serif;
+    --sans: var(--font-roboto), 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --max: 1280px;
+    --gutter: 32px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
     --max: 1280px;
     --gutter: 32px;
     --radius-sm: 6px;
@@ -247,7 +264,9 @@ section {
     0 1px 1px rgba(255,255,255,0.9) inset,
     0 -1px 1px rgba(255,255,255,0.2) inset,
     0 10px 36px rgba(20,20,30,0.10);
-  overflow: hidden;
+  /* PAS d'overflow:hidden ici : sinon le dropdown desktop "Services" est
+     clippé par la pill et reste invisible. Les effets internes (glow,
+     shimmer) sont chacun positionnés avec leur propre clipping local. */
   transition:
     padding 0.55s var(--ease),
     border-radius 0.55s var(--ease),
@@ -2768,131 +2787,123 @@ body:has(.home-with-cinematic-footer) {
 }
 
 /* ===========================================================
-   FOR WHO — section "Pour qui on travaille"
+   FOR WHO — section "Pour qui" : citation pleine page
    =========================================================== */
 .forwho-section {
   background: var(--cream);
   padding: 120px 0;
   position: relative;
+  overflow: hidden;
 }
-.forwho-head {
-  max-width: 800px;
-  margin: 0 auto 64px;
+.forwho-container {
+  max-width: 1120px;
   text-align: center;
 }
-.forwho-title {
+.forwho-section .eyebrow {
+  display: block;
+  margin-bottom: 56px;
+}
+.forwho-quote {
+  position: relative;
+  margin: 0;
+  padding: 0 40px;
+  max-width: 1000px;
+  margin: 0 auto 80px;
+}
+.forwho-quote p {
   font-family: var(--serif);
-  font-size: clamp(36px, 4.6vw, 56px);
-  line-height: 1.08;
-  letter-spacing: -0.022em;
+  font-size: clamp(28px, 3.8vw, 52px);
+  line-height: 1.18;
+  letter-spacing: -0.018em;
   font-weight: 400;
-  margin: 24px 0 24px;
   color: var(--ink);
-}
-.forwho-title .italic { color: var(--klein); font-style: italic; }
-.forwho-lead {
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--ink-soft);
-  max-width: 640px;
-  margin: 0 auto;
-}
-.forwho-lead strong { color: var(--ink); font-weight: 600; }
-.forwho-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  max-width: 980px;
-  margin: 0 auto 64px;
-}
-@media (max-width: 700px) { .forwho-grid { grid-template-columns: 1fr; } }
-.forwho-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 32px;
-  background: #fff;
-  border-radius: 18px;
-  border: 0.5px solid var(--line-soft);
+  margin: 0 0 32px;
+  text-align: left;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), transform 0.4s var(--ease);
-  transition-delay: calc(var(--stagger-i, 0) * 100ms);
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
-.forwho-section.in-view .forwho-card { opacity: 1; transform: translateY(0); }
-.forwho-card:hover { transform: translateY(-4px) !important; }
-.forwho-icon {
-  font-size: 32px;
-  line-height: 1;
+.forwho-section.in-view .forwho-quote p { opacity: 1; transform: translateY(0); }
+.forwho-section.in-view .forwho-quote p:nth-of-type(2) { transition-delay: 180ms; }
+
+.forwho-quote em {
+  font-style: italic;
+  color: var(--klein);
+  /* Pas de gras : la couleur fait le travail */
+  font-weight: 400;
 }
-.forwho-card-title {
-  font-family: var(--serif);
-  font-size: 22px;
-  font-weight: 500;
-  margin: 0;
-  letter-spacing: -0.01em;
+.forwho-quote strong {
   color: var(--ink);
+  font-weight: 600;
+  font-style: normal;
 }
-.forwho-card-desc {
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: var(--ink-soft);
-  margin: 0;
+.forwho-quote-second {
+  font-size: clamp(22px, 2.8vw, 36px) !important;
+  color: var(--ink-soft) !important;
+  line-height: 1.32 !important;
 }
 
-.forwho-notfor {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 36px 40px;
-  background: rgba(192, 57, 43, 0.04);
-  border-radius: 16px;
-  border-left: 3px solid rgba(192, 57, 43, 0.55);
-}
-.forwho-notfor-title {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 500;
-  margin: 0 0 16px;
-  color: #8E1F12;
-}
-.forwho-notfor-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 18px;
-}
-.forwho-notfor-list li {
-  position: relative;
-  padding: 5px 0 5px 24px;
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-.forwho-notfor-list li::before {
-  content: '✕';
+/* Gros guillemets décoratifs en serif */
+.forwho-mark {
   position: absolute;
-  left: 0;
-  top: 5px;
-  color: #C0392B;
-  font-weight: 700;
+  font-family: var(--serif);
+  font-size: clamp(80px, 12vw, 160px);
+  line-height: 0.8;
+  color: var(--klein);
+  opacity: 0.18;
+  font-weight: 400;
+  pointer-events: none;
+  user-select: none;
 }
-.forwho-notfor-foot {
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: var(--ink-muted);
-  margin: 0;
-  font-style: italic;
+.forwho-mark:not(.forwho-mark-end) {
+  top: -30px;
+  left: -10px;
+}
+.forwho-mark-end {
+  bottom: -80px;
+  right: -10px;
+}
+
+.forwho-line {
+  width: 80px;
+  height: 1px;
+  background: var(--ink-muted);
+  margin: 0 auto 56px;
+  opacity: 0.3;
+}
+
+.forwho-foot {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.9s var(--ease) 360ms, transform 0.9s var(--ease) 360ms;
+}
+.forwho-section.in-view .forwho-foot { opacity: 1; transform: translateY(0); }
+.forwho-foot strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 700px) {
+  .forwho-quote { padding: 0 16px; }
+  .forwho-mark:not(.forwho-mark-end) { top: -16px; left: 0; }
+  .forwho-mark-end { bottom: -50px; right: 0; }
 }
 
 /* ===========================================================
    MANIFESTO — section "Notre manifeste"
    =========================================================== */
 .manifesto-section {
-  background: linear-gradient(180deg, var(--cream) 0%, #fff 40%, #fff 60%, var(--cream) 100%);
-  padding: 140px 0;
+  background: linear-gradient(180deg, var(--cream) 0%, #fff 30%, #fff 70%, var(--cream) 100%);
+  /* Padding reduit pour limiter l'espace avec la section precedente
+     (Engagements) et la section suivante (Realisations). */
+  padding: 80px 0;
   position: relative;
 }
 .manifesto-container {
-  max-width: 860px;
+  max-width: 1100px;
 }
 .manifesto-section .eyebrow {
   display: block;
@@ -2910,10 +2921,14 @@ body:has(.home-with-cinematic-footer) {
   color: var(--ink);
 }
 .manifesto-title .italic { color: var(--klein); font-style: italic; }
-.manifesto-body { max-width: 720px; margin: 0 auto; }
+.manifesto-body {
+  /* Texte qui prend plus de place en largeur */
+  max-width: 980px;
+  margin: 0 auto;
+}
 .manifesto-lead {
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1.55;
   font-weight: 400;
   color: var(--ink);
@@ -2923,18 +2938,18 @@ body:has(.home-with-cinematic-footer) {
 .manifesto-duo {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 40px;
   margin: 56px 0;
-  padding: 36px 0;
+  padding: 40px 0;
   border-top: 0.5px solid var(--line-soft);
   border-bottom: 0.5px solid var(--line-soft);
 }
-@media (max-width: 700px) { .manifesto-duo { grid-template-columns: 1fr; gap: 36px; } }
+@media (max-width: 800px) { .manifesto-duo { grid-template-columns: 1fr; gap: 36px; } }
 .manifesto-pillar { padding: 8px 0; }
 .manifesto-pillar-num {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 36px;
+  font-size: 38px;
   color: var(--klein);
   opacity: 0.8;
   margin-bottom: 10px;
@@ -2942,21 +2957,21 @@ body:has(.home-with-cinematic-footer) {
 }
 .manifesto-pillar-title {
   font-family: var(--serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 500;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   letter-spacing: -0.012em;
   color: var(--ink);
 }
 .manifesto-pillar p {
-  font-size: 15px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.75;
   color: var(--ink-soft);
   margin: 0;
 }
 .manifesto-pillar strong { color: var(--ink); font-weight: 600; }
 .manifesto-text {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.8;
   color: var(--ink-soft);
   margin: 0 0 22px;
@@ -2973,7 +2988,7 @@ body:has(.home-with-cinematic-footer) {
 .manifesto-signature-text { display: flex; flex-direction: column; gap: 2px; }
 .manifesto-signature-name {
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--ink);
 }
@@ -2983,18 +2998,18 @@ body:has(.home-with-cinematic-footer) {
 }
 
 /* ===========================================================
-   GUARANTEES — section engagements post-livraison
+   GUARANTEES — section parallax horizontal sticky
    =========================================================== */
 .guarantees-section {
   background: var(--cream);
-  padding: 120px 0;
+  /* Section haute pour permettre le scroll-jacking horizontal */
   position: relative;
 }
-.guarantees-head {
-  max-width: 760px;
-  margin: 0 auto 64px;
+.guarantees-intro {
+  padding: 120px 0 60px;
   text-align: center;
 }
+.guarantees-intro .eyebrow { display: block; margin-bottom: 18px; }
 .guarantees-title {
   font-family: var(--serif);
   font-size: clamp(36px, 4.6vw, 56px);
@@ -3003,64 +3018,110 @@ body:has(.home-with-cinematic-footer) {
   font-weight: 400;
   margin: 24px 0 24px;
   color: var(--ink);
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .guarantees-title .italic { color: var(--klein); font-style: italic; }
 .guarantees-lead {
   font-size: 17px;
   line-height: 1.65;
   color: var(--ink-soft);
-  max-width: 600px;
+  max-width: 580px;
   margin: 0 auto;
 }
-.guarantees-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 1180px;
-  margin: 0 auto;
+
+/* Stage : on rend la section assez haute pour que les cartes scrollent
+   horizontalement pendant qu'on scrolle verticalement. */
+.guarantees-stage {
+  height: 280vh;
+  position: relative;
 }
-@media (max-width: 900px) { .guarantees-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .guarantees-grid { grid-template-columns: 1fr; } }
-.guarantees-card {
-  padding: 30px 28px;
+/* Viewport sticky : reste fixe en haut pendant qu'on parcourt la stage */
+.guarantees-viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.guarantees-track {
+  display: flex;
+  gap: 32px;
+  padding-left: 12vw;
+  padding-right: 12vw;
+  will-change: transform;
+}
+.guarantees-slide {
+  flex-shrink: 0;
+  width: min(440px, 70vw);
+  min-height: 360px;
+  padding: 40px 36px;
   background: #fff;
-  border-radius: 18px;
+  border-radius: 22px;
   border: 0.5px solid var(--line-soft);
+  box-shadow: 0 24px 60px rgba(20, 20, 40, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), box-shadow 0.4s var(--ease), border-color 0.4s var(--ease);
-  transition-delay: calc(var(--stagger-i, 0) * 80ms);
+  gap: 14px;
+  position: relative;
+  /* Pas d'overflow:hidden pour ne pas couper le numero en filigrane */
 }
-.guarantees-section.in-view .guarantees-card { opacity: 1; transform: translateY(0); }
-.guarantees-card:hover {
-  border-color: var(--klein);
-  box-shadow: 0 18px 46px rgba(27, 79, 138, 0.12);
+.guarantees-slide-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--klein);
+  letter-spacing: 0.03em;
 }
-.guarantees-icon {
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.guarantees-slide-num span { color: var(--ink-muted); font-size: 14px; }
+.guarantees-slide-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 5px 12px;
   background: rgba(27, 79, 138, 0.08);
   color: var(--klein);
-  border-radius: 12px;
-  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  margin-bottom: 4px;
 }
-.guarantees-card-title {
+.guarantees-slide-title {
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   font-weight: 500;
   margin: 0;
-  letter-spacing: -0.01em;
   color: var(--ink);
 }
-.guarantees-card-desc {
-  font-size: 14px;
-  line-height: 1.65;
+.guarantees-slide-desc {
+  font-size: 15px;
+  line-height: 1.7;
   color: var(--ink-soft);
   margin: 0;
+}
+
+@media (max-width: 700px) {
+  /* Sur mobile, on abandonne le parallax horizontal au profit d'une grille verticale.
+     Le scroll-jacking horizontal marche mal au tactile. */
+  .guarantees-stage { height: auto; }
+  .guarantees-viewport {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding: 40px 0 100px;
+  }
+  .guarantees-track {
+    flex-direction: column;
+    padding-left: 24px;
+    padding-right: 24px;
+    transform: none !important;
+    gap: 16px;
+  }
+  .guarantees-slide { width: 100%; min-height: 0; padding: 28px 24px; }
 }

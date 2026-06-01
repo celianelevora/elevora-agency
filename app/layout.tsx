@@ -1,31 +1,32 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Fraunces, Inter, Roboto } from "next/font/google";
+import { Playfair_Display, Roboto } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageEnter from "@/components/PageEnter";
 
-const fraunces = Fraunces({
+// Cochin n'est PAS sur Google Fonts (fonte commerciale Linotype).
+// Strategie : on charge Playfair Display comme fallback web le plus
+// proche de Cochin (serif elegant haut-contraste), et on prefere Cochin
+// natif quand l'OS le fournit (Mac/iOS). Voir --font-serif dans globals.css.
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
-  variable: "--font-fraunces",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-geist",
+  variable: "--font-playfair",
   display: "swap",
 });
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-roboto",
   display: "swap",
 });
+
+// Anciens aliases pour ne pas casser les usages existants
+const fraunces = { variable: '' };
+const inter = { variable: '' };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://elevora-agency.com"),
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${fraunces.variable} ${inter.variable} ${roboto.variable}`}>
+    <html lang="fr" className={`${playfair.variable} ${roboto.variable}`}>
       <body>
         <Header />
         <main>
