@@ -1,41 +1,70 @@
-export default function LegalLayout({ pillText, title, lastUpdate, children }) {
+import { ReactNode } from 'react';
+
+interface LegalLayoutProps {
+  pillText: string;
+  title: string;        // peut contenir des span.italic
+  intro?: string;
+  lastUpdate: string;
+  version?: string;
+  toc?: { id: string; label: string }[];
+  children: ReactNode;
+}
+
+export default function LegalLayout({
+  pillText,
+  title,
+  intro,
+  lastUpdate,
+  version = '1.0',
+  toc,
+  children,
+}: LegalLayoutProps) {
   return (
-    <>
-      <section style={{ padding: '80px 0 40px' }}>
-        <div className="container" style={{ maxWidth: 860 }}>
-          <span className="pill">
-            <span className="pill-dot"></span>
+    <article className="legal-page">
+      {/* Hero */}
+      <section className="legal-hero">
+        <div className="container" style={{ maxWidth: 980 }}>
+          <span className="pill legal-pill">
+            <span className="pill-dot legal-pill-dot" />
             {pillText}
           </span>
           <h1
-            style={{ margin: '28px 0 28px' }}
+            className="legal-h1"
             dangerouslySetInnerHTML={{ __html: title }}
           />
-          <p style={{ fontSize: 14, color: 'var(--ink-muted)' }}>Dernière mise à jour : {lastUpdate}</p>
+          {intro && <p className="legal-intro">{intro}</p>}
+          <div className="legal-meta">
+            <span>Dernière mise à jour : <strong>{lastUpdate}</strong></span>
+            <span className="legal-meta-sep">·</span>
+            <span>Version : <strong>{version}</strong></span>
+          </div>
         </div>
       </section>
 
-      <section style={{ paddingTop: 0 }}>
-        <div
-          className="container legal-content"
-          style={{ maxWidth: 860 }}
-        >
-          {children}
+      {/* Layout 2 colonnes : sommaire sticky + contenu */}
+      <section className="legal-body">
+        <div className="container legal-grid">
+          {toc && toc.length > 0 && (
+            <aside className="legal-toc">
+              <div className="legal-toc-inner">
+                <div className="legal-toc-title">Sommaire</div>
+                <ol className="legal-toc-list">
+                  {toc.map((item, i) => (
+                    <li key={item.id}>
+                      <a href={`#${item.id}`}>
+                        <span className="legal-toc-num">{String(i + 1).padStart(2, '0')}</span>
+                        <span>{item.label}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </aside>
+          )}
+
+          <div className="legal-content">{children}</div>
         </div>
       </section>
-
-      <style>{`
-        .legal-content h2 { font-size: 22px; margin: 40px 0 16px; }
-        .legal-content h3 { font-size: 17px; margin: 28px 0 12px; }
-        .legal-content p, .legal-content li { font-size: 15px; line-height: 1.7; color: var(--ink-soft); margin-bottom: 12px; }
-        .legal-content ul { padding-left: 20px; }
-        .legal-content strong { color: var(--ink); font-weight: 500; }
-        .legal-content a { color: var(--klein); }
-        .cookie-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-        .cookie-table th, .cookie-table td { padding: 12px 16px; text-align: left; border: 0.5px solid var(--line); }
-        .cookie-table th { background: var(--cream-warm); font-weight: 500; color: var(--ink); }
-        .cookie-table td { color: var(--ink-soft); }
-      `}</style>
-    </>
+    </article>
   );
 }

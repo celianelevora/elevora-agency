@@ -91,7 +91,7 @@ export default function Header() {
 
           {/* CTA droite — toujours dans le DOM, masque proprement en CSS au scroll
               (transition fluide synchronisee avec le reste du header). */}
-          <Link href="/contact" className="hdr-cta" onClick={closeMenu}>
+          <Link href="/demarrer-un-projet" className="hdr-cta" onClick={closeMenu}>
             Démarrer un projet
             <svg className="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -138,7 +138,7 @@ export default function Header() {
         <Link href="/tarifs" className="drawer-link" onClick={closeMenu}>Tarifs</Link>
         <Link href="/agence" className="drawer-link" onClick={closeMenu}>Agence</Link>
         <Link href="/contact" className="drawer-link" onClick={closeMenu}>Contact</Link>
-        <Link href="/contact" className="drawer-cta" onClick={closeMenu}>
+        <Link href="/demarrer-un-projet" className="drawer-cta" onClick={closeMenu}>
           Démarrer un projet
           <svg className="ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="5" y1="12" x2="19" y2="12" />

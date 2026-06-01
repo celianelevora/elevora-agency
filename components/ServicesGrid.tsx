@@ -24,14 +24,6 @@ export default function ServicesGrid() {
 
   return (
     <section ref={sectionRef} className="services-section">
-      {/* Image cascade en background (derrière les cards), opacité réduite */}
-      <div className="services-bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="services-bg-img" src="/services-bg.jpg" alt="" />
-        <div className="services-bg-fade-top" />
-        <div className="services-bg-fade-bottom" />
-      </div>
-
       <div className="container services-container">
         <span className="eyebrow">01 — Ce qu'on fait</span>
         <h2 className="services-title">

@@ -2,11 +2,38 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json();
+    let data: Record<string, any> = {};
 
-    const required = ['firstname', 'lastname', 'email', 'message'];
+    // Accepter JSON ou FormData (les nouveaux formulaires envoient FormData
+    // pour pouvoir joindre une piece jointe sans surcout)
+    const ct = request.headers.get('content-type') || '';
+    if (ct.includes('application/json')) {
+      data = await request.json();
+    } else {
+      const fd = await request.formData();
+      fd.forEach((value, key) => {
+        // Pour les checkbox multiples (features) on construit un tableau
+        if (data[key] !== undefined) {
+          if (Array.isArray(data[key])) {
+            data[key].push(value);
+          } else {
+            data[key] = [data[key], value];
+          }
+        } else {
+          data[key] = value;
+        }
+      });
+    }
+
+    const formType = data.form_type || 'contact_simple';
+    const required =
+      formType === 'start_project'
+        ? ['first_name', 'last_name', 'email', 'project_type', 'description', 'objective']
+        : ['first_name', 'last_name', 'email', 'subject', 'message'];
+
     for (const field of required) {
-      if (!data[field] || data[field].trim() === '') {
+      const v = data[field];
+      if (!v || (typeof v === 'string' && v.trim() === '')) {
         return NextResponse.json(
           { error: `Le champ ${field} est requis.` },
           { status: 400 }
@@ -15,50 +42,31 @@ export async function POST(request: NextRequest) {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
+    if (!emailRegex.test(String(data.email))) {
       return NextResponse.json({ error: 'Email invalide.' }, { status: 400 });
     }
 
-    console.log('Nouveau message de contact :', {
-      from: `${data.firstname} ${data.lastname} <${data.email}>`,
-      phone: data.phone,
+    console.log(`[${formType}] Nouvelle demande :`, {
+      from: `${data.first_name} ${data.last_name} <${data.email}>`,
+      phone: data.phone_full || data.phone,
       company: data.company,
-      project: data.project,
+      project_type: data.project_type,
+      objective: data.objective,
       budget: data.budget,
-      message: data.message,
+      features: data.features,
+      subject: data.subject,
+      message: data.message || data.description,
     });
 
-    // Pour brancher Resend (envoi d'email réel) :
-    // 1. npm install resend
-    // 2. Ajouter RESEND_API_KEY dans les variables d'environnement Infomaniak
-    // 3. Décommenter ci-dessous
+    // TODO Resend : a brancher quand RESEND_API_KEY sera configure
+    // npm install resend ; ajouter env var ; appeler resend.emails.send(...)
 
-    /*
-    import { Resend } from 'resend';
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: 'Elevora <noreply@elevora-agency.com>',
-      to: 'contact@elevora-agency.com',
-      reply_to: data.email,
-      subject: `Nouveau message : ${data.firstname} ${data.lastname}`,
-      html: `
-        <h2>Nouveau message depuis le site</h2>
-        <p><strong>Nom :</strong> ${data.firstname} ${data.lastname}</p>
-        <p><strong>Email :</strong> ${data.email}</p>
-        <p><strong>Téléphone :</strong> ${data.phone || 'Non renseigné'}</p>
-        <p><strong>Entreprise :</strong> ${data.company || 'Non renseignée'}</p>
-        <p><strong>Type de projet :</strong> ${data.project || 'Non précisé'}</p>
-        <p><strong>Budget :</strong> ${data.budget || 'Non précisé'}</p>
-        <hr>
-        <p><strong>Message :</strong></p>
-        <p>${data.message.replace(/\n/g, '<br>')}</p>
-      `,
-    });
-    */
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Erreur API contact :', error);
-    return NextResponse.json({ error: 'Erreur serveur.' }, { status: 500 });
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch (err) {
+    console.error('Erreur API /api/contact :', err);
+    return NextResponse.json(
+      { error: 'Erreur serveur. Merci de réessayer.' },
+      { status: 500 }
+    );
   }
 }
