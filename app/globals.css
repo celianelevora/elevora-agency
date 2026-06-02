@@ -3833,42 +3833,54 @@ body:has(.home-with-cinematic-footer) {
 }
 
 /* ===========================================================
-   BANNIERE FINALE PAGE REALISATIONS — image statue plein largeur
+   BANNIERE FINALE PAGE REALISATIONS — image entiere visible
    =========================================================== */
 .reali-cta-banner {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  /* Colle au footer : pas de margin-bottom */
+  /* Pas de min-height : la banniere fait la hauteur naturelle
+     de l'image (ratio ~3:1, donc ~33% de la largeur viewport).
+     Pas de margin-bottom : colle au footer. */
   margin-bottom: -1px;
+  background-color: var(--cream);
 }
 .reali-cta-banner-bg {
   position: absolute;
   inset: 0;
+  /* contain pour voir l'image en ENTIER, pas de recadrage.
+     L'image fait 2172x724 donc ratio ~3:1, parfait pour une banniere wide. */
   background-image: url('/reali-cta-bg.jpg');
-  background-size: cover;
-  background-position: center;
+  background-size: contain;
+  background-position: right center;
   background-repeat: no-repeat;
   background-color: var(--cream);
   z-index: -1;
 }
 .reali-cta-banner-inner {
+  /* La banniere prend sa hauteur naturelle de l'image en aspect ratio */
+  aspect-ratio: 2172 / 724;
+  width: 100%;
   display: flex;
   align-items: center;
-  min-height: 480px;
-  padding: 120px 0;
+  /* Pas de padding y sinon ca casse l'aspect-ratio */
+  padding: 0;
+  position: relative;
 }
 .reali-cta-banner-content {
-  /* Texte cale a gauche (image a la statue cote droit) */
-  max-width: 600px;
+  /* Texte cole a gauche : padding-left genereux pour respirer du bord,
+     pas centre. Cale verticalement au centre de la banniere. */
+  max-width: 540px;
+  padding-left: 6vw;
+  padding-right: 2vw;
 }
 .reali-cta-banner-title {
   font-family: var(--serif);
-  font-size: clamp(40px, 5vw, 64px);
-  line-height: 1.04;
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1.05;
   letter-spacing: -0.022em;
   font-weight: 400;
-  margin: 0 0 22px;
+  margin: 0 0 16px;
   color: var(--ink);
 }
 .reali-cta-banner-title .italic {
@@ -3876,21 +3888,21 @@ body:has(.home-with-cinematic-footer) {
   font-style: italic;
 }
 .reali-cta-banner-lead {
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 520px;
-  margin: 0 0 32px;
+  max-width: 460px;
+  margin: 0 0 22px;
 }
 .reali-cta-banner-link {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 28px;
+  padding: 14px 24px;
   background: var(--klein);
   color: #fff;
   border-radius: 999px;
-  font-size: 15px;
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: 500;
   text-decoration: none;
   box-shadow: 0 14px 36px rgba(27, 79, 138, 0.30);
@@ -3902,7 +3914,11 @@ body:has(.home-with-cinematic-footer) {
   box-shadow: 0 20px 44px rgba(27, 79, 138, 0.40);
 }
 @media (max-width: 700px) {
-  .reali-cta-banner-inner { min-height: 380px; padding: 80px 0; }
+  /* Sur mobile, on abandonne l'aspect ratio strict pour le confort de lecture :
+     image en background contain + contenu qui peut prendre la hauteur necessaire */
+  .reali-cta-banner-bg { background-size: cover; opacity: 0.6; }
+  .reali-cta-banner-inner { aspect-ratio: auto; min-height: 360px; padding: 50px 0; }
+  .reali-cta-banner-content { padding-left: 6vw; padding-right: 6vw; max-width: 100%; }
 }
 
 /* ===========================================================
@@ -3915,11 +3931,14 @@ body:has(.home-with-cinematic-footer) {
   isolation: isolate;
   overflow: hidden;
   background: var(--cream);
-  min-height: 90vh;
+  /* Pas de min-height 90vh qui pousse le contenu trop bas : on laisse
+     le contenu definir la hauteur naturelle avec un padding controle. */
+  min-height: 0;
 }
 .methode-hero-bg {
   position: absolute;
-  top: 110px;
+  /* Image remonte : top 90px au lieu de 110px (calage juste sous le header). */
+  top: 90px;
   left: 0; right: 0; bottom: 0;
   background-image: url('/method-fond.jpg');
   background-size: cover;
@@ -3927,29 +3946,29 @@ body:has(.home-with-cinematic-footer) {
   background-repeat: no-repeat;
   background-color: var(--cream);
   z-index: 0;
-  /* Fondu doux en bas pour rejoindre la section suivante */
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0,0,0,1) 60px,
-    rgba(0,0,0,1) calc(100% - 120px),
+    rgba(0,0,0,1) 40px,
+    rgba(0,0,0,1) calc(100% - 100px),
     transparent 100%
   );
           mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(0,0,0,1) 60px,
-    rgba(0,0,0,1) calc(100% - 120px),
+    rgba(0,0,0,1) 40px,
+    rgba(0,0,0,1) calc(100% - 100px),
     transparent 100%
   );
 }
 .methode-hero-inner {
   position: relative;
   z-index: 1;
-  min-height: 90vh;
+  /* Padding-top reduit : 120px -> 130px (header de 100px + 30px d'air).
+     Padding-bottom reduit aussi pour eviter le trou en bas du screen. */
   display: flex;
-  align-items: center;
-  padding: 120px 5vw 80px 5vw;
+  align-items: flex-start;
+  padding: 130px 5vw 70px 5vw;
 }
 .methode-hero-content {
   /* Texte cale a gauche : on prend 55% max et on s'aligne a gauche */
@@ -4075,21 +4094,38 @@ body:has(.home-with-cinematic-footer) {
   margin: 0 auto;
 }
 
-/* ETAPES FlowArt — refonte du layout interieur */
+/* ETAPES FlowArt — refonte du layout interieur
+   Les images de fond ont leur sujet visuel sur le COTE DROIT, donc :
+   - Le texte se positionne dans la MOITIE GAUCHE (zone vide de l'image)
+   - La card "livrable" se positionne aussi a gauche, en dessous du texte,
+     OU a droite par-dessus le sujet en glasswing (au choix : ici glasswing) */
 .methode-step {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 64px;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
   align-items: start;
-  max-width: 1200px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
 }
 @media (max-width: 900px) {
-  .methode-step { grid-template-columns: 1fr; gap: 36px; }
+  .methode-step { grid-template-columns: 1fr; gap: 28px; }
 }
 
-.methode-step-left { display: flex; flex-direction: column; }
+.methode-step-left {
+  display: flex;
+  flex-direction: column;
+  /* Reste dans la moitie GAUCHE (zone libre des images) */
+  max-width: 560px;
+}
+.methode-step-right {
+  /* La card livrable se cale a droite, plus haut que le bas du texte,
+     en chevauchant la zone du sujet visuel avec son glasswing translucide. */
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-start;
+  margin-top: 60px;
+}
 .methode-step-num {
   font-family: var(--serif);
   font-style: italic;

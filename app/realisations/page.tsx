@@ -254,7 +254,7 @@ export default function RealisationsPage() {
       <section className="reali-cta-banner" aria-label="Démarrer un projet">
         <div className="reali-cta-banner-bg" aria-hidden="true" />
         <div className="reali-cta-banner-inner">
-          <div className="container reali-cta-banner-content">
+          <div className="reali-cta-banner-content">
             <h2 className="reali-cta-banner-title">
               Le prochain projet,<br />
               <span className="italic">c'est le vôtre ?</span>

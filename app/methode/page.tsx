@@ -82,10 +82,15 @@ export default function MethodePage() {
       <article>
         <FlowArt aria-label="Méthode Elevora — 4 étapes">
 
-          {/* ETAPE 01 — CADRAGE */}
+          {/* ETAPE 01 — CADRAGE : image Penseur lavande clair */}
           <FlowSection
             aria-label="Étape 1 — Cadrage"
-            style={{ background: 'var(--cream)' }}
+            style={{
+              backgroundImage: 'url(/methode-step-1.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundColor: '#EBE8EF',
+            }}
           >
             <div className="methode-step">
               <div className="methode-step-left">
@@ -122,10 +127,15 @@ export default function MethodePage() {
             </div>
           </FlowSection>
 
-          {/* ETAPE 02 — DESIGN */}
+          {/* ETAPE 02 — DESIGN : image colonnes neon bleu nuit */}
           <FlowSection
             aria-label="Étape 2 — Design"
-            style={{ background: 'var(--klein)' }}
+            style={{
+              backgroundImage: 'url(/methode-step-2.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundColor: '#001741',
+            }}
           >
             <div className="methode-step methode-step-dark">
               <div className="methode-step-left">
@@ -162,10 +172,15 @@ export default function MethodePage() {
             </div>
           </FlowSection>
 
-          {/* ETAPE 03 — DEVELOPPEMENT */}
+          {/* ETAPE 03 — DEVELOPPEMENT : image statue mystique bleu nuit profond */}
           <FlowSection
             aria-label="Étape 3 — Développement"
-            style={{ background: 'var(--klein-deep)' }}
+            style={{
+              backgroundImage: 'url(/methode-step-3.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundColor: '#090A1F',
+            }}
           >
             <div className="methode-step methode-step-dark">
               <div className="methode-step-left">
@@ -202,10 +217,15 @@ export default function MethodePage() {
             </div>
           </FlowSection>
 
-          {/* ETAPE 04 — LIVRAISON */}
+          {/* ETAPE 04 — LIVRAISON : image statue rose pastel apaisee */}
           <FlowSection
             aria-label="Étape 4 — Livraison"
-            style={{ background: 'var(--pink-soft)' }}
+            style={{
+              backgroundImage: 'url(/methode-step-4.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundColor: '#FDE6EA',
+            }}
           >
             <div className="methode-step">
               <div className="methode-step-left">
