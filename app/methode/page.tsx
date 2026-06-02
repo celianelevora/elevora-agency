@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import FlowArt, { FlowSection } from '@/components/ui/story-scroll';
-import { DynamicIslandTOC } from '@/components/ui/dynamic-island-toc';
 
 export const metadata = {
   title: 'Méthode | Comment on travaille',
@@ -245,7 +244,7 @@ export default function MethodePage() {
         </FlowArt>
       </article>
 
-      <DynamicIslandTOC selector="article h2" accentColor="var(--pink)" />
+      {/* Widget DynamicIslandTOC retire sur demande utilisateur */}
 
       {/* BANNIERE IMAGE PURE : remplace l'ancienne section "Ce qu'on ne fera jamais".
           L'image contient deja son propre texte/icones integres, on n'ajoute rien par-dessus. */}

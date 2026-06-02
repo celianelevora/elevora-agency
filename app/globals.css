@@ -1271,7 +1271,8 @@ body:has(.home-with-cinematic-footer) {
 }
 .site-footer-desc {
   font-family: var(--sans);
-  font-size: 14px;
+  /* +15% : 14 -> 16 */
+  font-size: 16px;
   line-height: 1.7;
   color: rgba(184,184,184,0.7);
   margin-bottom: 24px;
@@ -1281,7 +1282,8 @@ body:has(.home-with-cinematic-footer) {
   align-items: center;
   gap: 8px;
   font-family: var(--sans);
-  font-size: 12px;
+  /* +15% : 12 -> 14 */
+  font-size: 14px;
   color: rgba(184,184,184,0.5);
   padding: 8px 14px;
   border: 1px solid rgba(184,184,184,0.15);
@@ -1296,7 +1298,8 @@ body:has(.home-with-cinematic-footer) {
 }
 .site-footer-col-title {
   font-family: var(--sans);
-  font-size: 11px;
+  /* +15% : 11 -> 13 */
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1306,7 +1309,8 @@ body:has(.home-with-cinematic-footer) {
 .site-footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 .site-footer-col a, .site-footer-col address {
   font-family: var(--sans);
-  font-size: 14px;
+  /* +15% : 14 -> 16 */
+  font-size: 16px;
   font-style: normal;
   color: rgba(184,184,184,0.7);
   text-decoration: none;
@@ -1326,7 +1330,8 @@ body:has(.home-with-cinematic-footer) {
   padding-top: 28px;
   border-top: 1px solid rgba(184,184,184,0.12);
   font-family: var(--sans);
-  font-size: 12px;
+  /* +15% : 12 -> 14 */
+  font-size: 14px;
   color: rgba(184,184,184,0.5);
 }
 .site-footer-legal { display: flex; gap: 24px; flex-wrap: wrap; }
@@ -4385,21 +4390,32 @@ body:has(.home-with-cinematic-footer) {
 
 /* ===========================================================
    TRANSITION methode-intro -> ETAPE 01
-   La section "Chaque étape a un objectif" (.methode-intro) a un fond cream,
-   l'etape 1 a une image lavande pale. On fond la fin de l'intro vers
-   transparent pour creer une transition douce vers l'image. */
-.methode-intro {
-  position: relative;
+   Approche mask-image : la PREMIERE FlowSection (et seulement elle)
+   recoit un fondu en haut : transparent sur les 120 premiers pixels,
+   puis opaque. Resultat : l'image de l'etape 1 apparait progressivement
+   depuis le cream de la section .methode-intro qui la precede. */
+[data-flow-section]:first-of-type {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,1) 120px,
+    rgba(0,0,0,1) 100%
+  );
+          mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0,0,0,1) 120px,
+    rgba(0,0,0,1) 100%
+  );
 }
-.methode-intro::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0; right: 0;
-  height: 140px;
-  background: linear-gradient(to bottom, transparent 0%, var(--cream) 100%);
-  pointer-events: none;
-  /* Le fade descend vers le cream pour que la fin de l'intro se fond
-     visuellement avec ce qui suit (FlowArt). */
-  opacity: 0.5;
+
+/* ===========================================================
+   FOOTER CINEMATIQUE (home page) — +15% sur tous les textes
+   Le CinematicFooter utilise Tailwind, on rescale via font-size root */
+.cinematic-footer-wrapper {
+  /* +15% : tous les rem/em internes s'agrandissent automatiquement */
+  font-size: 18.4px; /* 16 * 1.15 */
 }
+.cinematic-footer-wrapper .text-xs { font-size: 0.85rem !important; /* +15% de 0.75rem */ }
+.cinematic-footer-wrapper .text-sm { font-size: 1rem !important; /* +15% de 0.875rem */ }
+.cinematic-footer-wrapper .text-base { font-size: 1.15rem !important; /* +15% de 1rem */ }
