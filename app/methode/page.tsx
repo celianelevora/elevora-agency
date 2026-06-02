@@ -8,25 +8,6 @@ export const metadata = {
     "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre.",
 };
 
-const NEVERS = [
-  {
-    title: "Vous facturer un changement qu'on aurait dû anticiper",
-    desc: "Si on a mal cadré, c'est sur nous. Vous ne payez jamais notre approximation initiale.",
-  },
-  {
-    title: 'Sous-traiter sans vous le dire',
-    desc: "Tout est fait par nous, à Nantes. Si jamais on devait s'appuyer sur un partenaire, vous le saurez avant.",
-  },
-  {
-    title: 'Vous prendre en otage à la fin',
-    desc: "Le code, les accès, le nom de domaine — tout vous appartient. Si vous voulez changer d'agence demain, vous pouvez.",
-  },
-  {
-    title: "Accepter un projet qu'on ne saurait pas faire",
-    desc: 'Si votre besoin dépasse nos compétences, on vous le dit franchement et on vous oriente vers la bonne personne.',
-  },
-];
-
 export default function MethodePage() {
   return (
     <>
@@ -266,26 +247,10 @@ export default function MethodePage() {
 
       <DynamicIslandTOC selector="article h2" accentColor="var(--pink)" />
 
-      {/* CE QU'ON NE FAIT PAS — section sombre, dense */}
-      <section className="methode-nevers">
-        <div className="container">
-          <div className="methode-nevers-head">
-            <span className="eyebrow methode-nevers-eyebrow">Et aussi</span>
-            <h2 className="methode-nevers-title">
-              Ce qu'on ne fera<br />
-              <span className="italic methode-italic-pink">jamais.</span>
-            </h2>
-          </div>
-          <div className="methode-nevers-grid">
-            {NEVERS.map((n, i) => (
-              <div key={i} className="methode-never-card">
-                <div className="methode-never-num">{String(i + 1).padStart(2, '0')}</div>
-                <h4 className="methode-never-title">{n.title}</h4>
-                <p className="methode-never-desc">{n.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* BANNIERE IMAGE PURE : remplace l'ancienne section "Ce qu'on ne fera jamais".
+          L'image contient deja son propre texte/icones integres, on n'ajoute rien par-dessus. */}
+      <section className="methode-banner" aria-label="Comprendre avant d'agir">
+        <div className="methode-banner-bg" aria-hidden="true" />
       </section>
 
       {/* CTA — Demarrer un projet */}
