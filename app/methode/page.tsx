@@ -64,6 +64,7 @@ export default function MethodePage() {
 
           {/* ETAPE 01 — CADRAGE : image Penseur lavande clair */}
           <FlowSection
+            className="methode-step-first"
             aria-label="Étape 1 — Cadrage"
             style={{
               backgroundImage: 'url(/methode-step-1.jpg)',

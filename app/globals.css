@@ -4389,24 +4389,37 @@ body:has(.home-with-cinematic-footer) {
 }
 
 /* ===========================================================
-   TRANSITION methode-intro -> ETAPE 01
-   Approche mask-image : la PREMIERE FlowSection (et seulement elle)
-   recoit un fondu en haut : transparent sur les 120 premiers pixels,
-   puis opaque. Resultat : l'image de l'etape 1 apparait progressivement
-   depuis le cream de la section .methode-intro qui la precede. */
-[data-flow-section]:first-of-type {
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0,0,0,1) 120px,
-    rgba(0,0,0,1) 100%
-  );
-          mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0,0,0,1) 120px,
-    rgba(0,0,0,1) 100%
-  );
+   TRANSITION methode-intro -> ETAPE 01 (Option B : backdrop-blur)
+   Un overlay flou positionne sur la jonction entre les deux sections
+   diffuse visuellement la limite, peu importe les couleurs.
+   - bottom: -100px pour dépasser dans l'étape 1
+   - height: 200px = 100px sur l'intro + 100px sur l'étape 1
+   - backdrop-filter: blur(40px) floute tout ce qui passe derrière */
+.methode-intro {
+  position: relative;
+}
+.methode-intro::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -100px;
+  height: 200px;
+  -webkit-backdrop-filter: blur(40px) saturate(110%);
+          backdrop-filter: blur(40px) saturate(110%);
+  z-index: 10;
+  pointer-events: none;
+  /* Petit voile blanc tres tres leger pour adoucir encore */
+  background: linear-gradient(to bottom,
+    rgba(234, 233, 238, 0) 0%,
+    rgba(234, 233, 238, 0.15) 50%,
+    rgba(234, 233, 238, 0) 100%);
+}
+
+/* Retire les anciens mask-image qui ne fonctionnaient pas comme prevu */
+.methode-step-first,
+.methode-step-first .flow-art-container {
+  -webkit-mask-image: none !important;
+          mask-image: none !important;
 }
 
 /* ===========================================================
@@ -4419,3 +4432,70 @@ body:has(.home-with-cinematic-footer) {
 .cinematic-footer-wrapper .text-xs { font-size: 0.85rem !important; /* +15% de 0.75rem */ }
 .cinematic-footer-wrapper .text-sm { font-size: 1rem !important; /* +15% de 0.875rem */ }
 .cinematic-footer-wrapper .text-base { font-size: 1.15rem !important; /* +15% de 1rem */ }
+
+/* ===========================================================
+   NEUTRALISATION ECART BANNIERE / FOOTER (page Realisations)
+   Plusieurs causes possibles, on les bloque TOUTES :
+
+   1) .page-enter a padding-bottom: 80px → on retire pour cette page
+   2) bannière elle-meme avec margin-bottom negatif renforce
+   3) footer avec margin-top potentiel → forcer a 0
+   4) display block + line-height: 0 pour eliminer baseline gap
+
+   Selecteur :has() permet de cibler uniquement la page contenant
+   la banniere, sans toucher aux autres pages. */
+body:has(.reali-cta-banner) .page-enter {
+  padding-bottom: 0 !important;
+}
+body:has(.reali-cta-banner) main {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+body:has(.reali-cta-banner) .site-footer {
+  margin-top: 0 !important;
+}
+.reali-cta-banner {
+  margin-bottom: 0 !important;
+  display: block !important;
+  /* Eliminer tout gap baseline/inline */
+  line-height: 0;
+  vertical-align: top;
+}
+.reali-cta-banner > * { line-height: normal; }
+
+/* ===========================================================
+   NEUTRALISATION ECART ETAPE 4 (rose) / BANNIERE COMPRENDRE
+   Causes possibles :
+   1) FlowSection min-h-screen avec contenu < 100vh → on voit le fond
+   2) <main> du FlowArt avec un background visible
+   3) <article> wrapper avec margin-bottom
+   4) Pin GSAP qui laisse un espace
+   On force tout a 0 et on s'assure que la 4eme FlowSection
+   se termine sur la couleur de l'image (pas le cream du body). */
+
+/* Le <main> du FlowArt et l'<article> qui le wrappe : pas de padding/margin */
+article:has([data-flow-section]),
+article:has([data-flow-section]) > main {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Derniere FlowSection : pas de marge */
+[data-flow-section]:last-of-type {
+  margin-bottom: 0 !important;
+}
+
+/* La banniere methode colle directement a l'etape 4 */
+.methode-banner {
+  margin-top: 0 !important;
+}
+
+/* La section CTA "Tout commence par un echange" colle a la banniere */
+.methode-cta {
+  margin-top: 0 !important;
+}
+
+/* Renforcer la fixation au footer pour la page Methode aussi */
+body:has(.methode-banner) .site-footer {
+  margin-top: 0 !important;
+}
