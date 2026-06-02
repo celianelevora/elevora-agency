@@ -1,314 +1,244 @@
-import Hero from '@/components/Hero';
 import Link from 'next/link';
 import FlowArt, { FlowSection } from '@/components/ui/story-scroll';
 import { DynamicIslandTOC } from '@/components/ui/dynamic-island-toc';
 
 export const metadata = {
   title: 'Méthode | Comment on travaille',
-  description: "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre.",
+  description:
+    "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre.",
 };
 
-
 const NEVERS = [
-  { title: "Vous facturer un changement qu'on aurait dû anticiper", desc: "Si on a mal cadré, c'est sur nous. Vous ne payez jamais notre approximation initiale." },
-  { title: 'Sous-traiter sans vous le dire', desc: "Tout est fait par nous, à Nantes. Si jamais on devait s'appuyer sur un partenaire, vous le saurez avant." },
-  { title: 'Vous prendre en otage à la fin', desc: "Le code, les accès, le nom de domaine — tout vous appartient. Si vous voulez changer d'agence demain, vous pouvez." },
-  { title: "Accepter un projet qu'on ne saurait pas faire", desc: 'Si votre besoin dépasse nos compétences, on vous le dit franchement et on vous oriente vers la bonne personne.' },
+  {
+    title: "Vous facturer un changement qu'on aurait dû anticiper",
+    desc: "Si on a mal cadré, c'est sur nous. Vous ne payez jamais notre approximation initiale.",
+  },
+  {
+    title: 'Sous-traiter sans vous le dire',
+    desc: "Tout est fait par nous, à Nantes. Si jamais on devait s'appuyer sur un partenaire, vous le saurez avant.",
+  },
+  {
+    title: 'Vous prendre en otage à la fin',
+    desc: "Le code, les accès, le nom de domaine — tout vous appartient. Si vous voulez changer d'agence demain, vous pouvez.",
+  },
+  {
+    title: "Accepter un projet qu'on ne saurait pas faire",
+    desc: 'Si votre besoin dépasse nos compétences, on vous le dit franchement et on vous oriente vers la bonne personne.',
+  },
 ];
 
 export default function MethodePage() {
   return (
     <>
-      <Hero
-        pillText="Notre méthode"
-        title={`De l'idée à la mise en ligne,<br>un chemin <span class="italic">clair et balisé.</span>`}
-        lead="Un projet digital se passe mal quand le client ne sait pas où il en est, ce qu'on attend de lui, et combien ça va coûter. On a structuré notre méthode pour que ces trois informations soient toujours sur la table."
-        bgImage="/method-fond.jpg"
-        leftOffsetPercent={15}
-      />
+      {/* HERO custom : texte aligne a GAUCHE, image colonne marbre a DROITE */}
+      <section className="methode-hero">
+        <div className="methode-hero-bg" aria-hidden="true" />
+        <div className="methode-hero-inner">
+          <div className="methode-hero-content">
+            <div className="methode-hero-meta">
+              <span className="methode-hero-num">04</span>
+              <span className="methode-hero-meta-line" />
+              <span className="methode-hero-meta-label">étapes · 6 à 10 semaines</span>
+            </div>
+            <h1 className="methode-hero-title">
+              De l'idée à la mise en ligne,<br />
+              un chemin <span className="italic">clair et balisé.</span>
+            </h1>
+            <p className="methode-hero-lead">
+              Un projet digital se passe mal quand le client ne sait pas où il
+              en est, ce qu'on attend de lui, et combien ça va coûter. On a
+              structuré notre méthode pour que ces trois informations soient
+              toujours sur la table.
+            </p>
+            <div className="methode-hero-chips">
+              <span className="methode-chip">Devis ferme</span>
+              <span className="methode-chip">Livraison annoncée</span>
+              <span className="methode-chip">Suivi 30 jours offert</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* STORY SCROLL — Les 4 étapes en immersion */}
+      {/* INTRO RAPIDE : pose le decor avant le scroll des etapes */}
+      <section className="methode-intro">
+        <div className="container methode-intro-inner">
+          <div className="methode-intro-tag">
+            <span className="methode-intro-tag-dot" />
+            Comment ça se passe
+          </div>
+          <h2 className="methode-intro-title">
+            Chaque étape a un <span className="italic">objectif</span>,<br />
+            une durée et un livrable.
+          </h2>
+          <p className="methode-intro-text">
+            Pas de jargon, pas de zone floue. À la fin de chaque étape, vous
+            savez exactement ce que vous avez en main et ce qui vient ensuite.
+            Vous gardez la main du début à la fin.
+          </p>
+        </div>
+      </section>
+
+      {/* STORY SCROLL — Les 4 etapes en immersion verticale */}
       <article>
         <FlowArt aria-label="Méthode Elevora — 4 étapes">
+
+          {/* ETAPE 01 — CADRAGE */}
           <FlowSection
             aria-label="Étape 1 — Cadrage"
-            style={{ background: 'var(--cream-warm)' }}
+            style={{ background: 'var(--cream)' }}
           >
-            <div className="flex flex-col gap-4 max-w-2xl">
-              <span
-                style={{
-                  fontSize: 13,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--ink-muted)',
-                  fontWeight: 500,
-                }}
-              >
-                Étape 01 — Cadrage · 1 semaine
-              </span>
-              <h2
-                style={{
-                  fontSize: 'clamp(3rem, 9vw, 8rem)',
-                  fontFamily: 'var(--sans)',
-                  fontWeight: 400,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.95,
-                  color: 'var(--ink)',
-                  margin: 0,
-                }}
-              >
-                On comprend<br />
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--klein)' }}>
-                  avant
-                </span>{' '}
-                d'agir.
-              </h2>
-              <p
-                style={{
-                  fontSize: 19,
-                  lineHeight: 1.55,
-                  color: 'var(--ink-soft)',
-                  maxWidth: 600,
-                  marginTop: 16,
-                }}
-              >
-                Premier rendez-vous : on parle de votre métier, de vos clients, de vos concurrents. On définit les objectifs concrets et les indicateurs qui diront si c'est réussi.
-              </p>
-            </div>
-            <div
-              className="self-end max-w-md"
-              style={{
-                background: 'rgba(0,51,160,0.06)',
-                borderRadius: 16,
-                padding: '24px 28px',
-              }}
-            >
-              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12 }}>
-                Ce que vous repartez avec
+            <div className="methode-step">
+              <div className="methode-step-left">
+                <span className="methode-step-num methode-step-num-klein">01</span>
+                <span className="methode-step-tag">Cadrage · ~ 1 semaine</span>
+                <h2 className="methode-step-title">
+                  On comprend<br />
+                  <span className="italic methode-italic-klein">avant</span> d'agir.
+                </h2>
+                <p className="methode-step-lead">
+                  Premier rendez-vous : on parle de votre métier, de vos clients,
+                  de vos concurrents. On définit les objectifs concrets et les
+                  indicateurs qui diront si c'est réussi.
+                </p>
+                <ul className="methode-step-points">
+                  <li>Atelier de découverte (2 à 3 heures)</li>
+                  <li>Analyse de la concurrence et des références</li>
+                  <li>Définition des objectifs business chiffrés</li>
+                  <li>Rédaction du brief technique</li>
+                </ul>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--klein)' }}>→</span> Une note de cadrage qui synthétise tout
-                </li>
-                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--klein)' }}>→</span> Un planning prévisionnel détaillé
-                </li>
-                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--klein)' }}>→</span> Un devis ferme, valable 30 jours
-                </li>
-              </ul>
+              <div className="methode-step-right">
+                <div className="methode-deliverable">
+                  <div className="methode-deliverable-head">
+                    <span className="methode-deliverable-eyebrow">Ce que vous repartez avec</span>
+                  </div>
+                  <ul className="methode-deliverable-list">
+                    <li><span className="bullet bullet-klein" /> Une note de cadrage qui synthétise tout</li>
+                    <li><span className="bullet bullet-klein" /> Un planning prévisionnel détaillé</li>
+                    <li><span className="bullet bullet-klein" /> Un devis ferme, valable 30 jours</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </FlowSection>
 
+          {/* ETAPE 02 — DESIGN */}
           <FlowSection
             aria-label="Étape 2 — Design"
             style={{ background: 'var(--klein)' }}
           >
-            <div className="flex flex-col gap-4 max-w-2xl">
-              <span
-                style={{
-                  fontSize: 13,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(245,240,232,0.6)',
-                  fontWeight: 500,
-                }}
-              >
-                Étape 02 — Design · 2 semaines
-              </span>
-              <h2
-                style={{
-                  fontSize: 'clamp(3rem, 9vw, 8rem)',
-                  fontFamily: 'var(--sans)',
-                  fontWeight: 400,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.95,
-                  color: 'var(--cream)',
-                  margin: 0,
-                }}
-              >
-                On dessine.<br />
-                Vous{' '}
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)' }}>
-                  validez.
-                </span>
-              </h2>
-              <p
-                style={{
-                  fontSize: 19,
-                  lineHeight: 1.55,
-                  color: 'rgba(245,240,232,0.8)',
-                  maxWidth: 600,
-                  marginTop: 16,
-                }}
-              >
-                Maquettes interactives sur Figma : vous cliquez, vous naviguez, vous testez avant qu'une seule ligne de code soit écrite. Retours gratuits et illimités à cette étape.
-              </p>
-            </div>
-            <div
-              className="self-end max-w-md"
-              style={{
-                background: 'rgba(245,240,232,0.08)',
-                borderRadius: 16,
-                padding: '24px 28px',
-                border: '0.5px solid rgba(245,240,232,0.15)',
-              }}
-            >
-              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.5)', marginBottom: 12 }}>
-                Ce que vous repartez avec
+            <div className="methode-step methode-step-dark">
+              <div className="methode-step-left">
+                <span className="methode-step-num methode-step-num-pink">02</span>
+                <span className="methode-step-tag methode-step-tag-light">Design · ~ 2 semaines</span>
+                <h2 className="methode-step-title methode-step-title-light">
+                  On dessine.<br />
+                  Vous <span className="italic methode-italic-pink">validez.</span>
+                </h2>
+                <p className="methode-step-lead methode-step-lead-light">
+                  Maquettes interactives sur Figma : vous cliquez, vous naviguez,
+                  vous testez avant qu'une seule ligne de code soit écrite.
+                  Retours gratuits et illimités à cette étape.
+                </p>
+                <ul className="methode-step-points methode-step-points-light">
+                  <li>Direction artistique sur 2-3 pistes</li>
+                  <li>Maquettes haute-fidélité de toutes les pages</li>
+                  <li>Prototype cliquable navigable sur Figma</li>
+                  <li>Allers-retours jusqu'à validation finale</li>
+                </ul>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink)' }}>→</span> Maquettes haute-fidélité de toutes les pages
-                </li>
-                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink)' }}>→</span> Charte graphique appliquée à l'ensemble
-                </li>
-                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink)' }}>→</span> Prototype cliquable
-                </li>
-              </ul>
+              <div className="methode-step-right">
+                <div className="methode-deliverable methode-deliverable-dark">
+                  <div className="methode-deliverable-head">
+                    <span className="methode-deliverable-eyebrow methode-deliverable-eyebrow-light">Ce que vous repartez avec</span>
+                  </div>
+                  <ul className="methode-deliverable-list methode-deliverable-list-light">
+                    <li><span className="bullet bullet-pink" /> Maquettes haute-fidélité de toutes les pages</li>
+                    <li><span className="bullet bullet-pink" /> Charte graphique appliquée à l'ensemble</li>
+                    <li><span className="bullet bullet-pink" /> Prototype cliquable sur Figma</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </FlowSection>
 
+          {/* ETAPE 03 — DEVELOPPEMENT */}
           <FlowSection
             aria-label="Étape 3 — Développement"
             style={{ background: 'var(--klein-deep)' }}
           >
-            <div className="flex flex-col gap-4 max-w-2xl">
-              <span
-                style={{
-                  fontSize: 13,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(245,240,232,0.6)',
-                  fontWeight: 500,
-                }}
-              >
-                Étape 03 — Développement · 3 à 5 semaines
-              </span>
-              <h2
-                style={{
-                  fontSize: 'clamp(3rem, 9vw, 8rem)',
-                  fontFamily: 'var(--sans)',
-                  fontWeight: 400,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.95,
-                  color: 'var(--cream)',
-                  margin: 0,
-                }}
-              >
-                Du code{' '}
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)' }}>
-                  propre.
-                </span><br />
-                Pas de magie.
-              </h2>
-              <p
-                style={{
-                  fontSize: 19,
-                  lineHeight: 1.55,
-                  color: 'rgba(245,240,232,0.8)',
-                  maxWidth: 600,
-                  marginTop: 16,
-                }}
-              >
-                Développement par sprints hebdomadaires. Vous voyez le site progresser semaine après semaine sur une URL privée. Pas de surprise à la livraison.
-              </p>
-            </div>
-            <div
-              className="self-end max-w-md"
-              style={{
-                background: 'rgba(245,240,232,0.08)',
-                borderRadius: 16,
-                padding: '24px 28px',
-                border: '0.5px solid rgba(245,240,232,0.15)',
-              }}
-            >
-              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.5)', marginBottom: 12 }}>
-                Ce que vous repartez avec
+            <div className="methode-step methode-step-dark">
+              <div className="methode-step-left">
+                <span className="methode-step-num methode-step-num-pink">03</span>
+                <span className="methode-step-tag methode-step-tag-light">Développement · ~ 3 à 5 semaines</span>
+                <h2 className="methode-step-title methode-step-title-light">
+                  Du code <span className="italic methode-italic-pink">propre.</span><br />
+                  Pas de magie.
+                </h2>
+                <p className="methode-step-lead methode-step-lead-light">
+                  Développement par sprints hebdomadaires. Vous voyez le site
+                  progresser semaine après semaine sur une URL privée. Aucune
+                  surprise à la livraison.
+                </p>
+                <ul className="methode-step-points methode-step-points-light">
+                  <li>Sprints hebdomadaires avec démos en direct</li>
+                  <li>Code propre, commenté, archivé sur GitHub</li>
+                  <li>Tests sur tous les navigateurs et mobiles</li>
+                  <li>Audit performance et accessibilité avant livraison</li>
+                </ul>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink)' }}>→</span> Démos de progression chaque semaine
-                </li>
-                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink)' }}>→</span> Code propre, commenté, archivé sur Git
-                </li>
-                <li style={{ fontSize: 14, color: 'rgba(245,240,232,0.85)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink)' }}>→</span> Performance et accessibilité auditées
-                </li>
-              </ul>
+              <div className="methode-step-right">
+                <div className="methode-deliverable methode-deliverable-dark">
+                  <div className="methode-deliverable-head">
+                    <span className="methode-deliverable-eyebrow methode-deliverable-eyebrow-light">Ce que vous repartez avec</span>
+                  </div>
+                  <ul className="methode-deliverable-list methode-deliverable-list-light">
+                    <li><span className="bullet bullet-pink" /> Démos de progression chaque semaine</li>
+                    <li><span className="bullet bullet-pink" /> Code source propre sur GitHub à votre nom</li>
+                    <li><span className="bullet bullet-pink" /> Score PageSpeed 90+ garanti</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </FlowSection>
 
+          {/* ETAPE 04 — LIVRAISON */}
           <FlowSection
             aria-label="Étape 4 — Livraison"
-            style={{ background: 'var(--pink-light)' }}
+            style={{ background: 'var(--pink-soft)' }}
           >
-            <div className="flex flex-col gap-4 max-w-2xl">
-              <span
-                style={{
-                  fontSize: 13,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--pink-deep)',
-                  fontWeight: 500,
-                }}
-              >
-                Étape 04 — Livraison · 1 semaine
-              </span>
-              <h2
-                style={{
-                  fontSize: 'clamp(3rem, 9vw, 8rem)',
-                  fontFamily: 'var(--sans)',
-                  fontWeight: 400,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 0.95,
-                  color: 'var(--ink)',
-                  margin: 0,
-                }}
-              >
-                On vous{' '}
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink-deep)' }}>
-                  forme.
-                </span><br />
-                On reste là.
-              </h2>
-              <p
-                style={{
-                  fontSize: 19,
-                  lineHeight: 1.55,
-                  color: 'var(--ink-soft)',
-                  maxWidth: 600,
-                  marginTop: 16,
-                }}
-              >
-                Mise en ligne, formation à l'administration, suivi 30 jours. Vous êtes autonome avec votre outil, et on reste joignables sans facturation cachée.
-              </p>
-            </div>
-            <div
-              className="self-end max-w-md"
-              style={{
-                background: 'rgba(153,53,86,0.08)',
-                borderRadius: 16,
-                padding: '24px 28px',
-              }}
-            >
-              <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12 }}>
-                Ce que vous repartez avec
+            <div className="methode-step">
+              <div className="methode-step-left">
+                <span className="methode-step-num methode-step-num-pink-deep">04</span>
+                <span className="methode-step-tag methode-step-tag-pink">Livraison · ~ 1 semaine + suivi 30j</span>
+                <h2 className="methode-step-title">
+                  On vous <span className="italic methode-italic-pink-deep">forme.</span><br />
+                  On reste là.
+                </h2>
+                <p className="methode-step-lead">
+                  Mise en ligne, formation à l'administration, suivi 30 jours.
+                  Vous êtes autonome avec votre outil, et on reste joignables sans
+                  facturation cachée.
+                </p>
+                <ul className="methode-step-points">
+                  <li>Mise en ligne sur votre nom de domaine</li>
+                  <li>Formation 1h30 (captée en vidéo, offerte)</li>
+                  <li>30 jours de suivi corrections inclus</li>
+                  <li>Maintenance technique 12 mois incluse</li>
+                </ul>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink-deep)' }}>→</span> Site en ligne avec votre nom de domaine
-                </li>
-                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink-deep)' }}>→</span> Vidéo de formation à l'administration
-                </li>
-                <li style={{ fontSize: 14, color: 'var(--ink-soft)', display: 'flex', gap: 10 }}>
-                  <span style={{ color: 'var(--pink-deep)' }}>→</span> 30 jours de suivi inclus
-                </li>
-              </ul>
+              <div className="methode-step-right">
+                <div className="methode-deliverable methode-deliverable-pink">
+                  <div className="methode-deliverable-head">
+                    <span className="methode-deliverable-eyebrow methode-deliverable-eyebrow-pink">Ce que vous repartez avec</span>
+                  </div>
+                  <ul className="methode-deliverable-list">
+                    <li><span className="bullet bullet-pink-deep" /> Site en ligne avec votre nom de domaine</li>
+                    <li><span className="bullet bullet-pink-deep" /> Vidéo de formation personnalisée</li>
+                    <li><span className="bullet bullet-pink-deep" /> 30 jours de suivi inclus</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </FlowSection>
         </FlowArt>
@@ -316,46 +246,47 @@ export default function MethodePage() {
 
       <DynamicIslandTOC selector="article h2" accentColor="var(--pink)" />
 
-      {/* CE QU'ON NE FAIT PAS */}
-      <section style={{ background: 'var(--klein)', color: 'var(--cream)' }}>
+      {/* CE QU'ON NE FAIT PAS — section sombre, dense */}
+      <section className="methode-nevers">
         <div className="container">
-          <span className="eyebrow" style={{ color: 'rgba(245,240,232,0.6)' }}>Et aussi</span>
-          <h2 style={{ margin: '18px 0 56px', maxWidth: 640, color: 'var(--cream)' }}>
-            Ce qu'on ne fera<br />
-            <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)', fontWeight: 400 }}>jamais.</span>
-          </h2>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 32 }}>
+          <div className="methode-nevers-head">
+            <span className="eyebrow methode-nevers-eyebrow">Et aussi</span>
+            <h2 className="methode-nevers-title">
+              Ce qu'on ne fera<br />
+              <span className="italic methode-italic-pink">jamais.</span>
+            </h2>
+          </div>
+          <div className="methode-nevers-grid">
             {NEVERS.map((n, i) => (
-              <div key={i} style={{ borderLeft: '2px solid var(--pink)', paddingLeft: 24 }}>
-                <h4 style={{ fontSize: 18, marginBottom: 8, color: 'var(--cream)' }}>{n.title}</h4>
-                <p style={{ fontSize: 14, opacity: 0.78, lineHeight: 1.65 }}>{n.desc}</p>
+              <div key={i} className="methode-never-card">
+                <div className="methode-never-num">{String(i + 1).padStart(2, '0')}</div>
+                <h4 className="methode-never-title">{n.title}</h4>
+                <p className="methode-never-desc">{n.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section>
-        <div className="container">
-          <div style={{ maxWidth: 640 }}>
-            <span className="eyebrow">Démarrer</span>
-            <h2 style={{ margin: '18px 0 24px' }}>
-              Tout commence par<br />
-              un <span className="italic">échange.</span>
-            </h2>
-            <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--ink-soft)', marginBottom: 36 }}>
-              30 minutes en visio ou en café à Nantes. Vous nous racontez votre projet, on vous dit ce qu'on en pense. Aucun engagement.
-            </p>
-            <Link href="/contact" className="cta-big">
-              Prendre rendez-vous
-              <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
-          </div>
+      {/* CTA — Demarrer un projet */}
+      <section className="methode-cta">
+        <div className="container methode-cta-inner">
+          <span className="methode-cta-eyebrow">Démarrer</span>
+          <h2 className="methode-cta-title">
+            Tout commence par<br />
+            un <span className="italic">échange.</span>
+          </h2>
+          <p className="methode-cta-lead">
+            30 minutes en visio ou en café à Nantes. Vous nous racontez votre
+            projet, on vous dit ce qu'on en pense. Aucun engagement.
+          </p>
+          <Link href="/demarrer-un-projet" className="methode-cta-link">
+            Prendre rendez-vous
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
         </div>
       </section>
     </>

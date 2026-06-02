@@ -1,5 +1,4 @@
 import Hero from '@/components/Hero';
-import CTASection from '@/components/CTASection';
 import { ScrollTiltedGrid, type ScrollTiltedGridItem } from '@/components/ui/scroll-tilted-grid';
 
 /** Generation de tuiles colorees pour la grille Inspirations (charte V2) */
@@ -251,11 +250,28 @@ export default function RealisationsPage() {
         />
       </section>
 
-      <CTASection
-        title={`Le prochain projet,<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">c'est le vôtre ?</span>`}
-        description="Premier échange gratuit. On comprend votre besoin et on vous dit honnêtement si on peut vous aider."
-        primaryLabel="Démarrer un projet"
-      />
+      {/* BANNIERE FINALE : image statue grand format remplace l'ancien CTA */}
+      <section className="reali-cta-banner" aria-label="Démarrer un projet">
+        <div className="reali-cta-banner-bg" aria-hidden="true" />
+        <div className="reali-cta-banner-inner">
+          <div className="container reali-cta-banner-content">
+            <h2 className="reali-cta-banner-title">
+              Le prochain projet,<br />
+              <span className="italic">c'est le vôtre ?</span>
+            </h2>
+            <p className="reali-cta-banner-lead">
+              Premier échange gratuit. On comprend votre besoin et on vous dit honnêtement si on peut vous aider.
+            </p>
+            <a href="/demarrer-un-projet" className="reali-cta-banner-link">
+              Démarrer un projet
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
