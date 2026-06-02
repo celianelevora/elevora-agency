@@ -3841,17 +3841,15 @@ body:has(.home-with-cinematic-footer) {
    BANNIERE FINALE PAGE REALISATIONS — image entiere visible
    =========================================================== */
 .reali-cta-banner {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  /* Pas de min-height : la banniere fait la hauteur naturelle
-     de l'image (ratio ~3:1, donc ~33% de la largeur viewport).
-     marginBottom: -2px (au lieu de -1) pour fermer tout risque de bande
-     visible due aux arrondis pixel des aspect-ratio. */
-  margin-bottom: -2px;
-  background-color: var(--cream);
-  /* Block display obligatoire pour eviter tout interlining */
-  display: block;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    /* MARGIN BRUTAL : -120px absorbe le padding-bottom: 80px du .page-enter
+       + tout autre espace résiduel (margins, padding-top du footer, etc.).
+       Suffisant pour coller au footer dans tous les scénarios. */
+    margin-bottom: -120px;
+    background-color: var(--cream);
+    display: block;
 }
 .reali-cta-banner + footer,
 .reali-cta-banner + .site-footer {
@@ -4295,10 +4293,12 @@ body:has(.home-with-cinematic-footer) {
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  /* Hauteur : meme proportion que l'ancienne .methode-nevers (~820px sur 1920),
-     soit ratio image native 1919x820 -> aspect-ratio 1919/820. */
-  aspect-ratio: 1919 / 820;
-  background-color: #0D0D1A;
+  aspect-ratio: 1919/820;
+  background-color: #0d0d1a;
+  /* MARGIN BRUTAL : -120px en haut absorbe le padding-bottom du .page-enter
+     ou de l'<article> qui contient le FlowArt, et fait remonter la banniere
+     pour coller a la 4eme etape (rose). */
+  margin-top: -120px;
 }
 .methode-banner-bg {
   position: absolute;
@@ -4455,7 +4455,7 @@ body:has(.reali-cta-banner) .site-footer {
   margin-top: 0 !important;
 }
 .reali-cta-banner {
-  margin-bottom: 0 !important;
+  /* margin-bottom: -120px gere dans la regle principale plus haut */
   display: block !important;
   /* Eliminer tout gap baseline/inline */
   line-height: 0;
@@ -4486,9 +4486,8 @@ article:has([data-flow-section]) > main {
 }
 
 /* La banniere methode colle directement a l'etape 4 */
-.methode-banner {
-  margin-top: 0 !important;
-}
+/* .methode-banner gere son propre margin-top: -120px pour coller a l'etape 4
+   (regle plus haut dans le fichier). Pas de margin-top: 0 ici sinon il ecrase. */
 
 /* La section CTA "Tout commence par un echange" colle a la banniere */
 .methode-cta {
