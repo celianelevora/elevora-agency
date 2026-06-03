@@ -3844,12 +3844,12 @@ body:has(.home-with-cinematic-footer) {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    /* MARGIN BRUTAL : -120px absorbe le padding-bottom: 80px du .page-enter
-       + tout autre espace résiduel (margins, padding-top du footer, etc.).
-       Suffisant pour coller au footer dans tous les scénarios. */
-    margin-bottom: -120px;
+    /* MARGIN BRUTAL : -200px pour absorber largement tout espace residuel
+       (padding-bottom de wrappers, min-height, gaps, etc.) */
+    margin-bottom: -200px;
     background-color: var(--cream);
     display: block;
+    z-index: 2;
 }
 .reali-cta-banner + footer,
 .reali-cta-banner + .site-footer {
@@ -4390,11 +4390,12 @@ body:has(.home-with-cinematic-footer) {
 
 /* ===========================================================
    TRANSITION methode-intro -> ETAPE 01 (Option B : backdrop-blur)
-   Un overlay flou positionne sur la jonction entre les deux sections
-   diffuse visuellement la limite, peu importe les couleurs.
-   - bottom: -100px pour dépasser dans l'étape 1
-   - height: 200px = 100px sur l'intro + 100px sur l'étape 1
-   - backdrop-filter: blur(40px) floute tout ce qui passe derrière */
+   Overlay flou positionne uniquement DANS LA ZONE VIDE entre la fin
+   du texte de l'intro et le bas de la section :
+   - .methode-intro a padding: 100px 0 60px, donc 60px d'espace vide en bas
+   - bottom: -40px, height: 80px → l'overlay va de -40px sous l'intro
+     a +40px au-dessus du bas (dans les 60px de padding-bottom, OK
+     pas de texte). Resultat : le blur floute uniquement la jonction. */
 .methode-intro {
   position: relative;
 }
@@ -4402,17 +4403,13 @@ body:has(.home-with-cinematic-footer) {
   content: '';
   position: absolute;
   left: 0; right: 0;
-  bottom: -100px;
-  height: 200px;
-  -webkit-backdrop-filter: blur(40px) saturate(110%);
-          backdrop-filter: blur(40px) saturate(110%);
+  bottom: -40px;
+  height: 80px;
+  -webkit-backdrop-filter: blur(30px) saturate(110%);
+          backdrop-filter: blur(30px) saturate(110%);
   z-index: 10;
   pointer-events: none;
-  /* Petit voile blanc tres tres leger pour adoucir encore */
-  background: linear-gradient(to bottom,
-    rgba(234, 233, 238, 0) 0%,
-    rgba(234, 233, 238, 0.15) 50%,
-    rgba(234, 233, 238, 0) 100%);
+  /* Pas de background colore, juste le blur pour fondre les couleurs */
 }
 
 /* Retire les anciens mask-image qui ne fonctionnaient pas comme prevu */
@@ -4435,24 +4432,26 @@ body:has(.home-with-cinematic-footer) {
 
 /* ===========================================================
    NEUTRALISATION ECART BANNIERE / FOOTER (page Realisations)
-   Plusieurs causes possibles, on les bloque TOUTES :
-
-   1) .page-enter a padding-bottom: 80px → on retire pour cette page
-   2) bannière elle-meme avec margin-bottom negatif renforce
-   3) footer avec margin-top potentiel → forcer a 0
-   4) display block + line-height: 0 pour eliminer baseline gap
-
-   Selecteur :has() permet de cibler uniquement la page contenant
-   la banniere, sans toucher aux autres pages. */
+   On bloque TOUS les conteneurs qui pourraient creuser un espace
+   en bas avant le footer sur la page contenant la banniere.
+   Si une cause m'echappe, les autres regles couvrent. */
 body:has(.reali-cta-banner) .page-enter {
   padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  min-height: 0 !important;
 }
 body:has(.reali-cta-banner) main {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
+  min-height: 0 !important;
+}
+/* Et tous les divs wrappers entre main et le footer */
+body:has(.reali-cta-banner) main > * {
+  margin-bottom: 0 !important;
 }
 body:has(.reali-cta-banner) .site-footer {
   margin-top: 0 !important;
+  padding-top: 80px;
 }
 .reali-cta-banner {
   /* margin-bottom: -120px gere dans la regle principale plus haut */
