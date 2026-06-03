@@ -3844,12 +3844,12 @@ body:has(.home-with-cinematic-footer) {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    /* MARGIN BRUTAL : -200px pour absorber largement tout espace residuel
-       (padding-bottom de wrappers, min-height, gaps, etc.) */
-    margin-bottom: -200px;
+    /* CRITIQUE : annule le padding: 120px 0 herite de section {}.
+       C'est ce padding qui creait l'ecart entre la banniere et le footer. */
+    padding: 0 !important;
+    margin-bottom: -2px;
     background-color: var(--cream);
     display: block;
-    z-index: 2;
 }
 .reali-cta-banner + footer,
 .reali-cta-banner + .site-footer {
@@ -4295,10 +4295,11 @@ body:has(.home-with-cinematic-footer) {
   width: 100%;
   aspect-ratio: 1919/820;
   background-color: #0d0d1a;
-  /* MARGIN BRUTAL : -120px en haut absorbe le padding-bottom du .page-enter
-     ou de l'<article> qui contient le FlowArt, et fait remonter la banniere
-     pour coller a la 4eme etape (rose). */
-  margin-top: -120px;
+  /* CRITIQUE : annule le padding: 120px 0 herite de section {}.
+     Et margin-top: 0 (plus de -120px) parce que c'etait juste un palliatif
+     pour absorber ce meme padding-bottom de la 4eme etape. */
+  padding: 0 !important;
+  margin-top: 0;
 }
 .methode-banner-bg {
   position: absolute;
