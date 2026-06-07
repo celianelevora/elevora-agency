@@ -140,21 +140,20 @@ export default function AgencePage() {
   return (
     <>
       <style>{`
+        /* ── Hero + Origine wrapper (image de fond commune) ─ */
+        .agence-hero-origine {
+          background-image: url('/agence-bg-hero.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
         /* ── Hero agence ───────────────────────────────── */
         .agence-hero {
           padding: 140px 0 100px;
-          background: var(--cream);
+          background: transparent;
           position: relative;
           overflow: hidden;
-        }
-        .agence-hero::before {
-          content: '';
-          position: absolute;
-          top: -120px; right: -80px;
-          width: 520px; height: 520px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(27,79,138,0.07) 0%, transparent 70%);
-          pointer-events: none;
         }
         .agence-hero-eyebrow {
           display: inline-flex; align-items: center; gap: 10px;
@@ -177,8 +176,8 @@ export default function AgencePage() {
 
         /* ── Origine ───────────────────────────────────── */
         .agence-origine {
-          padding: 100px 0;
-          border-top: 1px solid var(--line);
+          padding: 60px 0 120px;
+          background: transparent;
         }
         .agence-origine-grid {
           display: grid; grid-template-columns: 340px 1fr; gap: 80px;
@@ -199,8 +198,20 @@ export default function AgencePage() {
         /* ── Fondateurs ────────────────────────────────── */
         .agence-founders {
           padding: 100px 0 120px;
-          background: var(--night);
+          background-color: var(--night);
+          background-image: url('/agence-bg-fondateurs.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          position: relative;
         }
+        .agence-founders::before {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(26,26,46,0.35) 0%, rgba(26,26,46,0.15) 50%, rgba(26,26,46,0.45) 100%);
+          pointer-events: none;
+        }
+        .agence-founders > .container { position: relative; z-index: 1; }
         .agence-founders-head { margin-bottom: 72px; }
         .agence-founders-head .eyebrow-dark {
           display: inline-flex; align-items: center; gap: 10px;
@@ -273,7 +284,11 @@ export default function AgencePage() {
         /* ── Approche en 3 temps ───────────────────────── */
         .agence-approche {
           padding: 110px 0;
-          background: var(--cream);
+          background-color: var(--cream);
+          background-image: url('/agence-bg-approche.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           position: relative;
         }
         .agence-approche-head {
@@ -323,7 +338,11 @@ export default function AgencePage() {
         /* ── Préoccupations clients ────────────────────── */
         .agence-concerns {
           padding: 110px 0;
-          background: #FAFAFB;
+          background-color: #FAFAFB;
+          background-image: url('/agence-bg-fondamentaux.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
         .agence-concerns-head {
           margin-bottom: 64px; max-width: 720px;
@@ -340,17 +359,20 @@ export default function AgencePage() {
           display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
         .concern-card {
-          background: #FFF;
-          border: 1px solid var(--line);
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(229,229,232,0.6);
           border-radius: var(--radius-lg);
           padding: 32px 28px;
           display: flex; flex-direction: column;
-          transition: border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s;
+          transition: border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s, background 0.3s;
         }
         .concern-card:hover {
+          background: rgba(255, 255, 255, 1);
           border-color: var(--klein);
           transform: translateY(-3px);
-          box-shadow: 0 12px 32px rgba(27,79,138,0.08);
+          box-shadow: 0 12px 32px rgba(27,79,138,0.10);
         }
         .concern-icon {
           width: 44px; height: 44px;
@@ -387,9 +409,21 @@ export default function AgencePage() {
         /* ── Valeurs ───────────────────────────────────── */
         .agence-valeurs {
           padding: 100px 0;
-          background: var(--klein);
+          background-color: var(--night);
+          background-image: url('/agence-bg-valeurs.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           color: var(--cream);
+          position: relative;
         }
+        .agence-valeurs::before {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(26,26,46,0.25) 0%, rgba(26,26,46,0.1) 100%);
+          pointer-events: none;
+        }
+        .agence-valeurs > .container { position: relative; z-index: 1; }
         .agence-valeurs-head { margin-bottom: 64px; }
         .agence-valeurs-head .eyebrow { color: rgba(234,233,238,0.5); }
         .agence-valeurs-head .eyebrow::before { background: rgba(234,233,238,0.4); }
@@ -420,18 +454,13 @@ export default function AgencePage() {
         /* ── Écologie / Infomaniak ──────────────────────── */
         .agence-eco {
           padding: 120px 0;
-          background: var(--cream);
+          background-color: #EFEFE5;
+          background-image: url('/agence-bg-ecologie.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
           position: relative;
           overflow: hidden;
-        }
-        .agence-eco::before {
-          content: '';
-          position: absolute;
-          bottom: -180px; left: -100px;
-          width: 480px; height: 480px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(74,124,89,0.10) 0%, transparent 70%);
-          pointer-events: none;
         }
         .eco-grid {
           display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px;
@@ -507,8 +536,11 @@ export default function AgencePage() {
         /* ── CTA ───────────────────────────────────────── */
         .agence-cta {
           padding: 110px 0;
-          background: var(--cream);
-          border-top: 1px solid var(--line);
+          background-color: var(--cream);
+          background-image: url('/agence-bg-cta.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
         }
         .agence-cta-inner {
           display: flex; align-items: flex-end;
@@ -548,8 +580,9 @@ export default function AgencePage() {
         }
       `}</style>
 
-      {/* ── HERO ── */}
-      <section className="agence-hero">
+      {/* ── HERO + ORIGINE (fond commun) ── */}
+      <div className="agence-hero-origine">
+        <section className="agence-hero">
         <div className="container">
           <div className="agence-hero-eyebrow">L'agence</div>
           <h1>
@@ -585,6 +618,8 @@ export default function AgencePage() {
           </div>
         </div>
       </section>
+      </div>
+      {/* ── /HERO + ORIGINE ── */}
 
       {/* ── FONDATEURS ── */}
       <section className="agence-founders">
