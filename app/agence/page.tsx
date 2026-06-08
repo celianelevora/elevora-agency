@@ -152,7 +152,7 @@ export default function AgencePage() {
 
         /* ── Hero agence ───────────────────────────────── */
         .agence-hero {
-          padding: 80px 0 100px;
+          padding: 80px 0 40px;
           background: transparent;
           position: relative;
           overflow: hidden;
@@ -178,7 +178,7 @@ export default function AgencePage() {
 
         /* ── Origine ───────────────────────────────────── */
         .agence-origine {
-          padding: 60px 0 120px;
+          padding: 20px 0 120px;
           background: transparent;
         }
         .agence-origine-grid {
@@ -512,12 +512,21 @@ export default function AgencePage() {
         .eco-text p:last-of-type { margin-bottom: 28px; }
         .eco-link {
           display: inline-flex; align-items: center; gap: 8px;
-          font-size: 13px; letter-spacing: 0.06em;
-          color: #4A7C59; text-decoration: none;
-          border-bottom: 1px solid #4A7C59; padding-bottom: 3px;
-          transition: gap 0.2s;
+          font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+          color: #2F5641;
+          background: rgba(74, 124, 89, 0.10);
+          border: 1px solid rgba(74, 124, 89, 0.35);
+          padding: 11px 20px;
+          border-radius: 999px;
+          text-decoration: none;
+          transition: background 0.25s var(--ease), border-color 0.25s var(--ease), gap 0.2s var(--ease), transform 0.25s var(--ease);
         }
-        .eco-link:hover { gap: 12px; }
+        .eco-link:hover {
+          gap: 12px;
+          background: rgba(74, 124, 89, 0.18);
+          border-color: rgba(74, 124, 89, 0.55);
+          transform: translateY(-1px);
+        }
         .eco-stats {
           display: grid;
           grid-template-columns: 1fr 1fr;

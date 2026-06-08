@@ -32,11 +32,11 @@ export default function CTASection({
           ? `url(${bgImage}) center / cover no-repeat, linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)`
           : 'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
         color: 'var(--cream)',
-        padding: '120px 0 140px',
+        padding: '120px 0 180px',
         position: 'relative',
         /* Marge negative bas : la section "mord" sur le footer pour eviter
-           toute bande blanche/grise visible entre CTA et footer. */
-        marginBottom: '-1px',
+           toute bande blanche/grise visible entre CTA et footer (arrondis). */
+        marginBottom: '-60px',
       }}
     >
       {/* Halos ambient luxe (framboise + bleu klein) — réduits si image de fond */}

@@ -104,7 +104,7 @@ const PLANS: Plan[] = [
 export default function TarifsPage() {
   return (
     <>
-      <div className="tarifs-top-bg">
+      <div className="tarifs-page-bg">
       <Hero
         pillText="Tarifs"
         title={`Des tarifs <span class="italic">honnêtes</span>,<br>sans surprise.`}
@@ -151,8 +151,6 @@ export default function TarifsPage() {
           </div>
         </div>
       </section>
-      </div>
-      {/* /tarifs-top-bg */}
 
       {/* Section "Tout inclus dans chaque offre" — refondue avec icônes + couleurs charte */}
       <section className="tarifs-included">
@@ -256,17 +254,14 @@ export default function TarifsPage() {
                     <h4 className="tarifs-faq-q">{item.q}</h4>
                     <p className="tarifs-faq-a">{item.a}</p>
                   </div>
-                  <div className="tarifs-faq-chevron" aria-hidden="true">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="6 9 12 15 18 9" />
-                    </svg>
-                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </section>
+      </div>
+      {/* /tarifs-page-bg */}
 
       <CTASection
         eyebrow="Encore une question ?"
