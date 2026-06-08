@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
 interface LegalLayoutProps {
-  pillText: string;
   title: string;        // peut contenir des span.italic
   intro?: string;
   lastUpdate: string;
@@ -11,7 +10,6 @@ interface LegalLayoutProps {
 }
 
 export default function LegalLayout({
-  pillText,
   title,
   intro,
   lastUpdate,
@@ -24,7 +22,6 @@ export default function LegalLayout({
       {/* Hero */}
       <section className="legal-hero">
         <div className="container" style={{ maxWidth: 980 }}>
-          {/* Pill pillText retiree sur demande utilisateur */}
           <h1
             className="legal-h1"
             dangerouslySetInnerHTML={{ __html: title }}

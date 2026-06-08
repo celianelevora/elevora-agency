@@ -14,7 +14,6 @@ const TOC = [
 export default function CookiesPage() {
   return (
     <LegalLayout
-      pillText="Traceurs & témoins de connexion"
       title={`Politique de <span class="italic">cookies</span>`}
       intro="La présente politique a pour objet d'informer les utilisateurs du site elevora-agency.com sur l'utilisation des cookies et autres traceurs, conformément à l'article 82 de la loi Informatique et Libertés et aux lignes directrices de la CNIL du 17 septembre 2020."
       lastUpdate="1er juin 2026"

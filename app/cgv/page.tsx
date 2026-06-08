@@ -18,7 +18,6 @@ const TOC = [
 export default function CGVPage() {
   return (
     <LegalLayout
-      pillText="Conditions générales de vente"
       title={`Conditions <span class="italic">générales de vente</span>`}
       intro="Les présentes conditions générales de vente (CGV) régissent les relations contractuelles entre la société Elevora et tout client professionnel souhaitant bénéficier de ses prestations de services numériques."
       lastUpdate="1er juin 2026"

@@ -49,9 +49,12 @@ interface PricingSectionProps extends React.ComponentProps<"div"> {
   description?: string;
 }
 
-/* Hook simple sans dépendance externe */
+/* Hook simple sans dépendance externe.
+   Retourne null tant que le viewport n'est pas connu (SSR + 1er rendu client),
+   ce qui evite le saut de position des cards sur desktop et tout mismatch
+   d'hydratation. */
 function useIsDesktop(minWidth = 768) {
-  const [isDesktop, setIsDesktop] = React.useState(false);
+  const [isDesktop, setIsDesktop] = React.useState<boolean | null>(null);
   React.useEffect(() => {
     const mql = window.matchMedia(`(min-width: ${minWidth}px)`);
     const onChange = () => setIsDesktop(mql.matches);
@@ -113,7 +116,9 @@ export function PricingSection({
             key={plan.name}
             initial={{ y: 50, opacity: 0 }}
             whileInView={
-              isDesktop
+              isDesktop === null
+                ? undefined
+                : isDesktop
                 ? {
                     y: plan.highlighted ? -20 : 0,
                     opacity: 1,
@@ -323,15 +328,15 @@ function PricingCard({ plan, frequency = "oneshot" }: PricingCardProps) {
             : "var(--ink-soft)",
         }}
       >
-        {plan.features.map((feature, index) => (
-          <div key={index} className="flex items-start gap-2.5">
-            <CheckCircleIcon
-              className="h-4 w-4 mt-0.5 shrink-0"
-              style={{
-                color: plan.highlighted ? "var(--pink)" : "var(--klein)",
-              }}
-            />
-            <TooltipProvider>
+        <TooltipProvider>
+          {plan.features.map((feature, index) => (
+            <div key={index} className="flex items-start gap-2.5">
+              <CheckCircleIcon
+                className="h-4 w-4 mt-0.5 shrink-0"
+                style={{
+                  color: plan.highlighted ? "var(--pink)" : "var(--klein)",
+                }}
+              />
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
                   <p
@@ -356,9 +361,9 @@ function PricingCard({ plan, frequency = "oneshot" }: PricingCardProps) {
                   </TooltipContent>
                 )}
               </Tooltip>
-            </TooltipProvider>
-          </div>
-        ))}
+            </div>
+          ))}
+        </TooltipProvider>
       </div>
 
       {/* Audience */}

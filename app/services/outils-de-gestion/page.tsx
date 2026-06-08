@@ -110,7 +110,6 @@ export default function OutilsGestionPage() {
   return (
     <>
       <Hero
-        pillText="Service 02 — Outils de gestion"
         title={`L'outil qui vous va.<br>Pas <span class="italic">l'inverse.</span>`}
         lead="CRM, facturation, gestion RH, extranet client, outil métier. On développe l'outil dont votre entreprise a vraiment besoin — pas une usine à gaz qu'il faut tordre pour qu'elle s'adapte à vous."
         primaryCTA={{ label: 'Discutons de votre outil', href: '/contact' }}

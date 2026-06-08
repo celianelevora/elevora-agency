@@ -24,10 +24,6 @@ const roboto = Roboto({
   display: "swap",
 });
 
-// Anciens aliases pour ne pas casser les usages existants
-const fraunces = { variable: '' };
-const inter = { variable: '' };
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://elevora-agency.com"),
   title: {

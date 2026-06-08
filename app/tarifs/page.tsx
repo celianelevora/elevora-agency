@@ -106,7 +106,6 @@ export default function TarifsPage() {
     <>
       <div className="tarifs-page-bg">
       <Hero
-        pillText="Tarifs"
         title={`Des tarifs <span class="italic">honnêtes</span>,<br>sans surprise.`}
         lead="Trois offres pensées pour répondre à chaque étape de votre activité. Pas de prix gonflé, pas de coûts cachés. Le devis qu'on annonce est le prix que vous payez."
         transparentBg

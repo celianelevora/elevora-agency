@@ -101,7 +101,6 @@ export default function SitesWebPage() {
   return (
     <>
       <Hero
-        pillText="Service 01 — Sites web"
         title={`Des sites qui<br><span class="italic">convertissent</span>,<br>pas qui décorent.`}
         lead="Vitrine, e-commerce, refonte ou landing page. On construit votre site autour de vos clients et de vos objectifs, jamais autour d'un template recyclé."
         primaryCTA={{ label: 'Démarrer mon projet', href: '/contact' }}

@@ -28,17 +28,34 @@ export default function CTASection({
     <section
       className="cta-section"
       style={{
-        background: bgImage
-          ? `url(${bgImage}) center / cover no-repeat, linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)`
-          : 'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
+        /* Gradient de base toujours present (fallback solide sous l'image). */
+        background:
+          'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
         color: 'var(--cream)',
         padding: '120px 0 180px',
         position: 'relative',
+        overflow: 'hidden',
         /* Marge negative bas : la section "mord" sur le footer pour eviter
            toute bande blanche/grise visible entre CTA et footer (arrondis). */
         marginBottom: '-60px',
       }}
     >
+      {/* Image de fond en couche dediee (evite le shorthand multivaleurs
+          url()+gradient mal supporte par Safari avec des CSS vars). */}
+      {bgImage && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${bgImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
       {/* Halos ambient luxe (framboise + bleu klein) — réduits si image de fond */}
       <div
         aria-hidden="true"

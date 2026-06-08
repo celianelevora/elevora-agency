@@ -9,7 +9,6 @@ type StatProp = {
 };
 
 interface HeroProps {
-  pillText: string;
   title: string;
   lead?: string;
   primaryCTA?: CTAProp;
@@ -26,7 +25,7 @@ interface HeroProps {
   transparentBg?: boolean;
 }
 
-export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding, leftOffsetPercent, transparentBg }: HeroProps) {
+export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding, leftOffsetPercent, transparentBg }: HeroProps) {
   const padTop = topPadding ?? 100;
   const leftOffset = leftOffsetPercent ?? 0;
   return (
@@ -83,9 +82,6 @@ export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, 
         </>
       )}
       <div className="container" style={{ position: 'relative', zIndex: 2, paddingLeft: leftOffset > 0 ? `${leftOffset}%` : undefined }}>
-        {/* Pastille pillText retiree sur demande utilisateur :
-            tous les heros de pages n'affichent plus la pill au-dessus du titre. */}
-
         <h1
           style={{ margin: '0 0 28px', maxWidth: 880 }}
           dangerouslySetInnerHTML={{ __html: title }}

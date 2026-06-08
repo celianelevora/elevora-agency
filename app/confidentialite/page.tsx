@@ -18,7 +18,6 @@ const TOC = [
 export default function ConfidentialitePage() {
   return (
     <LegalLayout
-      pillText="Protection des données"
       title={`Politique de <span class="italic">confidentialité</span>`}
       intro="La société Elevora attache une importance particulière à la protection de votre vie privée et de vos données personnelles. La présente politique détaille la manière dont nous collectons, utilisons et protégeons vos données dans le respect du Règlement (UE) 2016/679 (RGPD) et de la loi Informatique et Libertés."
       lastUpdate="1er juin 2026"

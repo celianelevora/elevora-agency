@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const metadata = {
   title: "L'agence | Elevora",
@@ -701,7 +702,12 @@ export default function AgencePage() {
             {FOUNDERS.map((f) => (
               <div key={f.prenom} className="founder-card">
                 <div className="founder-photo-wrap">
-                  <img src={f.photo} alt={`${f.prenom} ${f.nom}`} />
+                  <Image
+                    src={f.photo}
+                    alt={`${f.prenom} ${f.nom}`}
+                    fill
+                    sizes="(max-width: 900px) 100vw, 33vw"
+                  />
                 </div>
                 <div className="founder-tag">{f.tag}</div>
                 <div className="founder-name">{f.prenom}</div>

@@ -164,7 +164,6 @@ export default function RealisationsPage() {
   return (
     <>
       <Hero
-        pillText="Réalisations"
         title={`Nos projets.<br><span class="italic">Sans filtre.</span>`}
         lead="Voici les projets que nous avons livrés et ceux en cours. Sites vitrines, refontes premium, outils métier — chaque cas est documenté avec honnêteté : ce qu'on a fait, dans quel délai, pour quoi faire."
       />
