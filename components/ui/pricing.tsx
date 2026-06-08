@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { motion, Transition } from "framer-motion";
+import { motion, AnimatePresence, Transition } from "framer-motion";
 import { CheckCircleIcon, StarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -261,62 +261,83 @@ function PricingCard({ plan, frequency = "oneshot" }: PricingCardProps) {
           {plan.info}
         </p>
 
-        <h3 className="mt-4 flex items-end gap-1">
-          {hasPrice ? (
-            <>
-              <span
-                className="text-4xl"
+        <h3 className="mt-4 flex items-end gap-1 min-h-[40px]">
+          <AnimatePresence mode="wait" initial={false}>
+            {hasPrice ? (
+              <motion.span
+                key={`price-${frequency}`}
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -10, opacity: 0 }}
+                transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                className="flex items-end gap-1"
+              >
+                <span
+                  className="text-4xl"
+                  style={{
+                    fontFamily: "var(--serif)",
+                    fontWeight: 500,
+                    letterSpacing: "-0.03em",
+                    color: plan.highlighted ? "var(--cream)" : "var(--ink)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {typeof price === "number" ? `${price}€` : price}
+                </span>
+                {frequency === "monthly" && typeof price === "number" && (
+                  <span
+                    className="text-sm mb-1"
+                    style={{
+                      color: plan.highlighted
+                        ? "rgba(245,240,232,0.6)"
+                        : "var(--ink-muted)",
+                    }}
+                  >
+                    /mois
+                  </span>
+                )}
+              </motion.span>
+            ) : (
+              <motion.span
+                key={`unavailable-${frequency}`}
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -10, opacity: 0 }}
+                transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+                className="text-2xl"
                 style={{
                   fontFamily: "var(--serif)",
-                  fontWeight: 500,
-                  letterSpacing: "-0.03em",
-                  color: plan.highlighted ? "var(--cream)" : "var(--ink)",
+                  fontStyle: "italic",
+                  fontWeight: 400,
+                  color: plan.highlighted ? "var(--cream)" : "var(--ink-muted)",
                   lineHeight: 1,
                 }}
               >
-                {typeof price === "number" ? `${price}€` : price}
-              </span>
-              {frequency === "monthly" && typeof price === "number" && (
-                <span
-                  className="text-sm mb-1"
-                  style={{
-                    color: plan.highlighted
-                      ? "rgba(245,240,232,0.6)"
-                      : "var(--ink-muted)",
-                  }}
-                >
-                  /mois
-                </span>
-              )}
-            </>
-          ) : (
-            <span
-              className="text-2xl"
-              style={{
-                fontFamily: "var(--serif)",
-                fontStyle: "italic",
-                fontWeight: 400,
-                color: plan.highlighted ? "var(--cream)" : "var(--ink-muted)",
-                lineHeight: 1,
-              }}
-            >
-              Non disponible
-            </span>
-          )}
+                Non disponible
+              </motion.span>
+            )}
+          </AnimatePresence>
         </h3>
 
-        {priceNote && (
-          <p
-            className="text-xs mt-2"
-            style={{
-              color: plan.highlighted
-                ? "rgba(245,240,232,0.7)"
-                : "var(--ink-muted)",
-            }}
-          >
-            {priceNote}
-          </p>
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          {priceNote && (
+            <motion.p
+              key={`note-${frequency}`}
+              initial={{ y: 6, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -6, opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+              className="text-xs mt-2"
+              style={{
+                color: plan.highlighted
+                  ? "rgba(245,240,232,0.7)"
+                  : "var(--ink-muted)",
+              }}
+            >
+              {priceNote}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Features */}

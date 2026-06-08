@@ -2422,7 +2422,11 @@ body:has(.home-with-cinematic-footer) {
    PAGES & FORMULAIRES — Contact + Démarrer un projet
    =========================================================== */
 .form-page {
-  background: var(--cream);
+  background-color: var(--cream);
+  background-image: url('/fond-demarrer-projet.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
   padding: 130px 0 100px;
   min-height: 100vh;
 }
@@ -3628,10 +3632,16 @@ body:has(.home-with-cinematic-footer) {
   align-items: center;
   gap: 24px;
   padding: 28px 36px;
-  background: linear-gradient(135deg, var(--klein-deep), var(--klein));
-  color: #fff;
+  /* Refonte couleurs : glasswing creme + accent Klein, harmonise avec le
+     reste de la page tarifs (fond peral, FAQ glasswing). Plus de bloc dark
+     qui faisait tache sur le fond pearl. */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(27, 79, 138, 0.18);
+  color: var(--ink);
   border-radius: 18px;
-  box-shadow: 0 24px 60px rgba(13, 43, 80, 0.30);
+  box-shadow: 0 16px 48px rgba(27, 79, 138, 0.10), 0 4px 16px rgba(27, 79, 138, 0.06);
   max-width: 1080px;
   margin: 0 auto;
 }
@@ -3642,8 +3652,10 @@ body:has(.home-with-cinematic-footer) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  /* Icone Klein sur fond Klein translucide */
+  background: rgba(27, 79, 138, 0.10);
+  color: var(--klein);
+  border: 1px solid rgba(27, 79, 138, 0.18);
   border-radius: 14px;
 }
 .tarifs-helper-content { flex: 1; }
@@ -3653,14 +3665,15 @@ body:has(.home-with-cinematic-footer) {
   margin: 0 0 6px;
   font-weight: 500;
   letter-spacing: -0.01em;
+  color: var(--ink);
 }
 .tarifs-helper-desc {
   font-size: 14px;
   line-height: 1.6;
   margin: 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--ink-soft);
 }
-.tarifs-helper-desc strong { color: #fff; font-weight: 600; }
+.tarifs-helper-desc strong { color: var(--klein); font-weight: 600; }
 .tarifs-helper-cta {
   display: inline-flex;
   align-items: center;
@@ -4164,12 +4177,11 @@ body:has(.home-with-cinematic-footer) {
   max-width: 645px;
 }
 .methode-step-right {
-  /* Card livrable se place en BAS, decalee a droite (pas tout a gauche
-     pour pas etre directement sous le texte, mais pas a l'extreme droite
-     non plus pour ne pas masquer le sujet visuel). */
+  /* Card livrable se place en BAS, alignee a gauche avec le texte de l'etape
+     (meme bord gauche que .methode-step-left). */
   display: flex;
   justify-content: flex-start;
-  margin-left: 18%;
+  margin-left: 0;
   margin-top: 0;
 }
 .methode-step-num {
@@ -4177,10 +4189,14 @@ body:has(.home-with-cinematic-footer) {
   font-style: italic;
   /* +15% : clamp(80,9,140) -> clamp(92,10.4,161) */
   font-size: clamp(92px, 10.4vw, 161px);
-  line-height: 0.9;
+  /* line-height 1.0 (avant 0.9) : evite que les jambages italique du "3"/"4"
+     n'empietent visuellement sur la ligne du tag dessous. */
+  line-height: 1.0;
   font-weight: 400;
   letter-spacing: -0.03em;
-  margin-bottom: 10px;
+  /* Marge agrandie : 10px laissait le tag (DEVELOPPEMENT, LIVRAISON) trop
+     proche, voire en superposition avec les descendants italiques. */
+  margin-bottom: 32px;
 }
 .methode-step-num-klein { color: var(--klein); }
 .methode-step-num-pink { color: var(--pink); }
@@ -4314,6 +4330,15 @@ body:has(.home-with-cinematic-footer) {
 .bullet-pink { background: var(--pink); }
 .bullet-pink-deep { background: var(--pink-deep); }
 
+/* Recode anti-seam : la regle globale `section { padding: 120px 0 }` creait
+   une bande grise visible entre l'etape 4 (pink) et la banner image (dark)
+   parce que chaque FlowSection est un <section>. On la neutralise : le
+   conteneur interne `.flow-art-container` a son propre padding (pt clamp,
+   pb 4vw) qui suffit largement. */
+article [data-flow-section] {
+  padding: 0;
+}
+
 /* ===========================================================
    BANNIERE IMAGE — remplace l'ancienne section "Ce qu'on ne fera jamais"
    Dimensions identiques (1920 x ~820px en Full HD).
@@ -4325,11 +4350,9 @@ body:has(.home-with-cinematic-footer) {
   width: 100%;
   aspect-ratio: 1919/820;
   background-color: #0d0d1a;
-  /* CRITIQUE : annule le padding: 120px 0 herite de section {}.
-     Et margin-top: 0 (plus de -120px) parce que c'etait juste un palliatif
-     pour absorber ce meme padding-bottom de la 4eme etape. */
-  padding: 0 !important;
-  margin-top: 0;
+  /* Maintenant un <div> au lieu de <section>, donc plus besoin de !important
+     pour battre le padding: 120px 0 global. Margin: 0 pour coller a l'etape 4. */
+  margin: 0;
 }
 .methode-banner-bg {
   position: absolute;

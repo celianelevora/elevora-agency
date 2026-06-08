@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import { PricingSection, type Plan } from "@/components/ui/pricing";
 import CTASection from "@/components/CTASection";
+import PostFooterPortal from "@/components/PostFooterPortal";
 
 export const metadata = {
   title: "Tarifs | Création de site web à partir de 300€",
@@ -262,16 +263,19 @@ export default function TarifsPage() {
       </div>
       {/* /tarifs-page-bg */}
 
-      <CTASection
-        eyebrow="Encore une question ?"
-        title={`Discutons de<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">votre projet.</span>`}
-        description="Pas sûr de quelle offre vous correspond ? On vous aide à choisir lors d'un premier échange gratuit et sans engagement."
-        primaryLabel="Prendre rendez-vous"
-        secondaryLabel="07 78 43 57 21"
-        secondaryHref="tel:+33778435721"
-        showContactInfo
-        bgImage="/tarifs-bg-cta.jpg"
-      />
+      <PostFooterPortal>
+        <CTASection
+          eyebrow="Encore une question ?"
+          title={`Discutons de<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">votre projet.</span>`}
+          description="Pas sûr de quelle offre vous correspond ? On vous aide à choisir lors d'un premier échange gratuit et sans engagement."
+          primaryLabel="Prendre rendez-vous"
+          secondaryLabel="07 78 43 57 21"
+          secondaryHref="tel:+33778435721"
+          showContactInfo
+          bgImage="/tarifs-bg-cta.jpg"
+          belowFooter
+        />
+      </PostFooterPortal>
     </>
   );
 }

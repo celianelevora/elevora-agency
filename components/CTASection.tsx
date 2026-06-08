@@ -11,6 +11,9 @@ interface CTASectionProps {
   showContactInfo?: boolean;
   /** Image de fond optionnelle. Si fournie, remplace le gradient par défaut. */
   bgImage?: string;
+  /** Quand la CTA est rendue APRES le footer (via PostFooterPortal). Supprime
+      la margin negative qui sert a mordre sur le footer dans l'usage normal. */
+  belowFooter?: boolean;
 }
 
 export default function CTASection({
@@ -23,6 +26,7 @@ export default function CTASection({
   secondaryHref,
   showContactInfo = false,
   bgImage,
+  belowFooter = false,
 }: CTASectionProps) {
   return (
     <section
@@ -35,9 +39,10 @@ export default function CTASection({
         padding: '120px 0 180px',
         position: 'relative',
         overflow: 'hidden',
-        /* Marge negative bas : la section "mord" sur le footer pour eviter
-           toute bande blanche/grise visible entre CTA et footer (arrondis). */
-        marginBottom: '-60px',
+        /* Marge negative bas : utile uniquement quand la CTA est SUIVIE du
+           footer (pour mordre sur ses arrondis). Si belowFooter, plus de
+           negative margin. */
+        marginBottom: belowFooter ? 0 : '-60px',
       }}
     >
       {/* Image de fond en couche dediee (evite le shorthand multivaleurs

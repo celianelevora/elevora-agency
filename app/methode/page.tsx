@@ -247,11 +247,12 @@ export default function MethodePage() {
 
       {/* Widget DynamicIslandTOC retire sur demande utilisateur */}
 
-      {/* BANNIERE IMAGE PURE : remplace l'ancienne section "Ce qu'on ne fera jamais".
-          L'image contient deja son propre texte/icones integres, on n'ajoute rien par-dessus. */}
-      <section className="methode-banner" aria-label="Comprendre avant d'agir">
+      {/* BANNIERE IMAGE PURE — Recodee en <div> (et non <section>) pour ne pas
+          heriter du `section { padding: 120px 0 }` global qui creait une bande
+          grise visible entre l'etape 4 et cette image. */}
+      <div className="methode-banner" aria-label="Comprendre avant d'agir" role="img">
         <div className="methode-banner-bg" aria-hidden="true" />
-      </section>
+      </div>
 
       {/* CTA — Demarrer un projet */}
       <section className="methode-cta">

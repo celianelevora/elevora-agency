@@ -70,6 +70,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <PageEnter>{children}</PageEnter>
         </main>
         <Footer />
+        {/* Slot pour pages qui veulent rendre du contenu APRES le footer
+            (ex. /tarifs avec sa CTA "Discutons de votre projet" deplacee sous
+            le footer). Voir composant <PostFooterPortal>. */}
+        <div id="post-footer-slot" />
       </body>
     </html>
   );
