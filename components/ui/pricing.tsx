@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/tooltip";
 
 type FREQUENCY = "oneshot" | "monthly";
-const frequencies: FREQUENCY[] = ["oneshot", "monthly"];
 
 const FREQUENCY_LABELS: Record<FREQUENCY, string> = {
   oneshot: "Paiement unique",
@@ -28,7 +27,6 @@ export interface Plan {
     oneshot?: number | string;
     monthly?: number | string;
   };
-  /** Texte sous le prix, ex "engagement 12 mois (468€ total)" */
   priceNote?: {
     oneshot?: string;
     monthly?: string;
@@ -42,7 +40,6 @@ export interface Plan {
     href: string;
   };
   highlighted?: boolean;
-  /** Affiché en bas, ex "Idéal pour..." */
   audience?: string;
 }
 
@@ -52,6 +49,19 @@ interface PricingSectionProps extends React.ComponentProps<"div"> {
   description?: string;
 }
 
+/* Hook simple sans dépendance externe */
+function useIsDesktop(minWidth = 768) {
+  const [isDesktop, setIsDesktop] = React.useState(false);
+  React.useEffect(() => {
+    const mql = window.matchMedia(`(min-width: ${minWidth}px)`);
+    const onChange = () => setIsDesktop(mql.matches);
+    onChange();
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, [minWidth]);
+  return isDesktop;
+}
+
 export function PricingSection({
   plans,
   heading,
@@ -59,11 +69,12 @@ export function PricingSection({
   ...props
 }: PricingSectionProps) {
   const [frequency, setFrequency] = React.useState<FREQUENCY>("oneshot");
+  const isDesktop = useIsDesktop();
 
   return (
     <div
       className={cn(
-        "flex w-full flex-col items-center justify-center space-y-8 p-4",
+        "flex w-full flex-col items-center justify-center space-y-10 p-4",
         props.className,
       )}
       {...props}
@@ -72,9 +83,9 @@ export function PricingSection({
         <h2
           className="text-3xl md:text-5xl"
           style={{
-            fontFamily: "var(--sans)",
+            fontFamily: "var(--serif)",
             fontWeight: 400,
-            letterSpacing: "-0.03em",
+            letterSpacing: "-0.025em",
             color: "var(--ink)",
             lineHeight: 1.05,
           }}
@@ -97,15 +108,44 @@ export function PricingSection({
       />
 
       <div className="mx-auto grid w-full max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">
-        {plans.map((plan) => (
-          <PricingCard plan={plan} key={plan.name} frequency={frequency} />
+        {plans.map((plan, index) => (
+          <motion.div
+            key={plan.name}
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={
+              isDesktop
+                ? {
+                    y: plan.highlighted ? -20 : 0,
+                    opacity: 1,
+                    x: index === 2 ? -25 : index === 0 ? 25 : 0,
+                    scale: plan.highlighted ? 1.0 : 0.94,
+                  }
+                : { y: 0, opacity: 1, scale: 1 }
+            }
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{
+              duration: 1.4,
+              type: "spring",
+              stiffness: 90,
+              damping: 28,
+              delay: index * 0.1,
+              opacity: { duration: 0.5 },
+            }}
+            style={{
+              zIndex: plan.highlighted ? 10 : 0,
+              transformOrigin:
+                index === 0 ? "right center" : index === 2 ? "left center" : "center",
+            }}
+          >
+            <PricingCard plan={plan} frequency={frequency} />
+          </motion.div>
         ))}
       </div>
     </div>
   );
 }
 
-type PricingFrequencyToggleProps = React.ComponentProps<"div"> & {
+type PricingFrequencyToggleProps = {
   frequency: FREQUENCY;
   setFrequency: React.Dispatch<React.SetStateAction<FREQUENCY>>;
 };
@@ -113,76 +153,82 @@ type PricingFrequencyToggleProps = React.ComponentProps<"div"> & {
 function PricingFrequencyToggle({
   frequency,
   setFrequency,
-  ...props
 }: PricingFrequencyToggleProps) {
+  const isMonthly = frequency === "monthly";
+
   return (
-    <div
-      className={cn(
-        "mx-auto flex w-fit rounded-full border p-1",
-        props.className,
-      )}
-      style={{
-        background: "rgba(0, 51, 160, 0.04)",
-        borderColor: "rgba(0, 51, 160, 0.15)",
-      }}
-      {...props}
-    >
-      {frequencies.map((freq) => (
-        <button
-          key={freq}
-          onClick={() => setFrequency(freq)}
-          className="relative px-5 py-2 text-sm font-medium transition-colors"
-          style={{
-            color: frequency === freq ? "var(--cream)" : "var(--ink-soft)",
-          }}
-        >
-          <span className="relative z-10">{FREQUENCY_LABELS[freq]}</span>
-          {frequency === freq && (
-            <motion.span
-              layoutId="frequency"
-              transition={{ type: "spring", duration: 0.4 }}
-              className="absolute inset-0 z-0 rounded-full"
-              style={{ background: "var(--klein)" }}
-            />
-          )}
-        </button>
-      ))}
+    <div className="flex items-center gap-4">
+      <span
+        className="text-sm font-medium transition-colors"
+        style={{ color: !isMonthly ? "var(--ink)" : "var(--ink-muted)" }}
+      >
+        {FREQUENCY_LABELS.oneshot}
+      </span>
+
+      <button
+        type="button"
+        onClick={() => setFrequency(isMonthly ? "oneshot" : "monthly")}
+        className="relative h-7 w-12 rounded-full transition-colors duration-300"
+        style={{
+          background: isMonthly ? "var(--klein)" : "rgba(27, 79, 138, 0.15)",
+        }}
+        aria-label="Toggle billing"
+      >
+        <motion.div
+          className="absolute top-0.5 h-6 w-6 rounded-full bg-white shadow-md"
+          animate={{ left: isMonthly ? 22 : 2 }}
+          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+        />
+      </button>
+
+      <span
+        className="text-sm font-medium transition-colors"
+        style={{ color: isMonthly ? "var(--ink)" : "var(--ink-muted)" }}
+      >
+        {FREQUENCY_LABELS.monthly}
+      </span>
     </div>
   );
 }
 
-type PricingCardProps = React.ComponentProps<"div"> & {
+type PricingCardProps = {
   plan: Plan;
   frequency?: FREQUENCY;
 };
 
-function PricingCard({
-  plan,
-  className,
-  frequency = frequencies[0],
-  ...props
-}: PricingCardProps) {
+function PricingCard({ plan, frequency = "oneshot" }: PricingCardProps) {
   const price = plan.price[frequency];
   const priceNote = plan.priceNote?.[frequency];
   const hasPrice = price !== undefined && price !== null;
 
   return (
     <div
-      key={plan.name}
       className={cn(
-        "relative flex w-full flex-col rounded-2xl border overflow-hidden",
-        className,
+        "relative flex w-full h-full flex-col rounded-2xl overflow-hidden",
       )}
       style={{
         background: plan.highlighted ? "var(--klein)" : "#FFFFFF",
-        borderColor: plan.highlighted
-          ? "var(--klein)"
-          : "var(--line-soft)",
+        borderWidth: plan.highlighted ? 2 : 1,
+        borderStyle: "solid",
+        borderColor: plan.highlighted ? "var(--klein)" : "var(--line-soft)",
         color: plan.highlighted ? "var(--cream)" : "var(--ink)",
+        boxShadow: plan.highlighted
+          ? "0 24px 60px rgba(27, 79, 138, 0.25), 0 8px 24px rgba(27, 79, 138, 0.15)"
+          : "0 4px 20px rgba(0, 0, 0, 0.04)",
       }}
-      {...props}
     >
       {plan.highlighted && <BorderTrail size={80} />}
+
+      {/* Popular badge */}
+      {plan.highlighted && (
+        <div
+          className="absolute top-0 right-0 z-10 flex items-center gap-1 rounded-bl-xl rounded-tr-2xl px-3 py-1.5"
+          style={{ background: "var(--pink)", color: "var(--cream)" }}
+        >
+          <StarIcon className="h-3.5 w-3.5 fill-current" />
+          <span className="text-xs font-semibold tracking-wide">Populaire</span>
+        </div>
+      )}
 
       {/* Header card */}
       <div
@@ -193,23 +239,8 @@ function PricingCard({
             : "var(--line-soft)",
         }}
       >
-        <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-          {plan.highlighted && (
-            <span
-              className="flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium"
-              style={{
-                background: "var(--pink)",
-                color: "var(--cream)",
-              }}
-            >
-              <StarIcon className="h-3 w-3 fill-current" />
-              Populaire
-            </span>
-          )}
-        </div>
-
         <div
-          className="text-base font-medium tracking-tight"
+          className="text-base font-medium"
           style={{ letterSpacing: "-0.01em" }}
         >
           {plan.name}
@@ -231,7 +262,7 @@ function PricingCard({
               <span
                 className="text-4xl"
                 style={{
-                  fontFamily: "var(--sans)",
+                  fontFamily: "var(--serif)",
                   fontWeight: 500,
                   letterSpacing: "-0.03em",
                   color: plan.highlighted ? "var(--cream)" : "var(--ink)",

@@ -152,7 +152,7 @@ export default function AgencePage() {
 
         /* ── Hero agence ───────────────────────────────── */
         .agence-hero {
-          padding: 140px 0 100px;
+          padding: 80px 0 100px;
           background: transparent;
           position: relative;
           overflow: hidden;
@@ -309,13 +309,23 @@ export default function AgencePage() {
           max-width: 600px;
         }
         .agence-approche-link {
-          font-size: 13px; letter-spacing: 0.06em;
+          font-size: 15px; letter-spacing: 0.04em; font-weight: 500;
           color: var(--klein); text-decoration: none;
-          border-bottom: 1px solid var(--klein); padding-bottom: 4px;
-          transition: gap 0.2s; display: inline-flex; align-items: center; gap: 8px;
+          padding: 10px 20px;
+          border: 1.5px solid var(--klein);
+          border-radius: 999px;
+          background: rgba(255,255,255,0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          transition: all 0.3s var(--ease);
+          display: inline-flex; align-items: center; gap: 9px;
           flex-shrink: 0;
         }
-        .agence-approche-link:hover { gap: 12px; }
+        .agence-approche-link:hover {
+          background: var(--klein);
+          color: var(--cream);
+          gap: 13px;
+        }
         .approche-grid {
           display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
           border-top: 1px solid var(--line);
@@ -361,28 +371,31 @@ export default function AgencePage() {
           display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
         }
         .concern-card {
-          background: rgba(255, 255, 255, 0.92);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border: 1px solid rgba(229,229,232,0.6);
+          background: rgba(255, 255, 255, 0.45);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.6);
           border-radius: var(--radius-lg);
           padding: 32px 28px;
           display: flex; flex-direction: column;
           transition: border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s, background 0.3s;
+          box-shadow: 0 4px 24px rgba(27, 79, 138, 0.05);
         }
         .concern-card:hover {
-          background: rgba(255, 255, 255, 1);
-          border-color: var(--klein);
+          background: rgba(255, 255, 255, 0.65);
+          border-color: rgba(27, 79, 138, 0.4);
           transform: translateY(-3px);
           box-shadow: 0 12px 32px rgba(27,79,138,0.10);
         }
         .concern-icon {
           width: 44px; height: 44px;
           border-radius: 10px;
-          background: var(--cream);
+          background: rgba(255, 255, 255, 0.7);
+          backdrop-filter: blur(6px);
           color: var(--klein);
           display: flex; align-items: center; justify-content: center;
           margin-bottom: 24px;
+          border: 1px solid rgba(255, 255, 255, 0.8);
         }
         .concern-label {
           font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -399,25 +412,29 @@ export default function AgencePage() {
         }
         .concern-tags {
           display: flex; flex-wrap: wrap; gap: 6px;
-          padding-top: 16px; border-top: 1px solid var(--line);
+          padding-top: 16px; border-top: 1px solid rgba(229,229,232,0.7);
         }
         .concern-tag {
           font-size: 10.5px; letter-spacing: 0.04em;
           color: var(--ink-muted);
-          background: var(--cream);
+          background: rgba(255, 255, 255, 0.55);
+          backdrop-filter: blur(6px);
           padding: 4px 9px; border-radius: 4px;
         }
 
         /* ── Valeurs ───────────────────────────────────── */
         .agence-valeurs {
-          padding: 100px 0;
+          padding: 140px 0;
           background-color: var(--night);
           background-image: url('/agence-bg-valeurs.jpg');
           background-size: cover;
-          background-position: center;
+          background-position: center center;
           background-repeat: no-repeat;
           color: var(--cream);
           position: relative;
+          display: flex;
+          align-items: center;
+          min-height: 620px;
         }
         .agence-valeurs::before {
           content: '';
@@ -425,7 +442,7 @@ export default function AgencePage() {
           background: linear-gradient(180deg, rgba(26,26,46,0.25) 0%, rgba(26,26,46,0.1) 100%);
           pointer-events: none;
         }
-        .agence-valeurs > .container { position: relative; z-index: 1; }
+        .agence-valeurs > .container { position: relative; z-index: 1; width: 100%; }
         .agence-valeurs-head { margin-bottom: 64px; }
         .agence-valeurs-head .eyebrow { color: rgba(234,233,238,0.5); }
         .agence-valeurs-head .eyebrow::before { background: rgba(234,233,238,0.4); }
@@ -502,34 +519,64 @@ export default function AgencePage() {
         }
         .eco-link:hover { gap: 12px; }
         .eco-stats {
-          display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-          background: rgba(74, 124, 89, 0.18);
-          border-radius: var(--radius-lg);
-          overflow: hidden;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border: 1px solid rgba(74, 124, 89, 0.22);
-          box-shadow: 0 8px 32px rgba(74, 124, 89, 0.10);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          gap: 0;
+          background: rgba(255, 255, 255, 0.4);
+          backdrop-filter: blur(20px) saturate(160%);
+          -webkit-backdrop-filter: blur(20px) saturate(160%);
+          border: 1px solid rgba(255, 255, 255, 0.55);
+          border-radius: 20px;
+          padding: 16px;
+          position: relative;
+          box-shadow: 0 16px 48px rgba(74, 124, 89, 0.08), 0 4px 16px rgba(74, 124, 89, 0.06);
+        }
+        /* Divider vertical (gold-tinted thin line) */
+        .eco-stats::before {
+          content: '';
+          position: absolute;
+          left: 50%; top: 18%; bottom: 18%;
+          width: 1px;
+          background: linear-gradient(180deg, transparent 0%, rgba(74,124,89,0.35) 30%, rgba(184,156,89,0.4) 50%, rgba(74,124,89,0.35) 70%, transparent 100%);
+        }
+        /* Divider horizontal */
+        .eco-stats::after {
+          content: '';
+          position: absolute;
+          top: 50%; left: 18%; right: 18%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent 0%, rgba(74,124,89,0.35) 30%, rgba(184,156,89,0.4) 50%, rgba(74,124,89,0.35) 70%, transparent 100%);
         }
         .eco-stat {
           padding: 32px 28px;
-          background: rgba(255, 255, 255, 0.78);
+          background: transparent;
           color: var(--ink);
           position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
         .eco-stat-value {
           font-family: var(--serif); font-weight: 400;
-          font-size: clamp(36px, 4vw, 48px);
-          color: #4A7C59; line-height: 1; margin-bottom: 12px;
+          font-style: italic;
+          font-size: clamp(48px, 5vw, 64px);
+          background: linear-gradient(135deg, #2D5238 0%, #4A7C59 50%, #6B8E5E 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          line-height: 1; margin-bottom: 14px;
           letter-spacing: -0.02em;
         }
         .eco-stat-label {
-          font-size: 13px; font-weight: 500;
-          color: var(--ink); margin-bottom: 4px;
+          font-size: 13.5px; font-weight: 500;
+          color: var(--ink); margin-bottom: 6px;
+          letter-spacing: 0.01em;
         }
         .eco-stat-sub {
-          font-size: 11.5px; line-height: 1.4;
+          font-size: 11.5px; line-height: 1.5;
           color: var(--ink-soft);
+          font-style: italic;
         }
         .eco-infomaniak {
           display: inline-flex; align-items: center; gap: 8px;
@@ -545,23 +592,27 @@ export default function AgencePage() {
 
         /* ── CTA ───────────────────────────────────────── */
         .agence-cta {
-          padding: 110px 0;
+          padding: 160px 0;
           background: transparent;
+          min-height: 520px;
+          display: flex;
+          align-items: center;
         }
+        .agence-cta > .container { width: 100%; }
         .agence-cta-inner {
           display: flex; align-items: flex-end;
           justify-content: space-between; gap: 48px;
         }
         .agence-cta h2 {
           font-family: var(--serif); font-weight: 400;
-          font-size: clamp(36px, 5vw, 68px); line-height: 1.02;
-          letter-spacing: -0.02em; color: var(--ink); margin: 0;
-          max-width: 600px;
+          font-size: clamp(54px, 7.5vw, 110px); line-height: 0.98;
+          letter-spacing: -0.025em; color: var(--ink); margin: 0;
+          max-width: 700px;
         }
-        .agence-cta-right { flex-shrink: 0; text-align: right; }
+        .agence-cta-right { flex-shrink: 0; text-align: right; max-width: 360px; }
         .agence-cta-sub {
-          font-size: 15px; color: var(--ink-soft); margin-bottom: 28px;
-          max-width: 280px; line-height: 1.6;
+          font-size: 16px; color: var(--ink-soft); margin-bottom: 32px;
+          line-height: 1.6;
         }
 
         /* ── Responsive ─────────────────────────────────── */

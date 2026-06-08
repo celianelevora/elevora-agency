@@ -9,6 +9,8 @@ interface CTASectionProps {
   secondaryLabel?: string;
   secondaryHref?: string;
   showContactInfo?: boolean;
+  /** Image de fond optionnelle. Si fournie, remplace le gradient par défaut. */
+  bgImage?: string;
 }
 
 export default function CTASection({
@@ -20,13 +22,15 @@ export default function CTASection({
   secondaryLabel,
   secondaryHref,
   showContactInfo = false,
+  bgImage,
 }: CTASectionProps) {
   return (
     <section
       className="cta-section"
       style={{
-        background:
-          'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
+        background: bgImage
+          ? `url(${bgImage}) center / cover no-repeat, linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)`
+          : 'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
         color: 'var(--cream)',
         padding: '120px 0 140px',
         position: 'relative',
@@ -35,17 +39,18 @@ export default function CTASection({
         marginBottom: '-1px',
       }}
     >
-      {/* Halos ambient luxe (framboise + bleu klein) */}
+      {/* Halos ambient luxe (framboise + bleu klein) — réduits si image de fond */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          background:
-            'radial-gradient(ellipse at 18% 30%, rgba(43,108,196,0.30) 0%, transparent 55%),' +
-            'radial-gradient(ellipse at 85% 75%, rgba(201,38,106,0.22) 0%, transparent 55%),' +
-            'radial-gradient(circle at 50% 100%, rgba(232,82,126,0.12) 0%, transparent 45%)',
+          background: bgImage
+            ? 'radial-gradient(ellipse at 18% 30%, rgba(27,79,138,0.18) 0%, transparent 55%)'
+            : 'radial-gradient(ellipse at 18% 30%, rgba(43,108,196,0.30) 0%, transparent 55%),' +
+              'radial-gradient(ellipse at 85% 75%, rgba(201,38,106,0.22) 0%, transparent 55%),' +
+              'radial-gradient(circle at 50% 100%, rgba(232,82,126,0.12) 0%, transparent 45%)',
         }}
       />
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>

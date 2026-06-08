@@ -104,14 +104,15 @@ const PLANS: Plan[] = [
 export default function TarifsPage() {
   return (
     <>
+      <div className="tarifs-top-bg">
       <Hero
         pillText="Tarifs"
         title={`Des tarifs <span class="italic">honnêtes</span>,<br>sans surprise.`}
         lead="Trois offres pensées pour répondre à chaque étape de votre activité. Pas de prix gonflé, pas de coûts cachés. Le devis qu'on annonce est le prix que vous payez."
+        transparentBg
       />
 
       <section className="tarifs-pricing">
-        <div className="tarifs-pricing-bg" aria-hidden="true" />
         <div className="container">
           <PricingSection
             plans={PLANS}
@@ -150,6 +151,8 @@ export default function TarifsPage() {
           </div>
         </div>
       </section>
+      </div>
+      {/* /tarifs-top-bg */}
 
       {/* Section "Tout inclus dans chaque offre" — refondue avec icônes + couleurs charte */}
       <section className="tarifs-included">
@@ -211,44 +214,56 @@ export default function TarifsPage() {
         </div>
       </section>
 
-      {/* FAQ tarifs — design enrichi */}
+      {/* FAQ tarifs — design 2 colonnes avec accordion-cards */}
       <section className="tarifs-faq">
         <div className="container">
-          <div className="tarifs-faq-head">
-            <span className="eyebrow">Questions fréquentes</span>
-            <h2 className="tarifs-faq-title">
-              Vos questions<br />
-              sur nos <span className="italic">tarifs.</span>
-            </h2>
-          </div>
+          <div className="tarifs-faq-layout">
+            <div className="tarifs-faq-head">
+              <span className="eyebrow">Questions fréquentes</span>
+              <h2 className="tarifs-faq-title">
+                Vos questions<br />
+                sur nos <span className="italic">tarifs.</span>
+              </h2>
+              <p className="tarifs-faq-lead">
+                Des réponses claires pour vous aider à choisir la formule la
+                plus adaptée à votre projet.
+              </p>
+              <span className="tarifs-faq-underline" aria-hidden="true" />
+            </div>
 
-          <div className="tarifs-faq-list">
-            {[
-              {
-                q: "Pourquoi un écart si grand entre 300 € et 3500 € ?",
-                a: "Parce qu'il y a un monde entre un site simple basé sur un template adapté (Starter) et un site sur mesure complet avec automatisations métier et CRM avancé (Premium). On préfère être transparent sur ces écarts plutôt que de proposer des prix flous.",
-              },
-              {
-                q: 'Quelle est la différence entre one-shot et mensuel ?',
-                a: "En one-shot, vous payez une fois et le site vous appartient immédiatement. En mensuel, vous étalez le coût sur 12 mois avec hébergement et maintenance inclus — idéal si vous ne voulez pas avancer toute la somme. À la fin des 12 mois, le site reste à vous.",
-              },
-              {
-                q: 'Que se passe-t-il après les 12 mois pour la formule mensuelle ?',
-                a: "Vous avez le choix : continuer la formule mensuelle pour conserver hébergement et maintenance, ou récupérer le site et gérer vous-même l'hébergement. Aucun engagement supplémentaire imposé.",
-              },
-              {
-                q: "Le prix peut-il évoluer en cours de projet ?",
-                a: "Non. Le devis qu'on signe ensemble est ferme. Si vous demandez des fonctionnalités hors périmètre initial, on fait un avenant chiffré et validé par vous avant de continuer. Pas de mauvaise surprise.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="tarifs-faq-item">
-                <div className="tarifs-faq-num">{String(i + 1).padStart(2, '0')}</div>
-                <div className="tarifs-faq-body">
-                  <h4 className="tarifs-faq-q">{item.q}</h4>
-                  <p className="tarifs-faq-a">{item.a}</p>
+            <div className="tarifs-faq-list">
+              {[
+                {
+                  q: "Pourquoi un écart si grand entre 300 € et 3500 € ?",
+                  a: "Parce qu'il y a un monde entre un site simple basé sur un template adapté (Starter) et un site sur mesure complet avec automatisations métier et CRM avancé (Premium). On préfère être transparent sur ces écarts plutôt que de proposer des prix flous.",
+                },
+                {
+                  q: 'Quelle est la différence entre one-shot et mensuel ?',
+                  a: "En one-shot, vous payez une fois et le site vous appartient immédiatement. En mensuel, vous étalez le coût sur 12 mois avec hébergement et maintenance inclus — idéal si vous ne voulez pas avancer toute la somme. À la fin des 12 mois, le site reste à vous.",
+                },
+                {
+                  q: 'Que se passe-t-il après les 12 mois pour la formule mensuelle ?',
+                  a: "Vous avez le choix : continuer la formule mensuelle pour conserver hébergement et maintenance, ou récupérer le site et gérer vous-même l'hébergement. Aucun engagement supplémentaire imposé.",
+                },
+                {
+                  q: "Le prix peut-il évoluer en cours de projet ?",
+                  a: "Non. Le devis qu'on signe ensemble est ferme. Si vous demandez des fonctionnalités hors périmètre initial, on fait un avenant chiffré et validé par vous avant de continuer. Pas de mauvaise surprise.",
+                },
+              ].map((item, i) => (
+                <div key={i} className="tarifs-faq-item">
+                  <div className="tarifs-faq-num">{String(i + 1).padStart(2, '0')}</div>
+                  <div className="tarifs-faq-body">
+                    <h4 className="tarifs-faq-q">{item.q}</h4>
+                    <p className="tarifs-faq-a">{item.a}</p>
+                  </div>
+                  <div className="tarifs-faq-chevron" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -261,6 +276,7 @@ export default function TarifsPage() {
         secondaryLabel="07 78 43 57 21"
         secondaryHref="tel:+33778435721"
         showContactInfo
+        bgImage="/tarifs-bg-cta.jpg"
       />
     </>
   );

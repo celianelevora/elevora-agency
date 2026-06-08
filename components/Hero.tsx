@@ -22,9 +22,11 @@ interface HeroProps {
   topPadding?: number;
   /** Décalage horizontal du contenu vers la droite, en % (pour push tout à gauche). */
   leftOffsetPercent?: number;
+  /** Si true, supprime le fond cream pour laisser passer un wrapper parent. */
+  transparentBg?: boolean;
 }
 
-export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding, leftOffsetPercent }: HeroProps) {
+export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding, leftOffsetPercent, transparentBg }: HeroProps) {
   const padTop = topPadding ?? 100;
   const leftOffset = leftOffsetPercent ?? 0;
   return (
@@ -33,7 +35,7 @@ export default function Hero({ pillText, title, lead, primaryCTA, secondaryCTA, 
         padding: `${padTop}px 0 80px`,
         position: 'relative',
         overflow: 'hidden',
-        background: '#EAE9EE',
+        background: transparentBg ? 'transparent' : '#EAE9EE',
       }}
     >
       {bgImage && (
