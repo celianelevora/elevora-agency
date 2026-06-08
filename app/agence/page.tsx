@@ -142,9 +142,11 @@ export default function AgencePage() {
       <style>{`
         /* ── Hero + Origine wrapper (image de fond commune) ─ */
         .agence-hero-origine {
+          margin-top: -76px;
+          padding-top: 76px;
           background-image: url('/agence-bg-hero.jpg');
           background-size: cover;
-          background-position: center;
+          background-position: center top;
           background-repeat: no-repeat;
         }
 
@@ -281,14 +283,18 @@ export default function AgencePage() {
         }
         .founder-linkedin:hover { color: var(--cream); }
 
-        /* ── Approche en 3 temps ───────────────────────── */
-        .agence-approche {
-          padding: 110px 0;
-          background-color: var(--cream);
-          background-image: url('/agence-bg-approche.jpg');
+        /* ── Approche + Préoccupations wrapper (image commune) ── */
+        .agence-approche-concerns {
+          background-image: url('/agence-bg-approche-concerns.jpg');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
+        }
+
+        /* ── Approche en 3 temps ───────────────────────── */
+        .agence-approche {
+          padding: 110px 0;
+          background: transparent;
           position: relative;
         }
         .agence-approche-head {
@@ -338,11 +344,7 @@ export default function AgencePage() {
         /* ── Préoccupations clients ────────────────────── */
         .agence-concerns {
           padding: 110px 0;
-          background-color: #FAFAFB;
-          background-image: url('/agence-bg-fondamentaux.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+          background: transparent;
         }
         .agence-concerns-head {
           margin-bottom: 64px; max-width: 720px;
@@ -451,14 +453,18 @@ export default function AgencePage() {
           color: rgba(234,233,238,0.72);
         }
 
-        /* ── Écologie / Infomaniak ──────────────────────── */
-        .agence-eco {
-          padding: 120px 0;
-          background-color: #EFEFE5;
-          background-image: url('/agence-bg-ecologie.jpg');
+        /* ── Écologie + CTA wrapper (image commune) ────── */
+        .agence-eco-cta {
+          background-image: url('/agence-bg-eco-cta.jpg');
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;
+        }
+
+        /* ── Écologie / Infomaniak ──────────────────────── */
+        .agence-eco {
+          padding: 120px 0;
+          background: transparent;
           position: relative;
           overflow: hidden;
         }
@@ -496,30 +502,34 @@ export default function AgencePage() {
         }
         .eco-link:hover { gap: 12px; }
         .eco-stats {
-          display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;
-          background: var(--ink);
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+          background: rgba(74, 124, 89, 0.18);
           border-radius: var(--radius-lg);
           overflow: hidden;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(74, 124, 89, 0.22);
+          box-shadow: 0 8px 32px rgba(74, 124, 89, 0.10);
         }
         .eco-stat {
           padding: 32px 28px;
-          background: var(--ink);
-          color: var(--cream);
+          background: rgba(255, 255, 255, 0.78);
+          color: var(--ink);
           position: relative;
         }
         .eco-stat-value {
           font-family: var(--serif); font-weight: 400;
           font-size: clamp(36px, 4vw, 48px);
-          color: #7FB069; line-height: 1; margin-bottom: 12px;
+          color: #4A7C59; line-height: 1; margin-bottom: 12px;
           letter-spacing: -0.02em;
         }
         .eco-stat-label {
           font-size: 13px; font-weight: 500;
-          color: var(--cream); margin-bottom: 4px;
+          color: var(--ink); margin-bottom: 4px;
         }
         .eco-stat-sub {
           font-size: 11.5px; line-height: 1.4;
-          color: rgba(234,233,238,0.5);
+          color: var(--ink-soft);
         }
         .eco-infomaniak {
           display: inline-flex; align-items: center; gap: 8px;
@@ -536,11 +546,7 @@ export default function AgencePage() {
         /* ── CTA ───────────────────────────────────────── */
         .agence-cta {
           padding: 110px 0;
-          background-color: var(--cream);
-          background-image: url('/agence-bg-cta.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+          background: transparent;
         }
         .agence-cta-inner {
           display: flex; align-items: flex-end;
@@ -654,6 +660,9 @@ export default function AgencePage() {
         </div>
       </section>
 
+      {/* ── APPROCHE + PRÉOCCUPATIONS (fond commun) ── */}
+      <div className="agence-approche-concerns">
+
       {/* ── APPROCHE EN 3 TEMPS ── */}
       <section className="agence-approche">
         <div className="container">
@@ -714,6 +723,9 @@ export default function AgencePage() {
         </div>
       </section>
 
+      </div>
+      {/* ── /APPROCHE + PRÉOCCUPATIONS ── */}
+
       {/* ── VALEURS ── */}
       <section className="agence-valeurs">
         <div className="container">
@@ -735,6 +747,9 @@ export default function AgencePage() {
           </div>
         </div>
       </section>
+
+      {/* ── ÉCOLOGIE + CTA (fond commun) ── */}
+      <div className="agence-eco-cta">
 
       {/* ── ÉCOLOGIE / INFOMANIAK ── */}
       <section className="agence-eco">
@@ -805,6 +820,9 @@ export default function AgencePage() {
           </div>
         </div>
       </section>
+
+      </div>
+      {/* ── /ÉCOLOGIE + CTA ── */}
     </>
   );
 }
