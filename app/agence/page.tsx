@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { StaggerText } from '@/components/ui/stagger-text';
+import CountUp from '@/components/ui/count-up';
+import ScrollRevealText from '@/components/ui/scroll-reveal-text';
 
 export const metadata = {
   title: "L'agence | Elevora",
@@ -14,6 +16,7 @@ const FOUNDERS = [
     nom: 'Soulet Lapetina',
     role: 'Président',
     tag: 'Relations grands comptes',
+    hoverTagline: "Le visage d'Elevora.",
     description:
       "Le visage d'Elevora. Célian gère les relations avec les PME et les structures qui ont besoin d'un interlocuteur qui comprend leurs enjeux — pas juste leur brief. Diplomate dans l'âme, il traduit les ambitions en projets concrets.",
     linkedin: 'https://www.linkedin.com/in/c%C3%A9lian-soulet-lapetina/',
@@ -24,6 +27,7 @@ const FOUNDERS = [
     nom: 'Chain',
     role: 'Directeur Général',
     tag: 'Réseaux & petites structures',
+    hoverTagline: "L'énergie qui ne se simule pas.",
     description:
       "Raphaël est celui qui va chercher les clients là où ils sont. Il accompagne indépendants et petites entreprises — de la première prise de contact jusqu'à la livraison — avec une énergie qui ne se simule pas.",
     linkedin: 'https://www.linkedin.com/in/rapha%C3%ABl-chain/',
@@ -34,6 +38,7 @@ const FOUNDERS = [
     nom: 'Morio',
     role: 'Directrice Générale',
     tag: 'Création web & réseau',
+    hoverTagline: "Pose les questions que les autres oublient.",
     description:
       "Paloma conçoit. Sites web, identités, parcours utilisateur — elle pose les questions que les autres oublient de poser. Elle développe aussi le réseau d'Elevora avec une précision qu'on aurait tort de sous-estimer.",
     linkedin: 'https://www.linkedin.com/in/paloma-morio/',
@@ -110,10 +115,10 @@ const VALUES = [
 ];
 
 const ECO_STATS = [
-  { value: '100%', label: 'Énergie renouvelable', sub: '60% hydraulique + 40% certifié' },
-  { value: '200%', label: 'Compensation CO₂', sub: 'Certifié myclimate depuis 10+ ans' },
-  { value: '1.06', label: 'PUE datacenter', sub: 'Moyenne européenne : 1.8' },
-  { value: '15 ans', label: 'Durée de vie serveurs', sub: 'Refroidissement par air extérieur' },
+  { value: 100, decimals: 0, suffix: '%', label: 'Énergie renouvelable', sub: '60% hydraulique + 40% certifié' },
+  { value: 200, decimals: 0, suffix: '%', label: 'Compensation CO₂', sub: 'Certifié myclimate depuis 10+ ans' },
+  { value: 1.06, decimals: 2, suffix: '', label: 'PUE datacenter', sub: 'Moyenne européenne : 1.8' },
+  { value: 15, decimals: 0, suffix: ' ans', label: 'Durée de vie serveurs', sub: 'Refroidissement par air extérieur' },
 ];
 
 function Icon({ name }: { name: string }) {
@@ -255,6 +260,28 @@ export default function AgencePage() {
         .founder-card:hover .founder-photo-wrap img {
           transform: scale(1.03);
           filter: grayscale(0%) contrast(1.05) brightness(1);
+        }
+        /* Overlay reveal au hover : slide vertical depuis le bas, gradient
+           transparent vers framboise. Italic Cochin pour la tagline editoriale. */
+        .founder-photo-overlay {
+          position: absolute;
+          left: 0; right: 0; bottom: 0;
+          padding: 90px 26px 28px;
+          background: linear-gradient(180deg, rgba(201, 38, 106, 0) 0%, rgba(201, 38, 106, 0.92) 65%);
+          transform: translateY(101%);
+          transition: transform 0.55s var(--ease);
+          z-index: 2;
+          pointer-events: none;
+        }
+        .founder-card:hover .founder-photo-overlay { transform: translateY(0); }
+        .founder-photo-overlay-text {
+          font-family: var(--serif);
+          font-style: italic;
+          font-size: clamp(18px, 1.6vw, 22px);
+          line-height: 1.25;
+          letter-spacing: -0.01em;
+          color: var(--cream);
+          margin: 0;
         }
         .founder-tag {
           font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -678,15 +705,15 @@ export default function AgencePage() {
               <h2>D'où vient<br /><span style={{ fontStyle: 'italic' }}>Elevora.</span></h2>
             </div>
             <div className="agence-origine-right">
-              <p>
-                On a grandi dans un secteur où les agences prometteuses finissent par décevoir — devis flous, délais qui glissent, interlocuteurs injoignables une fois le chèque encaissé. On l'a vécu des deux côtés de la table.
-              </p>
-              <p>
-                Fin 2025, à Nantes, on a créé Elevora. Pas pour révolutionner le marché — pour faire <em>simplement ce qu'on s'engage à faire</em>, avec des vrais gens derrière chaque projet. Légère, directe, joignable.
-              </p>
-              <p>
-                On est jeunes, assumés, et motivés par quelque chose que les grosses structures ont souvent perdu : l'envie que chaque client reparte avec quelque chose de bien fait.
-              </p>
+              <ScrollRevealText
+                text="On a grandi dans un secteur où les agences prometteuses finissent par décevoir — devis flous, délais qui glissent, interlocuteurs injoignables une fois le chèque encaissé. On l'a vécu des deux côtés de la table."
+              />
+              <ScrollRevealText
+                text="Fin 2025, à Nantes, on a créé Elevora. Pas pour révolutionner le marché — pour faire simplement ce qu'on s'engage à faire, avec des vrais gens derrière chaque projet. Légère, directe, joignable."
+              />
+              <ScrollRevealText
+                text="On est jeunes, assumés, et motivés par quelque chose que les grosses structures ont souvent perdu : l'envie que chaque client reparte avec quelque chose de bien fait."
+              />
             </div>
           </div>
         </div>
@@ -717,6 +744,9 @@ export default function AgencePage() {
                     fill
                     sizes="(max-width: 900px) 100vw, 33vw"
                   />
+                  <div className="founder-photo-overlay" aria-hidden="true">
+                    <p className="founder-photo-overlay-text">{f.hoverTagline}</p>
+                  </div>
                 </div>
                 <div className="founder-tag">{f.tag}</div>
                 <div className="founder-name">{f.prenom}</div>
@@ -850,15 +880,15 @@ export default function AgencePage() {
               <div className="eco-infomaniak">
                 Partenaire d'hébergement <span className="eco-infomaniak-logo">infomaniak</span>
               </div>
-              <p>
-                On a choisi <strong style={{ color: 'var(--ink)' }}>Infomaniak</strong> pour héberger l'intégralité de nos projets. Pas pour suivre une tendance — parce que leurs engagements sont vérifiables, certifiés, et concrets.
-              </p>
-              <p>
-                Datacenters en Suisse, alimentés à 100% en énergie renouvelable (hydraulique et solaire). Refroidis par air extérieur depuis 2013 — zéro climatisation. Serveurs utilisés 15 ans avant remplacement. Compensation CO₂ à 200% via myclimate.
-              </p>
-              <p>
-                Bonus en 2025 : leur nouveau datacenter D4 revalorise 100% de sa chaleur pour chauffer 6 000 logements à Genève.
-              </p>
+              <ScrollRevealText
+                text="On a choisi Infomaniak pour héberger l'intégralité de nos projets. Pas pour suivre une tendance — parce que leurs engagements sont vérifiables, certifiés, et concrets."
+              />
+              <ScrollRevealText
+                text="Datacenters en Suisse, alimentés à 100% en énergie renouvelable (hydraulique et solaire). Refroidis par air extérieur depuis 2013 — zéro climatisation. Serveurs utilisés 15 ans avant remplacement. Compensation CO₂ à 200% via myclimate."
+              />
+              <ScrollRevealText
+                text="Bonus en 2025 : leur nouveau datacenter D4 revalorise 100% de sa chaleur pour chauffer 6 000 logements à Genève."
+              />
               <a href="https://www.infomaniak.com/fr/ecologie" target="_blank" rel="noopener noreferrer" className="eco-link">
                 Voir les engagements d'Infomaniak
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -870,7 +900,9 @@ export default function AgencePage() {
             <div className="eco-stats">
               {ECO_STATS.map((s) => (
                 <div key={s.label} className="eco-stat">
-                  <div className="eco-stat-value">{s.value}</div>
+                  <div className="eco-stat-value">
+                    <CountUp to={s.value} decimals={s.decimals} suffix={s.suffix} />
+                  </div>
                   <div className="eco-stat-label">{s.label}</div>
                   <div className="eco-stat-sub">{s.sub}</div>
                 </div>
