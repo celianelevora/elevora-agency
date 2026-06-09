@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { StaggerText } from '@/components/ui/stagger-text';
 
 export const metadata = {
   title: "L'agence | Elevora",
@@ -653,9 +654,14 @@ export default function AgencePage() {
         <div className="container">
           <div className="agence-hero-eyebrow">L'agence</div>
           <h1>
-            Trois personnes.<br />
-            Une <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}>obsession</span><br />
-            commune.
+            <StaggerText text="Trois personnes." />
+            <br />
+            <StaggerText text="Une " />
+            <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}>
+              <StaggerText text="obsession" />
+            </span>
+            <br />
+            <StaggerText text="commune." />
           </h1>
           <p className="agence-hero-lead">
             Elevora est née d'une conviction simple : le web artisanal, rigoureux et accessible, ça devrait être la norme — pas l'exception. On a décidé de le faire exister.
@@ -694,8 +700,11 @@ export default function AgencePage() {
           <div className="agence-founders-head">
             <div className="eyebrow-dark">L'équipe fondatrice</div>
             <h2>
-              Ceux qui font<br />
-              <span style={{ fontStyle: 'italic', color: 'var(--pink-light)' }}>tourner la machine.</span>
+              <StaggerText text="Ceux qui font" />
+              <br />
+              <span style={{ fontStyle: 'italic', color: 'var(--pink-light)' }}>
+                <StaggerText text="tourner la machine." />
+              </span>
             </h2>
           </div>
           <div className="agence-founders-grid">
@@ -798,8 +807,11 @@ export default function AgencePage() {
           <div className="agence-valeurs-head">
             <span className="eyebrow">Ce qui nous tient</span>
             <h2>
-              Trois valeurs<br />
-              <span style={{ color: 'var(--pink-light)', fontStyle: 'italic', fontFamily: 'var(--serif)' }}>non négociables.</span>
+              <StaggerText text="Trois valeurs" />
+              <br />
+              <span style={{ color: 'var(--pink-light)', fontStyle: 'italic', fontFamily: 'var(--serif)' }}>
+                <StaggerText text="non négociables." />
+              </span>
             </h2>
           </div>
           <div className="valeurs-grid">
@@ -827,8 +839,13 @@ export default function AgencePage() {
                 Engagement environnemental
               </div>
               <h2 className="eco-title">
-                Vos sites tournent sur<br />
-                <em>les datacenters les plus<br />écologiques d'Europe.</em>
+                <StaggerText text="Vos sites tournent sur" />
+                <br />
+                <em>
+                  <StaggerText text="les datacenters les plus" />
+                  <br />
+                  <StaggerText text="écologiques d'Europe." />
+                </em>
               </h2>
               <div className="eco-infomaniak">
                 Partenaire d'hébergement <span className="eco-infomaniak-logo">infomaniak</span>
@@ -868,8 +885,11 @@ export default function AgencePage() {
         <div className="container">
           <div className="agence-cta-inner">
             <h2>
-              On prend<br />
-              <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}>un café ?</span>
+              <StaggerText text="On prend" />
+              <br />
+              <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}>
+                <StaggerText text="un café ?" />
+              </span>
             </h2>
             <div className="agence-cta-right">
               <p className="agence-cta-sub">
