@@ -8,7 +8,6 @@ import ProjectShowcase from '@/components/ProjectShowcase';
 import MethodSteps from '@/components/MethodSteps';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import { FaqsSection } from '@/components/FaqsSection';
-import Guarantees from '@/components/Guarantees';
 import { CinematicFooter } from '@/components/CinematicFooter';
 
 export const metadata = {
@@ -52,13 +51,10 @@ export default function HomePage() {
       <div className="sec-warm"><ProjectShowcase /></div>
 
       {/* 05 — Méthode */}
-      <div className="sec-white"><MethodSteps /></div>
+      <div className="sec-night"><MethodSteps /></div>
 
       {/* 06 — Témoignages */}
       <div className="sec-warm"><TestimonialsSection /></div>
-
-      {/* Garanties post-livraison */}
-      <Guarantees />
 
       {/* FAQ */}
       <div className="sec-white"><FaqsSection /></div>

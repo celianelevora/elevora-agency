@@ -4,6 +4,7 @@ import { Playfair_Display, Roboto } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageEnter from "@/components/PageEnter";
+import Preloader from "@/components/Preloader";
 
 // Cochin n'est PAS sur Google Fonts (fonte commerciale Linotype).
 // Strategie : on charge Playfair Display comme fallback web le plus
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${playfair.variable} ${roboto.variable}`}>
       <body>
+        <Preloader />
         <Header />
         <main>
           <PageEnter>{children}</PageEnter>

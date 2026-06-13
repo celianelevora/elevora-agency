@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { StaggerText } from '@/components/ui/stagger-text';
 import CountUp from '@/components/ui/count-up';
 import ScrollRevealText from '@/components/ui/scroll-reveal-text';
+import { BlurFade } from '@/components/ui/blur-fade';
 
 export const metadata = {
   title: "L'agence | Elevora",
@@ -197,11 +198,11 @@ export default function AgencePage() {
           font-size: clamp(30px, 3.5vw, 42px); line-height: 1.08;
           letter-spacing: -0.02em; color: var(--ink); margin: 16px 0 0;
         }
+        .agence-origine-right { display: flex; flex-direction: column; gap: 22px; }
         .agence-origine-right p {
           font-size: 17px; line-height: 1.75; color: var(--ink-soft);
-          margin-bottom: 22px;
+          margin: 0;
         }
-        .agence-origine-right p:last-child { margin-bottom: 0; }
         .agence-origine-right em { color: var(--ink); font-style: italic; }
 
         /* ── Fondateurs ────────────────────────────────── */
@@ -449,6 +450,54 @@ export default function AgencePage() {
           background: rgba(255, 255, 255, 0.55);
           backdrop-filter: blur(6px);
           padding: 4px 9px; border-radius: 4px;
+        }
+
+        /* ── Préoccupations — liste éditoriale (sans cases) ── */
+        .agc-list {
+          display: grid; grid-template-columns: 1fr 1fr;
+          column-gap: 56px;
+        }
+        .agc-item {
+          padding: 34px 4px 32px;
+          border-top: 1px solid rgba(26, 26, 46, 0.13);
+          position: relative;
+          transition: padding-left 0.4s var(--ease);
+        }
+        .agc-item::before {
+          content: ""; position: absolute; left: 0; top: -1px; height: 1px; width: 0;
+          background: var(--klein); transition: width 0.5s var(--ease);
+        }
+        .agc-item-pink::before { background: var(--pink); }
+        .agc-item:hover { padding-left: 14px; }
+        .agc-item:hover::before { width: 56px; }
+        .agc-item-head {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+        }
+        .agc-item-icon { display: inline-flex; }
+        .agc-item-icon svg { width: 22px; height: 22px; }
+        .agc-item-klein .agc-item-icon { color: var(--klein); }
+        .agc-item-pink .agc-item-icon { color: var(--pink); }
+        .agc-item-label {
+          font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+        }
+        .agc-item-klein .agc-item-label { color: var(--klein); }
+        .agc-item-pink .agc-item-label { color: var(--pink); }
+        .agc-item-title {
+          font-family: var(--serif); font-weight: 400;
+          font-size: 23px; line-height: 1.18; letter-spacing: -0.01em;
+          color: var(--ink); margin: 0 0 12px; transition: color 0.35s var(--ease);
+        }
+        .agc-item-klein:hover .agc-item-title { color: var(--klein); }
+        .agc-item-pink:hover .agc-item-title { color: var(--pink); }
+        .agc-item-desc {
+          font-size: 14.5px; line-height: 1.65; color: var(--ink-soft); margin: 0 0 16px;
+        }
+        .agc-item-tags {
+          font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+          color: var(--ink-muted); margin: 0;
+        }
+        @media (max-width: 760px) {
+          .agc-list { grid-template-columns: 1fr; column-gap: 0; }
         }
 
         /* ── Valeurs ───────────────────────────────────── */
@@ -705,15 +754,15 @@ export default function AgencePage() {
               <h2>D'où vient<br /><span style={{ fontStyle: 'italic' }}>Elevora.</span></h2>
             </div>
             <div className="agence-origine-right">
-              <ScrollRevealText
-                text="On a grandi dans un secteur où les agences prometteuses finissent par décevoir — devis flous, délais qui glissent, interlocuteurs injoignables une fois le chèque encaissé. On l'a vécu des deux côtés de la table."
-              />
-              <ScrollRevealText
-                text="Fin 2025, à Nantes, on a créé Elevora. Pas pour révolutionner le marché — pour faire simplement ce qu'on s'engage à faire, avec des vrais gens derrière chaque projet. Légère, directe, joignable."
-              />
-              <ScrollRevealText
-                text="On est jeunes, assumés, et motivés par quelque chose que les grosses structures ont souvent perdu : l'envie que chaque client reparte avec quelque chose de bien fait."
-              />
+              <BlurFade inView delay={0}>
+                <p>On a grandi dans un secteur où les agences prometteuses finissent par décevoir — devis flous, délais qui glissent, interlocuteurs injoignables une fois le chèque encaissé. On l'a vécu des deux côtés de la table.</p>
+              </BlurFade>
+              <BlurFade inView delay={0.1}>
+                <p>Fin 2025, à Nantes, on a créé Elevora. Pas pour révolutionner le marché — pour faire simplement ce qu'on s'engage à faire, avec des vrais gens derrière chaque projet. Légère, directe, joignable.</p>
+              </BlurFade>
+              <BlurFade inView delay={0.2}>
+                <p>On est jeunes, assumés, et motivés par quelque chose que les grosses structures ont souvent perdu : l'envie que chaque client reparte avec quelque chose de bien fait.</p>
+              </BlurFade>
             </div>
           </div>
         </div>
@@ -812,16 +861,16 @@ export default function AgencePage() {
               Chaque client arrive avec ses questions. Référencement, sécurité, vitesse, design, données — voici ce qu'on intègre dans tous nos projets, quel que soit votre métier.
             </p>
           </div>
-          <div className="concerns-grid">
-            {CONCERNS.map((c) => (
-              <div key={c.label} className="concern-card">
-                <div className="concern-icon"><Icon name={c.icon} /></div>
-                <div className="concern-label">{c.label}</div>
-                <div className="concern-title">{c.title}</div>
-                <p className="concern-desc">{c.desc}</p>
-                <div className="concern-tags">
-                  {c.tags.map((t) => <span key={t} className="concern-tag">{t}</span>)}
+          <div className="agc-list">
+            {CONCERNS.map((c, i) => (
+              <div key={c.label} className={`agc-item ${i % 2 ? 'agc-item-pink' : 'agc-item-klein'}`}>
+                <div className="agc-item-head">
+                  <span className="agc-item-icon"><Icon name={c.icon} /></span>
+                  <span className="agc-item-label">{c.label}</span>
                 </div>
+                <h3 className="agc-item-title">{c.title}</h3>
+                <p className="agc-item-desc">{c.desc}</p>
+                <p className="agc-item-tags">{c.tags.join('   ·   ')}</p>
               </div>
             ))}
           </div>

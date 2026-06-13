@@ -27,14 +27,15 @@ export default function ScrollRevealText({
   text,
   as = 'p',
   className,
-  fadeOpacity = 0.2,
+  fadeOpacity = 0.45,
 }: ScrollRevealTextProps) {
   const ref = React.useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref as React.RefObject<HTMLElement>,
-    // Demarre quand le haut de l'element atteint 85% du viewport,
-    // finit quand il atteint 25% (zone confortable de lecture).
-    offset: ['start 0.85', 'start 0.25'],
+    // Le texte est entièrement révélé bien plus tôt : il finit dès que son
+    // haut atteint 70% du viewport (donc dès l'entrée en zone de lecture),
+    // pour ne jamais bloquer la lecture quand on est en face.
+    offset: ['start 0.92', 'start 0.7'],
   });
 
   const words = text.split(' ');

@@ -163,7 +163,7 @@ export default function TarifsPage() {
             </h2>
           </div>
 
-          <div className="tarifs-included-grid">
+          <div className="tarifs-incl2-list">
             {[
               {
                 title: 'Le code source',
@@ -202,10 +202,13 @@ export default function TarifsPage() {
                 color: 'pink',
               },
             ].map((item, i) => (
-              <div key={i} className={`tarifs-included-card tarifs-included-card-${item.color}`}>
-                <div className="tarifs-included-icon">{item.icon}</div>
-                <h4 className="tarifs-included-card-title">{item.title}</h4>
-                <p className="tarifs-included-card-desc">{item.desc}</p>
+              <div key={i} className={`tarifs-incl2-row tarifs-incl2-${item.color}`}>
+                <span className="tarifs-incl2-icon">{item.icon}</span>
+                <h4 className="tarifs-incl2-title">{item.title}</h4>
+                <p className="tarifs-incl2-desc">{item.desc}</p>
+                <span className="tarifs-incl2-check" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><polyline points="20 6 9 17 4 12" /></svg>
+                </span>
               </div>
             ))}
           </div>
