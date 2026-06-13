@@ -1,5 +1,5 @@
 import HeroWithGooey from '@/components/HeroWithGooey';
-import Marquee from '@/components/Marquee';
+import ScrollSequence from '@/components/ScrollSequence';
 import WhyNow from '@/components/WhyNow';
 import ForWho from '@/components/ForWho';
 import EngagementsGrid from '@/components/EngagementsGrid';
@@ -21,19 +21,14 @@ export default function HomePage() {
     <div className="home-with-cinematic-footer">
       <HeroWithGooey />
 
-      <div className="sec-night">
-        <Marquee
-          items={[
-            'Sites vitrines',
-            'E-commerce',
-            'Refontes complètes',
-            'CRM sur mesure',
-            'Outils de gestion',
-            'Extranets clients',
-            'Landing pages',
-          ]}
-        />
-      </div>
+      {/* Séquence cinématique scrubbée au scroll (transition statue 1→2),
+          fond enchaîné par fondu vers le reste du site */}
+      <ScrollSequence
+        frameCount={122}
+        framePath="/seq/frame_"
+        framePad={4}
+        frameExt="webp"
+      />
 
       {/* 01 — Le constat */}
       <WhyNow />

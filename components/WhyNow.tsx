@@ -38,6 +38,7 @@ export default function WhyNow() {
 
   return (
     <section ref={ref} className="whynow-section">
+      <div className="lux-bg" aria-hidden="true" />
       <div className="container">
         <div className="whynow-head">
           <span className="eyebrow">01 — Le constat</span>

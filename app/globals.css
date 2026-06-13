@@ -2427,7 +2427,10 @@ body:has(.home-with-cinematic-footer) {
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  padding: 130px 0 100px;
+  /* Remonte sous le header fixe (le <main> parent réserve 76px) pour que
+     l'image couvre toute la page, header compris. Le padding compense. */
+  margin-top: -76px;
+  padding: 206px 0 100px;
   min-height: 100vh;
 }
 .form-page-head {
@@ -2708,10 +2711,13 @@ body:has(.home-with-cinematic-footer) {
    WHY NOW — section "Pourquoi un site, pourquoi maintenant"
    =========================================================== */
 .whynow-section {
-  background: var(--cream);
-  padding: 120px 0;
+  background: radial-gradient(130% 90% at 50% 0%, #F2F1F5, #EAE9EE 60%);
+  padding: 130px 0;
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
+.whynow-section .container { position: relative; z-index: 1; }
 .whynow-head {
   max-width: 720px;
   margin: 0 auto 64px;
@@ -2744,38 +2750,55 @@ body:has(.home-with-cinematic-footer) {
 @media (max-width: 900px) { .whynow-grid { grid-template-columns: 1fr; } }
 .whynow-card {
   position: relative;
-  padding: 36px 32px 32px;
-  background: #fff;
+  overflow: hidden;
+  padding: 38px 32px 34px;
+  background: linear-gradient(170deg, #ffffff, #FBFAFC);
   border-radius: 20px;
-  border: 0.5px solid var(--line-soft);
-  box-shadow: 0 12px 36px rgba(20, 20, 40, 0.05);
+  border: 1px solid rgba(26, 26, 46, 0.06);
+  box-shadow: 0 14px 40px rgba(20, 20, 40, 0.05);
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), box-shadow 0.4s var(--ease);
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease), box-shadow 0.45s var(--ease), border-color 0.45s var(--ease);
   transition-delay: calc(var(--stagger-i, 0) * 120ms);
 }
 .whynow-section.in-view .whynow-card { opacity: 1; transform: translateY(0); }
-.whynow-card:hover { box-shadow: 0 20px 50px rgba(20, 20, 40, 0.1); }
+.whynow-card::before {
+  content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 100%;
+  background: linear-gradient(90deg, var(--klein), #2B6CC4);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.5s var(--ease);
+}
+.whynow-card:nth-child(2)::before { background: linear-gradient(90deg, #C9266A, #E8527E); }
+.whynow-card:hover { transform: translateY(-4px); transition-delay: 0s; box-shadow: 0 26px 60px rgba(20, 20, 40, 0.12); border-color: rgba(27, 79, 138, 0.18); }
+.whynow-card:hover::before { transform: scaleX(1); }
 .whynow-num {
   position: absolute;
-  top: 28px;
-  right: 32px;
+  top: 6px;
+  right: 18px;
+  z-index: 0;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 32px;
-  color: rgba(27, 79, 138, 0.18);
+  font-weight: 600;
+  font-size: 96px;
   line-height: 1;
+  color: rgba(27, 79, 138, 0.06);
+  user-select: none;
 }
+.whynow-card:nth-child(2) .whynow-num { color: rgba(201, 38, 106, 0.06); }
 .whynow-eyebrow {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--klein);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 16px;
 }
+.whynow-card:nth-child(2) .whynow-eyebrow { color: #C9266A; }
 .whynow-card-title {
+  position: relative;
+  z-index: 1;
   font-family: var(--serif);
   font-size: 21px;
   line-height: 1.25;
@@ -2785,6 +2808,8 @@ body:has(.home-with-cinematic-footer) {
   color: var(--ink);
 }
 .whynow-card-body {
+  position: relative;
+  z-index: 1;
   font-size: 14.5px;
   line-height: 1.65;
   color: var(--ink-soft);
@@ -2795,14 +2820,17 @@ body:has(.home-with-cinematic-footer) {
    FOR WHO — section "Pour qui" : citation pleine page
    =========================================================== */
 .forwho-section {
-  background: var(--cream);
-  padding: 120px 0;
+  background: radial-gradient(130% 90% at 50% 0%, #F2F1F5, #EAE9EE 60%);
+  padding: 130px 0;
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 .forwho-container {
   max-width: 1120px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 .forwho-section .eyebrow {
   display: block;
@@ -2824,12 +2852,7 @@ body:has(.home-with-cinematic-footer) {
   color: var(--ink);
   margin: 0 0 32px;
   text-align: left;
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
-.forwho-section.in-view .forwho-quote p { opacity: 1; transform: translateY(0); }
-.forwho-section.in-view .forwho-quote p:nth-of-type(2) { transition-delay: 180ms; }
 
 .forwho-quote em {
   font-style: italic;
@@ -2884,11 +2907,7 @@ body:has(.home-with-cinematic-footer) {
   line-height: 1.75;
   color: var(--ink-soft);
   text-align: center;
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.9s var(--ease) 360ms, transform 0.9s var(--ease) 360ms;
 }
-.forwho-section.in-view .forwho-foot { opacity: 1; transform: translateY(0); }
 .forwho-foot strong { color: var(--ink); font-weight: 600; }
 
 @media (max-width: 700px) {
@@ -2901,14 +2920,16 @@ body:has(.home-with-cinematic-footer) {
    MANIFESTO — section "Notre manifeste"
    =========================================================== */
 .manifesto-section {
-  background: linear-gradient(180deg, var(--cream) 0%, #fff 30%, #fff 70%, var(--cream) 100%);
-  /* Padding reduit pour limiter l'espace avec la section precedente
-     (Engagements) et la section suivante (Realisations). */
-  padding: 80px 0;
+  background: radial-gradient(130% 80% at 50% 0%, #F4F3F7, #EAE9EE 55%);
+  padding: 110px 0;
   position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 .manifesto-container {
   max-width: 1100px;
+  position: relative;
+  z-index: 1;
 }
 .manifesto-section .eyebrow {
   display: block;
@@ -2950,15 +2971,20 @@ body:has(.home-with-cinematic-footer) {
   border-bottom: 0.5px solid var(--line-soft);
 }
 @media (max-width: 800px) { .manifesto-duo { grid-template-columns: 1fr; gap: 36px; } }
-.manifesto-pillar { padding: 8px 0; }
+.manifesto-pillar { padding: 8px 0; position: relative; }
 .manifesto-pillar-num {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 38px;
-  color: var(--klein);
-  opacity: 0.8;
-  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 56px;
   line-height: 1;
+  margin-bottom: 14px;
+  background: linear-gradient(120deg, var(--klein), #2B6CC4);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.manifesto-duo > div:nth-child(2) .manifesto-pillar-num {
+  background: linear-gradient(120deg, #C9266A, #E8527E);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .manifesto-pillar-title {
   font-family: var(--serif);
@@ -4598,10 +4624,11 @@ body:has(.methode-banner) .site-footer {
 /* fondus de raccord cream <-> sombre en haut et en bas du bandeau */
 .method2::before,
 .method2::after{
-  content:""; position:absolute; left:0; right:0; height:90px; z-index:3; pointer-events:none;
+  content:""; position:absolute; left:0; right:0; z-index:3; pointer-events:none;
 }
-.method2::before{ top:0; background:linear-gradient(180deg,#EAE9EE,rgba(234,233,238,0)); }
-.method2::after{ bottom:0; background:linear-gradient(0deg,#EAE9EE,rgba(234,233,238,0)); }
+.method2::before{ top:0; height:180px;
+  background:linear-gradient(180deg,#EAE9EE 0%, rgba(234,233,238,.82) 34%, rgba(234,233,238,.32) 66%, transparent 100%); }
+.method2::after{ bottom:0; height:120px; background:linear-gradient(0deg,#EAE9EE,rgba(234,233,238,0)); }
 
 .method2-aura{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
 .method2-halo{ position:absolute; border-radius:50%; filter:blur(100px); opacity:.4; }
@@ -4768,4 +4795,112 @@ body:has(.methode-banner) .site-footer {
   .tarifs-incl2-row{ grid-template-columns:40px 1fr; grid-template-areas:"icon title" "icon desc"; column-gap:18px; padding:22px 6px; }
   .tarifs-incl2-check{ display:none; }
   .tarifs-incl2-title{ font-size:1.15rem; }
+}
+
+/* ============================================================
+   SÉQUENCE CINÉMATIQUE — scrub de frames piloté au scroll
+   (transition statue 1→2 après le hero, fondu vers le site)
+   ============================================================ */
+.seq{ position:relative; height:250vh; background:#0D0D1A; }
+.seq-stage{ position:sticky; top:0; height:100vh; overflow:hidden; background:#0D0D1A; }
+.seq-canvas{ display:block; width:100%; height:100%; }
+.seq-overlay{
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; opacity:0; padding:0 24px;
+}
+.seq-overlay-kicker{
+  font-family:var(--sans); font-size:12px; letter-spacing:.4em; text-transform:uppercase;
+  color:rgba(234,233,238,.66); margin-bottom:20px;
+}
+.seq-overlay-title{
+  font-family:var(--serif); font-weight:500; line-height:1.08; letter-spacing:-.01em;
+  font-size:clamp(2.1rem,5.4vw,3.8rem); color:#EAE9EE;
+  text-shadow:0 4px 40px rgba(0,0,0,.5);
+}
+.seq-overlay-title .italic{ font-style:italic;
+  background:linear-gradient(100deg,#2B6CC4,#E0598F);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.seq-fade{ position:absolute; inset:0; z-index:3; pointer-events:none; background:var(--cream); opacity:0; }
+
+/* ============================================================
+   FOND PREMIUM RÉUTILISABLE pour les sections claires
+   (halos de marque très discrets + grille fine masquée)
+   ============================================================ */
+.lux-bg{ position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.lux-bg::before{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(46vw 46vw at 10% 12%, rgba(27,79,138,.07), transparent 68%),
+    radial-gradient(42vw 42vw at 92% 86%, rgba(201,38,106,.055), transparent 68%);
+}
+.lux-bg::after{
+  content:""; position:absolute; inset:0; opacity:.55;
+  background-image:
+    linear-gradient(rgba(26,26,46,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(26,26,46,.045) 1px,transparent 1px);
+  background-size:62px 62px;
+  -webkit-mask-image:radial-gradient(120% 92% at 50% 28%,#000,transparent 78%);
+          mask-image:radial-gradient(120% 92% at 50% 28%,#000,transparent 78%);
+}
+
+/* ============================================================
+   MÉTHODE (06) — halo lumineux CONFINÉ dans chaque carte
+   + glow coloré au sommet pour réchauffer la transition 5→6
+   ============================================================ */
+.method2-card-glow{
+  position:absolute; inset:0; z-index:0; pointer-events:none; border-radius:inherit;
+  opacity:0; transition:opacity .35s ease; mix-blend-mode:screen;
+  background:radial-gradient(260px circle at var(--cx,50%) var(--cy,40%),
+    rgba(61,116,180,.24), rgba(201,38,106,.10) 46%, transparent 70%);
+}
+.method2-card:hover .method2-card-glow{ opacity:1; }
+@media (pointer:coarse){ .method2-card-glow{ display:none; } }
+
+/* glow coloré large en haut-centre (zone de transition) */
+.method2-halo-top{
+  width:64vw; height:30vw; top:-14vw; left:50%; transform:translateX(-50%);
+  background:radial-gradient(ellipse at center,
+    rgba(43,108,196,.55), rgba(201,38,106,.16) 46%, transparent 72%);
+  opacity:.5;
+}
+
+/* ============================================================
+   PAGES LÉGALES — un peu de vie & de couleur (sans surcharger)
+   ============================================================ */
+.legal-page{ background:radial-gradient(120% 70% at 50% 0%, #F2F1F5, #EAE9EE 55%); position:relative; }
+/* halo de marque discret dans le hero */
+.legal-hero{ overflow:hidden; border-bottom:none; }
+.legal-hero::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(42vw 30vw at 6% -12%, rgba(27,79,138,.11), transparent 70%),
+    radial-gradient(38vw 26vw at 100% -6%, rgba(201,38,106,.07), transparent 72%);
+}
+.legal-hero::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:2px; z-index:1;
+  background:linear-gradient(90deg, var(--legal-red), #2B6CC4 28%, rgba(201,38,106,.5) 60%, transparent 88%);
+}
+.legal-hero > .container{ position:relative; z-index:1; }
+
+/* sommaire : liseré coloré + fond doux */
+.legal-toc-inner{
+  border-top:2px solid transparent;
+  border-image:linear-gradient(90deg,var(--legal-red),#2B6CC4) 1;
+  background:linear-gradient(180deg, rgba(27,79,138,.04), transparent 60%);
+  border-radius:0 0 10px 10px;
+  padding-left:14px; margin-left:-14px;
+}
+
+/* titres de section : accent souligné Klein */
+.legal-content h2{ position:relative; padding-bottom:14px; }
+.legal-content h2::after{
+  content:""; position:absolute; left:0; bottom:0; width:48px; height:3px; border-radius:2px;
+  background:linear-gradient(90deg, var(--legal-red), #2B6CC4);
+}
+
+/* encart info : un soupçon de couleur */
+.legal-info{
+  border-left:3px solid #2B6CC4;
+  background:linear-gradient(180deg, rgba(43,108,196,.045), #fff);
 }

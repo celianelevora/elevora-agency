@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 
 const STEPS = [
   {
@@ -61,35 +61,24 @@ export default function MethodSteps() {
     return () => obs.disconnect();
   }, []);
 
-  // Spotlight qui suit la souris (jeu de lumière)
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    if (!window.matchMedia('(pointer:fine)').matches) return;
-    let raf = 0;
-    const onMove = (e: MouseEvent) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-        el.style.setProperty('--my', `${e.clientY - r.top}px`);
-        raf = 0;
-      });
-    };
-    el.addEventListener('mousemove', onMove);
-    return () => el.removeEventListener('mousemove', onMove);
-  }, []);
+  // Glow lumineux confiné À L'INTÉRIEUR de chaque carte (suit la souris)
+  const handleCardMove = (e: MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--cx', `${e.clientX - r.left}px`);
+    card.style.setProperty('--cy', `${e.clientY - r.top}px`);
+  };
 
   const progress = (lit.filter(Boolean).length / STEPS.length) * 100;
 
   return (
     <section ref={sectionRef} className="method2">
       <div className="method2-aura" aria-hidden="true">
+        <span className="method2-halo method2-halo-top" />
         <span className="method2-halo method2-halo-klein" />
         <span className="method2-halo method2-halo-razz" />
         <span className="method2-grid" />
       </div>
-      <div className="method2-spot" aria-hidden="true" />
 
       <div className="container method2-inner">
         <div className="method2-head">
@@ -122,7 +111,8 @@ export default function MethodSteps() {
                 <span className="method2-node-ring" />
               </div>
 
-              <div className="method2-card">
+              <div className="method2-card" onMouseMove={handleCardMove}>
+                <span className="method2-card-glow" aria-hidden="true" />
                 <span className="method2-ghost" aria-hidden="true">{step.num}</span>
                 <div className="method2-card-top">
                   <span className="method2-step-num">{step.num}</span>

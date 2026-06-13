@@ -32,7 +32,7 @@ export default function HeroWithGooey() {
         playsInline
         preload="auto"
       >
-        <source src="/hero-statue-1a2.mp4" type="video/mp4" />
+        <source src="/hero-loop.mp4" type="video/mp4" />
       </video>
       {/* Halos et particules d'ambiance (fixes, pas d'animation lourde) */}
       <div className="hero-ambient" aria-hidden="true">

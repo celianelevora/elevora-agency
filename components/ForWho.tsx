@@ -5,6 +5,7 @@ import { BlurFade } from '@/components/ui/blur-fade';
 export default function ForWho() {
   return (
     <section className="forwho-section">
+      <div className="lux-bg" aria-hidden="true" />
       <div className="container forwho-container">
         <BlurFade inView delay={0}>
           <span className="eyebrow">02 — Pour qui</span>
