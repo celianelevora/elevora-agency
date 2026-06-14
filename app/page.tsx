@@ -19,12 +19,9 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="home-with-cinematic-footer">
-      {/* Habillage continu : UNE seule couche décorative (halos de marque +
-          grille discrète) ancrée au viewport, derrière toute la landing.
-          Elle relie visuellement toutes les parties sans aucune couture. */}
-      <div className="landing-dressing" aria-hidden="true">
-        <span className="landing-dressing-grid" />
-      </div>
+      {/* L'habillage continu (halos + grille) et la scène vidéo sont rendus
+          directement dans <body> par CinematicIntro (portail), pour qu'aucun
+          parent ne piège leur position:fixed. */}
 
       {/* Ouverture cinématique : hero (écran 1) + scrub statue 1→122 +
           promesse figée sur la dernière frame (écran 2) — un seul système

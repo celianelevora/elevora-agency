@@ -1,22 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 /* ============================================================
-   CinematicIntro — ouverture de la landing (réécriture v18, scrub VIDÉO).
+   CinematicIntro — ouverture de la landing (réécriture v20, scrub VIDÉO).
 
-   Approche reprise du prototype HTML qui fonctionnait : la statue est une
-   <video> (object-fit:cover, AUCUN canvas → aucun bug d'étirement) dont le
-   currentTime est piloté par le scroll, LISSÉ par interpolation (LERP) pour
-   un scrub fluide. La vidéo est encodée « tout-image-clé » (chaque frame =
-   keyframe) donc le seek est instantané.
+   POURQUOI CETTE RÉÉCRITURE :
+   La scène (statue) est en position:fixed pour rester collée à l'écran. Mais
+   dans l'arbre Next.js (<main> > .page-enter > ...), un ancêtre « piégeait » ce
+   fixed : la scène prenait la hauteur de TOUTE la page (~18000px) au lieu de
+   l'écran, et object-fit:cover zoomait alors énormément la vidéo en coupant les
+   côtés. Correctif structurel : la scène + l'habillage sont rendus DIRECTEMENT
+   dans <body> via un portail React. Plus aucun parent ne peut les piéger, et la
+   hauteur est verrouillée en 100dvh -> la boîte fait exactement l'écran.
 
      • hero (écran 1) : texte à gauche, statue derrière, header sombre
      • scrub : la statue « recule » (pose 1 → pose 2) pendant qu'on scrolle
      • promesse (écran 2) : dernière frame figée + « Ce qu'on dit, on le tient. »
 
-   Une boucle rAF continue rapproche en douceur la position vidéo de sa cible.
+   Le currentTime de la vidéo est piloté par le scroll, LISSÉ par interpolation
+   (LERP) pour un scrub fluide. La vidéo est encodée tout-image-clé (seek instant).
    ============================================================ */
 
 interface Props {
@@ -45,7 +50,12 @@ export default function CinematicIntro({
   const promiseRef = useRef<HTMLDivElement>(null);
   const romanRef = useRef<HTMLSpanElement>(null);
 
+  // le portail (scène + habillage) ne peut être monté qu'après le mount client
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
+    if (!mounted) return;
     const wrap = wrapRef.current;
     const stage = stageRef.current;
     const video = videoRef.current;
@@ -175,11 +185,19 @@ export default function CinematicIntro({
       root.classList.remove("cine-hero");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [duration, videoSrc, poster]);
+  }, [mounted, duration, videoSrc, poster]);
 
-  return (
+  // --- COUCHE DE FOND (habillage continu + scène vidéo) : rendue dans <body> ---
+  // via portail -> aucun ancêtre transformé/animé ne peut piéger le position:fixed,
+  // donc la scène fait toujours exactement la taille de l'écran (jamais étirée).
+  const backdrop = (
     <>
-      {/* SCÈNE FIXE — la vidéo statue, cadrée en CSS (object-fit:cover) */}
+      {/* habillage continu : halos de marque + grille discrète (sous la scène) */}
+      <div className="landing-dressing" aria-hidden="true">
+        <span className="landing-dressing-grid" />
+      </div>
+
+      {/* SCÈNE — la vidéo statue, cadrée en CSS (object-fit:cover, 100dvh) */}
       <div ref={stageRef} className="cine-stage" aria-hidden="true">
         <video
           ref={videoRef}
@@ -196,8 +214,14 @@ export default function CinematicIntro({
         <div className="cine-scrim" />
         <div ref={fadeRef} className="cine-fade" />
       </div>
+    </>
+  );
 
-      {/* PILOTE DE SCROLL */}
+  return (
+    <>
+      {mounted && createPortal(backdrop, document.body)}
+
+      {/* PILOTE DE SCROLL (reste dans le flux : c'est lui qui crée la hauteur) */}
       <div ref={wrapRef} className="cine-wrap">
         {/* I — HERO (écran 1) */}
         <section
