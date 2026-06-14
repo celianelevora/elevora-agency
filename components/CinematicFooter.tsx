@@ -1,15 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const STYLES = `
 .cinematic-footer-wrapper {
@@ -161,29 +155,6 @@ const MarqueeItem = () => (
 );
 
 export function CinematicFooter() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const giantTextRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const linksRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!wrapperRef.current) return;
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        giantTextRef.current,
-        { y: "8vh", scale: 0.86 },
-        { y: "0vh", scale: 1, ease: "power1.out", scrollTrigger: { trigger: wrapperRef.current, start: "top 95%", end: "top 42%", scrub: 1 } }
-      );
-      gsap.fromTo(
-        [headingRef.current, linksRef.current],
-        { y: 40 },
-        { y: 0, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: wrapperRef.current, start: "top 82%", end: "top 38%", scrub: 1 } }
-      );
-    }, wrapperRef);
-    return () => ctx.revert();
-  }, []);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -191,15 +162,26 @@ export function CinematicFooter() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      <div ref={wrapperRef} className="relative w-full">
+      <div className="relative w-full">
         <footer
-          className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden cinematic-footer-wrapper"
-          style={{ background: "#EAE9EE", color: "#1A1A2E" }}
+          className="cinematic-footer-wrapper"
+          style={{
+            position: "relative",
+            zIndex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            minHeight: "100vh",
+            width: "100%",
+            overflow: "hidden",
+            background: "#EAE9EE",
+            color: "#1A1A2E",
+          }}
         >
           <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
           <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
-          <div ref={giantTextRef} className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none">
+          <div className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none">
             ELEVORA
           </div>
 
@@ -211,7 +193,7 @@ export function CinematicFooter() {
           </div>
 
           <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 w-full max-w-5xl mx-auto">
-            <h2 ref={headingRef} className="footer-cta-title text-center" style={{ fontWeight: 400 }}>
+            <h2 className="footer-cta-title text-center" style={{ fontWeight: 400 }}>
               On démarre <span className="footer-cta-em">votre&nbsp;projet</span> ?
             </h2>
 
@@ -220,7 +202,7 @@ export function CinematicFooter() {
               on évalue la faisabilité, on vous propose un devis ferme sous 5 jours.
             </p>
 
-            <div ref={linksRef} className="flex flex-col items-center gap-6 w-full">
+            <div className="flex flex-col items-center gap-6 w-full">
               <div className="flex flex-wrap justify-center gap-4 w-full">
                 <MagneticButton as={Link} href="/contact" className="footer-cta-primary px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#fff", background: "linear-gradient(180deg, #2B6CC4, #1B4F8A)", border: "none", boxShadow: "0 14px 34px -8px rgba(27,79,138,0.55)" }}>
                   Démarrer un projet

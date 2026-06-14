@@ -246,17 +246,17 @@ section {
   border-radius: 26px;
   background: linear-gradient(
     180deg,
-    rgba(255,255,255,0.20) 0%,
-    rgba(255,255,255,0.20) 50%,
-    rgba(255,255,255,0.20) 100%
+    rgba(255,255,255,0.66) 0%,
+    rgba(255,255,255,0.58) 50%,
+    rgba(255,255,255,0.62) 100%
   );
-  backdrop-filter: blur(15px) saturate(190%);
-  -webkit-backdrop-filter: blur(15px) saturate(190%);
-  border: 1px solid rgba(255,255,255,0.45);
+  backdrop-filter: blur(18px) saturate(190%);
+  -webkit-backdrop-filter: blur(18px) saturate(190%);
+  border: 1px solid rgba(255,255,255,0.7);
   box-shadow:
-    0 1px 1px rgba(255,255,255,0.9) inset,
-    0 -1px 1px rgba(255,255,255,0.2) inset,
-    0 10px 36px rgba(20,20,30,0.10);
+    0 1px 1px rgba(255,255,255,0.95) inset,
+    0 -1px 1px rgba(255,255,255,0.3) inset,
+    0 14px 44px rgba(20,20,30,0.16);
   /* PAS d'overflow:hidden ici : sinon le dropdown desktop "Services" est
      clippé par la pill et reste invisible. Les effets internes (glow,
      shimmer) sont chacun positionnés avec leur propre clipping local. */
@@ -433,7 +433,7 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
 }
 .hdr-link {
   position: relative;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--ink-soft);
   text-decoration: none;
   padding: 9px 16px;
@@ -446,7 +446,7 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
    sinon le padding interne maintient la hauteur de la pill. */
 .hdr.scrolled .hdr-link {
   padding: 5px 14px;
-  font-size: 13px;
+  font-size: 15px;
 }
 .hdr-link .ic { opacity: 0.45; transition: transform 0.3s var(--ease); }
 .hdr-link::after {
@@ -509,20 +509,24 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 13px 24px;
+  padding: 13px 25px;
   margin-left: 10px;
   border-radius: 999px;
-  background: linear-gradient(180deg, var(--klein-bright), var(--klein));
+  background: linear-gradient(135deg, #3B79D4 0%, #235FA6 50%, #15487E 100%);
   color: #fff;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
+  letter-spacing: 0.015em;
   overflow: hidden;
   flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
   box-shadow:
-    0 1px 1px rgba(255,255,255,0.4) inset,
-    0 6px 18px rgba(27,79,138,0.35);
-  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease);
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 2px rgba(11,27,56,0.3),
+    0 2px 5px rgba(11,27,56,0.22),
+    0 10px 26px -8px rgba(27,79,138,0.55);
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease), background 0.4s;
 }
 .hdr-cta::before {
   content: '';
@@ -535,9 +539,12 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
 }
 .hdr-cta:hover {
   transform: translateY(-2px);
+  background: linear-gradient(135deg, #4886E0 0%, #2B6CC4 50%, #1B4F8A 100%);
   box-shadow:
-    0 1px 1px rgba(255,255,255,0.5) inset,
-    0 10px 26px rgba(27,79,138,0.45);
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 2px rgba(11,27,56,0.3),
+    0 4px 9px rgba(11,27,56,0.26),
+    0 16px 34px -8px rgba(27,79,138,0.7);
 }
 .hdr-cta:hover::before { left: 130%; }
 .hdr-cta .ic { transition: transform 0.4s var(--ease-spring); position: relative; }
@@ -1263,7 +1270,8 @@ body:has(.home-with-cinematic-footer) .hdr {
    -> pas de couture entre groupes, pas de débordement (plus de halo rose perdu).
    PAS de framboise ici (c'était ce qui bavait). La couleur « forte » est
    réservée à la Méthode (bleue). ============================================ */
-.lp-group{ position:relative; }
+/* .lp-group : pas de position:relative (le fond fonctionne sans, et ça évite
+   de fausser offsetTop des sections enfants). */
 /* Parties 1+2 (constat + pour-qui) : voile Klein doux en haut, fondu ensuite */
 .home-with-cinematic-footer .lp-group-intro{
   background:
@@ -1287,21 +1295,23 @@ body:has(.home-with-cinematic-footer) .hdr {
     radial-gradient(80vw 62vh at 50% 21%, rgba(43,108,196,.36), transparent 62%),
     radial-gradient(62vw 56vh at 90% 86%, rgba(201,38,106,.15), transparent 60%),
     radial-gradient(58vw 54vh at 8% 4%, rgba(43,108,196,.18), transparent 56%),
+    radial-gradient(145% 130% at 50% 42%, transparent 50%, rgba(4,11,26,.45) 100%),
     linear-gradient(176deg, #0E2D54 0%, #0F2547 50%, #091A35 100%) !important;
 }
-/* fondus doux haut/bas vers le gris des sections voisines (sous le contenu z-2) */
+/* fondus haut/bas vers le gris des sections voisines : plus hauts et plus
+   progressifs (multi-paliers) -> transition douce + jolie révélation des étoiles. */
 .home-with-cinematic-footer .sec-night::before,
 .home-with-cinematic-footer .sec-night::after {
-  content: ""; position: absolute; left: 0; right: 0; height: 130px;
+  content: ""; position: absolute; left: 0; right: 0; height: clamp(120px,18vh,200px);
   z-index: 1; pointer-events: none;
 }
 .home-with-cinematic-footer .sec-night::before {
   top: 0;
-  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(13,43,80,0) 100%);
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(234,233,238,.58) 30%, rgba(20,40,75,0) 100%);
 }
 .home-with-cinematic-footer .sec-night::after {
   bottom: 0;
-  background: linear-gradient(to top, #EAE9EE 0%, rgba(11,27,56,0) 100%);
+  background: linear-gradient(to top, #EAE9EE 0%, rgba(234,233,238,.58) 30%, rgba(15,30,58,0) 100%);
 }
 /* La section racine à l'intérieur d'un wrapper .sec-* devient transparente
    pour laisser voir le fond du wrapper */
@@ -4824,21 +4834,61 @@ body:has(.methode-banner) .site-footer {
 .method2::after{ content:none; display:none; }
 
 .method2-aura{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.method2-halo{ position:absolute; border-radius:50%; filter:blur(100px); opacity:.4; }
-.method2-halo-klein{ width:46vw;height:46vw; top:-8vw; left:-6vw;
-  background:radial-gradient(circle,#1B4F8A,transparent 65%);
+
+/* ✦ CHAMP D'ÉTOILES — vrai « dessin » cosmique (scintille doucement) */
+.method2-aura::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    radial-gradient(1.3px 1.3px at 12% 18%, rgba(255,255,255,.95), transparent),
+    radial-gradient(1px 1px at 28% 62%, rgba(200,220,255,.7), transparent),
+    radial-gradient(1.5px 1.5px at 47% 11%, rgba(255,255,255,.9), transparent),
+    radial-gradient(1px 1px at 63% 43%, rgba(255,255,255,.6), transparent),
+    radial-gradient(1.4px 1.4px at 78% 21%, rgba(220,230,255,.85), transparent),
+    radial-gradient(1px 1px at 88% 66%, rgba(255,255,255,.7), transparent),
+    radial-gradient(1px 1px at 8% 80%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1.6px 1.6px at 36% 88%, rgba(255,255,255,.9), transparent),
+    radial-gradient(1px 1px at 56% 77%, rgba(210,225,255,.6), transparent),
+    radial-gradient(1.3px 1.3px at 72% 90%, rgba(255,255,255,.75), transparent),
+    radial-gradient(1px 1px at 92% 35%, rgba(255,255,255,.6), transparent),
+    radial-gradient(1.4px 1.4px at 18% 43%, rgba(255,255,255,.8), transparent),
+    radial-gradient(1px 1px at 41% 70%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1.2px 1.2px at 67% 14%, rgba(230,238,255,.75), transparent),
+    radial-gradient(1px 1px at 83% 50%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1.5px 1.5px at 24% 30%, rgba(255,255,255,.85), transparent),
+    radial-gradient(1px 1px at 50% 54%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1.3px 1.3px at 95% 80%, rgba(255,255,255,.7), transparent);
+  background-repeat:no-repeat;
+  -webkit-mask-image:radial-gradient(135% 105% at 50% 34%, #000 32%, transparent 82%);
+          mask-image:radial-gradient(135% 105% at 50% 34%, #000 32%, transparent 82%);
+  animation:method2Twinkle 6.5s ease-in-out infinite alternate;
+}
+@keyframes method2Twinkle{ 0%{ opacity:.5 } 100%{ opacity:1 } }
+
+/* nébuleuse violette qui dérive (donne de la vie au fond) */
+.method2-aura::after{
+  content:""; position:absolute; z-index:0; pointer-events:none;
+  width:62vw; height:54vh; top:6%; left:28%;
+  background:radial-gradient(circle, rgba(96,124,224,.24), transparent 62%);
+  filter:blur(95px);
+  animation:method2Drift2 26s ease-in-out infinite alternate;
+}
+@keyframes method2Drift2{ from{ transform:translate(0,0) } to{ transform:translate(-55px,42px) } }
+
+.method2-halo{ position:absolute; border-radius:50%; filter:blur(95px); opacity:.52; }
+.method2-halo-klein{ width:48vw;height:48vw; top:-9vw; left:-7vw;
+  background:radial-gradient(circle,#2B6CC4,transparent 66%);
   animation:method2Drift 18s ease-in-out infinite alternate; }
-.method2-halo-razz{ width:42vw;height:42vw; bottom:-10vw; right:-6vw;
-  background:radial-gradient(circle,#C9266A,transparent 65%); opacity:.32;
+.method2-halo-razz{ width:44vw;height:44vw; bottom:-11vw; right:-7vw;
+  background:radial-gradient(circle,#C9266A,transparent 66%); opacity:.42;
   animation:method2Drift 22s ease-in-out infinite alternate-reverse; }
 @keyframes method2Drift{ from{transform:translate(0,0)} to{transform:translate(40px,30px)} }
-.method2-grid{ position:absolute; inset:0; opacity:.5;
-  background-image:
-    linear-gradient(rgba(234,233,238,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(234,233,238,.04) 1px,transparent 1px);
-  background-size:64px 64px;
-  -webkit-mask-image:radial-gradient(120% 80% at 50% 30%,#000,transparent 75%);
-          mask-image:radial-gradient(120% 80% at 50% 30%,#000,transparent 75%); }
+
+/* grille BLUEPRINT en pointillés (texture technique, masquée vers le centre) */
+.method2-grid{ position:absolute; inset:0; z-index:0; opacity:.6;
+  background-image:radial-gradient(rgba(168,196,244,.17) 1.1px, transparent 1.3px);
+  background-size:38px 38px;
+  -webkit-mask-image:radial-gradient(120% 88% at 50% 32%,#000 40%,transparent 80%);
+          mask-image:radial-gradient(120% 88% at 50% 32%,#000 40%,transparent 80%); }
 /* spotlight qui suit la souris */
 .method2-spot{ position:absolute; inset:0; z-index:1; pointer-events:none; mix-blend-mode:screen;
   background:radial-gradient(420px circle at var(--mx) var(--my),rgba(61,116,180,.16),transparent 60%);
@@ -5584,27 +5634,57 @@ html.cine-hero{
 }
 .cine2-ctas{ display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(22px,3.4vh,40px); }
 .cine2-cta{
-  display:inline-flex; align-items:center; gap:9px;
-  padding:14px 24px; border-radius:999px;
+  position:relative; overflow:hidden;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 28px; border-radius:999px;
   font-family:var(--font-roboto), system-ui, sans-serif;
-  font-size:15px; font-weight:600; color:#fff; text-decoration:none;
-  background:linear-gradient(135deg,#2B6CC4 0%,#1B4F8A 100%);
-  box-shadow:0 1px 1px rgba(255,255,255,.25) inset, 0 14px 34px rgba(27,79,138,.45);
-  transition:transform .35s var(--ease,cubic-bezier(.16,1,.3,1)), box-shadow .35s;
+  font-size:15px; font-weight:600; letter-spacing:.015em;
+  color:#fff; text-decoration:none;
+  background:linear-gradient(135deg,#3B79D4 0%,#235FA6 50%,#163F70 100%);
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -1px 2px rgba(11,27,56,.3),
+    0 2px 6px rgba(11,27,56,.25),
+    0 16px 40px -12px rgba(27,79,138,.65);
+  transition:transform .42s var(--ease,cubic-bezier(.16,1,.3,1)), box-shadow .42s, background .42s;
 }
-.cine2-cta:hover{ transform:translateY(-2px); box-shadow:0 1px 1px rgba(255,255,255,.35) inset, 0 18px 44px rgba(27,79,138,.6); }
-.cine2-cta svg{ transition:transform .35s; }
+/* reflet qui balaie au survol (touche premium) */
+.cine2-cta::before{
+  content:""; position:absolute; top:0; left:-90%; width:60%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+  transform:skewX(-20deg); transition:left .7s var(--ease,cubic-bezier(.16,1,.3,1)); pointer-events:none;
+}
+.cine2-cta:hover{
+  transform:translateY(-2px);
+  background:linear-gradient(135deg,#4886E0 0%,#2B6CC4 50%,#1B4F8A 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    inset 0 -1px 2px rgba(11,27,56,.3),
+    0 4px 10px rgba(11,27,56,.28),
+    0 24px 54px -12px rgba(27,79,138,.8);
+}
+.cine2-cta:hover::before{ left:130%; }
+.cine2-cta svg{ transition:transform .42s var(--ease,cubic-bezier(.16,1,.3,1)); position:relative; }
 .cine2-cta:hover svg{ transform:translateX(4px); }
 .cine2-cta-ghost{
-  display:inline-flex; align-items:center;
-  padding:14px 22px; border-radius:999px;
+  position:relative;
+  display:inline-flex; align-items:center; gap:9px;
+  padding:15px 26px; border-radius:999px;
   font-family:var(--font-roboto), system-ui, sans-serif;
-  font-size:15px; font-weight:500; color:rgba(255,255,255,.92); text-decoration:none;
-  border:1px solid rgba(255,255,255,.32); background:rgba(255,255,255,.05);
-  backdrop-filter:blur(4px);
-  transition:background .35s, border-color .35s, transform .35s;
+  font-size:15px; font-weight:500; letter-spacing:.015em;
+  color:rgba(255,255,255,.94); text-decoration:none;
+  border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14), 0 8px 24px -12px rgba(0,0,0,.5);
+  backdrop-filter:blur(10px) saturate(1.2);
+  -webkit-backdrop-filter:blur(10px) saturate(1.2);
+  transition:background .4s, border-color .4s, transform .4s, box-shadow .4s;
 }
-.cine2-cta-ghost:hover{ background:rgba(255,255,255,.13); border-color:rgba(255,255,255,.55); transform:translateY(-2px); }
+.cine2-cta-ghost:hover{
+  background:rgba(255,255,255,.13); border-color:rgba(255,255,255,.55);
+  transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 12px 30px -12px rgba(0,0,0,.55);
+}
 .cine2-tagline{
   flex-shrink:0; margin:0; max-width:300px;
   font-family:var(--font-roboto), system-ui, sans-serif;

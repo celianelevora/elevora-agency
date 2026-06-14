@@ -75,13 +75,15 @@ export default function RomanRail() {
     const tick = () => {
       raf = 0;
       const vh = window.innerHeight;
-      const mid = window.scrollY + vh * 0.42;
       const els = elsRef.current;
+      const probe = vh * 0.42; // ligne de référence à 42% de l'écran
 
       let idx = 0;
       for (let i = 0; i < els.length; i++) {
-        const top = els[i].offsetTop;
-        if (mid >= top) idx = i;
+        // getBoundingClientRect = position réelle à l'écran, robuste quel que
+        // soit le parent positionné. offsetTop était faussé par les wrappers
+        // .lp-group (relatif au groupe, pas au document) -> mauvaise corrélation.
+        if (els[i].getBoundingClientRect().top <= probe) idx = i;
         else break;
       }
       setActive(idx);
@@ -91,8 +93,9 @@ export default function RomanRail() {
       const first = els[0];
       const last = els[els.length - 1];
       if (first && last && progRef.current) {
-        const start = first.offsetTop;
-        const end = last.offsetTop + last.offsetHeight;
+        const start = first.getBoundingClientRect().top + window.scrollY;
+        const lastRect = last.getBoundingClientRect();
+        const end = lastRect.top + window.scrollY + lastRect.height;
         const p = Math.min(1, Math.max(0, (window.scrollY + vh * 0.5 - start) / (end - start)));
         progRef.current.style.height = (p * 100).toFixed(2) + "%";
       }
@@ -115,7 +118,9 @@ export default function RomanRail() {
 
   const go = (id: string, i: number) => {
     const el = elsRef.current[i] || document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop + 4, behavior: "smooth" });
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: Math.max(0, top + 4), behavior: "smooth" });
   };
 
   return (
