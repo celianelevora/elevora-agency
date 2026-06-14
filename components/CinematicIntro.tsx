@@ -76,14 +76,20 @@ export default function CinematicIntro({
     if (!img || !img.naturalWidth) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const cw = canvas.clientWidth;
-    const ch = canvas.clientHeight;
+    // Le canvas est plein écran (position:fixed inset:0) : on dimensionne sa
+    // résolution interne sur le VIEWPORT (source de vérité toujours fiable).
+    // clientWidth peut valoir 0 ou la taille par défaut 300×150 selon le
+    // timing de layout -> c'était la cause du rendu en gros pixels à l'arrivée.
+    const cw = window.innerWidth;
+    const ch = window.innerHeight;
     if (!cw || !ch) return;
     if (canvas.width !== Math.round(cw * dpr) || canvas.height !== Math.round(ch * dpr)) {
       canvas.width = Math.round(cw * dpr);
       canvas.height = Math.round(ch * dpr);
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
 
     const ir = img.naturalWidth / img.naturalHeight;
     const cr = cw / ch;
@@ -126,9 +132,11 @@ export default function CinematicIntro({
       const k = i;
       img.onload = () => {
         loaded[k] = true;
-        if (k === 0 && lastIdxRef.current < 0) {
-          lastIdxRef.current = 0;
-          drawFrame(0);
+        // (re)dessine dès que la frame chargée est celle qu'on veut afficher
+        // (corrige le cas où le tick a fixé lastIdx avant le chargement).
+        if (k === lastIdxRef.current || (lastIdxRef.current < 0 && k === 0)) {
+          if (lastIdxRef.current < 0) lastIdxRef.current = 0;
+          drawFrame(lastIdxRef.current);
         }
       };
       imgs.push(img);
@@ -215,14 +223,17 @@ export default function CinematicIntro({
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    // premiers rendus (après layout)
+    // premiers rendus (après layout) — on force le redraw même à l'arrêt en
+    // haut de page (l'index ne change pas, donc on remet lastIdx à -1).
     tick();
-    const t = window.setTimeout(tick, 80);
+    const t1 = window.setTimeout(() => { lastIdxRef.current = -1; tick(); }, 90);
+    const t2 = window.setTimeout(() => { lastIdxRef.current = -1; tick(); }, 360);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      window.clearTimeout(t);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
       if (raf) cancelAnimationFrame(raf);
       root.classList.remove("cine-hero");
     };

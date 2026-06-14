@@ -1224,8 +1224,20 @@ body:has(.home-with-cinematic-footer) .hdr {
 .home-with-cinematic-footer .sec-cream { background: #EAE9EE !important; }
 .home-with-cinematic-footer .sec-white { background: #EAE9EE !important; }
 .home-with-cinematic-footer .sec-warm  { background: #EAE9EE !important; }
+
+/* FOND CONTINU DE LA LANDING — un seul #EAE9EE uniforme qui traverse toutes
+   les parties claires. On neutralise les overlays décoratifs par section
+   (halos Klein/framboise + grille) qui créaient des coins colorés visibles
+   aux jointures (01↔02, 02↔03, 03↔04, 04↔05). */
+.home-with-cinematic-footer { background: #EAE9EE; }
+.home-with-cinematic-footer .lux-bg { display: none !important; }
 .home-with-cinematic-footer .sec-night {
-  background: #0D0D1A url('/method-bg.png') center center / 100% 100% no-repeat !important;
+  /* Image mise à l'échelle SANS déformation : `auto 100%` = la hauteur épouse
+     la section, la largeur reste proportionnelle (image portrait 1003×1568).
+     Les fondus haut/bas intégrés à l'image restent alignés sur les bords donc
+     le raccord avec les sections crème reste propre ; les côtés laissent voir
+     le fond nuit #0D0D1A (effet vignette). Avant : `100% 100%` étirait tout. */
+  background: #0D0D1A url('/method-bg.png') center center / auto 100% no-repeat !important;
 }
 /* La section racine à l'intérieur d'un wrapper .sec-* devient transparente
    pour laisser voir le fond du wrapper */
@@ -2745,9 +2757,10 @@ body:has(.home-with-cinematic-footer) {
    WHY NOW — section "Pourquoi un site, pourquoi maintenant"
    =========================================================== */
 .whynow-section {
-  /* Raccord sans couture : #EAE9EE en haut ET en bas (mêmes bords que les
-     sections voisines), léger renflement clair au centre pour la profondeur. */
-  background: linear-gradient(180deg, #EAE9EE 0%, #F3F2F7 22%, #EAE9EE 72%, #EAE9EE 100%);
+  /* Fond continu : transparent -> on voit le #EAE9EE uniforme du parent
+     (.home-with-cinematic-footer). Plus de dégradé ni de halo par section :
+     les jointures avec les sections voisines sont invisibles. */
+  background: transparent;
   padding: 130px 0;
   position: relative;
   overflow: hidden;
@@ -2856,9 +2869,8 @@ body:has(.home-with-cinematic-footer) {
    FOR WHO — section "Pour qui" : citation pleine page
    =========================================================== */
 .forwho-section {
-  /* Le haut épouse exactement le bas de « Le constat » (#EAE9EE) : plus de
-     marche brute entre les deux fonds. */
-  background: linear-gradient(180deg, #EAE9EE 0%, #F3F2F7 26%, #EAE9EE 78%, #EAE9EE 100%);
+  /* Fond continu transparent (voir .whynow-section). */
+  background: transparent;
   padding: 130px 0;
   position: relative;
   overflow: hidden;
@@ -2958,9 +2970,8 @@ body:has(.home-with-cinematic-footer) {
    MANIFESTO — section "Notre manifeste"
    =========================================================== */
 .manifesto-section {
-  /* Le haut rejoint le bas des Engagements (#EAE9EE) : la jonction avec la
-     déchirure de papier devient invisible (plus de bande claire). */
-  background: linear-gradient(180deg, #EAE9EE 0%, #F4F3F8 24%, #EAE9EE 76%, #EAE9EE 100%);
+  /* Fond continu transparent (voir .whynow-section). */
+  background: transparent;
   padding: 110px 0;
   position: relative;
   overflow: hidden;
@@ -5035,9 +5046,9 @@ body:has(.methode-banner) .site-footer {
 .cine-scrim{
   position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
-    linear-gradient(90deg, rgba(8,8,18,.78) 0%, rgba(8,8,18,.32) 34%, rgba(8,8,18,0) 56%),
-    linear-gradient(0deg, rgba(8,8,18,.62) 0%, rgba(8,8,18,0) 32%),
-    radial-gradient(120% 90% at 70% 30%, rgba(8,8,18,0) 40%, rgba(8,8,18,.5) 100%);
+    linear-gradient(90deg, rgba(8,8,18,.6) 0%, rgba(8,8,18,.22) 32%, rgba(8,8,18,0) 54%),
+    linear-gradient(0deg, rgba(8,8,18,.44) 0%, rgba(8,8,18,0) 30%),
+    radial-gradient(130% 95% at 72% 32%, rgba(8,8,18,0) 48%, rgba(8,8,18,.32) 100%);
 }
 /* fondu final vers le site clair (piloté en JS sur la fin du scroll) */
 .cine-fade{
