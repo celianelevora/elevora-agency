@@ -5375,9 +5375,13 @@ body:has(.methode-banner) .site-footer {
    ============================================================ */
 .cine2{
   position:relative;
-  height:560vh;                /* budget de défilement : hero + scrub + promesse */
+  width:100vw;                       /* pleine largeur viewport (html a overflow-x:hidden) */
+  margin-left:calc(50% - 50vw);      /* casse la largeur du parent -> bord à bord */
+  margin-right:calc(50% - 50vw);
+  margin-top:-76px;                  /* annule le padding-top:76px de <main> -> hero plein écran SOUS le header */
+  padding:0;                         /* annule le section{padding:120px 0} global (bande sombre parasite) */
+  height:560vh;                      /* budget de défilement : hero + scrub + promesse */
   background:#0B0B16;
-  margin:0;
 }
 .cine2-stage{
   position:sticky; top:0;

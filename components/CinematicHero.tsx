@@ -145,8 +145,8 @@ export default function CinematicHero({
       // ---- FONDU de raccord vers le site clair (#EAE9EE) ----
       fade.style.opacity = map(P, 0.94, 1).toFixed(3);
 
-      // ---- header clair tant qu'on est sur la statue ----
-      setDark(P < 0.93);
+      // ---- header clair seulement quand le fondu crème recouvre l'écran ----
+      setDark(P < 0.96);
     };
 
     const tick = () => {
