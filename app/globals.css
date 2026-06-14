@@ -1161,8 +1161,10 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   background: linear-gradient(to top, var(--cream) 0%, rgba(234,233,238,0) 100%);
 }
 
-/* Masquer le footer global sur la page d'accueil (remplacé par CinematicFooter) */
-body:has(.home-with-cinematic-footer) > .footer {
+/* Masquer le footer global (navy) sur la page d'accueil — remplacé par le
+   CinematicFooter. La règle ciblait `.footer` mais l'élément est `.site-footer`
+   -> elle ne masquait rien, d'où le double footer. */
+body:has(.home-with-cinematic-footer) > .site-footer {
   display: none;
 }
 
@@ -1277,14 +1279,15 @@ body:has(.home-with-cinematic-footer) .hdr {
 
 .home-with-cinematic-footer .sec-night {
   position: relative;
-  /* MÉTHODE — fond bleu « habillé » (plus d'image method-bg.png).
-     Dégradé Klein profond + halos de marque (klein-bright + un soupçon de
-     framboise) pour la profondeur. Le texte de la méthode est clair -> lisible. */
+  /* MÉTHODE — fond bleu PREMIUM et dimensionnel (plus d'image, plus de version terne).
+     1) « projecteur » Klein-bright central qui éclaire le titre et met la section en avant,
+     2) chaleur framboise en bas-droite, 3) base Klein profonde éclairée en haut.
+     Les halos animés + la grille + le spotlight souris (composant .method2) complètent. */
   background:
-    radial-gradient(110vw 78vh at 12% -4%, rgba(43,108,196,.26), transparent 56%),
-    radial-gradient(80vw 64vh at 102% 104%, rgba(201,38,106,.13), transparent 60%),
-    radial-gradient(64vw 58vh at 82% 30%, rgba(27,79,138,.34), transparent 60%),
-    linear-gradient(178deg, #0D2B50 0%, #102449 46%, #0B1B38 100%) !important;
+    radial-gradient(80vw 62vh at 50% 21%, rgba(43,108,196,.36), transparent 62%),
+    radial-gradient(62vw 56vh at 90% 86%, rgba(201,38,106,.15), transparent 60%),
+    radial-gradient(58vw 54vh at 8% 4%, rgba(43,108,196,.18), transparent 56%),
+    linear-gradient(176deg, #0E2D54 0%, #0F2547 50%, #091A35 100%) !important;
 }
 /* fondus doux haut/bas vers le gris des sections voisines (sous le contenu z-2) */
 .home-with-cinematic-footer .sec-night::before,
@@ -4703,8 +4706,7 @@ body:has(.methode-banner) .site-footer {
    ============================================================ */
 .elv-preloader{
   position:fixed;
-  top:0; left:0; right:0; bottom:0;
-  width:100vw; height:100vh; height:100dvh; max-width:100vw;
+  top:0; left:0; right:0; bottom:0;   /* plein écran, calé sur le viewport (hors scrollbar) */
   z-index:2147483647;                 /* au-dessus de tout */
   display:flex; align-items:center; justify-content:center;
   background:
@@ -4712,9 +4714,9 @@ body:has(.methode-banner) .site-footer {
   overflow:hidden;
   opacity:1;
   transition:opacity .72s cubic-bezier(.16,1,.3,1), visibility .72s;
-  /* CLÉ DU BUG : la <video> du hero crée un calque GPU qui, sans ça,
-     passe AU-DESSUS de l'overlay fixe et le rogne en boîte centrale.
-     On promeut le preloader sur son propre calque -> il recouvre tout. */
+  /* propre calque GPU (composite au-dessus des <video> du hero). NB : le vrai
+     décalage « boîte 1240px » venait de la règle .cine-hero appliquée à <html>
+     -> corrigé via html.cine-hero { max-width:none; will-change:auto } ailleurs. */
   transform:translateZ(0);
   -webkit-transform:translateZ(0);
   will-change:transform, opacity;
@@ -4812,7 +4814,9 @@ body:has(.methode-banner) .site-footer {
    ============================================================ */
 .method2{
   position:relative; overflow:hidden;
-  padding:clamp(90px,13vh,150px) 0 clamp(96px,14vh,160px);
+  /* gros gap : le titre démarre bien EN-DESSOUS du fondu gris du haut (130px)
+     -> il n'est plus « en pleine transition gris→bleu » */
+  padding:clamp(180px,25vh,310px) 0 clamp(150px,20vh,260px);
   --mx:50%; --my:30%;
 }
 /* fondus de raccord haut/bas désormais intégrés dans l'image de fond (.sec-night) */
@@ -5168,6 +5172,18 @@ body:has(.methode-banner) .site-footer {
   color:#F3F2F7;
   will-change:opacity, transform, filter;
 }
+/* ⚠️ <html> reçoit la classe `cine-hero` sur le hero (thème header). La règle
+   `.cine-hero` ci-dessus (vestige d'un ancien conteneur de hero) ne doit JAMAIS
+   s'appliquer au <html> : sinon il est réduit à 1240px centré + `will-change:transform`
+   en fait le bloc conteneur des éléments `fixed` -> preloader/footer décalés.
+   On neutralise donc ces propriétés sur l'élément racine. */
+html.cine-hero{
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  width:auto !important;
+  will-change:auto !important;
+}
 .cine-eyebrow{
   display:inline-flex; align-items:center; gap:14px;
   font-family:var(--font-roboto),system-ui,sans-serif;
@@ -5365,7 +5381,7 @@ body:has(.methode-banner) .site-footer {
 /* ligne verticale + remplissage de progression */
 .roman-rail-track{
   position:absolute;
-  top:6px; bottom:6px; left:50%;
+  top:24px; bottom:24px; left:50%;     /* borné au centre des 1res/dernières pastilles -> ne dépasse plus sous IX */
   width:1.5px; transform:translateX(-50%);
   background:rgba(26,26,46,.14);
   z-index:0;
@@ -5398,10 +5414,11 @@ body:has(.methode-banner) .site-footer {
   box-shadow:0 6px 18px rgba(27,79,138,.42);
 }
 /* variante sombre : sur sections sombres (intro + Méthode) */
-.roman-rail.tone-dark .roman-rail-track{ background:rgba(234,233,238,.16); }
+.roman-rail.tone-dark .roman-rail-track{ background:rgba(234,233,238,.12); }
 .roman-rail.tone-dark .roman-rail-mark{
-  color:rgba(234,233,238,.44);
-  background:rgba(16,16,30,.66);
+  color:rgba(234,233,238,.5);
+  background:rgba(17,20,36,.96);              /* OPAQUE -> le trait ne traverse plus la pastille */
+  border:1px solid rgba(234,233,238,.09);
   text-shadow:0 1px 10px rgba(0,0,0,.7);
 }
 .roman-rail.tone-dark .roman-rail-mark:hover{ color:rgba(234,233,238,.82); }
@@ -5414,24 +5431,44 @@ body:has(.methode-banner) .site-footer {
 /* ---- Tooltip de titre au survol d'un chiffre ----
    Pilule affichée À GAUCHE du chiffre survolé. Le :hover CSS garantit
    qu'un SEUL titre s'affiche à la fois, et qu'il disparaît à la sortie souris. */
+/* ---- Tooltip de titre au survol d'un chiffre (rendu PREMIUM) ----
+   Étiquette éditoriale affichée À GAUCHE du chiffre survolé : verre dépoli,
+   petites capitales espacées, micro-flèche vers la pastille. Le :hover CSS
+   garantit qu'UN SEUL titre s'affiche à la fois et disparaît à la sortie. */
 .roman-rail-tip{
   position:absolute;
-  right:calc(100% + 12px);
+  right:calc(100% + 16px);
   top:50%;
-  transform:translateY(-50%) translateX(6px);
+  transform:translateY(-50%) translateX(10px);
   white-space:nowrap;
   font-family:var(--font-roboto),'Roboto',-apple-system,sans-serif;
-  font-style:normal; font-weight:500; font-size:12.5px; letter-spacing:.01em;
-  line-height:1;
-  padding:7px 12px;
-  border-radius:999px;
+  font-style:normal; font-weight:600; font-size:10.5px;
+  letter-spacing:.14em; text-transform:uppercase; line-height:1;
+  padding:9px 14px;
+  border-radius:9px;
   color:#1A1A2E;
-  background:rgba(255,255,255,.94);
-  border:1px solid rgba(26,26,46,.08);
-  box-shadow:0 8px 24px rgba(20,20,40,.16);
-  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  background:rgba(255,255,255,.68);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:
+    0 1px 2px rgba(20,20,40,.05),
+    0 14px 34px -10px rgba(27,79,138,.28),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
+          backdrop-filter:blur(16px) saturate(1.25);
   opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity .26s var(--ease), transform .26s var(--ease), visibility .26s;
+  transition:
+    opacity .3s var(--ease,cubic-bezier(.16,1,.3,1)),
+    transform .46s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)),
+    visibility .3s;
+}
+/* micro-flèche pointant vers la pastille */
+.roman-rail-tip::after{
+  content:""; position:absolute; left:100%; top:50%;
+  width:7px; height:7px; transform:translate(-52%,-50%) rotate(45deg);
+  background:rgba(255,255,255,.68);
+  border-right:1px solid rgba(255,255,255,.7);
+  border-top:1px solid rgba(255,255,255,.7);
+  -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
 }
 .roman-rail-mark:hover .roman-rail-tip,
 .roman-rail-mark:focus-visible .roman-rail-tip{
@@ -5440,15 +5477,23 @@ body:has(.methode-banner) .site-footer {
 }
 /* variante sombre (intro + Méthode) */
 .roman-rail.tone-dark .roman-rail-tip{
-  color:#EAE9EE;
-  background:rgba(16,16,30,.92);
-  border-color:rgba(234,233,238,.12);
-  box-shadow:0 10px 26px rgba(0,0,0,.5);
+  color:#F3F2F7;
+  background:rgba(18,21,38,.78);
+  border-color:rgba(234,233,238,.14);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.3),
+    0 16px 36px -10px rgba(0,0,0,.6),
+    inset 0 1px 0 rgba(255,255,255,.08);
+}
+.roman-rail.tone-dark .roman-rail-tip::after{
+  background:rgba(18,21,38,.78);
+  border-right-color:rgba(234,233,238,.14);
+  border-top-color:rgba(234,233,238,.14);
 }
 /* le chiffre actif est agrandi (scale 1.4) : on neutralise l'effet sur la pilule
    pour qu'elle garde une taille normale et reste bien lisible */
 .roman-rail-mark.active .roman-rail-tip{
-  transform:translateY(-50%) translateX(6px) scale(.715);
+  transform:translateY(-50%) translateX(10px) scale(.715);
   transform-origin:right center;
 }
 .roman-rail-mark.active:hover .roman-rail-tip,
@@ -5607,10 +5652,11 @@ body:has(.methode-banner) .site-footer {
 }
 .cine2-promise-title em{ font-style:italic; color:rgba(255,255,255,.62); }
 .cine2-promise-cards{
-  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:22px; width:100%; max-width:760px;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  gap:clamp(24px,6vw,90px); width:100%; max-width:none;
 }
 .cine2-pcard{
+  flex:0 1 clamp(238px,23vw,340px);
   text-align:left; padding:28px 26px; border-radius:16px;
   background:rgba(18,18,30,.46);
   border:1px solid rgba(255,255,255,.12);
@@ -5642,7 +5688,8 @@ body:has(.methode-banner) .site-footer {
   .cine2-hero-ui{ flex-direction:column; align-items:flex-start; justify-content:flex-end; gap:18px; padding:100px 22px 56px; }
   .cine2-title{ font-size:clamp(34px,9vw,56px); }
   .cine2-tagline{ text-align:left; align-self:flex-start; max-width:none; }
-  .cine2-promise-cards{ grid-template-columns:1fr; max-width:420px; gap:14px; }
+  .cine2-promise-cards{ flex-direction:column; align-items:stretch; max-width:420px; margin:0 auto; gap:14px; }
+  .cine2-pcard{ flex:0 0 auto; }
   .cine2-promise-title{ font-size:clamp(30px,8vw,46px); }
   .cine2-cue{ display:none; }
 }

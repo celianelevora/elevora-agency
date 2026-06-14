@@ -168,11 +168,13 @@ export default function CinematicHero({
       if (!reduce) promise.style.transform = `translateY(${((1 - pin) * 36).toFixed(1)}px)`;
       promise.style.pointerEvents = pin > 0.5 && pout > 0.5 ? "auto" : "none";
 
-      // ---- raccord crème vers le site clair ----
-      fade.style.opacity = map(P, 0.94, 1).toFixed(3);
+      // ---- PLUS de page grise : la dernière frame laisse apparaître la
+      //      partie 01 directement (le voile crème est neutralisé). ----
+      fade.style.opacity = "0";
 
-      // ---- header clair seulement quand le crème recouvre l'écran ----
-      setDark(P < 0.96);
+      // ---- header : texte clair tant que la statue est à l'écran, puis
+      //      bascule clair (texte sombre) juste avant la partie 01. ----
+      setDark(P < 0.997);
     };
 
     const tick = () => {
