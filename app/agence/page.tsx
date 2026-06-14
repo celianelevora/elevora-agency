@@ -751,7 +751,7 @@ export default function AgencePage() {
           <div className="agence-origine-grid">
             <div className="agence-origine-left">
               <span className="eyebrow">Notre histoire</span>
-              <h2>D'où vient<br /><span style={{ fontStyle: 'italic' }}>Elevora.</span></h2>
+              <h2><StaggerText text="D'où vient" /><br /><span style={{ fontStyle: 'italic' }}><StaggerText text="Elevora." /></span></h2>
             </div>
             <div className="agence-origine-right">
               <BlurFade inView delay={0}>
@@ -824,8 +824,8 @@ export default function AgencePage() {
             <div className="agence-approche-head-left">
               <span className="eyebrow">Notre approche</span>
               <h2>
-                Trois temps,<br />
-                <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}>une exigence.</span>
+                <StaggerText text="Trois temps," /><br />
+                <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}><StaggerText text="une exigence." /></span>
               </h2>
             </div>
             <Link href="/methode" className="agence-approche-link">
@@ -854,8 +854,8 @@ export default function AgencePage() {
           <div className="agence-concerns-head">
             <span className="eyebrow">Vos préoccupations</span>
             <h2>
-              On a une réponse<br />
-              <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}>à chacune.</span>
+              <StaggerText text="On a une réponse" /><br />
+              <span style={{ fontStyle: 'italic', color: 'var(--klein)' }}><StaggerText text="à chacune." /></span>
             </h2>
             <p>
               Chaque client arrive avec ses questions. Référencement, sécurité, vitesse, design, données — voici ce qu'on intègre dans tous nos projets, quel que soit votre métier.

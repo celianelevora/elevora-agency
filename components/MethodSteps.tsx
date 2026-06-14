@@ -73,13 +73,6 @@ export default function MethodSteps() {
 
   return (
     <section ref={sectionRef} className="method2">
-      <div className="method2-aura" aria-hidden="true">
-        <span className="method2-halo method2-halo-top" />
-        <span className="method2-halo method2-halo-klein" />
-        <span className="method2-halo method2-halo-razz" />
-        <span className="method2-grid" />
-      </div>
-
       <div className="container method2-inner">
         <div className="method2-head">
           <span className="method2-eyebrow">06 — Notre méthode</span>

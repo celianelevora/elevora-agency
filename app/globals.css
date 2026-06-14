@@ -1191,7 +1191,7 @@ body:has(.home-with-cinematic-footer) .hdr {
 .home-with-cinematic-footer .sec-white { background: #EAE9EE !important; }
 .home-with-cinematic-footer .sec-warm  { background: #EAE9EE !important; }
 .home-with-cinematic-footer .sec-night {
-  background: linear-gradient(180deg, #1A1A2E, #0D0D1A) !important;
+  background: #0D0D1A url('/method-bg.png') center center / 100% 100% no-repeat !important;
 }
 /* La section racine à l'intérieur d'un wrapper .sec-* devient transparente
    pour laisser voir le fond du wrapper */
@@ -4621,14 +4621,9 @@ body:has(.methode-banner) .site-footer {
   padding:clamp(90px,13vh,150px) 0 clamp(96px,14vh,160px);
   --mx:50%; --my:30%;
 }
-/* fondus de raccord cream <-> sombre en haut et en bas du bandeau */
+/* fondus de raccord haut/bas désormais intégrés dans l'image de fond (.sec-night) */
 .method2::before,
-.method2::after{
-  content:""; position:absolute; left:0; right:0; z-index:3; pointer-events:none;
-}
-.method2::before{ top:0; height:180px;
-  background:linear-gradient(180deg,#EAE9EE 0%, rgba(234,233,238,.82) 34%, rgba(234,233,238,.32) 66%, transparent 100%); }
-.method2::after{ bottom:0; height:120px; background:linear-gradient(0deg,#EAE9EE,rgba(234,233,238,0)); }
+.method2::after{ content:none; display:none; }
 
 .method2-aura{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
 .method2-halo{ position:absolute; border-radius:50%; filter:blur(100px); opacity:.4; }
@@ -4868,14 +4863,22 @@ body:has(.methode-banner) .site-footer {
 /* ============================================================
    PAGES LÉGALES — un peu de vie & de couleur (sans surcharger)
    ============================================================ */
-.legal-page{ background:radial-gradient(120% 70% at 50% 0%, #F2F1F5, #EAE9EE 55%); position:relative; }
-/* halo de marque discret dans le hero */
-.legal-hero{ overflow:hidden; border-bottom:none; }
+.legal-page{
+  background:radial-gradient(120% 70% at 50% 0%, #F2F1F5, #EAE9EE 55%);
+  position:relative;
+  /* Le fond coloré remonte tout en haut, derrière le header fixe (le <main>
+     parent réserve 76px). Le texte ne bouge pas : le hero récupère ces 76px
+     (+ les 100px d'origine du .legal-page) en padding-top. */
+  margin-top:-76px;
+  padding-top:0;
+}
+/* halo de marque ancré tout en haut, derrière le header */
+.legal-hero{ overflow:hidden; border-bottom:none; padding-top:256px; }
 .legal-hero::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
   background:
-    radial-gradient(42vw 30vw at 6% -12%, rgba(27,79,138,.11), transparent 70%),
-    radial-gradient(38vw 26vw at 100% -6%, rgba(201,38,106,.07), transparent 72%);
+    radial-gradient(640px 440px at 8% 46px, rgba(27,79,138,.13), transparent 70%),
+    radial-gradient(560px 380px at 100% 88px, rgba(201,38,106,.085), transparent 72%);
 }
 .legal-hero::after{
   content:""; position:absolute; left:0; right:0; bottom:0; height:2px; z-index:1;
