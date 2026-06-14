@@ -5041,7 +5041,7 @@ body:has(.methode-banner) .site-footer {
   pointer-events:none;
   overflow:hidden;
 }
-.cine-canvas{ display:block; width:100%; height:100%; }
+.cine-canvas{ position:absolute; inset:0; display:block; width:100%; height:100%; }
 /* vignette : assombrit le pourtour pour la lisibilité du texte (gauche + bas) */
 .cine-scrim{
   position:absolute; inset:0; z-index:1; pointer-events:none;

@@ -76,16 +76,19 @@ export default function CinematicIntro({
     if (!img || !img.naturalWidth) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    // Le canvas est plein écran (position:fixed inset:0) : on dimensionne sa
-    // résolution interne sur le VIEWPORT (source de vérité toujours fiable).
-    // clientWidth peut valoir 0 ou la taille par défaut 300×150 selon le
-    // timing de layout -> c'était la cause du rendu en gros pixels à l'arrivée.
-    const cw = window.innerWidth;
-    const ch = window.innerHeight;
+    // On dimensionne la résolution interne sur la TAILLE RÉELLE AFFICHÉE du
+    // canvas (getBoundingClientRect), pas sur clientWidth ni innerHeight : ainsi
+    // le ratio interne == ratio affiché, donc AUCUN étirement possible (ni gros
+    // pixels, ni traînées verticales), quelle que soit la boîte du canvas.
+    const rect = canvas.getBoundingClientRect();
+    const cw = Math.round(rect.width);
+    const ch = Math.round(rect.height);
     if (!cw || !ch) return;
-    if (canvas.width !== Math.round(cw * dpr) || canvas.height !== Math.round(ch * dpr)) {
-      canvas.width = Math.round(cw * dpr);
-      canvas.height = Math.round(ch * dpr);
+    const bw = Math.round(cw * dpr);
+    const bh = Math.round(ch * dpr);
+    if (canvas.width !== bw || canvas.height !== bh) {
+      canvas.width = bw;
+      canvas.height = bh;
     }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.imageSmoothingEnabled = true;
@@ -223,6 +226,17 @@ export default function CinematicIntro({
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
+    // Redessine dès que la BOÎTE du canvas change de taille (layout tardif,
+    // polices, barre d'URL mobile…) — c'est ce qui élimine durablement le
+    // rendu déformé à l'arrivée.
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined" && canvasRef.current) {
+      ro = new ResizeObserver(() => {
+        lastIdxRef.current = -1;
+        onScroll();
+      });
+      ro.observe(canvasRef.current);
+    }
     // premiers rendus (après layout) — on force le redraw même à l'arrêt en
     // haut de page (l'index ne change pas, donc on remet lastIdx à -1).
     tick();
@@ -234,6 +248,7 @@ export default function CinematicIntro({
       window.removeEventListener("resize", onResize);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
+      if (ro) ro.disconnect();
       if (raf) cancelAnimationFrame(raf);
       root.classList.remove("cine-hero");
     };
