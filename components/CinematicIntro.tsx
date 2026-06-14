@@ -4,175 +4,119 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 /* ============================================================
-   CinematicIntro — bloc d'ouverture unique de la landing.
+   CinematicIntro — ouverture de la landing (réécriture v18, scrub VIDÉO).
 
-   Fusionne en UN SEUL système piloté par le scroll :
-     • le hero (écran 1 : texte à gauche, statue à droite, header sombre)
-     • le scrub des 122 frames (la statue « recule » de la frame 1 → 122)
-     • la promesse (dernière frame figée + « Ce qu'on dit, on le tient. »
-       + 2 cartes par-dessus, façon écran 2)
+   Approche reprise du prototype HTML qui fonctionnait : la statue est une
+   <video> (object-fit:cover, AUCUN canvas → aucun bug d'étirement) dont le
+   currentTime est piloté par le scroll, LISSÉ par interpolation (LERP) pour
+   un scrub fluide. La vidéo est encodée « tout-image-clé » (chaque frame =
+   keyframe) donc le seek est instantané.
 
-   La statue est dessinée sur un <canvas> en position:fixed DERRIÈRE le
-   contenu. Les panneaux (hero / promesse) sont en sticky et se pinnent :
-   on a l'impression de rester sur place pendant que la frame défile.
-   Aucune nouvelle dépendance — rAF + canvas natif, comme ScrollSequence.
+     • hero (écran 1) : texte à gauche, statue derrière, header sombre
+     • scrub : la statue « recule » (pose 1 → pose 2) pendant qu'on scrolle
+     • promesse (écran 2) : dernière frame figée + « Ce qu'on dit, on le tient. »
+
+   Une boucle rAF continue rapproche en douceur la position vidéo de sa cible.
    ============================================================ */
 
 interface Props {
-  frameCount?: number;
-  framePath?: string; // ex: "/seq/frame_"
-  framePad?: number; // 4 -> frame_0001
-  frameExt?: string; // "webp"
+  /** durée de la vidéo (s) — fallback si les métadonnées tardent */
+  duration?: number;
+  videoSrc?: string;
+  poster?: string;
 }
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const eoCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 const eInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+const SCRUB_LERP = 0.18; // lissage du currentTime vidéo
+
 export default function CinematicIntro({
-  frameCount = 122,
-  framePath = "/seq/frame_",
-  framePad = 4,
-  frameExt = "webp",
+  duration = 5.083,
+  videoSrc = "/statue-scrub.mp4",
+  poster = "/seq/frame_0001.webp",
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const fadeRef = useRef<HTMLDivElement>(null);
-
   const heroRef = useRef<HTMLDivElement>(null);
   const promiseRef = useRef<HTMLDivElement>(null);
   const romanRef = useRef<HTMLSpanElement>(null);
 
-  const imagesRef = useRef<HTMLImageElement[]>([]);
-  const loadedRef = useRef<boolean[]>([]);
-  const lastIdxRef = useRef<number>(-1);
-  const stageHiddenRef = useRef<boolean>(false);
-  const darkRef = useRef<boolean>(false);
-
-  // --- dessin d'une frame (cover, frame la plus proche déjà chargée) ---
-  const drawFrame = (idx: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let img: HTMLImageElement | undefined = imagesRef.current[idx];
-    if (!img || !loadedRef.current[idx] || !img.naturalWidth) {
-      img = undefined;
-      for (let d = 1; d < frameCount; d++) {
-        const lo = idx - d;
-        const hi = idx + d;
-        if (lo >= 0 && loadedRef.current[lo] && imagesRef.current[lo]?.naturalWidth) {
-          img = imagesRef.current[lo];
-          break;
-        }
-        if (hi < frameCount && loadedRef.current[hi] && imagesRef.current[hi]?.naturalWidth) {
-          img = imagesRef.current[hi];
-          break;
-        }
-      }
-    }
-    if (!img || !img.naturalWidth) return;
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    // On dimensionne la résolution interne sur la TAILLE RÉELLE AFFICHÉE du
-    // canvas (getBoundingClientRect), pas sur clientWidth ni innerHeight : ainsi
-    // le ratio interne == ratio affiché, donc AUCUN étirement possible (ni gros
-    // pixels, ni traînées verticales), quelle que soit la boîte du canvas.
-    const rect = canvas.getBoundingClientRect();
-    const cw = Math.round(rect.width);
-    const ch = Math.round(rect.height);
-    if (!cw || !ch) return;
-    const bw = Math.round(cw * dpr);
-    const bh = Math.round(ch * dpr);
-    if (canvas.width !== bw || canvas.height !== bh) {
-      canvas.width = bw;
-      canvas.height = bh;
-    }
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
-
-    const ir = img.naturalWidth / img.naturalHeight;
-    const cr = cw / ch;
-    let dw: number, dh: number, dx: number, dy: number;
-    if (cr > ir) {
-      dw = cw;
-      dh = cw / ir;
-      dx = 0;
-      dy = (ch - dh) / 2;
-    } else {
-      dh = ch;
-      dw = ch * ir;
-      dy = 0;
-      dx = (cw - dw) / 2;
-    }
-    ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, dx, dy, dw, dh);
-  };
-
   useEffect(() => {
     const wrap = wrapRef.current;
     const stage = stageRef.current;
+    const video = videoRef.current;
+    const fade = fadeRef.current;
     const hero = heroRef.current;
     const promise = promiseRef.current;
-    const fade = fadeRef.current;
     const roman = romanRef.current;
-    if (!wrap || !stage || !hero || !promise || !fade) return;
+    if (!wrap || !stage || !video || !fade || !hero || !promise) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const root = document.documentElement;
 
-    // --- préchargement des frames ---
-    const imgs: HTMLImageElement[] = [];
-    const loaded: boolean[] = new Array(frameCount).fill(false);
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      const n = String(i + 1).padStart(framePad, "0");
-      img.decoding = "async";
-      img.src = `${framePath}${n}.${frameExt}`;
-      const k = i;
-      img.onload = () => {
-        loaded[k] = true;
-        // (re)dessine dès que la frame chargée est celle qu'on veut afficher
-        // (corrige le cas où le tick a fixé lastIdx avant le chargement).
-        if (k === lastIdxRef.current || (lastIdxRef.current < 0 && k === 0)) {
-          if (lastIdxRef.current < 0) lastIdxRef.current = 0;
-          drawFrame(lastIdxRef.current);
-        }
-      };
-      imgs.push(img);
-    }
-    imagesRef.current = imgs;
-    loadedRef.current = loaded;
-
+    let dur = duration;
+    let vTarget = 0;
+    let vDisp = 0;
+    let lastSet = -1;
     let vh = window.innerHeight;
+    let dark = false;
+    let stageHidden = false;
+    let raf = 0;
+
+    // la vidéo est SCRUBBÉE (jamais lue) : on la met en pause sur la 1re frame
+    const primeVideo = () => {
+      try {
+        video.pause();
+        video.currentTime = 0;
+      } catch {
+        /* noop */
+      }
+    };
+    const onMeta = () => {
+      if (isFinite(video.duration) && video.duration > 0) dur = video.duration;
+      primeVideo();
+    };
+    video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("loadeddata", primeVideo);
 
     const setDark = (on: boolean) => {
-      if (darkRef.current === on) return;
-      darkRef.current = on;
+      if (dark === on) return;
+      dark = on;
       root.classList.toggle("cine-hero", on);
     };
     const setStageHidden = (hidden: boolean) => {
-      if (stageHiddenRef.current === hidden) return;
-      stageHiddenRef.current = hidden;
+      if (stageHidden === hidden) return;
+      stageHidden = hidden;
       stage.style.visibility = hidden ? "hidden" : "visible";
     };
 
-    // sous-plages de la progression globale P de l'intro [0..1]
     const drive = (P: number) => {
-      // --- frame : 0 pendant le hero, scrub 0->121, figée à la fin ---
+      // --- cible vidéo : 0 pendant le hero, scrub jusqu'à la fin, figée ---
       const fp = eInOut(clamp01((P - 0.1) / (0.82 - 0.1)));
-      let idx = Math.round(fp * (frameCount - 1));
-      if (idx < 0) idx = 0;
-      if (idx > frameCount - 1) idx = frameCount - 1;
-      if (idx !== lastIdxRef.current && !stageHiddenRef.current) {
-        drawFrame(idx);
-        lastIdxRef.current = idx;
+      vTarget = fp * dur;
+
+      // lissage du scrub
+      if (reduce) {
+        vDisp = vTarget;
+      } else {
+        vDisp += (vTarget - vDisp) * SCRUB_LERP;
+        if (Math.abs(vTarget - vDisp) < 0.008) vDisp = vTarget;
+      }
+      const t = Math.max(0, Math.min(dur - 0.001, vDisp));
+      if (!stageHidden && video.readyState >= 1 && Math.abs(t - lastSet) > 0.004) {
+        try {
+          video.currentTime = t;
+          lastSet = t;
+        } catch {
+          /* noop */
+        }
       }
 
-      // --- hero : sort en fondu + flou + montée (fini avant de se dé-pinner) ---
+      // --- hero : fondu + flou + montée (fini avant de se dé-pinner) ---
       const out = eoCubic(clamp01((P - 0.06) / (0.2 - 0.06)));
       hero.style.opacity = (1 - out).toFixed(3);
       if (reduce) {
@@ -201,65 +145,54 @@ export default function CinematicIntro({
 
       // --- header sombre tant qu'on est sur la statue, puis retour ---
       setDark(P < 0.94);
-      // --- on masque le canvas une fois l'intro entièrement dépassée ---
+      // --- on masque la scène fixe une fois l'intro dépassée ---
       setStageHidden(P >= 0.999);
     };
 
-    let raf = 0;
+    // boucle continue : le LERP rejoint la cible en douceur à chaque frame
     const tick = () => {
-      raf = 0;
       const rect = wrap.getBoundingClientRect();
-      const total = wrap.offsetHeight - vh; // course scrollable de l'intro
+      const total = wrap.offsetHeight - vh;
       const scrolled = -rect.top;
       const P = total > 0 ? clamp01(scrolled / total) : 0;
       drive(P);
-    };
-    const onScroll = () => {
-      if (raf) return;
       raf = requestAnimationFrame(tick);
     };
+
     const onResize = () => {
       vh = window.innerHeight;
-      lastIdxRef.current = -1; // force le redraw au prochain tick
-      onScroll();
     };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    // Redessine dès que la BOÎTE du canvas change de taille (layout tardif,
-    // polices, barre d'URL mobile…) — c'est ce qui élimine durablement le
-    // rendu déformé à l'arrivée.
-    let ro: ResizeObserver | null = null;
-    if (typeof ResizeObserver !== "undefined" && canvasRef.current) {
-      ro = new ResizeObserver(() => {
-        lastIdxRef.current = -1;
-        onScroll();
-      });
-      ro.observe(canvasRef.current);
-    }
-    // premiers rendus (après layout) — on force le redraw même à l'arrêt en
-    // haut de page (l'index ne change pas, donc on remet lastIdx à -1).
-    tick();
-    const t1 = window.setTimeout(() => { lastIdxRef.current = -1; tick(); }, 90);
-    const t2 = window.setTimeout(() => { lastIdxRef.current = -1; tick(); }, 360);
+
+    primeVideo();
+    raf = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-      if (ro) ro.disconnect();
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("loadeddata", primeVideo);
       if (raf) cancelAnimationFrame(raf);
       root.classList.remove("cine-hero");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [frameCount, framePath, framePad, frameExt]);
+  }, [duration, videoSrc, poster]);
 
   return (
     <>
-      {/* SCÈNE FIXE — statue dessinée derrière tout le contenu de l'intro */}
+      {/* SCÈNE FIXE — la vidéo statue, cadrée en CSS (object-fit:cover) */}
       <div ref={stageRef} className="cine-stage" aria-hidden="true">
-        <canvas ref={canvasRef} className="cine-canvas" />
+        <video
+          ref={videoRef}
+          className="cine-video"
+          poster={poster}
+          muted
+          playsInline
+          preload="auto"
+          tabIndex={-1}
+          disablePictureInPicture
+        >
+          <source src={videoSrc} type="video/mp4" />
+        </video>
         <div className="cine-scrim" />
         <div ref={fadeRef} className="cine-fade" />
       </div>
@@ -309,7 +242,7 @@ export default function CinematicIntro({
           </div>
         </section>
 
-        {/* scrub frame 1 → 122 (on « reste sur place ») */}
+        {/* scrub pose 1 → pose 2 (on « reste sur place ») */}
         <section className="cine-phase cine-scrub" aria-hidden="true" />
 
         {/* II — LA PROMESSE (écran 2, dernière frame figée) */}

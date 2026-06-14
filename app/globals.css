@@ -1218,19 +1218,44 @@ body:has(.home-with-cinematic-footer) .hdr {
 }
 
 /* ============================================
-   ALTERNANCE DES FONDS — délimitation des sections
-   (inspiré Lala-K, couleurs charte Elevora)
+   HABILLAGE CONTINU DE LA LANDING
+   Les parties claires sont TRANSPARENTES : elles laissent voir une seule
+   couche décorative continue (.landing-dressing) qui habille tout le site
+   d'un bloc — pensée comme un ensemble, pas par partie, et pas un aplat.
+   Les bandes « texturées » (Engagements papier déchiré, Méthode nuit) restent
+   leurs propres features et ponctuent cet habillage.
    ============================================ */
-.home-with-cinematic-footer .sec-cream { background: #EAE9EE !important; }
-.home-with-cinematic-footer .sec-white { background: #EAE9EE !important; }
-.home-with-cinematic-footer .sec-warm  { background: #EAE9EE !important; }
+.home-with-cinematic-footer .sec-cream,
+.home-with-cinematic-footer .sec-white,
+.home-with-cinematic-footer .sec-warm { background: transparent !important; }
 
-/* FOND CONTINU DE LA LANDING — un seul #EAE9EE uniforme qui traverse toutes
-   les parties claires. On neutralise les overlays décoratifs par section
-   (halos Klein/framboise + grille) qui créaient des coins colorés visibles
-   aux jointures (01↔02, 02↔03, 03↔04, 04↔05). */
-.home-with-cinematic-footer { background: #EAE9EE; }
+.home-with-cinematic-footer { background: transparent; }
 .home-with-cinematic-footer .lux-bg { display: none !important; }
+
+/* la couche d'habillage : halos de marque + grille discrète, ancrée au
+   viewport (position:fixed) -> AUCUNE couture possible, c'est un seul calque.
+   z-index:-1 : derrière le contenu, mais la scène vidéo de l'intro (z-index:0,
+   opaque) la masque pendant l'intro. */
+.landing-dressing{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(72vw 56vh at 7% 10%, rgba(27,79,138,.08), transparent 60%),
+    radial-gradient(64vw 58vh at 97% 82%, rgba(201,38,106,.065), transparent 62%),
+    radial-gradient(52vw 46vh at 82% 26%, rgba(43,108,196,.045), transparent 64%),
+    radial-gradient(60vw 50vh at 18% 96%, rgba(201,38,106,.04), transparent 64%),
+    #EAE9EE;
+}
+.landing-dressing-grid{
+  position:absolute; inset:0; display:block;
+  background-image:
+    linear-gradient(rgba(26,26,46,.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,26,46,.038) 1px, transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(125% 100% at 50% 42%, #000 0%, transparent 82%);
+          mask-image:radial-gradient(125% 100% at 50% 42%, #000 0%, transparent 82%);
+}
+@media (prefers-reduced-motion: reduce){ .landing-dressing{ /* statique de toute façon */ } }
+
 .home-with-cinematic-footer .sec-night {
   /* Image mise à l'échelle SANS déformation : `auto 100%` = la hauteur épouse
      la section, la largeur reste proportionnelle (image portrait 1003×1568).
@@ -5041,7 +5066,13 @@ body:has(.methode-banner) .site-footer {
   pointer-events:none;
   overflow:hidden;
 }
-.cine-canvas{ position:absolute; inset:0; display:block; width:100%; height:100%; }
+.cine-video{
+  position:absolute; inset:0; display:block;
+  width:100%; height:100%;
+  object-fit:cover; object-position:center;
+  /* la vidéo est SCRUBBÉE au scroll (pas lue) ; cover gère le cadrage donc
+     aucune mesure manuelle -> impossible d'étirer ou de pixeliser. */
+}
 /* vignette : assombrit le pourtour pour la lisibilité du texte (gauche + bas) */
 .cine-scrim{
   position:absolute; inset:0; z-index:1; pointer-events:none;
@@ -5256,58 +5287,72 @@ body:has(.methode-banner) .site-footer {
 }
 
 /* ============================================================
-   RAIL DE CHIFFRES ROMAINS — fil de progression latéral (écran 3)
+   RAIL DE CHIFFRES ROMAINS — fil de progression latéral (façon HTML)
    ------------------------------------------------------------
-   Découvre chaque section [data-roman-section] et surligne celle en
-   cours. .tone-dark = texte clair (sections sombres : intro, Méthode).
+   Compact, centré ; ligne de progression Klein→framboise nette ; chaque
+   chiffre est une « pastille » qui masque la ligne derrière lui ; le chiffre
+   actif est mis en boîte (couleur de marque) et agrandi. .tone-dark = sur
+   sections sombres (intro, Méthode).
    ============================================================ */
 .roman-rail{
   position:fixed;
-  right:clamp(14px,2.2vw,34px);
+  right:clamp(14px,2.4vw,40px);
   top:50%;
   transform:translateY(-50%);
   z-index:90;
   display:flex; flex-direction:column; align-items:center;
-  gap:clamp(10px,1.4vw,18px);
-  padding:18px 6px;
+  gap:clamp(9px,1.2vw,15px);
+  padding:14px 0;
   pointer-events:auto;
 }
-/* rail latéral discret derrière les marqueurs */
+/* ligne verticale + remplissage de progression */
 .roman-rail-track{
   position:absolute;
-  top:14px; bottom:14px; left:50%;
-  width:1px; transform:translateX(-50%);
-  background:rgba(26,26,46,.16);
-  overflow:hidden;
+  top:6px; bottom:6px; left:50%;
+  width:1.5px; transform:translateX(-50%);
+  background:rgba(26,26,46,.14);
+  z-index:0;
 }
 .roman-rail-prog{
   position:absolute; left:0; top:0; width:100%;
   height:0%;
-  background:linear-gradient(180deg, var(--klein,#1B4F8A), var(--pink,#C9266A));
-  transition:height .12s linear;
+  background:linear-gradient(180deg, var(--klein-bright,#2B6CC4), var(--pink,#C9266A));
+  box-shadow:0 0 8px rgba(201,38,106,.45);
+  transition:height .14s linear;
 }
+/* pastilles (chiffres) */
 .roman-rail-mark{
-  position:relative;
-  appearance:none; border:0; background:transparent; cursor:pointer;
+  position:relative; z-index:1;
+  appearance:none; border:0; cursor:pointer;
   font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
-  font-style:italic;
-  font-size:13px; line-height:1;
-  color:rgba(26,26,46,.34);
-  padding:3px 6px;
+  font-style:italic; font-size:13px; line-height:1;
+  color:rgba(26,26,46,.32);
+  background:#EAE9EE;
+  padding:5px 6px;
+  border-radius:6px;
   letter-spacing:.02em;
-  transition:color .3s var(--ease), transform .3s var(--ease), opacity .3s var(--ease);
+  transition:color .35s var(--ease), transform .35s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)), background .35s var(--ease), box-shadow .35s var(--ease);
 }
-.roman-rail-mark:hover{ color:rgba(26,26,46,.7); }
+.roman-rail-mark:hover{ color:rgba(26,26,46,.62); }
 .roman-rail-mark.active{
-  color:var(--ink,#1A1A2E);
-  font-size:18px;
-  transform:scale(1.04);
+  color:#fff;
+  background:linear-gradient(180deg, var(--klein-bright,#2B6CC4), var(--klein,#1B4F8A));
+  transform:scale(1.4);
+  box-shadow:0 6px 18px rgba(27,79,138,.42);
 }
-/* variante sombre : texte clair sur fond sombre (intro + Méthode) */
-.roman-rail.tone-dark .roman-rail-track{ background:rgba(234,233,238,.18); }
-.roman-rail.tone-dark .roman-rail-mark{ color:rgba(234,233,238,.4); }
-.roman-rail.tone-dark .roman-rail-mark:hover{ color:rgba(234,233,238,.78); }
-.roman-rail.tone-dark .roman-rail-mark.active{ color:#F3F2F7; }
+/* variante sombre : sur sections sombres (intro + Méthode) */
+.roman-rail.tone-dark .roman-rail-track{ background:rgba(234,233,238,.16); }
+.roman-rail.tone-dark .roman-rail-mark{
+  color:rgba(234,233,238,.44);
+  background:rgba(16,16,30,.66);
+  text-shadow:0 1px 10px rgba(0,0,0,.7);
+}
+.roman-rail.tone-dark .roman-rail-mark:hover{ color:rgba(234,233,238,.82); }
+.roman-rail.tone-dark .roman-rail-mark.active{
+  color:#fff;
+  background:linear-gradient(180deg, var(--klein-bright,#2B6CC4), var(--klein,#1B4F8A));
+  box-shadow:0 6px 18px rgba(0,0,0,.5);
+}
 
 /* le rail s'efface sous 880px (comme la maquette de référence) */
 @media (max-width:880px){

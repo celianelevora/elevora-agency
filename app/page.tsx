@@ -19,10 +19,17 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="home-with-cinematic-footer">
+      {/* Habillage continu : UNE seule couche décorative (halos de marque +
+          grille discrète) ancrée au viewport, derrière toute la landing.
+          Elle relie visuellement toutes les parties sans aucune couture. */}
+      <div className="landing-dressing" aria-hidden="true">
+        <span className="landing-dressing-grid" />
+      </div>
+
       {/* Ouverture cinématique : hero (écran 1) + scrub statue 1→122 +
           promesse figée sur la dernière frame (écran 2) — un seul système
           piloté par le scroll. Remplace l'ancien hero + ScrollSequence. */}
-      <CinematicIntro frameCount={122} framePath="/seq/frame_" framePad={4} frameExt="webp" />
+      <CinematicIntro videoSrc="/statue-scrub.mp4" poster="/seq/frame_0001.webp" duration={5.083} />
 
       {/* 01 — Le constat */}
       <div id="constat" data-roman-section data-roman="III"><WhyNow /></div>
