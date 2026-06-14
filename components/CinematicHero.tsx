@@ -4,48 +4,49 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 /* ============================================================
-   CinematicHero — ouverture de la landing (réécriture COMPLÈTE v21).
+   CinematicHero — ouverture de la landing (v23, scrub CANVAS).
 
-   Architecture robuste : UNE grande section haute (.cine2, ~560vh) avec une
-   scène en position:STICKY (.cine2-stage, height:100dvh). Sticky se dimensionne
-   normalement (= la taille de l'écran, jamais la hauteur de la page) et n'est PAS
-   piégeable par un parent transformé/animé -> plus aucun bug de zoom/cadrage.
+   Architecture : UNE grande section (.cine2, ~560vh) avec une scène en
+   position:STICKY (.cine2-stage, 100dvh) -> jamais piégeable, toujours = écran.
 
-   Déroulé (piloté par la progression P du scroll dans la section) :
-     1. HERO        : Hero.mp4 (gros plan, en boucle) + titre façon « Visual power ».
-     2. LIAISON     : fondu Hero -> scrub. La 1re frame du scrub = le hero, donc
-                      la transition est invisible (on « entre » dans la vidéo).
-     3. SCRUB       : la vidéo défile au scroll (et revient en arrière si on remonte),
-                      du gros plan au buste complet. currentTime piloté + LISSÉ (LERP).
-     4. PROMESSE    : dernière frame figée, le texte « Ce qu'on dit, on le tient »
-                      apparaît par-dessus, puis on enchaîne sur « 01 — Le constat ».
+   Le scrub n'est PLUS une vidéo pilotée par currentTime (les seeks se
+   regroupent quand on scrolle vite -> on saute des frames). À la place :
+   122 frames WebP pré-décodées, dessinées sur un <canvas>. Dessiner une image
+   est instantané -> en lissant l'INDEX de frame, on joue toutes les frames
+   intermédiaires même en scrollant vite. (Technique « à la Apple ».)
+
+   Déroulé piloté par la progression P du scroll :
+     1. HERO    : Hero.mp4 (gros plan, en boucle) + titre façon « Visual power ».
+     2. LIAISON : fondu Hero -> canvas (frame 0 = le hero) -> on entre dans la vidéo.
+     3. SCRUB   : le canvas défile frame par frame (avant/arrière) au scroll.
+     4. PROMESSE: dernière frame figée, « Ce qu'on dit, on le tient » par-dessus,
+                  puis raccord crème vers « 01 — Le constat ».
    ============================================================ */
 
 interface Props {
   heroSrc?: string;
-  scrubSrc?: string;
+  framesDir?: string;
+  frameCount?: number;
   poster?: string;
-  /** durée du scrub (s) — fallback si les métadonnées tardent */
-  duration?: number;
 }
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const eoCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 const map = (v: number, a: number, b: number) => clamp01((v - a) / (b - a));
+const pad3 = (n: number) => String(n).padStart(3, "0");
 
-const SCRUB_LERP = 0.18;
+const FRAME_LERP = 0.16; // lissage de l'index de frame (plus petit = plus de frames intermédiaires)
 
 export default function CinematicHero({
   heroSrc = "/hero-intro.mp4",
-  scrubSrc = "/scrub-intro.mp4",
+  framesDir = "/scrub-frames",
+  frameCount = 122,
   poster = "/scrub-poster.webp",
-  duration = 5.083,
 }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const heroVidRef = useRef<HTMLVideoElement>(null);
-  const scrubRef = useRef<HTMLVideoElement>(null);
-  const scrimRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const fadeRef = useRef<HTMLDivElement>(null);
   const heroUiRef = useRef<HTMLDivElement>(null);
   const promiseRef = useRef<HTMLDivElement>(null);
@@ -53,44 +54,75 @@ export default function CinematicHero({
 
   useEffect(() => {
     const section = sectionRef.current;
-    const scrub = scrubRef.current;
+    const canvas = canvasRef.current;
     const heroVid = heroVidRef.current;
     const fade = fadeRef.current;
     const heroUi = heroUiRef.current;
     const promise = promiseRef.current;
     const cue = cueRef.current;
-    if (!section || !scrub || !heroVid || !fade || !heroUi || !promise) return;
+    if (!section || !canvas || !heroVid || !fade || !heroUi || !promise) return;
+
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const root = document.documentElement;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    let dur = duration;
-    let vTarget = 0;
-    let vDisp = 0;
-    let lastSet = -1;
+    // ---- préchargement des frames ----
+    const frames: HTMLImageElement[] = new Array(frameCount);
+    const loaded: boolean[] = new Array(frameCount).fill(false);
+    let lastDrawn = -1;
+
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = () => {
+        loaded[i] = true;
+        // dès que la 1re frame est prête, on la peint (utile pour la liaison)
+        if (i === 0 && lastDrawn < 0) draw(0);
+      };
+      img.src = `${framesDir}/f_${pad3(i + 1)}.webp`;
+      frames[i] = img;
+    }
+
     let vh = window.innerHeight;
     let dark = false;
+    let curFrame = 0;
     let raf = 0;
 
-    // le scrub est piloté à la main (jamais lu) : pause + 1re frame
-    const primeScrub = () => {
-      try {
-        scrub.pause();
-        scrub.currentTime = 0;
-      } catch {
-        /* noop */
-      }
+    const sizeCanvas = () => {
+      const w = canvas.clientWidth || window.innerWidth;
+      const h = canvas.clientHeight || window.innerHeight;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      vh = window.innerHeight;
+      lastDrawn = -1; // forcer un redraw au prochain tick
     };
-    const onMeta = () => {
-      if (isFinite(scrub.duration) && scrub.duration > 0) dur = scrub.duration;
-      primeScrub();
-    };
-    scrub.addEventListener("loadedmetadata", onMeta);
-    scrub.addEventListener("loadeddata", primeScrub);
 
-    // le hero, lui, joue en boucle tout seul
-    const playHero = () => heroVid.play().catch(() => {});
-    heroVid.addEventListener("canplay", playHero);
+    const draw = (idx: number) => {
+      let i = Math.max(0, Math.min(frameCount - 1, Math.round(idx)));
+      // si la frame n'est pas encore prête, on cherche la plus proche déjà chargée
+      if (!loaded[i]) {
+        let found = -1;
+        for (let d = 1; d < frameCount; d++) {
+          if (i - d >= 0 && loaded[i - d]) { found = i - d; break; }
+          if (i + d < frameCount && loaded[i + d]) { found = i + d; break; }
+        }
+        if (found < 0) return; // rien de chargé encore -> on garde l'écran
+        i = found;
+      }
+      if (i === lastDrawn) return;
+      const img = frames[i];
+      const cw = canvas.width, ch = canvas.height;
+      const iw = img.naturalWidth, ih = img.naturalHeight;
+      if (!iw || !ih) return;
+      const scale = Math.max(cw / iw, ch / ih); // cover
+      const dw = iw * scale, dh = ih * scale;
+      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+      ctx.drawImage(img, 0, 0, iw, ih, dx, dy, dw, dh);
+      lastDrawn = i;
+    };
 
     const setDark = (on: boolean) => {
       if (dark === on) return;
@@ -98,34 +130,28 @@ export default function CinematicHero({
       root.classList.toggle("cine-hero", on);
     };
 
+    const playHero = () => heroVid.play().catch(() => {});
+    heroVid.addEventListener("canplay", playHero);
+
     const drive = (P: number) => {
-      // ---- LIAISON hero -> scrub (fondu croisé, les 2 montrent la même pose) ----
-      const xfade = map(P, 0.07, 0.15); // 0 -> 1
+      // ---- LIAISON hero -> canvas (fondu, les 2 montrent la même pose) ----
+      const xfade = map(P, 0.07, 0.15);
       heroVid.style.opacity = (1 - xfade).toFixed(3);
-      scrub.style.opacity = xfade.toFixed(3);
+      canvas.style.opacity = xfade.toFixed(3);
 
-      // ---- SCRUB : currentTime piloté par le scroll, LISSÉ ----
-      // 0 tant qu'on n'a pas fini la liaison (reste calé sur la pose du hero),
-      // puis défile jusqu'à la dernière frame, puis se fige.
-      const sp = map(P, 0.15, 0.72);
-      vTarget = sp * dur;
+      // ---- SCRUB : index de frame piloté par le scroll, LISSÉ ----
+      // 0 tant que la liaison n'est pas finie (calé sur la pose du hero),
+      // puis avance jusqu'à la dernière frame, puis se fige.
+      const targetFrame = map(P, 0.15, 0.72) * (frameCount - 1);
       if (reduce) {
-        vDisp = vTarget;
+        curFrame = targetFrame;
       } else {
-        vDisp += (vTarget - vDisp) * SCRUB_LERP;
-        if (Math.abs(vTarget - vDisp) < 0.008) vDisp = vTarget;
+        curFrame += (targetFrame - curFrame) * FRAME_LERP;
+        if (Math.abs(targetFrame - curFrame) < 0.35) curFrame = targetFrame;
       }
-      const t = Math.max(0, Math.min(dur - 0.001, vDisp));
-      if (scrub.readyState >= 1 && Math.abs(t - lastSet) > 0.004) {
-        try {
-          scrub.currentTime = t;
-          lastSet = t;
-        } catch {
-          /* noop */
-        }
-      }
+      draw(curFrame);
 
-      // ---- HERO UI : titre façon « Visual power », sort en montant + flou ----
+      // ---- HERO UI : titre, sort en montant + flou ----
       const heroOut = eoCubic(map(P, 0.02, 0.1));
       heroUi.style.opacity = (1 - heroOut).toFixed(3);
       if (!reduce) {
@@ -135,17 +161,17 @@ export default function CinematicHero({
       heroUi.style.pointerEvents = heroOut > 0.5 ? "none" : "auto";
       if (cue) cue.style.opacity = (1 - map(P, 0.01, 0.06)).toFixed(3);
 
-      // ---- PROMESSE : apparaît sur la dernière frame, repart au fondu final ----
-      const pin = eoCubic(map(P, 0.74, 0.84));
+      // ---- PROMESSE : sur la dernière frame, repart au fondu final ----
+      const pin = eoCubic(map(P, 0.76, 0.86));
       const pout = 1 - map(P, 0.94, 0.99);
       promise.style.opacity = (pin * pout).toFixed(3);
       if (!reduce) promise.style.transform = `translateY(${((1 - pin) * 36).toFixed(1)}px)`;
       promise.style.pointerEvents = pin > 0.5 && pout > 0.5 ? "auto" : "none";
 
-      // ---- FONDU de raccord vers le site clair (#EAE9EE) ----
+      // ---- raccord crème vers le site clair ----
       fade.style.opacity = map(P, 0.94, 1).toFixed(3);
 
-      // ---- header clair seulement quand le fondu crème recouvre l'écran ----
+      // ---- header clair seulement quand le crème recouvre l'écran ----
       setDark(P < 0.96);
     };
 
@@ -157,25 +183,21 @@ export default function CinematicHero({
       raf = requestAnimationFrame(tick);
     };
 
-    const onResize = () => {
-      vh = window.innerHeight;
-    };
+    const onResize = () => sizeCanvas();
     window.addEventListener("resize", onResize);
 
-    primeScrub();
+    sizeCanvas();
     playHero();
     raf = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("resize", onResize);
-      scrub.removeEventListener("loadedmetadata", onMeta);
-      scrub.removeEventListener("loadeddata", primeScrub);
       heroVid.removeEventListener("canplay", playHero);
       if (raf) cancelAnimationFrame(raf);
       root.classList.remove("cine-hero");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [heroSrc, scrubSrc, poster, duration]);
+  }, [heroSrc, framesDir, frameCount, poster]);
 
   return (
     <section
@@ -187,7 +209,7 @@ export default function CinematicHero({
       id="intro"
     >
       <div ref={stageRef} className="cine2-stage">
-        {/* couche vidéo : hero en boucle + scrub piloté (object-fit:cover) */}
+        {/* hero en boucle (vidéo) */}
         <video
           ref={heroVidRef}
           className="cine2-vid"
@@ -202,23 +224,14 @@ export default function CinematicHero({
         >
           <source src={heroSrc} type="video/mp4" />
         </video>
-        <video
-          ref={scrubRef}
-          className="cine2-vid cine2-vid-scrub"
-          poster={poster}
-          muted
-          playsInline
-          preload="auto"
-          tabIndex={-1}
-          disablePictureInPicture
-        >
-          <source src={scrubSrc} type="video/mp4" />
-        </video>
+
+        {/* scrub : frames dessinées sur canvas (révélé pendant la liaison) */}
+        <canvas ref={canvasRef} className="cine2-canvas" aria-hidden="true" />
 
         {/* vignette de lisibilité */}
-        <div ref={scrimRef} className="cine2-scrim" aria-hidden="true" />
+        <div className="cine2-scrim" aria-hidden="true" />
 
-        {/* HERO — titre façon « Visual power » : grand serif en bas à gauche */}
+        {/* HERO — titre façon « Visual power » */}
         <div ref={heroUiRef} className="cine2-hero-ui">
           <div className="cine2-hero-headline">
             <h1 className="cine2-title">
@@ -250,7 +263,7 @@ export default function CinematicHero({
           </div>
         </div>
 
-        {/* PROMESSE — sur la dernière frame (buste, main sur le cœur) */}
+        {/* PROMESSE — sur la dernière frame */}
         <div ref={promiseRef} className="cine2-promise">
           <p className="cine2-promise-eyebrow">
             <span /> La promesse
@@ -278,7 +291,7 @@ export default function CinematicHero({
           </div>
         </div>
 
-        {/* fondu final vers le site clair (par-dessus tout) */}
+        {/* raccord crème (par-dessus tout) */}
         <div ref={fadeRef} className="cine2-fade" aria-hidden="true" />
       </div>
     </section>

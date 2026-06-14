@@ -5371,7 +5371,7 @@ body:has(.methode-banner) .site-footer {
    CINÉMATIQUE D'OUVERTURE — v21 (CinematicHero)
    Une grande section + scène en position:STICKY (jamais piégeable,
    toujours = la taille de l'écran). Hero (Hero.mp4 en boucle) -> scrub
-   (scrub-intro.mp4 piloté au scroll) -> promesse sur la dernière frame.
+   (122 frames WebP sur canvas, pilotées au scroll) -> promesse sur la dernière frame.
    ============================================================ */
 .cine2{
   position:relative;
@@ -5398,7 +5398,14 @@ body:has(.methode-banner) .site-footer {
   z-index:0;
   will-change:opacity;
 }
-.cine2-vid-scrub{ opacity:0; }   /* invisible au départ ; révélé pendant la liaison */
+.cine2-canvas{
+  position:absolute; inset:0; display:block;
+  width:100%; height:100%;
+  opacity:0;                 /* invisible au départ ; révélé pendant la liaison */
+  z-index:0;
+  background:transparent;
+  will-change:opacity;
+}
 
 /* vignette : lisibilité du texte (gauche + bas) sans cacher la statue */
 .cine2-scrim{
