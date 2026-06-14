@@ -294,6 +294,40 @@ section {
   z-index: -1;
 }
 
+/* ============================================================
+   HEADER — VARIANTE SOMBRE (sur l'intro cinématique uniquement)
+   Active via <html class="cine-hero"> tant qu'on est sur la statue ;
+   revient au header verre dès qu'on dépasse l'intro. Spécificité haute
+   (html.cine-hero .hdr …) pour battre l'état .scrolled sans !important.
+   ============================================================ */
+html.cine-hero .hdr .bar {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+html.cine-hero .hdr .bar-wrap::before { opacity: 0; }
+html.cine-hero .hdr .bar::after { opacity: 0; }
+/* wordmark en blanc (le logo est une encre sombre monochrome) */
+html.cine-hero .hdr .hdr-logo img {
+  filter: brightness(0) invert(1);
+  opacity: 0.96;
+}
+html.cine-hero .hdr .hdr-logo-tag {
+  color: rgba(234,233,238,0.62);
+  border-left-color: rgba(234,233,238,0.22);
+}
+html.cine-hero .hdr .hdr-divider {
+  background: linear-gradient(180deg, transparent, rgba(234,233,238,0.22), transparent);
+}
+html.cine-hero .hdr .hdr-link { color: rgba(234,233,238,0.82); }
+html.cine-hero .hdr .hdr-link:hover { color: #fff; }
+html.cine-hero .hdr .hdr-link .ic { opacity: 0.7; }
+html.cine-hero .hdr .hdr-link::after { background: var(--pink); }
+html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
+/* le CTA bleu reste tel quel : il ressort déjà sur le fond sombre */
+
 /* Logo */
 .hdr-logo {
   display: inline-flex;
@@ -2711,7 +2745,9 @@ body:has(.home-with-cinematic-footer) {
    WHY NOW — section "Pourquoi un site, pourquoi maintenant"
    =========================================================== */
 .whynow-section {
-  background: radial-gradient(130% 90% at 50% 0%, #F2F1F5, #EAE9EE 60%);
+  /* Raccord sans couture : #EAE9EE en haut ET en bas (mêmes bords que les
+     sections voisines), léger renflement clair au centre pour la profondeur. */
+  background: linear-gradient(180deg, #EAE9EE 0%, #F3F2F7 22%, #EAE9EE 72%, #EAE9EE 100%);
   padding: 130px 0;
   position: relative;
   overflow: hidden;
@@ -2820,7 +2856,9 @@ body:has(.home-with-cinematic-footer) {
    FOR WHO — section "Pour qui" : citation pleine page
    =========================================================== */
 .forwho-section {
-  background: radial-gradient(130% 90% at 50% 0%, #F2F1F5, #EAE9EE 60%);
+  /* Le haut épouse exactement le bas de « Le constat » (#EAE9EE) : plus de
+     marche brute entre les deux fonds. */
+  background: linear-gradient(180deg, #EAE9EE 0%, #F3F2F7 26%, #EAE9EE 78%, #EAE9EE 100%);
   padding: 130px 0;
   position: relative;
   overflow: hidden;
@@ -2920,7 +2958,9 @@ body:has(.home-with-cinematic-footer) {
    MANIFESTO — section "Notre manifeste"
    =========================================================== */
 .manifesto-section {
-  background: radial-gradient(130% 80% at 50% 0%, #F4F3F7, #EAE9EE 55%);
+  /* Le haut rejoint le bas des Engagements (#EAE9EE) : la jonction avec la
+     déchirure de papier devient invisible (plus de bande claire). */
+  background: linear-gradient(180deg, #EAE9EE 0%, #F4F3F8 24%, #EAE9EE 76%, #EAE9EE 100%);
   padding: 110px 0;
   position: relative;
   overflow: hidden;
@@ -4579,7 +4619,9 @@ body:has(.methode-banner) .site-footer {
 }
 
 /* ============================================================
-   PRÉLOADER — signature Elevora animée (charte : Klein → framboise)
+   PRÉLOADER — « Elevora Agency » s'écrit à l'encre (Klein → framboise)
+   Le mot est révélé de gauche à droite (clip-path) pendant qu'une plume
+   lumineuse trace un trait d'encre sous lui ; « Agency » apparaît ensuite.
    ============================================================ */
 .elv-preloader{
   position:fixed; inset:0; z-index:9999;
@@ -4597,21 +4639,85 @@ body:has(.methode-banner) .site-footer {
   top:-12vw; left:-10vw; }
 .elv-glow-razz{ background:radial-gradient(circle,#C9266A,transparent 65%);
   bottom:-14vw; right:-10vw; opacity:.42; }
+
 .elv-stack{ position:relative; display:flex; flex-direction:column;
-  align-items:center; gap:26px; z-index:1; }
-.elv-sign{ width:min(340px,62vw); height:auto; overflow:visible;
-  filter:drop-shadow(0 6px 30px rgba(43,108,196,.35)); }
-.elv-word{
+  align-items:center; gap:18px; z-index:1; padding:0 24px; }
+
+/* --- « Elevora » : révélé au trait --- */
+.elv-write{ position:relative; display:inline-block; }
+.elv-name{
+  display:block;
   font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
-  font-size:clamp(1rem,2.4vw,1.5rem); letter-spacing:.42em; text-transform:uppercase;
-  color:#EAE9EE; padding-left:.42em;
-  opacity:0; transform:translateY(10px);
-  transition:opacity .9s ease .2s, transform .9s cubic-bezier(.16,1,.3,1) .2s;
+  font-style:italic; font-weight:600;
+  font-size:clamp(2.6rem,9vw,5.2rem); line-height:1;
+  letter-spacing:.005em;
+  color:#F3F2F7;
+  /* masque de révélation : tout est caché à droite au départ */
+  clip-path:inset(0 100% -0.25em 0);
+  filter:drop-shadow(0 8px 36px rgba(43,108,196,.28));
 }
-.elv-armed .elv-word{ opacity:.92; transform:translateY(0); }
-/* fallback mouvement réduit : on affiche tout d'emblée */
-.elv-draw-instant .elv-path{ stroke-dasharray:none !important; stroke-dashoffset:0 !important; }
-.elv-draw-instant .elv-word{ opacity:.92; transform:none; transition:none; }
+.elv-go .elv-name{
+  animation:elvReveal 1.7s cubic-bezier(.7,0,.2,1) .25s forwards;
+}
+/* trait d'encre sous le mot + plume lumineuse au bout */
+.elv-ink{
+  position:absolute; left:0; right:0; bottom:-.12em; height:3px; border-radius:3px;
+  transform-origin:left center; transform:scaleX(0);
+  background:linear-gradient(90deg,#1B4F8A 0%,#5C7FB8 45%,#C9266A 100%);
+  box-shadow:0 0 18px rgba(201,38,106,.55);
+}
+.elv-ink::after{
+  content:""; position:absolute; top:50%; right:-2px; width:9px; height:9px;
+  border-radius:50%; transform:translate(50%,-50%);
+  background:#F6E9F0;
+  box-shadow:0 0 10px 3px rgba(201,38,106,.85), 0 0 22px 6px rgba(27,79,138,.5);
+  opacity:0;
+}
+.elv-go .elv-ink{
+  animation:elvInk 1.7s cubic-bezier(.7,0,.2,1) .25s forwards;
+}
+.elv-go .elv-ink::after{
+  animation:elvNib 1.7s cubic-bezier(.7,0,.2,1) .25s forwards;
+}
+
+/* --- « Agency » : apparaît une fois le mot tracé --- */
+.elv-sub{
+  font-family:var(--font-roboto),system-ui,sans-serif;
+  font-weight:300; text-transform:uppercase;
+  font-size:clamp(.72rem,1.7vw,1rem); letter-spacing:.62em;
+  color:#C9CAD6; padding-left:.62em;
+  opacity:0; transform:translateY(12px);
+}
+.elv-go .elv-sub{
+  animation:elvSub 1s cubic-bezier(.16,1,.3,1) 1.45s forwards;
+}
+
+@keyframes elvReveal{
+  from{ clip-path:inset(0 100% -0.25em 0); }
+  to{   clip-path:inset(0 0 -0.25em 0); }
+}
+@keyframes elvInk{
+  0%{ transform:scaleX(0); }
+  100%{ transform:scaleX(1); }
+}
+@keyframes elvNib{
+  0%{ opacity:0; }
+  12%{ opacity:1; }
+  92%{ opacity:1; }
+  100%{ opacity:0; }
+}
+@keyframes elvSub{
+  from{ opacity:0; transform:translateY(12px); }
+  to{   opacity:.95; transform:translateY(0); }
+}
+
+/* fallback mouvement réduit : tout s'affiche d'emblée, sans tracé */
+@media (prefers-reduced-motion: reduce){
+  .elv-name{ clip-path:none; animation:none; }
+  .elv-ink{ transform:scaleX(1); animation:none; }
+  .elv-ink::after{ opacity:0; animation:none; }
+  .elv-sub{ opacity:.95; transform:none; animation:none; }
+}
 
 /* ============================================================
    06 · MÉTHODE — timeline atelier lumineuse (refonte, sans image)
@@ -4906,4 +5012,296 @@ body:has(.methode-banner) .site-footer {
 .legal-info{
   border-left:3px solid #2B6CC4;
   background:linear-gradient(180deg, rgba(43,108,196,.045), #fff);
+}
+
+/* ============================================================
+   INTRO CINÉMATIQUE — hero (écran 1) + scrub 122 frames + promesse
+   ------------------------------------------------------------
+   La statue est dessinée sur un <canvas> en position:fixed DERRIÈRE le
+   contenu. Les panneaux hero / promesse sont épinglés (sticky) : on a
+   l'impression de « rester sur place » pendant que la frame défile,
+   puis la dernière frame reste figée avec la promesse par-dessus.
+   ============================================================ */
+
+/* --- SCÈNE FIXE (canvas plein écran, derrière le contenu de l'intro) --- */
+.cine-stage{
+  position:fixed; inset:0; z-index:0;
+  background:#0B0B16;
+  pointer-events:none;
+  overflow:hidden;
+}
+.cine-canvas{ display:block; width:100%; height:100%; }
+/* vignette : assombrit le pourtour pour la lisibilité du texte (gauche + bas) */
+.cine-scrim{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(8,8,18,.78) 0%, rgba(8,8,18,.32) 34%, rgba(8,8,18,0) 56%),
+    linear-gradient(0deg, rgba(8,8,18,.62) 0%, rgba(8,8,18,0) 32%),
+    radial-gradient(120% 90% at 70% 30%, rgba(8,8,18,0) 40%, rgba(8,8,18,.5) 100%);
+}
+/* fondu final vers le site clair (piloté en JS sur la fin du scroll) */
+.cine-fade{
+  position:absolute; inset:0; z-index:2; pointer-events:none;
+  background:#EAE9EE; opacity:0;
+}
+
+/* --- PILOTE DE SCROLL (hauteurs = budget de défilement de chaque phase) --- */
+.cine-wrap{ position:relative; z-index:1; }
+.cine-phase{ position:relative; }
+.cine-hero-phase{ height:220vh; }
+.cine-scrub{ height:200vh; }
+.cine-promise-phase{ height:220vh; }
+
+/* le contenu épinglé occupe pile un écran et reste collé en haut */
+.cine-sticky{
+  position:sticky; top:0;
+  height:100vh; min-height:600px;
+  display:flex; align-items:center;
+  z-index:2;
+}
+
+/* ============================ HERO (écran 1) ============================ */
+.cine-hero{
+  width:100%;
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 clamp(24px,5vw,72px);
+  color:#F3F2F7;
+  will-change:opacity, transform, filter;
+}
+.cine-eyebrow{
+  display:inline-flex; align-items:center; gap:14px;
+  font-family:var(--font-roboto),system-ui,sans-serif;
+  font-size:12px; font-weight:500; letter-spacing:.24em; text-transform:uppercase;
+  color:rgba(234,233,238,.7);
+  margin:0 0 26px;
+}
+.cine-eyebrow-line{
+  width:42px; height:1px; display:inline-block;
+  background:linear-gradient(90deg, var(--klein-bright,#2B6CC4), transparent);
+}
+.cine-eyebrow-pink{ color:rgba(255,210,228,.85); }
+.cine-eyebrow-pink .cine-eyebrow-line{
+  background:linear-gradient(90deg, var(--pink,#C9266A), transparent);
+}
+.cine-h1{
+  font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
+  font-weight:500;
+  font-size:clamp(2.7rem,6.4vw,5.6rem);
+  line-height:1.04;
+  letter-spacing:-.02em;
+  margin:0;
+  text-shadow:0 2px 40px rgba(0,0,0,.45);
+}
+.cine-h1 em{
+  font-style:italic;
+  color:#7FA8DD;
+  font-weight:500;
+}
+.cine-lead{
+  font-family:var(--font-roboto),system-ui,sans-serif;
+  font-weight:300;
+  font-size:clamp(1rem,1.5vw,1.18rem);
+  line-height:1.6;
+  color:rgba(234,233,238,.82);
+  max-width:30em;
+  margin:30px 0 0;
+}
+.cine-ctas{ display:flex; flex-wrap:wrap; gap:16px; margin-top:38px; }
+.cine-cta-primary,
+.cine-cta-ghost{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--font-roboto),system-ui,sans-serif;
+  font-size:15px; font-weight:600;
+  padding:15px 26px; border-radius:999px;
+  text-decoration:none; cursor:pointer;
+  transition:transform .4s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)), box-shadow .4s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+}
+.cine-cta-primary{
+  background:linear-gradient(180deg, var(--klein-bright,#2B6CC4), var(--klein,#1B4F8A));
+  color:#fff;
+  box-shadow:0 1px 1px rgba(255,255,255,.35) inset, 0 10px 30px rgba(27,79,138,.45);
+}
+.cine-cta-primary svg{ transition:transform .4s var(--ease-spring,cubic-bezier(.34,1.56,.64,1)); }
+.cine-cta-primary:hover{ transform:translateY(-2px); box-shadow:0 1px 1px rgba(255,255,255,.45) inset, 0 16px 40px rgba(27,79,138,.55); }
+.cine-cta-primary:hover svg{ transform:translateX(4px); }
+.cine-cta-ghost{
+  background:rgba(234,233,238,.06);
+  color:#EAE9EE;
+  border:1px solid rgba(234,233,238,.32);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.cine-cta-ghost:hover{ transform:translateY(-2px); background:rgba(234,233,238,.12); border-color:rgba(234,233,238,.5); }
+.cine-cue{
+  display:flex; align-items:center; gap:12px;
+  margin-top:54px;
+  font-family:var(--font-roboto),system-ui,sans-serif;
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:rgba(234,233,238,.55);
+}
+.cine-cue i{
+  position:relative; width:1px; height:46px; display:block;
+  background:rgba(234,233,238,.25); overflow:hidden;
+}
+.cine-cue i::after{
+  content:""; position:absolute; left:0; top:-50%;
+  width:100%; height:50%;
+  background:linear-gradient(180deg, transparent, rgba(234,233,238,.9));
+  animation:cineCue 1.9s ease-in-out infinite;
+}
+@keyframes cineCue{
+  0%{ transform:translateY(-100%); opacity:0; }
+  35%{ opacity:1; }
+  100%{ transform:translateY(300%); opacity:0; }
+}
+
+/* ============================ PROMESSE (écran 2) ============================ */
+.cine-promise{
+  position:relative;
+  width:100%;
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 clamp(24px,5vw,72px);
+  color:#F3F2F7;
+  will-change:opacity, transform;
+}
+/* gros chiffre romain en filigrane (à droite) */
+.cine-roman-wm{
+  position:absolute;
+  right:clamp(24px,5vw,80px);
+  top:50%;
+  transform:translateY(-50%);
+  font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
+  font-style:italic; font-weight:600;
+  font-size:clamp(9rem,26vw,22rem);
+  line-height:.8;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(201,38,106,.32);
+  text-shadow:0 0 60px rgba(201,38,106,.12);
+  opacity:0; pointer-events:none; user-select:none;
+  z-index:0;
+}
+.cine-promise-title{
+  position:relative; z-index:1;
+  font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
+  font-weight:500;
+  font-size:clamp(2.2rem,5.4vw,4.4rem);
+  line-height:1.05; letter-spacing:-.02em;
+  margin:14px 0 0;
+  text-shadow:0 2px 40px rgba(0,0,0,.5);
+}
+.cine-promise-title em{ font-style:italic; color:#EAE9EE; }
+.cine-cards{
+  position:relative; z-index:1;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px; max-width:760px; margin:48px 0 0;
+}
+.cine-card{
+  position:relative;
+  padding:26px 26px 28px;
+  border-radius:16px;
+  background:rgba(12,12,22,.52);
+  border:1px solid rgba(234,233,238,.12);
+  backdrop-filter:blur(10px) saturate(140%);
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  box-shadow:0 24px 60px rgba(0,0,0,.35);
+}
+.cine-card-n{
+  display:block;
+  font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
+  font-style:italic; font-size:14px;
+  color:var(--pink,#C9266A);
+  margin-bottom:14px;
+}
+.cine-card h3{
+  font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
+  font-weight:600; font-size:1.32rem; line-height:1.2;
+  margin:0 0 10px; color:#F3F2F7;
+}
+.cine-card p{
+  font-family:var(--font-roboto),system-ui,sans-serif;
+  font-weight:300; font-size:14.5px; line-height:1.6;
+  color:rgba(234,233,238,.72); margin:0;
+}
+
+/* --- responsive intro --- */
+@media (max-width:760px){
+  .cine-hero-phase{ height:200vh; }
+  .cine-scrub{ height:170vh; }
+  .cine-promise-phase{ height:210vh; }
+  .cine-scrim{
+    background:
+      linear-gradient(0deg, rgba(8,8,18,.82) 0%, rgba(8,8,18,.2) 46%, rgba(8,8,18,.35) 100%);
+  }
+  .cine-cards{ grid-template-columns:1fr; gap:16px; max-width:none; }
+  .cine-roman-wm{ display:none; }
+  .cine-lead{ max-width:none; }
+}
+
+/* mouvement réduit : on fige les états utiles (lecture confortable) */
+@media (prefers-reduced-motion: reduce){
+  .cine-cue i::after{ animation:none; }
+}
+
+/* ============================================================
+   RAIL DE CHIFFRES ROMAINS — fil de progression latéral (écran 3)
+   ------------------------------------------------------------
+   Découvre chaque section [data-roman-section] et surligne celle en
+   cours. .tone-dark = texte clair (sections sombres : intro, Méthode).
+   ============================================================ */
+.roman-rail{
+  position:fixed;
+  right:clamp(14px,2.2vw,34px);
+  top:50%;
+  transform:translateY(-50%);
+  z-index:90;
+  display:flex; flex-direction:column; align-items:center;
+  gap:clamp(10px,1.4vw,18px);
+  padding:18px 6px;
+  pointer-events:auto;
+}
+/* rail latéral discret derrière les marqueurs */
+.roman-rail-track{
+  position:absolute;
+  top:14px; bottom:14px; left:50%;
+  width:1px; transform:translateX(-50%);
+  background:rgba(26,26,46,.16);
+  overflow:hidden;
+}
+.roman-rail-prog{
+  position:absolute; left:0; top:0; width:100%;
+  height:0%;
+  background:linear-gradient(180deg, var(--klein,#1B4F8A), var(--pink,#C9266A));
+  transition:height .12s linear;
+}
+.roman-rail-mark{
+  position:relative;
+  appearance:none; border:0; background:transparent; cursor:pointer;
+  font-family:var(--font-playfair),'Playfair Display',Georgia,serif;
+  font-style:italic;
+  font-size:13px; line-height:1;
+  color:rgba(26,26,46,.34);
+  padding:3px 6px;
+  letter-spacing:.02em;
+  transition:color .3s var(--ease), transform .3s var(--ease), opacity .3s var(--ease);
+}
+.roman-rail-mark:hover{ color:rgba(26,26,46,.7); }
+.roman-rail-mark.active{
+  color:var(--ink,#1A1A2E);
+  font-size:18px;
+  transform:scale(1.04);
+}
+/* variante sombre : texte clair sur fond sombre (intro + Méthode) */
+.roman-rail.tone-dark .roman-rail-track{ background:rgba(234,233,238,.18); }
+.roman-rail.tone-dark .roman-rail-mark{ color:rgba(234,233,238,.4); }
+.roman-rail.tone-dark .roman-rail-mark:hover{ color:rgba(234,233,238,.78); }
+.roman-rail.tone-dark .roman-rail-mark.active{ color:#F3F2F7; }
+
+/* le rail s'efface sous 880px (comme la maquette de référence) */
+@media (max-width:880px){
+  .roman-rail{ display:none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .roman-rail-prog{ transition:none; }
 }
