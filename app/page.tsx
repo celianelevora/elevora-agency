@@ -1,4 +1,4 @@
-import CinematicIntro from '@/components/CinematicIntro';
+import CinematicHero from '@/components/CinematicHero';
 import WhyNow from '@/components/WhyNow';
 import ForWho from '@/components/ForWho';
 import EngagementsGrid from '@/components/EngagementsGrid';
@@ -19,40 +19,43 @@ export const metadata = {
 export default function HomePage() {
   return (
     <div className="home-with-cinematic-footer">
-      {/* L'habillage continu (halos + grille) et la scène vidéo sont rendus
-          directement dans <body> par CinematicIntro (portail), pour qu'aucun
-          parent ne piège leur position:fixed. */}
+      {/* Habillage de fond continu (halos + grille), derrière TOUT le contenu
+          (z-index:-1). La cinématique d'ouverture, opaque, le recouvre ; les
+          parties 01+ (transparentes) le laissent transparaître. */}
+      <div className="landing-dressing" aria-hidden="true">
+        <span className="landing-dressing-grid" />
+      </div>
 
-      {/* Ouverture cinématique : hero (écran 1) + scrub statue 1→122 +
-          promesse figée sur la dernière frame (écran 2) — un seul système
-          piloté par le scroll. Remplace l'ancien hero + ScrollSequence. */}
-      <CinematicIntro videoSrc="/statue-scrub.mp4" poster="/seq/frame_0001.webp" duration={5.083} />
+      {/* Ouverture cinématique (réécrite de zéro) : hero Hero.mp4 en boucle +
+          scrub Image_1_à_2 piloté au scroll + promesse figée sur la dernière
+          frame. Tout est dans CinematicHero (section + scène sticky). */}
+      <CinematicHero />
 
       {/* 01 — Le constat */}
-      <div id="constat" data-roman-section data-roman="III"><WhyNow /></div>
+      <div id="constat" data-roman-section data-roman="II"><WhyNow /></div>
 
       {/* 02 — Pour qui */}
-      <div id="pour-qui" data-roman-section data-roman="IV"><ForWho /></div>
+      <div id="pour-qui" data-roman-section data-roman="III"><ForWho /></div>
 
       {/* 03 — Pourquoi Elevora (engagements) */}
-      <div id="pourquoi" data-roman-section data-roman="V"><EngagementsGrid /></div>
+      <div id="pourquoi" data-roman-section data-roman="IV"><EngagementsGrid /></div>
 
       {/* Manifeste */}
-      <div id="manifeste" data-roman-section data-roman="VI"><Manifesto /></div>
+      <div id="manifeste" data-roman-section data-roman="V"><Manifesto /></div>
 
       {/* 04 — Réalisations */}
-      <div id="realisations" data-roman-section data-roman="VII" className="sec-warm"><ProjectShowcase /></div>
+      <div id="realisations" data-roman-section data-roman="VI" className="sec-warm"><ProjectShowcase /></div>
 
       {/* 05 — Méthode (sombre) */}
-      <div id="methode" data-roman-section data-roman="VIII" data-roman-tone="dark" className="sec-night"><MethodSteps /></div>
+      <div id="methode" data-roman-section data-roman="VII" data-roman-tone="dark" className="sec-night"><MethodSteps /></div>
 
       {/* 06 — Témoignages */}
-      <div id="temoignages" data-roman-section data-roman="IX" className="sec-warm"><TestimonialsSection /></div>
+      <div id="temoignages" data-roman-section data-roman="VIII" className="sec-warm"><TestimonialsSection /></div>
 
       {/* FAQ */}
-      <div id="faq" data-roman-section data-roman="X" className="sec-white"><FaqsSection /></div>
+      <div id="faq" data-roman-section data-roman="IX" className="sec-white"><FaqsSection /></div>
 
-      {/* Fil de chiffres romains (façon écran 3) — couvre toutes les parties */}
+      {/* Fil de chiffres romains — couvre intro + toutes les parties */}
       <RomanRail />
 
       <CinematicFooter />
