@@ -1238,12 +1238,10 @@ body:has(.home-with-cinematic-footer) .hdr {
    opaque) la masque pendant l'intro. */
 .landing-dressing{
   position:fixed; inset:0; z-index:-1; pointer-events:none;
-  background:
-    radial-gradient(72vw 56vh at 7% 10%, rgba(27,79,138,.08), transparent 60%),
-    radial-gradient(64vw 58vh at 97% 82%, rgba(201,38,106,.065), transparent 62%),
-    radial-gradient(52vw 46vh at 82% 26%, rgba(43,108,196,.045), transparent 64%),
-    radial-gradient(60vw 50vh at 18% 96%, rgba(201,38,106,.04), transparent 64%),
-    #EAE9EE;
+  /* gris pur, AUCUN halo coloré ancré au viewport -> plus aucune bavure rose
+     qui déborde en bas des sections (cf. ancien screen). Les accents de couleur
+     vivent désormais DANS chaque groupe de sections (contenus, fondus). */
+  background:#EAE9EE;
 }
 .landing-dressing-grid{
   position:absolute; inset:0; display:block;
@@ -1256,13 +1254,51 @@ body:has(.home-with-cinematic-footer) .hdr {
 }
 @media (prefers-reduced-motion: reduce){ .landing-dressing{ /* statique de toute façon */ } }
 
+/* ============================================
+   FONDS PAR GROUPES DE SECTIONS — contenus, jamais de bavure
+   Accents Klein semi-transparents : le gris #EAE9EE + la grille du dressing
+   restent visibles à travers ; chaque accent se fond AVANT les bords du groupe
+   -> pas de couture entre groupes, pas de débordement (plus de halo rose perdu).
+   PAS de framboise ici (c'était ce qui bavait). La couleur « forte » est
+   réservée à la Méthode (bleue). ============================================ */
+.lp-group{ position:relative; }
+/* Parties 1+2 (constat + pour-qui) : voile Klein doux en haut, fondu ensuite */
+.home-with-cinematic-footer .lp-group-intro{
+  background:
+    radial-gradient(92vw 54vh at 50% 15%, rgba(27,79,138,.055), transparent 58%),
+    radial-gradient(58vw 40vh at 88% 3%, rgba(43,108,196,.04), transparent 60%);
+}
+/* Parties 4+5 (manifeste + réalisations) : léger accent Klein en bas qui amorce
+   la Méthode bleue juste après (transition de couleur douce) */
+.home-with-cinematic-footer .lp-group-work{
+  background:
+    radial-gradient(82vw 48vh at 50% 95%, rgba(27,79,138,.05), transparent 60%);
+}
+
 .home-with-cinematic-footer .sec-night {
-  /* Image mise à l'échelle SANS déformation : `auto 100%` = la hauteur épouse
-     la section, la largeur reste proportionnelle (image portrait 1003×1568).
-     Les fondus haut/bas intégrés à l'image restent alignés sur les bords donc
-     le raccord avec les sections crème reste propre ; les côtés laissent voir
-     le fond nuit #0D0D1A (effet vignette). Avant : `100% 100%` étirait tout. */
-  background: #0D0D1A url('/method-bg.png') center center / auto 100% no-repeat !important;
+  position: relative;
+  /* MÉTHODE — fond bleu « habillé » (plus d'image method-bg.png).
+     Dégradé Klein profond + halos de marque (klein-bright + un soupçon de
+     framboise) pour la profondeur. Le texte de la méthode est clair -> lisible. */
+  background:
+    radial-gradient(110vw 78vh at 12% -4%, rgba(43,108,196,.26), transparent 56%),
+    radial-gradient(80vw 64vh at 102% 104%, rgba(201,38,106,.13), transparent 60%),
+    radial-gradient(64vw 58vh at 82% 30%, rgba(27,79,138,.34), transparent 60%),
+    linear-gradient(178deg, #0D2B50 0%, #102449 46%, #0B1B38 100%) !important;
+}
+/* fondus doux haut/bas vers le gris des sections voisines (sous le contenu z-2) */
+.home-with-cinematic-footer .sec-night::before,
+.home-with-cinematic-footer .sec-night::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 130px;
+  z-index: 1; pointer-events: none;
+}
+.home-with-cinematic-footer .sec-night::before {
+  top: 0;
+  background: linear-gradient(to bottom, #EAE9EE 0%, rgba(13,43,80,0) 100%);
+}
+.home-with-cinematic-footer .sec-night::after {
+  bottom: 0;
+  background: linear-gradient(to top, #EAE9EE 0%, rgba(11,27,56,0) 100%);
 }
 /* La section racine à l'intérieur d'un wrapper .sec-* devient transparente
    pour laisser voir le fond du wrapper */
@@ -2009,6 +2045,11 @@ body:has(.home-with-cinematic-footer) {
   object-position: center;
   z-index: 1;
   pointer-events: none;
+  /* Bords haut/bas de la vidéo fondus vers transparent -> on retombe sur
+     l'image eng-fond.png (déjà fondue vers #EAE9EE) -> transition douce
+     depuis la partie 2 et vers la partie 4 (le titre, au-dessus, n'est pas affecté). */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 84%, transparent 100%);
 }
 /* NOTE: pas de .eng-fade ici — l'image eng-fond.png a deja ses bords
    haut/bas fondus vers #EAE9EE (cf RECAP). Ajouter un fondu CSS par-dessus
@@ -3274,6 +3315,7 @@ body:has(.home-with-cinematic-footer) {
 .projects-row {
   display: grid;
   gap: 20px;
+  align-items: start; /* cartes à hauteur de leur contenu -> plus de bande --project-bg sombre étirée sous l'info */
 }
 .projects-row-1 { grid-template-columns: 1.45fr 1fr; }
 .projects-row-2 { grid-template-columns: 1fr 1.45fr; }
@@ -3298,7 +3340,7 @@ body:has(.home-with-cinematic-footer) {
 }
 .project-cover {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 2 / 1; /* colle au ratio réel des covers (~2.0) -> object-fit:cover ne rogne plus les côtés (« Garage » n'est plus coupé) */
   overflow: hidden;
   background: var(--project-bg, #fff);
 }
@@ -4660,13 +4702,23 @@ body:has(.methode-banner) .site-footer {
    lumineuse trace un trait d'encre sous lui ; « Agency » apparaît ensuite.
    ============================================================ */
 .elv-preloader{
-  position:fixed; inset:0; z-index:9999;
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  width:100vw; height:100vh; height:100dvh; max-width:100vw;
+  z-index:2147483647;                 /* au-dessus de tout */
   display:flex; align-items:center; justify-content:center;
   background:
     radial-gradient(120% 120% at 50% 40%, #20203A 0%, #1A1A2E 55%, #121225 100%);
   overflow:hidden;
   opacity:1;
   transition:opacity .72s cubic-bezier(.16,1,.3,1), visibility .72s;
+  /* CLÉ DU BUG : la <video> du hero crée un calque GPU qui, sans ça,
+     passe AU-DESSUS de l'overlay fixe et le rogne en boîte centrale.
+     On promeut le preloader sur son propre calque -> il recouvre tout. */
+  transform:translateZ(0);
+  -webkit-transform:translateZ(0);
+  will-change:transform, opacity;
+  isolation:isolate;
 }
 .elv-preloader.elv-out{ opacity:0; visibility:hidden; pointer-events:none; }
 .elv-glow{ position:absolute; width:54vw; height:54vw; border-radius:50%;
@@ -5357,6 +5409,51 @@ body:has(.methode-banner) .site-footer {
   color:#fff;
   background:linear-gradient(180deg, var(--klein-bright,#2B6CC4), var(--klein,#1B4F8A));
   box-shadow:0 6px 18px rgba(0,0,0,.5);
+}
+
+/* ---- Tooltip de titre au survol d'un chiffre ----
+   Pilule affichée À GAUCHE du chiffre survolé. Le :hover CSS garantit
+   qu'un SEUL titre s'affiche à la fois, et qu'il disparaît à la sortie souris. */
+.roman-rail-tip{
+  position:absolute;
+  right:calc(100% + 12px);
+  top:50%;
+  transform:translateY(-50%) translateX(6px);
+  white-space:nowrap;
+  font-family:var(--font-roboto),'Roboto',-apple-system,sans-serif;
+  font-style:normal; font-weight:500; font-size:12.5px; letter-spacing:.01em;
+  line-height:1;
+  padding:7px 12px;
+  border-radius:999px;
+  color:#1A1A2E;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(26,26,46,.08);
+  box-shadow:0 8px 24px rgba(20,20,40,.16);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity .26s var(--ease), transform .26s var(--ease), visibility .26s;
+}
+.roman-rail-mark:hover .roman-rail-tip,
+.roman-rail-mark:focus-visible .roman-rail-tip{
+  opacity:1; visibility:visible;
+  transform:translateY(-50%) translateX(0);
+}
+/* variante sombre (intro + Méthode) */
+.roman-rail.tone-dark .roman-rail-tip{
+  color:#EAE9EE;
+  background:rgba(16,16,30,.92);
+  border-color:rgba(234,233,238,.12);
+  box-shadow:0 10px 26px rgba(0,0,0,.5);
+}
+/* le chiffre actif est agrandi (scale 1.4) : on neutralise l'effet sur la pilule
+   pour qu'elle garde une taille normale et reste bien lisible */
+.roman-rail-mark.active .roman-rail-tip{
+  transform:translateY(-50%) translateX(6px) scale(.715);
+  transform-origin:right center;
+}
+.roman-rail-mark.active:hover .roman-rail-tip,
+.roman-rail-mark.active:focus-visible .roman-rail-tip{
+  transform:translateY(-50%) translateX(0) scale(.715);
 }
 
 /* le rail s'efface sous 880px (comme la maquette de référence) */

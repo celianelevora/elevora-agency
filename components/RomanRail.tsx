@@ -17,9 +17,23 @@ const ROMAN = [
   "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
 ];
 
+/* Titres lisibles affichés au survol d'un chiffre (un seul à la fois). */
+const TITLES: Record<string, string> = {
+  intro: "Accueil",
+  constat: "Le constat",
+  "pour-qui": "Pour qui ?",
+  pourquoi: "Nos engagements",
+  manifeste: "Manifeste",
+  realisations: "Réalisations",
+  methode: "Notre méthode",
+  temoignages: "Témoignages",
+  faq: "FAQ",
+};
+
 interface Item {
   id: string;
   label: string;
+  title: string;
 }
 
 export default function RomanRail() {
@@ -40,6 +54,11 @@ export default function RomanRail() {
         nodes.map((n, i) => ({
           id: n.id || `roman-${i}`,
           label: n.dataset.roman || ROMAN[i] || String(i + 1),
+          title:
+            n.dataset.romanTitle ||
+            TITLES[n.id] ||
+            n.dataset.roman ||
+            `Section ${i + 1}`,
         }))
       );
     };
@@ -113,9 +132,10 @@ export default function RomanRail() {
           type="button"
           className={`roman-rail-mark ${i === active ? "active" : ""}`}
           onClick={() => go(it.id, i)}
-          aria-label={`Aller à la section ${it.label}`}
+          aria-label={`Aller à la section : ${it.title}`}
           aria-current={i === active ? "true" : undefined}
         >
+          <span className="roman-rail-tip" aria-hidden="true">{it.title}</span>
           {it.label}
         </button>
       ))}

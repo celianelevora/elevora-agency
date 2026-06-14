@@ -172,13 +172,13 @@ export function CinematicFooter() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         giantTextRef.current,
-        { y: "10vh", scale: 0.8, opacity: 0 },
-        { y: "0vh", scale: 1, opacity: 1, ease: "power1.out", scrollTrigger: { trigger: wrapperRef.current, start: "top 80%", end: "bottom bottom", scrub: 1 } }
+        { y: "8vh", scale: 0.86 },
+        { y: "0vh", scale: 1, ease: "power1.out", scrollTrigger: { trigger: wrapperRef.current, start: "top 95%", end: "top 42%", scrub: 1 } }
       );
       gsap.fromTo(
         [headingRef.current, linksRef.current],
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: wrapperRef.current, start: "top 40%", end: "bottom bottom", scrub: 1 } }
+        { y: 40 },
+        { y: 0, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: wrapperRef.current, start: "top 82%", end: "top 38%", scrub: 1 } }
       );
     }, wrapperRef);
     return () => ctx.revert();
