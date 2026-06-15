@@ -86,7 +86,7 @@ export default function ServiceHero({
            page Agence (margin-top:-76 / padding-top:76). */
         marginTop: -76,
         padding: '206px 0 150px',
-        minHeight: '94vh',
+        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         background: baseColor,
@@ -187,47 +187,51 @@ export default function ServiceHero({
           variants={item}
           style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}
         >
-          <Link
-            href={primary.href}
-            style={{
-              background: 'var(--pink)',
-              color: '#fff',
-              padding: '16px 30px',
-              borderRadius: 999,
-              fontSize: 15,
-              fontWeight: 500,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 10,
-              textDecoration: 'none',
-              boxShadow: '0 16px 40px rgba(201,38,106,.4)',
-              transition: 'transform .22s, box-shadow .22s',
-            }}
-          >
-            {primary.label}
-            <svg className="ic" width="18" height="18" viewBox="0 0 24 24">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </Link>
-          {secondary && (
+          <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
             <Link
-              href={secondary.href}
+              href={primary.href}
               style={{
-                color: ink,
-                padding: '16px 28px',
+                background: 'var(--pink)',
+                color: '#fff',
+                padding: '16px 30px',
+                borderRadius: 999,
                 fontSize: 15,
                 fontWeight: 500,
-                border: isDark
-                  ? '0.5px solid rgba(234,233,238,.32)'
-                  : '0.5px solid var(--line-strong)',
-                borderRadius: 999,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 10,
                 textDecoration: 'none',
-                backdropFilter: 'blur(6px)',
+                boxShadow: '0 16px 40px rgba(201,38,106,.4)',
               }}
             >
-              {secondary.label}
+              {primary.label}
+              <svg className="ic" width="18" height="18" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </Link>
+          </motion.div>
+          {secondary && (
+            <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
+              <Link
+                href={secondary.href}
+                style={{
+                  color: ink,
+                  padding: '16px 28px',
+                  fontSize: 15,
+                  fontWeight: 500,
+                  border: isDark
+                    ? '0.5px solid rgba(234,233,238,.32)'
+                    : '0.5px solid var(--line-strong)',
+                  borderRadius: 999,
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(6px)',
+                  display: 'inline-flex',
+                }}
+              >
+                {secondary.label}
+              </Link>
+            </motion.div>
           )}
         </motion.div>
 
@@ -237,13 +241,17 @@ export default function ServiceHero({
             style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}
           >
             {tags.map((t) => (
-              <span
+              <motion.span
                 key={t}
+                whileHover={{ y: -4, scale: 1.06, backgroundColor: isDark ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.85)' }}
+                whileTap={{ scale: 0.94 }}
+                transition={{ type: 'spring', stiffness: 420, damping: 20 }}
                 style={{
                   fontSize: 12.5,
                   letterSpacing: '.02em',
                   padding: '8px 16px',
                   borderRadius: 999,
+                  cursor: 'default',
                   color: isDark ? 'rgba(234,233,238,.86)' : 'var(--ink-soft)',
                   border: isDark
                     ? '0.5px solid rgba(234,233,238,.2)'
@@ -253,7 +261,7 @@ export default function ServiceHero({
                 }}
               >
                 {t}
-              </span>
+              </motion.span>
             ))}
           </motion.div>
         )}

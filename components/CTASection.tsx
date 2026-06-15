@@ -106,6 +106,7 @@ export default function CTASection({
           <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginBottom: showContactInfo ? 40 : 0, flexWrap: 'wrap' }}>
             <Link
               href={primaryHref}
+              className="cta-final-primary"
               style={{
                 background: 'var(--pink)',
                 color: '#fff',
@@ -116,8 +117,6 @@ export default function CTASection({
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
-                transition: 'transform 0.22s var(--ease), box-shadow 0.22s var(--ease), background 0.22s var(--ease)',
-                boxShadow: '0 14px 36px rgba(201,38,106,0.40)',
                 textDecoration: 'none',
               }}
             >
@@ -130,6 +129,7 @@ export default function CTASection({
             {secondaryLabel && (
               <a
                 href={secondaryHref}
+                className="cta-final-secondary"
                 style={{
                   color: 'var(--cream)',
                   padding: '16px 28px',

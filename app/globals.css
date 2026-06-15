@@ -5787,3 +5787,28 @@ html.cine-hero{
 @media (prefers-reduced-motion:reduce){
   .cine2-cue i::after{ animation:none; }
 }
+
+/* ===== Boutons CTA finale — animation au survol / au toucher ===== */
+.cta-final-primary {
+  box-shadow: 0 14px 36px rgba(201, 38, 106, 0.40);
+  transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease), background 0.24s var(--ease);
+  will-change: transform;
+}
+.cta-final-primary .ic { transition: transform 0.26s var(--ease); }
+.cta-final-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 22px 52px rgba(201, 38, 106, 0.52);
+}
+.cta-final-primary:hover .ic { transform: translateX(5px); }
+.cta-final-primary:active { transform: translateY(-1px) scale(0.97); }
+
+.cta-final-secondary {
+  transition: transform 0.24s var(--ease), border-color 0.24s var(--ease), background 0.24s var(--ease);
+  will-change: transform;
+}
+.cta-final-secondary:hover {
+  transform: translateY(-3px) scale(1.03);
+  border-color: rgba(245, 240, 232, 0.6);
+  background: rgba(245, 240, 232, 0.06);
+}
+.cta-final-secondary:active { transform: translateY(-1px) scale(0.97); }

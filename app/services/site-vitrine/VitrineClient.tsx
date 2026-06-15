@@ -75,9 +75,7 @@ const TARIF_NOTE = 'Paiement en deux fois : 30 % à la commande, le solde à la 
 const FAQ = [
   { q: 'Que comprend exactement le tarif de 1 500 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro et hébergement la première année. Aucun coût caché.' },
   { q: 'Pourrai-je modifier mon site moi-même ?', a: 'Oui. On livre un back-office simple et on vous forme à sa prise en main. Vous changez vos textes, vos photos et vos actualités sans jamais toucher au code.' },
-  { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 6 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },
-  { q: 'Et une fois le site livré ?', a: 'Vous avez 15 jours de garantie pour ajuster les derniers détails. Au-delà, on reste joignables pour faire évoluer votre vitrine quand vous en avez besoin.' },
-];
+  { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 6 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },];
 
 function Arrow() {
   return (
@@ -157,8 +155,8 @@ export default function VitrineClient() {
         </Reveal>
       </SectionBg>
 
-      {/* 3 — CE QU'ON CONSTRUIT (img-3, sombre) — lignes lumineuses + spotlight */}
-      <SectionBg image={`${IMG}/img-3.webp`} scrim="dark-strong" parallax={65} py={144} glow="klein-pink" spotlight>
+      {/* 3 — CE QU'ON CONSTRUIT (img-3, sombre) — lignes lumineuses */}
+      <SectionBg image={`${IMG}/img-3.webp`} scrim="dark-strong" parallax={65} py={144} glow="klein-pink">
         <div style={{ maxWidth: 680, marginBottom: 58 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)' }}>Ce qu’on construit</span>
@@ -209,8 +207,8 @@ export default function VitrineClient() {
         </div>
       </SectionBg>
 
-      {/* 5 — SOCLE TECHNIQUE (img-5, sombre) — grands chiffres + spotlight */}
-      <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={65} py={144} glow="pink-klein" spotlight>
+      {/* 5 — SOCLE TECHNIQUE (img-5, sombre) — grands chiffres */}
+      <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={65} py={144} glow="pink-klein">
         <div className="vit-socle">
           <div>
             <Reveal>
@@ -225,7 +223,7 @@ export default function VitrineClient() {
           <div className="vit-stats">
             {SOCLE_STATS.map((stat, i) => (
               <Reveal key={stat.l} delay={i * 0.1} className="vit-stat">
-                <div style={{ fontSize: 'clamp(46px,5.6vw,70px)', fontWeight: 500, letterSpacing: '-0.03em', color: i % 2 ? 'var(--pink)' : 'var(--klein-bright)', lineHeight: 1, fontVariantNumeric: 'lining-nums tabular-nums' }}>
+                <div style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(52px,6.2vw,80px)', fontWeight: 500, letterSpacing: '-0.005em', color: i % 2 ? 'var(--pink)' : 'var(--klein-bright)', lineHeight: 1, fontVariantNumeric: 'lining-nums tabular-nums' }}>
                   <Counter to={stat.v} suffix={stat.s} decimals={stat.d} />
                 </div>
                 <motion.div aria-hidden initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 1, delay: i * 0.1 + 0.35, ease: [0.22, 1, 0.36, 1] }} style={{ height: 2, width: 46, background: i % 2 ? 'var(--pink)' : 'var(--klein-bright)', transformOrigin: 'left', margin: '15px 0 11px', borderRadius: 2 }} />

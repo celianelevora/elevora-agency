@@ -129,6 +129,8 @@ interface SectionBgProps {
   glow?: 'none' | 'klein-pink' | 'pink-klein' | 'blush';
   /** lumiere qui suit le curseur et revele la texture (defaut: false). */
   spotlight?: boolean;
+  /** position de l'image de fond (defaut 'center'). */
+  bgPosition?: string;
   id?: string;
   className?: string;
   style?: CSSProperties;
@@ -163,6 +165,7 @@ export function SectionBg({
   minHeight,
   glow = 'none',
   spotlight = false,
+  bgPosition,
   id,
   className = '',
   style,
@@ -204,7 +207,7 @@ export function SectionBg({
     >
       <motion.div
         className="svc-bg__img"
-        style={{ backgroundImage: `url(${image})`, y }}
+        style={{ backgroundImage: `url(${image})`, y, ...(bgPosition ? { backgroundPosition: bgPosition } : {}) }}
       />
       {scrim !== 'none' && (
         <div className="svc-bg__scrim" style={{ background: SCRIMS[scrim] }} />
@@ -370,6 +373,8 @@ export function RevealText({
                 fontStyle: isEmph ? 'italic' : undefined,
                 color: isEmph ? 'var(--pink)' : undefined,
                 fontWeight: isEmph ? 400 : undefined,
+                // Cormorant/Cochin en italique paraissent plus petits : on compense
+                fontSize: isEmph ? '1.1em' : undefined,
               }}
               initial={{ y: '110%' }}
               animate={inView ? { y: '0%' } : { y: '110%' }}
