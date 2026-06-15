@@ -52,23 +52,23 @@ export default function Header() {
                 </svg>
               </a>
               <div className="hdr-dropdown-menu hdr-dropdown-menu-wide">
-                <Link href="/services/sites-web" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/site-vitrine" className="hdr-dropdown-item" onClick={closeMenu}>
                   <span className="item-title">Site Vitrine</span>
                   <span className="item-sub">Présentez votre activité avec élégance</span>
                 </Link>
-                <Link href="/services/sites-web" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/site-ecommerce" className="hdr-dropdown-item" onClick={closeMenu}>
                   <span className="item-title">Site E-commerce</span>
                   <span className="item-sub">Vendez en ligne, simplement</span>
                 </Link>
-                <Link href="/services/sites-web" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/landing-page" className="hdr-dropdown-item" onClick={closeMenu}>
                   <span className="item-title">Landing page</span>
                   <span className="item-sub">Une page qui convertit</span>
                 </Link>
-                <Link href="/services/outils-de-gestion" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/application-web-mobile" className="hdr-dropdown-item" onClick={closeMenu}>
                   <span className="item-title">Application</span>
                   <span className="item-sub">Web & mobile sur mesure</span>
                 </Link>
-                <Link href="/services/outils-de-gestion" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/crm-outil-de-gestion" className="hdr-dropdown-item" onClick={closeMenu}>
                   <span className="item-title">CRM & Outil de gestion</span>
                   <span className="item-sub">Pilotez votre activité</span>
                 </Link>
@@ -118,11 +118,11 @@ export default function Header() {
 
       {/* Drawer mobile */}
       <div className={`hdr-mobile-drawer ${menuOpen ? 'open' : ''}`}>
-        <Link href="/services/sites-web" className="drawer-link" onClick={closeMenu}>Site Vitrine</Link>
-        <Link href="/services/sites-web" className="drawer-link" onClick={closeMenu}>Site E-commerce</Link>
-        <Link href="/services/sites-web" className="drawer-link" onClick={closeMenu}>Landing page</Link>
-        <Link href="/services/outils-de-gestion" className="drawer-link" onClick={closeMenu}>Application</Link>
-        <Link href="/services/outils-de-gestion" className="drawer-link" onClick={closeMenu}>CRM & Outil de gestion</Link>
+        <Link href="/services/site-vitrine" className="drawer-link" onClick={closeMenu}>Site Vitrine</Link>
+        <Link href="/services/site-ecommerce" className="drawer-link" onClick={closeMenu}>Site E-commerce</Link>
+        <Link href="/services/landing-page" className="drawer-link" onClick={closeMenu}>Landing page</Link>
+        <Link href="/services/application-web-mobile" className="drawer-link" onClick={closeMenu}>Application</Link>
+        <Link href="/services/crm-outil-de-gestion" className="drawer-link" onClick={closeMenu}>CRM & Outil de gestion</Link>
         <Link href="/realisations" className="drawer-link" onClick={closeMenu}>Réalisations</Link>
         <Link href="/methode" className="drawer-link" onClick={closeMenu}>Méthode</Link>
         <Link href="/tarifs" className="drawer-link" onClick={closeMenu}>Tarifs</Link>

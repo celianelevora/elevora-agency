@@ -14,6 +14,10 @@ interface CTASectionProps {
   /** Quand la CTA est rendue APRES le footer (via PostFooterPortal). Supprime
       la margin negative qui sert a mordre sur le footer dans l'usage normal. */
   belowFooter?: boolean;
+  /** Supprime la marge negative basse (-60px) qui fait mordre la CTA sur le
+      footer. A activer sur les pages (services) ou la CTA precede directement
+      le footer navy : sinon la CTA recouvre / coupe le haut du footer. */
+  noBleed?: boolean;
 }
 
 export default function CTASection({
@@ -27,6 +31,7 @@ export default function CTASection({
   showContactInfo = false,
   bgImage,
   belowFooter = false,
+  noBleed = false,
 }: CTASectionProps) {
   return (
     <section
@@ -42,7 +47,7 @@ export default function CTASection({
         /* Marge negative bas : utile uniquement quand la CTA est SUIVIE du
            footer (pour mordre sur ses arrondis). Si belowFooter, plus de
            negative margin. */
-        marginBottom: belowFooter ? 0 : '-60px',
+        marginBottom: belowFooter || noBleed ? 0 : '-60px',
       }}
     >
       {/* Image de fond en couche dediee (evite le shorthand multivaleurs
