@@ -731,15 +731,13 @@ export function PriceBlock({
             <p style={{ fontSize: 13.5, lineHeight: 1.65, color: soft, margin: 0 }}>{note}</p>
           )}
           <div style={{ marginTop: 'auto', paddingTop: 4 }}>
-            <Magnetic strength={0.35}>
-              <Link href={ctaHref} className="cta-big" style={{ display: 'inline-flex' }}>
-                {ctaLabel}
-                <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </Link>
-            </Magnetic>
+            <Link href={ctaHref} className="cta-big" style={{ display: 'inline-flex' }}>
+              {ctaLabel}
+              <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </Link>
           </div>
         </div>
 

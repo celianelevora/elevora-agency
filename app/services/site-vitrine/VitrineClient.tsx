@@ -20,7 +20,6 @@ import {
   Reveal,
   RevealText,
   Counter,
-  Magnetic,
   MiniFaq,
 } from '@/components/ServiceFX';
 
@@ -255,9 +254,7 @@ export default function VitrineClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 400 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Magnetic strength={0.35}>
-                  <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Demander un devis<Arrow /></Link>
-                </Magnetic>
+                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Demander un devis<Arrow /></Link>
               </div>
             </Reveal>
           </div>
@@ -268,8 +265,8 @@ export default function VitrineClient() {
             </Reveal>
             <div>
               {INCLUS.map((it, i) => (
-                <Reveal key={it} delay={i * 0.05} className="vit-inc">
-                  <span className="vit-inc__check" aria-hidden>
+                <Reveal key={it} delay={i * 0.05} className="svc-inc">
+                  <span className="svc-inc__check" aria-hidden>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--klein)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                   </span>
                   <span style={{ fontSize: 15.5, lineHeight: 1.5, color: 'var(--ink)' }}>{it}</span>
@@ -351,8 +348,5 @@ const VITRINE_CSS = `
 
 /* Tarif — révélation typographique + inclus */
 .vit-price { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(40px,6vw,90px); align-items: start; }
-.vit-inc { display: flex; gap: 14px; align-items: baseline; padding: 13px 0; border-top: 0.5px solid var(--line); }
-.vit-inc:first-child { border-top: none; }
-.vit-inc__check { flex-shrink: 0; width: 24px; height: 24px; border-radius: 999px; background: rgba(27,79,138,.10); display: inline-flex; align-items: center; justify-content: center; }
 @media (max-width: 860px) { .vit-price { grid-template-columns: 1fr; gap: 52px; } }
 `;

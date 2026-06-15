@@ -869,6 +869,9 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
    ============================================ */
 
 .cta-big {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   background: var(--klein);
   color: var(--cream);
   padding: 18px 32px;
@@ -879,17 +882,70 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: all 0.25s var(--ease);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  will-change: transform;
 }
-
+/* Vague framboise qui inonde le bouton depuis la gauche au survol */
+.cta-big::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, var(--pink) 0%, #E8517E 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
 .cta-big:hover {
-  background: var(--klein-deep);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(0, 51, 160, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 44px rgba(201, 38, 106, 0.34);
 }
+.cta-big:hover::before { transform: scaleX(1); }
+.cta-big:active { transform: translateY(-1px) scale(0.98); }
 
-.cta-big .arrow { transition: transform 0.25s var(--ease); }
-.cta-big:hover .arrow { transform: translateX(3px); }
+.cta-big .arrow { transition: transform 0.3s var(--ease); }
+.cta-big:hover .arrow { transform: translateX(5px); }
+
+/* ===== Liste « Tout est compris » — révélation au survol ===== */
+.svc-inc {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 13px 2px 13px 0;
+  border-top: 0.5px solid var(--line);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.svc-inc:first-child { border-top: none; }
+.svc-inc::after {
+  content: '';
+  position: absolute;
+  left: 38px; right: 4px; bottom: 4px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--klein), var(--pink));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.svc-inc:hover { transform: translateX(8px); }
+.svc-inc:hover::after { transform: scaleX(1); }
+.svc-inc__check {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  border-radius: 999px;
+  background: rgba(27, 79, 138, 0.10);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.svc-inc:hover .svc-inc__check {
+  background: var(--klein);
+  transform: scale(1.15) rotate(-6deg);
+}
+.svc-inc:hover .svc-inc__check svg { stroke: #fff; }
+.svc-inc__check svg { transition: stroke 0.3s var(--ease); }
 
 .cta-secondary {
   color: var(--ink);

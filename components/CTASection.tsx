@@ -66,6 +66,20 @@ export default function CTASection({
           }}
         />
       )}
+      {/* Voile sombre au-dessus de l'image : garantit la lisibilite du texte
+          clair, quelle que soit la tonalite de l'image (claire comme sombre). */}
+      {bgImage && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            background:
+              'linear-gradient(135deg, rgba(11,18,34,0.84) 0%, rgba(13,21,40,0.66) 50%, rgba(26,26,46,0.82) 100%)',
+          }}
+        />
+      )}
       {/* Halos ambient luxe (framboise + bleu klein) — réduits si image de fond */}
       <div
         aria-hidden="true"

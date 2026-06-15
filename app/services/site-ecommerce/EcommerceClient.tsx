@@ -1,21 +1,21 @@
 'use client';
 
 /**
- * PAGE 2 — SITE E-COMMERCE  ·  refonte v2
+ * PAGE 2 — SITE E-COMMERCE  ·  refonte v3
  * Charte : titres Cochin (fallback Cormorant Garamond), corps Roboto.
  * Identité propre (≠ vitrine) : circulation, abondance, commerce.
- *   Bandeau de chiffres horizontal · piliers en zigzag · grille « fiche technique ».
- * Image 1 (crème, 4:3) couvre le HERO + « Pour qui » : le hero montre le haut,
- * « Pour qui » montre le bas (même image, aucun objet dupliqué).
+ *   Bandeau de chiffres · piliers en zigzag · grille « fiche technique ».
+ * IMAGE 1 (crème, 4:3) couvre le HERO + « Pour qui » comme UNE SEULE image
+ *   continue (un seul fond, zoom « cover », aucune coupure, aucun objet dupliqué).
  * Ordre strict ensuite : 2 sombre · 3 blush · 4 sombre · 5 crème · 6 sombre · 7 blush.
  * Aucun widget : tarif = révélation typographique, tout est intégré.
  */
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import ServiceHero from '@/components/ServiceHero';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import CTASection from '@/components/CTASection';
-import { SectionBg, Reveal, RevealText, Counter, Magnetic } from '@/components/ServiceFX';
+import { SectionBg, Reveal, RevealText, Counter } from '@/components/ServiceFX';
 
 const IMG = '/services/site-ecommerce';
 
@@ -70,52 +70,91 @@ function DrawLine({ delay = 0, color, width = '100%', height = 2, mb = 0 }: { de
   return (<motion.span aria-hidden style={{ display: 'block', width, height, background: color, transformOrigin: 'left', marginBottom: mb, borderRadius: 2 }} initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }} />);
 }
 
+/* ===== Bloc combiné HERO + POUR QUI : une SEULE image continue ===== */
+function HeroPourQui() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const imgY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+
+  const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } } };
+  const item = {
+    hidden: { opacity: 0, y: 26, filter: 'blur(8px)' },
+    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+  };
+
+  return (
+    <section ref={ref} style={{ position: 'relative', overflow: 'hidden', marginTop: -76, background: '#EAE9EE' }}>
+      {/* UNE seule image de fond, couvre hero + pour qui sans coupure */}
+      <motion.div aria-hidden style={{ position: 'absolute', inset: '-6% 0 -6% 0', backgroundImage: `url(${IMG}/img-1.webp)`, backgroundSize: 'cover', backgroundPosition: 'center', y: imgY, zIndex: 0 }} />
+      {/* Voile crème pour lisibilité */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'linear-gradient(90deg, rgba(234,233,238,.85) 0%, rgba(234,233,238,.52) 44%, rgba(234,233,238,.12) 80%, transparent 100%)' }} />
+      {/* Halos blush (jeu de lumière) */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'radial-gradient(58% 48% at 76% 30%, rgba(201,38,106,.10), transparent 70%), radial-gradient(48% 42% at 16% 72%, rgba(27,79,138,.08), transparent 72%)' }} />
+
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        {/* HERO */}
+        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 160, paddingBottom: 110 }}>
+          <motion.span variants={item} className="svc-eyebrow" style={{ color: 'var(--klein)', marginBottom: 26 }}>Site e-commerce</motion.span>
+          <motion.h1 variants={item} style={{ margin: '18px 0 30px', maxWidth: 860, color: 'var(--ink)', lineHeight: 1.02 }}>
+            Vendez en ligne.<br />
+            <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)', fontWeight: 500 }}>Vraiment.</span>
+          </motion.h1>
+          <motion.p variants={item} className="lead" style={{ marginBottom: 44, maxWidth: 600, color: 'var(--ink-soft)' }}>
+            Une boutique sur mesure pensée pour vendre, fidéliser et scaler. Sans commission de marketplace, sans dépendance, 100 % à vous.
+          </motion.p>
+          <motion.div variants={item} style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+            <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
+              <Link href="/contact" style={{ background: 'var(--pink)', color: '#fff', padding: '16px 30px', borderRadius: 999, fontSize: 15, fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none', boxShadow: '0 16px 40px rgba(201,38,106,.4)' }}>
+                Lancer ma boutique<Arrow />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
+              <Link href="/methode" style={{ color: 'var(--ink)', padding: '16px 28px', fontSize: 15, fontWeight: 500, border: '0.5px solid var(--line-strong)', borderRadius: 999, textDecoration: 'none', backdropFilter: 'blur(6px)', display: 'inline-flex' }}>
+                Voir la méthode
+              </Link>
+            </motion.div>
+          </motion.div>
+          <motion.div variants={item} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}>
+            {['Stripe', 'Stocks & commandes', 'À partir de 1500 €'].map((t) => (
+              <motion.span key={t} whileHover={{ y: -4, scale: 1.06, backgroundColor: 'rgba(255,255,255,.85)' }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} style={{ fontSize: 12.5, letterSpacing: '.02em', padding: '8px 16px', borderRadius: 999, cursor: 'default', color: 'var(--ink-soft)', border: '0.5px solid var(--line)', background: 'rgba(255,255,255,.5)', backdropFilter: 'blur(8px)' }}>{t}</motion.span>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* POUR QUI (même image, prolongée) */}
+        <div className="container" style={{ paddingBottom: 'clamp(96px,12vw,148px)' }}>
+          <div className="ecom-pourqui">
+            <div className="ecom-pourqui__head">
+              <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Pour qui</span></Reveal>
+              <RevealText as="h2" text="Pour celles et ceux qui veulent vendre à leur façon." emphasis="vendre" style={{ margin: '22px 0 18px', ...H2('clamp(31px,4vw,52px)') }} />
+              <Reveal delay={0.15}><p style={{ fontSize: 16, lineHeight: 1.74, color: 'var(--ink-soft)', maxWidth: 380 }}>Trois profils, une même envie : posséder leur boutique de bout en bout.</p></Reveal>
+            </div>
+            <div className="ecom-pourqui__list">
+              {POURQUOI.map((p, i) => (
+                <Reveal key={p.t} delay={i * 0.1} className="ecom-aud">
+                  <DrawLine delay={i * 0.1 + 0.15} color="var(--klein)" mb={20} />
+                  <div className="ecom-aud__row">
+                    <h3 style={{ fontSize: 'clamp(21px,2.2vw,27px)', fontWeight: 500, lineHeight: 1.15 }}>{p.t}</h3>
+                    <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 18, color: 'var(--pink)', whiteSpace: 'nowrap' }}>{p.kw}</span>
+                  </div>
+                  <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--ink-soft)', marginTop: 12 }}>{p.d}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function EcommerceClient() {
   return (
     <>
       <style>{ECOM_CSS}</style>
 
-      {/* 1 — HERO (img-1 crème, haut de l'image) */}
-      <ServiceHero
-        image={`${IMG}/img-1.webp`}
-        theme="light"
-        glow
-        eyebrow="Site e-commerce"
-        title={
-          <>
-            Vendez en ligne.
-            <br />
-            <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)', fontWeight: 500 }}>Vraiment.</span>
-          </>
-        }
-        lead="Une boutique sur mesure pensée pour vendre, fidéliser et scaler. Sans commission de marketplace, sans dépendance, 100 % à vous."
-        primary={{ label: 'Lancer ma boutique', href: '/contact' }}
-        secondary={{ label: 'Voir la méthode', href: '/methode' }}
-        tags={['Stripe', 'Stocks & commandes', 'À partir de 3500 €']}
-      />
-
-      {/* 2 — POUR QUI (img-1 crème, bas de l'image = continuité du hero) */}
-      <SectionBg image={`${IMG}/img-1.webp`} bgPosition="center bottom" scrim="light-strong" parallax={40} py={140} glow="blush">
-        <div className="ecom-pourqui">
-          <div className="ecom-pourqui__head">
-            <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Pour qui</span></Reveal>
-            <RevealText as="h2" text="Pour celles et ceux qui veulent vendre à leur façon." emphasis="vendre" style={{ margin: '22px 0 18px', ...H2('clamp(31px,4vw,52px)') }} />
-            <Reveal delay={0.15}><p style={{ fontSize: 16, lineHeight: 1.74, color: 'var(--ink-soft)', maxWidth: 380 }}>Trois profils, une même envie : posséder leur boutique de bout en bout.</p></Reveal>
-          </div>
-          <div className="ecom-pourqui__list">
-            {POURQUOI.map((p, i) => (
-              <Reveal key={p.t} delay={i * 0.1} className="ecom-aud">
-                <DrawLine delay={i * 0.1 + 0.15} color="var(--klein)" mb={20} />
-                <div className="ecom-aud__row">
-                  <h3 style={{ fontSize: 'clamp(21px,2.2vw,27px)', fontWeight: 500, lineHeight: 1.15 }}>{p.t}</h3>
-                  <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 18, color: 'var(--pink)', whiteSpace: 'nowrap' }}>{p.kw}</span>
-                </div>
-                <p style={{ fontSize: 15, lineHeight: 1.72, color: 'var(--ink-soft)', marginTop: 12 }}>{p.d}</p>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </SectionBg>
+      {/* 1 + 2 — HERO & POUR QUI (img-1 crème, une seule image continue) */}
+      <HeroPourQui />
 
       {/* 3 — LE SUR-MESURE PAIE (img-2 sombre) — bandeau de chiffres */}
       <SectionBg image={`${IMG}/img-2.webp`} scrim="dark-strong" parallax={65} py={144} glow="klein-pink">
@@ -164,9 +203,11 @@ export default function EcommerceClient() {
         <div className="ecom-feats">
           {FONCTIONS.map((f, i) => (
             <Reveal key={f.t} delay={(i % 3) * 0.08} className="ecom-feat">
-              <span className="ecom-feat__dot" aria-hidden style={{ background: i % 2 ? 'var(--pink)' : 'var(--klein-bright)' }} />
-              <h3 style={{ fontSize: 'clamp(18px,1.9vw,21px)', fontWeight: 500, color: '#EAE9EE', marginBottom: 9, lineHeight: 1.2 }}>{f.t}</h3>
-              <p style={{ fontSize: 14, lineHeight: 1.65, color: 'rgba(234,233,238,.66)' }}>{f.d}</p>
+              <span className="ecom-feat__dot" aria-hidden style={{ background: i % 2 ? 'var(--pink)' : 'var(--klein-bright)', color: i % 2 ? 'var(--pink)' : 'var(--klein-bright)' }} />
+              <div className="ecom-feat__body">
+                <h3 style={{ fontSize: 'clamp(18px,1.9vw,21px)', fontWeight: 500, color: '#EAE9EE', marginBottom: 9, lineHeight: 1.2 }}>{f.t}</h3>
+                <p style={{ fontSize: 14, lineHeight: 1.65, color: 'rgba(234,233,238,.66)' }}>{f.d}</p>
+              </div>
             </Reveal>
           ))}
         </div>
@@ -181,7 +222,7 @@ export default function EcommerceClient() {
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>À partir de</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(80px,12vw,148px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>3 500</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(80px,12vw,148px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 500</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein)', marginBottom: '0.08em' }}>€</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
@@ -191,7 +232,7 @@ export default function EcommerceClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 420 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Magnetic strength={0.35}><Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Obtenir mon devis<Arrow /></Link></Magnetic>
+                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Obtenir mon devis<Arrow /></Link>
               </div>
             </Reveal>
           </div>
@@ -199,8 +240,8 @@ export default function EcommerceClient() {
             <Reveal><div style={{ fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', fontWeight: 600, color: 'var(--klein)', marginBottom: 4 }}>Tout est compris</div></Reveal>
             <div>
               {INCLUS.map((it, i) => (
-                <Reveal key={it} delay={i * 0.05} className="ecom-inc">
-                  <span className="ecom-inc__check" aria-hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--klein)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg></span>
+                <Reveal key={it} delay={i * 0.05} className="svc-inc">
+                  <span className="svc-inc__check" aria-hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--klein)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg></span>
                   <span style={{ fontSize: 15.5, lineHeight: 1.5, color: 'var(--ink)' }}>{it}</span>
                 </Reveal>
               ))}
@@ -251,7 +292,7 @@ const ECOM_CSS = `
 .ecom-aud { padding: 26px 0; }
 .ecom-aud:first-child { padding-top: 0; }
 .ecom-aud__row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
-@media (max-width: 880px) { .ecom-pourqui { grid-template-columns: 1fr; gap: 48px; } }
+@media (max-width: 880px) { .ecom-pourqui { grid-template-columns: 1fr; gap: 44px; } }
 
 /* Bandeau de chiffres */
 .ecom-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
@@ -280,21 +321,18 @@ const ECOM_CSS = `
   .ecom-zig__num { font-size: 52px; }
 }
 
-/* Fonctionnalités — grille fiche technique */
+/* Fonctionnalités — grille fiche technique (dot dans la gouttière, pas de saut au survol) */
 .ecom-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
-.ecom-feat { position: relative; padding: 28px 34px 30px 0; border-top: 0.5px solid rgba(234,233,238,.14); transition: padding-left .4s cubic-bezier(.22,1,.36,1); }
-.ecom-feat__dot { position: absolute; left: 0; top: 34px; width: 8px; height: 8px; border-radius: 999px; transition: transform .4s, box-shadow .4s; }
-.ecom-feat:hover { padding-left: 16px; }
-.ecom-feat:hover .ecom-feat__dot { transform: scale(1.6); box-shadow: 0 0 16px 2px currentColor; }
-.ecom-feat h3, .ecom-feat p { transition: opacity .3s; }
+.ecom-feat { position: relative; padding: 28px 30px 30px 28px; border-top: 0.5px solid rgba(234,233,238,.14); overflow: hidden; }
+.ecom-feat__dot { position: absolute; left: 0; top: 36px; width: 8px; height: 8px; border-radius: 999px; transition: transform .4s, box-shadow .4s; }
+.ecom-feat__body { transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.ecom-feat:hover .ecom-feat__body { transform: translateX(10px); }
+.ecom-feat:hover .ecom-feat__dot { transform: scale(1.7); box-shadow: 0 0 16px 2px currentColor; }
 @media (max-width: 860px) { .ecom-feats { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .ecom-feats { grid-template-columns: 1fr; } }
 
 /* Tarif */
 .ecom-price { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(40px,6vw,90px); align-items: start; }
-.ecom-inc { display: flex; gap: 14px; align-items: baseline; padding: 13px 0; border-top: 0.5px solid var(--line); }
-.ecom-inc:first-child { border-top: none; }
-.ecom-inc__check { flex-shrink: 0; width: 24px; height: 24px; border-radius: 999px; background: rgba(27,79,138,.10); display: inline-flex; align-items: center; justify-content: center; }
 @media (max-width: 860px) { .ecom-price { grid-template-columns: 1fr; gap: 52px; } }
 
 /* FAQ 2×2 */
