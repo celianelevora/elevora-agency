@@ -127,6 +127,8 @@ interface SectionBgProps {
   minHeight?: string;
   /** halo lumineux anime derriere le contenu (defaut: 'none'). */
   glow?: 'none' | 'klein-pink' | 'pink-klein' | 'blush';
+  /** lumiere qui suit le curseur et revele la texture (defaut: false). */
+  spotlight?: boolean;
   id?: string;
   className?: string;
   style?: CSSProperties;
@@ -160,6 +162,7 @@ export function SectionBg({
   py = 120,
   minHeight,
   glow = 'none',
+  spotlight = false,
   id,
   className = '',
   style,
@@ -174,10 +177,19 @@ export function SectionBg({
   const y = useTransform(scrollYProgress, [0, 1], [parallax, -parallax]);
   const base = toneBase(scrim);
 
+  function onSpotMove(e: React.MouseEvent) {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--svc-mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+    el.style.setProperty('--svc-my', `${((e.clientY - r.top) / r.height) * 100}%`);
+  }
+
   return (
     <section
       ref={ref}
       id={id}
+      onMouseMove={spotlight ? onSpotMove : undefined}
       className={`svc-bg ${className}`}
       style={{
         padding: `${py}px 0`,
@@ -225,6 +237,19 @@ export function SectionBg({
             <GlowField variant={glow} opacity={0.7} />
           )}
         </div>
+      )}
+      {/* Lumiere qui suit le curseur — revele la texture (z0) */}
+      {spotlight && (
+        <div
+          aria-hidden
+          className="svc-bg__spot"
+          style={{
+            position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
+            mixBlendMode: 'screen',
+            background:
+              'radial-gradient(420px circle at var(--svc-mx,50%) var(--svc-my,30%), rgba(140,178,238,.20), rgba(140,178,238,.05) 40%, transparent 66%)',
+          }}
+        />
       )}
       {/* Fondus haut + bas : l'image se fond dans la tonalite de la section
           => transitions parfaitement liees entre sections (plus de "cut"). */}

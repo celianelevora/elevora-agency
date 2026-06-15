@@ -1,18 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Playfair_Display, Roboto } from "next/font/google";
+import { Cormorant_Garamond, Roboto } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageEnter from "@/components/PageEnter";
 import Preloader from "@/components/Preloader";
 
-// Cochin n'est PAS sur Google Fonts (fonte commerciale Linotype).
-// Strategie : on charge Playfair Display comme fallback web le plus
-// proche de Cochin (serif elegant haut-contraste), et on prefere Cochin
-// natif quand l'OS le fournit (Mac/iOS). Voir --font-serif dans globals.css.
-const playfair = Playfair_Display({
+// Cochin (charte) n'est pas sur Google Fonts (fonte Linotype commerciale).
+// On la prefere quand l'OS la fournit (Mac/iOS) ; sinon, fallback web le plus
+// fidele a son elegance francaise : Cormorant Garamond (heritage Garamond,
+// faible hauteur d'x, longues hampes, contraste raffine) — bien plus proche
+// de Cochin que Playfair. La variable garde le nom --font-playfair pour rester
+// compatible avec tous les usages deja en place dans le projet.
+const playfair = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
