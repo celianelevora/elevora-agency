@@ -89,14 +89,30 @@ export default function RomanRail() {
       setActive(idx);
       setDark((els[idx]?.dataset.romanTone || "") === "dark");
 
-      // progression globale : du haut de la 1re section au bas de la dernière
-      const first = els[0];
-      const last = els[els.length - 1];
-      if (first && last && progRef.current) {
-        const start = first.getBoundingClientRect().top + window.scrollY;
-        const lastRect = last.getBoundingClientRect();
-        const end = lastRect.top + window.scrollY + lastRect.height;
-        const p = Math.min(1, Math.max(0, (window.scrollY + vh * 0.5 - start) / (end - start)));
+      // progression de la BARRE : calquée sur l'avancée d'une SECTION à l'autre
+      // (pas sur les pixels de scroll). Indispensable car le hero fait ~560vh :
+      // un calcul en pixels faisait galoper la barre (déjà à III sur I, etc.).
+      // Ici, la barre se cale exactement sur les chiffres équidistants : quand la
+      // section `idx` est active, la barre est au chiffre `idx`, puis interpole
+      // doucement vers le suivant selon l'avancée DANS cette section.
+      if (progRef.current && els.length > 1) {
+        const curTopDoc = els[idx].getBoundingClientRect().top + window.scrollY;
+        let nextTopDoc: number;
+        if (idx + 1 < els.length) {
+          nextTopDoc = els[idx + 1].getBoundingClientRect().top + window.scrollY;
+        } else {
+          const r = els[idx].getBoundingClientRect();
+          nextTopDoc = r.top + window.scrollY + r.height; // bas de la dernière section
+        }
+        // la section devient active quand son haut passe la ligne `probe` ;
+        // elle le reste jusqu'à ce que la suivante atteigne `probe`.
+        const scrollStart = curTopDoc - probe;
+        const scrollEnd = nextTopDoc - probe;
+        const frac =
+          scrollEnd > scrollStart
+            ? Math.min(1, Math.max(0, (window.scrollY - scrollStart) / (scrollEnd - scrollStart)))
+            : 0;
+        const p = Math.min(1, Math.max(0, (idx + frac) / (els.length - 1)));
         progRef.current.style.height = (p * 100).toFixed(2) + "%";
       }
     };

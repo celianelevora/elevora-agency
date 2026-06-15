@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import CTASection from '@/components/CTASection';
+import ServicesKinetic from '@/components/ServicesKinetic';
 import { ContainerScroll } from '@/components/ui/container-scroll';
 
 export const metadata = {
@@ -106,6 +107,9 @@ export default function SitesWebPage() {
         primaryCTA={{ label: 'Démarrer mon projet', href: '/contact' }}
         secondaryCTA={{ label: 'Voir nos sites livrés', href: '/realisations' }}
       />
+
+      {/* TYPOGRAPHIE CINÉTIQUE — Capter · Convaincre · Convertir */}
+      <ServicesKinetic variant="sites" />
 
       {/* DÉMO VISUELLE — Container Scroll */}
       <section style={{ padding: 0, background: 'var(--cream-warm)' }}>

@@ -72,14 +72,6 @@ export default function Header() {
                   <span className="item-title">CRM & Outil de gestion</span>
                   <span className="item-sub">Pilotez votre activité</span>
                 </Link>
-                <Link href="/services/outils-de-gestion" className="hdr-dropdown-item" onClick={closeMenu}>
-                  <span className="item-title">Maintenance</span>
-                  <span className="item-sub">Votre site toujours à jour</span>
-                </Link>
-                <Link href="/services/sites-web" className="hdr-dropdown-item" onClick={closeMenu}>
-                  <span className="item-title">SEO</span>
-                  <span className="item-sub">Soyez trouvé sur Google</span>
-                </Link>
               </div>
             </div>
             <Link href="/realisations" className="hdr-link" onClick={closeMenu}>Réalisations</Link>
@@ -131,8 +123,6 @@ export default function Header() {
         <Link href="/services/sites-web" className="drawer-link" onClick={closeMenu}>Landing page</Link>
         <Link href="/services/outils-de-gestion" className="drawer-link" onClick={closeMenu}>Application</Link>
         <Link href="/services/outils-de-gestion" className="drawer-link" onClick={closeMenu}>CRM & Outil de gestion</Link>
-        <Link href="/services/outils-de-gestion" className="drawer-link" onClick={closeMenu}>Maintenance</Link>
-        <Link href="/services/sites-web" className="drawer-link" onClick={closeMenu}>SEO</Link>
         <Link href="/realisations" className="drawer-link" onClick={closeMenu}>Réalisations</Link>
         <Link href="/methode" className="drawer-link" onClick={closeMenu}>Méthode</Link>
         <Link href="/tarifs" className="drawer-link" onClick={closeMenu}>Tarifs</Link>

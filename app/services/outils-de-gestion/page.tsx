@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import CTASection from '@/components/CTASection';
+import ServicesKinetic from '@/components/ServicesKinetic';
 
 export const metadata = {
   title: 'Outils de gestion sur mesure | CRM, compta, RH',
@@ -115,6 +116,9 @@ export default function OutilsGestionPage() {
         primaryCTA={{ label: 'Discutons de votre outil', href: '/contact' }}
         secondaryCTA={{ label: 'Voir notre méthode', href: '/methode' }}
       />
+
+      {/* TYPOGRAPHIE CINÉTIQUE — Automatiser · Centraliser · Maîtriser */}
+      <ServicesKinetic variant="outils" />
 
       {/* PROBLÈME */}
       <section style={{ background: '#FFF' }}>

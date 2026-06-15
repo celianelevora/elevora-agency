@@ -321,7 +321,7 @@ html.cine-hero .hdr .hdr-logo-tag {
 html.cine-hero .hdr .hdr-divider {
   background: linear-gradient(180deg, transparent, rgba(234,233,238,0.22), transparent);
 }
-html.cine-hero .hdr .hdr-link { color: rgba(234,233,238,0.82); }
+html.cine-hero .hdr .hdr-link { color: #fff; }
 html.cine-hero .hdr .hdr-link:hover { color: #fff; }
 html.cine-hero .hdr .hdr-link .ic { opacity: 0.7; }
 html.cine-hero .hdr .hdr-link::after { background: var(--pink); }
@@ -1171,8 +1171,18 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
 /* Masquer le footer global (navy) sur la page d'accueil — remplacé par le
    CinematicFooter. La règle ciblait `.footer` mais l'élément est `.site-footer`
    -> elle ne masquait rien, d'où le double footer. */
+/* Le footer navy (4 colonnes, .site-footer) est désormais AFFICHÉ sur la home,
+   JUSTE EN-DESSOUS du bloc CTA cinématique (.elv-cta). C'est lui qui porte le
+   logo, la description, l'hébergement Infomaniak, les réseaux, les colonnes
+   Services/Agence/Contact et le copyright -> plus de doublon avec le bloc CTA. */
 body:has(.home-with-cinematic-footer) > .site-footer {
-  display: none;
+  /* !important : verrou anti-régression. Plus AUCUNE règle ne pourra le
+     re-masquer (c'était la cause racine du footer « qui ne revenait pas »). */
+  display: block !important;
+  position: relative;
+  z-index: 3;
+  /* il se détache du bloc CTA crème comme une carte navy posée dessous */
+  box-shadow: 0 -24px 60px -40px rgba(9,18,40,.55);
 }
 
 /* ============================================
@@ -1287,6 +1297,13 @@ body:has(.home-with-cinematic-footer) .hdr {
 
 .home-with-cinematic-footer .sec-night {
   position: relative;
+  /* La zone bleue déborde de 10% (10vh) dans la section grise du dessus
+     (Réalisations) ET du dessous (Témoignages) — +5% de chaque côté demandés.
+     z-index:2 -> le bleu passe par-dessus les voisins (qui n'ont pas de z-index).
+     Le contenu et les fondus suivent le bloc, donc le titre garde sa marge. */
+  z-index: 2;
+  margin-top: -10vh;
+  margin-bottom: -10vh;
   /* MÉTHODE — fond bleu PREMIUM et dimensionnel (plus d'image, plus de version terne).
      1) « projecteur » Klein-bright central qui éclaire le titre et met la section en avant,
      2) chaleur framboise en bas-droite, 3) base Klein profonde éclairée en haut.
@@ -1323,11 +1340,6 @@ body:has(.home-with-cinematic-footer) .hdr {
 /* Le hero garde son image */
 .home-with-cinematic-footer .hero-statue {
   background-blend-mode: normal;
-}
-
-/* Footer cinématique : crème */
-.home-with-cinematic-footer .cinematic-footer-wrapper {
-  background: var(--cream) !important;
 }
 
 /* Body crème sur la landing */
@@ -1481,8 +1493,6 @@ body:has(.home-with-cinematic-footer) {
 .home-with-cinematic-footer .testimonials-section .eyebrow-dot { background: var(--c-bleu-clair); }
 /* Mot morphing hero : bleu principal (déjà via --klein) ; accent italique FAQ en framboise */
 .home-with-cinematic-footer .faq-title em { color: var(--c-framboise); }
-/* Hover liens footer cinématique : bleu Klein (plus de rose criard) */
-.home-with-cinematic-footer .footer-glass-pill:hover { color: var(--klein) !important; }
 /* Bordures de cartes FAQ au hover : bleu Klein franc (tout le rectangle) */
 .home-with-cinematic-footer .faq-item:hover { border-color: var(--klein); }
 
@@ -4631,17 +4641,6 @@ article [data-flow-section] {
 }
 
 /* ===========================================================
-   FOOTER CINEMATIQUE (home page) — +15% sur tous les textes
-   Le CinematicFooter utilise Tailwind, on rescale via font-size root */
-.cinematic-footer-wrapper {
-  /* +15% : tous les rem/em internes s'agrandissent automatiquement */
-  font-size: 18.4px; /* 16 * 1.15 */
-}
-.cinematic-footer-wrapper .text-xs { font-size: 0.85rem !important; /* +15% de 0.75rem */ }
-.cinematic-footer-wrapper .text-sm { font-size: 1rem !important; /* +15% de 0.875rem */ }
-.cinematic-footer-wrapper .text-base { font-size: 1.15rem !important; /* +15% de 1rem */ }
-
-/* ===========================================================
    NEUTRALISATION ECART BANNIERE / FOOTER (page Realisations)
    On bloque TOUS les conteneurs qui pourraient creuser un espace
    en bas avant le footer sur la page contenant la banniere.
@@ -4835,60 +4834,72 @@ body:has(.methode-banner) .site-footer {
 
 .method2-aura{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
 
-/* ✦ CHAMP D'ÉTOILES — vrai « dessin » cosmique (scintille doucement) */
+/* ✦ CHAMP D'ÉTOILES — vrai « dessin » cosmique, BIEN visible (scintille) */
 .method2-aura::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
   background-image:
-    radial-gradient(1.3px 1.3px at 12% 18%, rgba(255,255,255,.95), transparent),
-    radial-gradient(1px 1px at 28% 62%, rgba(200,220,255,.7), transparent),
-    radial-gradient(1.5px 1.5px at 47% 11%, rgba(255,255,255,.9), transparent),
-    radial-gradient(1px 1px at 63% 43%, rgba(255,255,255,.6), transparent),
-    radial-gradient(1.4px 1.4px at 78% 21%, rgba(220,230,255,.85), transparent),
-    radial-gradient(1px 1px at 88% 66%, rgba(255,255,255,.7), transparent),
-    radial-gradient(1px 1px at 8% 80%, rgba(255,255,255,.55), transparent),
-    radial-gradient(1.6px 1.6px at 36% 88%, rgba(255,255,255,.9), transparent),
-    radial-gradient(1px 1px at 56% 77%, rgba(210,225,255,.6), transparent),
-    radial-gradient(1.3px 1.3px at 72% 90%, rgba(255,255,255,.75), transparent),
-    radial-gradient(1px 1px at 92% 35%, rgba(255,255,255,.6), transparent),
-    radial-gradient(1.4px 1.4px at 18% 43%, rgba(255,255,255,.8), transparent),
-    radial-gradient(1px 1px at 41% 70%, rgba(255,255,255,.5), transparent),
-    radial-gradient(1.2px 1.2px at 67% 14%, rgba(230,238,255,.75), transparent),
-    radial-gradient(1px 1px at 83% 50%, rgba(255,255,255,.55), transparent),
-    radial-gradient(1.5px 1.5px at 24% 30%, rgba(255,255,255,.85), transparent),
-    radial-gradient(1px 1px at 50% 54%, rgba(255,255,255,.5), transparent),
-    radial-gradient(1.3px 1.3px at 95% 80%, rgba(255,255,255,.7), transparent);
+    /* halos doux (étoiles brillantes avec glow) */
+    radial-gradient(3px 3px at 47% 11%, rgba(255,255,255,.55), transparent 60%),
+    radial-gradient(3px 3px at 78% 21%, rgba(190,212,255,.5), transparent 60%),
+    radial-gradient(3px 3px at 24% 30%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(3px 3px at 36% 88%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(3px 3px at 72% 90%, rgba(210,225,255,.45), transparent 60%),
+    radial-gradient(3px 3px at 92% 35%, rgba(255,255,255,.45), transparent 60%),
+    /* étoiles (cœurs nets) */
+    radial-gradient(1.9px 1.9px at 12% 18%, rgba(255,255,255,1), transparent),
+    radial-gradient(1.5px 1.5px at 28% 62%, rgba(205,224,255,.92), transparent),
+    radial-gradient(2.2px 2.2px at 47% 11%, rgba(255,255,255,1), transparent),
+    radial-gradient(1.4px 1.4px at 63% 43%, rgba(255,255,255,.82), transparent),
+    radial-gradient(2px 2px at 78% 21%, rgba(225,234,255,.95), transparent),
+    radial-gradient(1.5px 1.5px at 88% 66%, rgba(255,255,255,.9), transparent),
+    radial-gradient(1.4px 1.4px at 8% 80%, rgba(255,255,255,.8), transparent),
+    radial-gradient(2.3px 2.3px at 36% 88%, rgba(255,255,255,1), transparent),
+    radial-gradient(1.5px 1.5px at 56% 77%, rgba(214,228,255,.82), transparent),
+    radial-gradient(1.9px 1.9px at 72% 90%, rgba(255,255,255,.92), transparent),
+    radial-gradient(1.5px 1.5px at 92% 35%, rgba(255,255,255,.82), transparent),
+    radial-gradient(2px 2px at 18% 43%, rgba(255,255,255,.95), transparent),
+    radial-gradient(1.4px 1.4px at 41% 70%, rgba(255,255,255,.78), transparent),
+    radial-gradient(1.8px 1.8px at 67% 14%, rgba(235,242,255,.9), transparent),
+    radial-gradient(1.4px 1.4px at 83% 50%, rgba(255,255,255,.8), transparent),
+    radial-gradient(2.2px 2.2px at 24% 30%, rgba(255,255,255,1), transparent),
+    radial-gradient(1.5px 1.5px at 50% 54%, rgba(255,255,255,.78), transparent),
+    radial-gradient(1.9px 1.9px at 95% 80%, rgba(255,255,255,.9), transparent),
+    radial-gradient(1.5px 1.5px at 33% 48%, rgba(255,255,255,.78), transparent),
+    radial-gradient(1.4px 1.4px at 61% 26%, rgba(225,234,255,.8), transparent),
+    radial-gradient(1.8px 1.8px at 5% 55%, rgba(255,255,255,.85), transparent),
+    radial-gradient(1.5px 1.5px at 44% 33%, rgba(255,255,255,.78), transparent);
   background-repeat:no-repeat;
-  -webkit-mask-image:radial-gradient(135% 105% at 50% 34%, #000 32%, transparent 82%);
-          mask-image:radial-gradient(135% 105% at 50% 34%, #000 32%, transparent 82%);
+  -webkit-mask-image:radial-gradient(140% 112% at 50% 36%, #000 42%, transparent 86%);
+          mask-image:radial-gradient(140% 112% at 50% 36%, #000 42%, transparent 86%);
   animation:method2Twinkle 6.5s ease-in-out infinite alternate;
 }
-@keyframes method2Twinkle{ 0%{ opacity:.5 } 100%{ opacity:1 } }
+@keyframes method2Twinkle{ 0%{ opacity:.72 } 100%{ opacity:1 } }
 
 /* nébuleuse violette qui dérive (donne de la vie au fond) */
 .method2-aura::after{
   content:""; position:absolute; z-index:0; pointer-events:none;
-  width:62vw; height:54vh; top:6%; left:28%;
-  background:radial-gradient(circle, rgba(96,124,224,.24), transparent 62%);
-  filter:blur(95px);
+  width:66vw; height:58vh; top:4%; left:26%;
+  background:radial-gradient(circle, rgba(108,138,236,.34), transparent 62%);
+  filter:blur(92px);
   animation:method2Drift2 26s ease-in-out infinite alternate;
 }
 @keyframes method2Drift2{ from{ transform:translate(0,0) } to{ transform:translate(-55px,42px) } }
 
-.method2-halo{ position:absolute; border-radius:50%; filter:blur(95px); opacity:.52; }
-.method2-halo-klein{ width:48vw;height:48vw; top:-9vw; left:-7vw;
+.method2-halo{ position:absolute; border-radius:50%; filter:blur(92px); opacity:.62; }
+.method2-halo-klein{ width:50vw;height:50vw; top:-9vw; left:-7vw;
   background:radial-gradient(circle,#2B6CC4,transparent 66%);
   animation:method2Drift 18s ease-in-out infinite alternate; }
-.method2-halo-razz{ width:44vw;height:44vw; bottom:-11vw; right:-7vw;
-  background:radial-gradient(circle,#C9266A,transparent 66%); opacity:.42;
+.method2-halo-razz{ width:46vw;height:46vw; bottom:-11vw; right:-7vw;
+  background:radial-gradient(circle,#C9266A,transparent 66%); opacity:.5;
   animation:method2Drift 22s ease-in-out infinite alternate-reverse; }
 @keyframes method2Drift{ from{transform:translate(0,0)} to{transform:translate(40px,30px)} }
 
 /* grille BLUEPRINT en pointillés (texture technique, masquée vers le centre) */
-.method2-grid{ position:absolute; inset:0; z-index:0; opacity:.6;
-  background-image:radial-gradient(rgba(168,196,244,.17) 1.1px, transparent 1.3px);
-  background-size:38px 38px;
-  -webkit-mask-image:radial-gradient(120% 88% at 50% 32%,#000 40%,transparent 80%);
-          mask-image:radial-gradient(120% 88% at 50% 32%,#000 40%,transparent 80%); }
+.method2-grid{ position:absolute; inset:0; z-index:0; opacity:.85;
+  background-image:radial-gradient(rgba(176,202,248,.28) 1.3px, transparent 1.5px);
+  background-size:36px 36px;
+  -webkit-mask-image:radial-gradient(122% 90% at 50% 32%,#000 44%,transparent 82%);
+          mask-image:radial-gradient(122% 90% at 50% 32%,#000 44%,transparent 82%); }
 /* spotlight qui suit la souris */
 .method2-spot{ position:absolute; inset:0; z-index:1; pointer-events:none; mix-blend-mode:screen;
   background:radial-gradient(420px circle at var(--mx) var(--my),rgba(61,116,180,.16),transparent 60%);

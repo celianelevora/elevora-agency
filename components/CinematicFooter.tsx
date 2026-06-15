@@ -1,241 +1,343 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { useRef } from "react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+/* ============================================================
+   CinematicFooter — RECONSTRUCTION COMPLÈTE (table rase).
 
-const STYLES = `
-.cinematic-footer-wrapper {
-  -webkit-font-smoothing: antialiased;
-  --cf-fg: #1A1A2E;
-  --cf-bg: #EAE9EE;
-  --cf-klein: #1B4F8A;
-  --cf-pink: #C9266A;
-  --pill-bg-1: rgba(255,255,255,0.55);
-  --pill-bg-2: rgba(255,255,255,0.25);
-  --pill-shadow: rgba(27,79,138,0.10);
-  --pill-highlight: rgba(255,255,255,0.9);
-  --pill-inset-shadow: rgba(255,255,255,0.6);
-  --pill-border: rgba(27,79,138,0.12);
-  --pill-bg-1-hover: rgba(43,108,196,0.10);
-  --pill-bg-2-hover: rgba(43,108,196,0.04);
-  --pill-border-hover: rgba(43,108,196,0.45);
-  --pill-shadow-hover: rgba(27,79,138,0.22);
-  --pill-highlight-hover: rgba(255,255,255,1);
-}
-@keyframes footer-breathe {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
-}
-@keyframes footer-scroll-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-footer-breathe { animation: footer-breathe 8s ease-in-out infinite alternate; }
-.animate-footer-scroll-marquee { animation: footer-scroll-marquee 40s linear infinite; }
-.footer-bg-grid {
-  background-size: 60px 60px;
-  background-image:
-    linear-gradient(to right, rgba(10,10,10,0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(10,10,10,0.03) 1px, transparent 1px);
-  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
-}
-.footer-aurora {
-  background: radial-gradient(circle at 50% 50%,
-    rgba(27,79,138,0.12) 0%, rgba(201,38,106,0.10) 40%, transparent 70%);
-}
-.footer-glass-pill {
-  background: linear-gradient(145deg, var(--pill-bg-1) 0%, var(--pill-bg-2) 100%);
-  box-shadow: 0 10px 30px -10px var(--pill-shadow), inset 0 1px 1px var(--pill-highlight), inset 0 -1px 2px var(--pill-inset-shadow);
-  border: 1px solid var(--pill-border);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.footer-glass-pill:hover {
-  background: linear-gradient(145deg, var(--pill-bg-1-hover) 0%, var(--pill-bg-2-hover) 100%);
-  border-color: var(--pill-border-hover);
-  box-shadow: 0 18px 38px -12px var(--pill-shadow-hover), inset 0 1px 1px var(--pill-highlight-hover);
-  color: var(--cf-fg);
-  transform: translateY(-2px);
-}
-.footer-cta-primary {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.footer-cta-primary:hover {
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-  box-shadow: 0 20px 44px -8px rgba(27,79,138,0.65) !important;
-}
-.footer-cta-primary svg {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.footer-cta-primary:hover svg {
-  transform: translateX(4px);
-}
-.footer-giant-bg-text {
-  font-family: var(--serif), serif;
-  font-size: 26vw;
-  line-height: 0.75;
-  font-weight: 600;
-  letter-spacing: -0.05em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(10,10,10,0.06);
-  background: linear-gradient(180deg, rgba(10,10,10,0.08) 0%, transparent 60%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.footer-text-glow {
-  font-family: var(--serif), serif;
-  background: linear-gradient(180deg, var(--cf-fg) 0%, rgba(10,10,10,0.5) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.footer-cta-title {
-  font-family: var(--serif), serif;
-  font-weight: 400;
-  font-size: clamp(2.6rem, 6.5vw, 5.5rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  color: var(--cf-fg);
-  margin-bottom: 1.5rem;
-}
-.footer-cta-em {
-  font-style: italic;
-  color: #1B4F8A;
-  white-space: nowrap;
-}
-.footer-cta-sub {
-  font-family: var(--sans), sans-serif;
-  font-weight: 300;
-  font-size: clamp(0.95rem, 1.4vw, 1.125rem);
-  line-height: 1.6;
-  color: rgba(26,26,46,0.7);
-  max-width: 540px;
-  margin: 0 auto 2.5rem;
-}
-`;
+   Repris de l'esprit du template fourni, mais réécrit 100% IN-FLOW :
+   - position:relative, AUCUN position:fixed, AUCUN clip-path,
+     AUCUN ScrollTrigger -> il ne peut PAS disparaître ni se dédoubler.
+   - le seul effet JS est un magnétisme léger (GSAP core) sur les
+     boutons, sans aucune dépendance au scroll/layout.
 
-export type MagneticButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    as?: React.ElementType;
-  };
+   Bloc CTA cinématique (crème, DA Elevora), personnalisé sur le
+   visuel demandé :
+     marquee de marque · « On démarre votre projet ? » · sous-titre ·
+     2 boutons (Démarrer un projet / Voir nos réalisations) ·
+     pavés (Sites web / Outils de gestion / Méthode / Tarifs) ·
+     immense filigrane ELEVORA en fond.
 
-const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
-  ({ className, children, as: Component = "button", ...props }, forwardedRef) => {
-    const localRef = useRef<HTMLElement>(null);
-    // Effet magnétique désactivé : les boutons restent fixes, hover propre via CSS
-    return (
-      <Component
-        ref={(node: HTMLElement) => {
-          (localRef as React.MutableRefObject<HTMLElement | null>).current = node;
-          if (typeof forwardedRef === "function") forwardedRef(node);
-          else if (forwardedRef) (forwardedRef as React.MutableRefObject<HTMLElement | null>).current = node;
-        }}
-        className={cn("cursor-pointer", className)}
-        {...props}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
-MagneticButton.displayName = "MagneticButton";
+   Le copyright + les colonnes (Services / Agence / Contact) + les
+   liens légaux vivent dans le footer navy juste EN-DESSOUS (composant
+   <Footer> global, .site-footer) -> aucun doublon ici.
+   ============================================================ */
 
-const MarqueeItem = () => (
-  <div className="flex items-center space-x-12 px-6">
-    <span>Sites web qui convertissent</span> <span style={{ color: "rgba(27,79,138,0.5)" }}>✦</span>
-    <span>Outils de gestion sur mesure</span> <span style={{ color: "rgba(201,38,106,0.5)" }}>✦</span>
-    <span>Accompagnement de A à Z</span> <span style={{ color: "rgba(27,79,138,0.5)" }}>✦</span>
-    <span>Agence indépendante à Nantes</span> <span style={{ color: "rgba(201,38,106,0.5)" }}>✦</span>
-  </div>
-);
+import { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import { gsap } from 'gsap';
+
+const MARQUEE = [
+  'Outils de gestion sur mesure',
+  'Accompagnement de A à Z',
+  'Agence indépendante à Nantes',
+  'Sites web qui convertissent',
+];
+
+const PILLS = [
+  { label: 'Sites web', href: '/services/sites-web' },
+  { label: 'Outils de gestion', href: '/services/outils-de-gestion' },
+  { label: 'Méthode', href: '/methode' },
+  { label: 'Tarifs', href: '/tarifs' },
+];
 
 export function CinematicFooter() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const rootRef = useRef<HTMLElement>(null);
+
+  // Magnétisme léger (progressive enhancement). GSAP core uniquement,
+  // aucune dépendance au scroll ni au layout -> ne peut pas casser l'affichage.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return; // pas sur tactile
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const cleanups: Array<() => void> = [];
+    root.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
+      const soft = el.dataset.magnetic === 'soft';
+      const k = soft ? 0.16 : 0.3;
+      const onMove = (e: MouseEvent) => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        gsap.to(el, { x: x * k, y: y * k, duration: 0.4, ease: 'power3.out' });
+      };
+      const onLeave = () =>
+        gsap.to(el, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)' });
+      el.addEventListener('mousemove', onMove);
+      el.addEventListener('mouseleave', onLeave);
+      cleanups.push(() => {
+        el.removeEventListener('mousemove', onMove);
+        el.removeEventListener('mouseleave', onLeave);
+        gsap.set(el, { clearProps: 'transform' });
+      });
+    });
+    return () => cleanups.forEach((c) => c());
+  }, []);
 
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
-      <div className="relative w-full">
-        <footer
-          className="cinematic-footer-wrapper"
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            minHeight: "100vh",
-            width: "100%",
-            overflow: "hidden",
-            background: "#EAE9EE",
-            color: "#1A1A2E",
-          }}
-        >
-          <div className="footer-aurora absolute left-1/2 top-1/2 h-[60vh] w-[80vw] -translate-x-1/2 -translate-y-1/2 animate-footer-breathe rounded-[50%] blur-[80px] pointer-events-none z-0" />
-          <div className="footer-bg-grid absolute inset-0 z-0 pointer-events-none" />
 
-          <div className="footer-giant-bg-text absolute -bottom-[5vh] left-1/2 -translate-x-1/2 whitespace-nowrap z-0 pointer-events-none select-none">
-            ELEVORA
-          </div>
+      <section ref={rootRef} className="elv-cta" aria-label="Démarrer un projet">
+        {/* Calques d'ambiance (décoratifs, in-flow) */}
+        <span className="elv-cta-grid" aria-hidden="true" />
+        <span className="elv-cta-aurora" aria-hidden="true" />
+        <span className="elv-cta-aurora elv-cta-aurora-2" aria-hidden="true" />
+        <span className="elv-cta-giant" aria-hidden="true">ELEVORA</span>
 
-          <div className="absolute top-12 left-0 w-full overflow-hidden py-4 z-10 -rotate-2 scale-110 shadow-2xl" style={{ borderTop: "1px solid rgba(10,10,10,0.1)", borderBottom: "1px solid rgba(10,10,10,0.1)", background: "rgba(245,240,232,0.55)", backdropFilter: "blur(8px)" }}>
-            <div className="flex w-max animate-footer-scroll-marquee text-xs md:text-sm font-bold tracking-[0.3em] uppercase" style={{ color: "#6B6B6B" }}>
-              <MarqueeItem />
-              <MarqueeItem />
-            </div>
-          </div>
-
-          <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 w-full max-w-5xl mx-auto">
-            <h2 className="footer-cta-title text-center" style={{ fontWeight: 400 }}>
-              On démarre <span className="footer-cta-em">votre&nbsp;projet</span> ?
-            </h2>
-
-            <p className="footer-cta-sub text-center">
-              Premier échange gratuit et sans engagement. On comprend votre besoin,
-              on évalue la faisabilité, on vous propose un devis ferme sous 5 jours.
-            </p>
-
-            <div className="flex flex-col items-center gap-6 w-full">
-              <div className="flex flex-wrap justify-center gap-4 w-full">
-                <MagneticButton as={Link} href="/contact" className="footer-cta-primary px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#fff", background: "linear-gradient(180deg, #2B6CC4, #1B4F8A)", border: "none", boxShadow: "0 14px 34px -8px rgba(27,79,138,0.55)" }}>
-                  Démarrer un projet
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </MagneticButton>
-                <MagneticButton as={Link} href="/realisations" className="footer-glass-pill px-10 py-5 rounded-full font-bold text-sm md:text-base flex items-center gap-3" style={{ color: "#1A1A2E" }}>
-                  Voir nos réalisations
-                </MagneticButton>
+        {/* Marquee de marque (légèrement incliné) */}
+        <div className="elv-cta-marquee" aria-hidden="true">
+          <div className="elv-cta-marquee-track">
+            {[0, 1].map((dup) => (
+              <div className="elv-cta-marquee-set" key={dup}>
+                {MARQUEE.map((m, i) => (
+                  <span className="elv-cta-marquee-item" key={`${dup}-${i}`}>
+                    {m}
+                    <span className="elv-cta-star" aria-hidden="true">✦</span>
+                  </span>
+                ))}
               </div>
+            ))}
+          </div>
+        </div>
 
-              <div className="flex flex-wrap justify-center gap-3 md:gap-6 w-full mt-2">
-                <MagneticButton as={Link} href="/services/sites-web" className="footer-glass-pill px-6 py-3 rounded-full font-medium text-xs md:text-sm" style={{ color: "#6B6B6B" }}>Sites web</MagneticButton>
-                <MagneticButton as={Link} href="/services/outils-de-gestion" className="footer-glass-pill px-6 py-3 rounded-full font-medium text-xs md:text-sm" style={{ color: "#6B6B6B" }}>Outils de gestion</MagneticButton>
-                <MagneticButton as={Link} href="/methode" className="footer-glass-pill px-6 py-3 rounded-full font-medium text-xs md:text-sm" style={{ color: "#6B6B6B" }}>Méthode</MagneticButton>
-                <MagneticButton as={Link} href="/tarifs" className="footer-glass-pill px-6 py-3 rounded-full font-medium text-xs md:text-sm" style={{ color: "#6B6B6B" }}>Tarifs</MagneticButton>
-              </div>
-            </div>
+        {/* Contenu central */}
+        <div className="elv-cta-inner">
+          <h2 className="elv-cta-title">
+            On démarre <span className="elv-cta-em">votre projet</span> ?
+          </h2>
+          <p className="elv-cta-sub">
+            Premier échange gratuit et sans engagement. On comprend votre besoin,
+            on évalue la faisabilité, on vous propose un devis ferme sous 5 jours.
+          </p>
+
+          <div className="elv-cta-actions">
+            <Link href="/demarrer-un-projet" className="elv-cta-btn" data-magnetic>
+              <span className="elv-cta-btn-label">
+                Démarrer un projet
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </Link>
+            <Link href="/realisations" className="elv-cta-btn-ghost" data-magnetic="soft">
+              Voir nos réalisations
+            </Link>
           </div>
 
-          <div className="relative z-20 w-full pb-8 px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-[10px] md:text-xs font-semibold tracking-widest uppercase order-2 md:order-1" style={{ color: "#6B6B6B" }}>
-              © 2026 Elevora · Agence digitale à Nantes
-            </div>
-            <MagneticButton as="button" onClick={scrollToTop} className="w-12 h-12 rounded-full footer-glass-pill flex items-center justify-center group order-3" style={{ color: "#6B6B6B" }} aria-label="Retour en haut">
-              <svg className="w-5 h-5 transform group-hover:-translate-y-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-              </svg>
-            </MagneticButton>
+          <div className="elv-cta-pills">
+            {PILLS.map((p) => (
+              <Link key={p.href + p.label} href={p.href} className="elv-cta-pill" data-magnetic="soft">
+                {p.label}
+              </Link>
+            ))}
           </div>
-        </footer>
-      </div>
+        </div>
+      </section>
     </>
   );
 }
+
+const STYLES = `
+.elv-cta {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* padding bas généreux : laisse respirer le filigrane ELEVORA et donne
+     une assise propre au footer navy (carte arrondie) qui suit juste après. */
+  padding: clamp(124px, 19vh, 208px) 24px clamp(140px, 20vh, 220px);
+  background: var(--cream, #EAE9EE);
+  color: var(--ink, #1A1A2E);
+  font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
+}
+
+/* Grille technique discrète, masquée vers les bords */
+.elv-cta-grid {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(26,26,46,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26,26,46,.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 40%, #000 34%, transparent 80%);
+          mask-image: radial-gradient(120% 100% at 50% 40%, #000 34%, transparent 80%);
+}
+
+/* Halos aurora Klein -> framboise, respiration douce (2 calques = profondeur) */
+.elv-cta-aurora {
+  position: absolute; left: 50%; top: 40%; z-index: 0; pointer-events: none;
+  width: 80vw; height: 62vh; transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(43,108,196,.22) 0%,
+    rgba(201,38,106,.14) 44%,
+    transparent 70%);
+  filter: blur(64px);
+  border-radius: 50%;
+  animation: elvCtaBreathe 9s ease-in-out infinite alternate;
+}
+.elv-cta-aurora-2 {
+  top: 64%; width: 52vw; height: 44vh;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(201,38,106,.14) 0%,
+    rgba(43,108,196,.10) 50%,
+    transparent 72%);
+  filter: blur(80px);
+  animation: elvCtaBreathe 11s ease-in-out .6s infinite alternate-reverse;
+}
+@keyframes elvCtaBreathe {
+  0%   { transform: translate(-50%, -50%) scale(1);    opacity: .7; }
+  100% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+}
+
+/* Filigrane géant ELEVORA en bas */
+.elv-cta-giant {
+  position: absolute; left: 50%; bottom: -2.5vh; z-index: 0;
+  transform: translateX(-50%);
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-weight: 800; letter-spacing: -.03em; line-height: .8;
+  font-size: clamp(4rem, 21vw, 20rem);
+  white-space: nowrap; user-select: none; pointer-events: none;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(26,26,46,.08);
+  background: linear-gradient(180deg, rgba(26,26,46,.08) 0%, transparent 60%);
+  -webkit-background-clip: text; background-clip: text;
+}
+
+/* Marquee */
+.elv-cta-marquee {
+  position: absolute; top: clamp(34px, 6vh, 64px); left: -4%; z-index: 1;
+  width: 108%;
+  transform: rotate(-2deg);
+  border-top: 1px solid rgba(26,26,46,.10);
+  border-bottom: 1px solid rgba(26,26,46,.10);
+  background: rgba(255,255,255,.46);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  padding: 13px 0;
+  overflow: hidden;
+  box-shadow: 0 18px 40px -28px rgba(26,26,46,.5);
+}
+.elv-cta-marquee-track { display: flex; width: max-content; animation: elvCtaMarquee 34s linear infinite; }
+.elv-cta-marquee-set { display: flex; }
+.elv-cta-marquee-item {
+  display: inline-flex; align-items: center;
+  font-size: .72rem; font-weight: 700; letter-spacing: .26em;
+  text-transform: uppercase; color: rgba(26,26,46,.55);
+  white-space: nowrap;
+}
+.elv-cta-star { color: var(--c-framboise, #C9266A); margin: 0 2.4rem; font-size: .6rem; }
+.elv-cta-marquee-item:nth-child(2n) .elv-cta-star { color: var(--klein-bright, #2B6CC4); }
+@keyframes elvCtaMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Contenu central */
+.elv-cta-inner {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  max-width: 880px; margin: 0 auto;
+}
+.elv-cta-title {
+  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-weight: 600; line-height: 1.04; letter-spacing: -.01em;
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  color: var(--ink, #1A1A2E);
+  margin: 0 0 clamp(18px, 2.6vh, 28px);
+}
+.elv-cta-em { font-style: italic; color: var(--klein-bright, #2B6CC4); }
+.elv-cta-sub {
+  max-width: 560px;
+  font-size: clamp(1rem, 1.25vw, 1.18rem); line-height: 1.6;
+  color: rgba(26,26,46,.62); margin: 0 0 clamp(34px, 5vh, 52px);
+}
+
+/* Actions */
+.elv-cta-actions {
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center;
+  margin-bottom: clamp(22px, 3.4vh, 36px);
+}
+
+/* Bouton primaire — gradient Klein, bordure éclairée, glow + reflet */
+.elv-cta-btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  padding: 17px 34px; border-radius: 999px;
+  font-size: 1rem; font-weight: 600; letter-spacing: .015em; text-decoration: none;
+  color: #fff;
+  background: linear-gradient(135deg, #3B79D4 0%, #235FA6 52%, #163F70 100%);
+  border: 1px solid rgba(255,255,255,.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.32),
+    inset 0 -2px 6px rgba(8,22,46,.45),
+    0 12px 26px -10px rgba(27,79,138,.6),
+    0 0 38px -8px rgba(43,108,196,.5);
+  overflow: hidden;
+  transition: box-shadow .35s cubic-bezier(.16,1,.3,1), filter .35s ease;
+}
+.elv-cta-btn::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.28) 48%, transparent 72%);
+  transform: translateX(-130%); transition: transform .7s cubic-bezier(.16,1,.3,1);
+}
+.elv-cta-btn:hover::before { transform: translateX(130%); }
+.elv-cta-btn:hover {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    inset 0 -2px 6px rgba(8,22,46,.5),
+    0 18px 34px -10px rgba(27,79,138,.7),
+    0 0 52px -6px rgba(43,108,196,.62);
+}
+.elv-cta-btn-label { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 10px; }
+.elv-cta-btn-label svg { transition: transform .35s cubic-bezier(.16,1,.3,1); }
+.elv-cta-btn:hover .elv-cta-btn-label svg { transform: translateX(4px); }
+
+/* Bouton fantôme — verre clair */
+.elv-cta-btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 17px 30px; border-radius: 999px;
+  font-size: 1rem; font-weight: 600; letter-spacing: .01em; text-decoration: none;
+  color: var(--ink, #1A1A2E);
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(26,26,46,.14);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 8px 22px -14px rgba(26,26,46,.4);
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease;
+}
+.elv-cta-btn-ghost:hover {
+  background: rgba(255,255,255,.82);
+  border-color: rgba(27,79,138,.4);
+  color: var(--c-bleu, #1B4F8A);
+  box-shadow: 0 14px 30px -14px rgba(27,79,138,.45);
+}
+
+/* Pavés secondaires */
+.elv-cta-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.elv-cta-pill {
+  display: inline-flex; align-items: center;
+  padding: 9px 20px; border-radius: 999px;
+  font-size: .82rem; font-weight: 500; letter-spacing: .01em; text-decoration: none;
+  color: rgba(26,26,46,.66);
+  background: rgba(255,255,255,.5);
+  border: 1px solid rgba(26,26,46,.10);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  transition: color .3s ease, border-color .3s ease, background .3s ease, transform .3s ease;
+}
+.elv-cta-pill:hover {
+  color: var(--c-framboise, #C9266A);
+  border-color: rgba(201,38,106,.4);
+  background: rgba(255,255,255,.78);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 760px) {
+  .elv-cta-actions { flex-direction: column; width: 100%; }
+  .elv-cta-btn, .elv-cta-btn-ghost { width: 100%; max-width: 360px; }
+  .elv-cta-giant { font-size: clamp(3.2rem, 27vw, 9rem); }
+  .elv-cta-marquee-item { font-size: .64rem; letter-spacing: .2em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elv-cta-aurora, .elv-cta-marquee-track { animation: none; }
+}
+`;

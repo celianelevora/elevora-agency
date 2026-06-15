@@ -69,10 +69,29 @@ export default function MethodSteps() {
     card.style.setProperty('--cy', `${e.clientY - r.top}px`);
   };
 
+  // Spotlight cosmique de la SECTION qui suit la souris (calque .method2-spot)
+  const handleSectionMove = (e: MouseEvent<HTMLElement>) => {
+    const sec = sectionRef.current;
+    if (!sec) return;
+    const r = sec.getBoundingClientRect();
+    sec.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    sec.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+
   const progress = (lit.filter(Boolean).length / STEPS.length) * 100;
 
   return (
-    <section ref={sectionRef} className="method2">
+    <section ref={sectionRef} className="method2" onMouseMove={handleSectionMove}>
+      {/* Fond cosmique : champ d'étoiles + nébuleuses (via .method2-aura::before/::after),
+          halos Klein/framboise, grille blueprint, + spotlight souris.
+          (Ces calques étaient stylés en CSS mais jamais rendus -> fond terne.) */}
+      <div className="method2-aura" aria-hidden="true">
+        <span className="method2-halo method2-halo-klein" />
+        <span className="method2-halo method2-halo-razz" />
+        <span className="method2-grid" />
+      </div>
+      <span className="method2-spot" aria-hidden="true" />
+
       <div className="container method2-inner">
         <div className="method2-head">
           <span className="method2-eyebrow">06 — Notre méthode</span>
