@@ -125,6 +125,8 @@ interface SectionBgProps {
   py?: number;
   /** min-height optionnelle (ex '100vh'). */
   minHeight?: string;
+  /** halo lumineux anime derriere le contenu (defaut: 'none'). */
+  glow?: 'none' | 'klein-pink' | 'pink-klein' | 'blush';
   id?: string;
   className?: string;
   style?: CSSProperties;
@@ -157,6 +159,7 @@ export function SectionBg({
   parallax = 60,
   py = 120,
   minHeight,
+  glow = 'none',
   id,
   className = '',
   style,
@@ -193,6 +196,35 @@ export function SectionBg({
       />
       {scrim !== 'none' && (
         <div className="svc-bg__scrim" style={{ background: SCRIMS[scrim] }} />
+      )}
+      {/* Halo lumineux anime (jeu de lumiere) — sous le contenu (z0) */}
+      {glow !== 'none' && (
+        <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
+          {glow === 'blush' ? (
+            <>
+              <motion.div
+                style={{
+                  position: 'absolute', width: 680, height: 680, borderRadius: '50%',
+                  filter: 'blur(90px)', top: '-18%', left: '-10%',
+                  background: 'radial-gradient(circle, rgba(201,38,106,.12), transparent 70%)',
+                }}
+                animate={{ x: [0, 36, 0], y: [0, 26, 0] }}
+                transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <motion.div
+                style={{
+                  position: 'absolute', width: 560, height: 560, borderRadius: '50%',
+                  filter: 'blur(90px)', bottom: '-16%', right: '-8%',
+                  background: 'radial-gradient(circle, rgba(27,79,138,.10), transparent 70%)',
+                }}
+                animate={{ x: [0, -30, 0], y: [0, -22, 0] }}
+                transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </>
+          ) : (
+            <GlowField variant={glow} opacity={0.7} />
+          )}
+        </div>
       )}
       {/* Fondus haut + bas : l'image se fond dans la tonalite de la section
           => transitions parfaitement liees entre sections (plus de "cut"). */}

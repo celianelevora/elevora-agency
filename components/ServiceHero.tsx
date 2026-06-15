@@ -15,6 +15,7 @@
 import Link from 'next/link';
 import { useRef, type ReactNode } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { GlowField } from '@/components/ServiceFX';
 
 type CTA = { label: string; href: string };
 
@@ -28,6 +29,8 @@ interface ServiceHeroProps {
   secondary?: CTA;
   /** petit bandeau de "tags" sous les boutons (optionnel). */
   tags?: string[];
+  /** halos colores animes derriere l'image (defaut: off). */
+  glow?: boolean;
 }
 
 export default function ServiceHero({
@@ -39,6 +42,7 @@ export default function ServiceHero({
   primary,
   secondary,
   tags,
+  glow = false,
 }: ServiceHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -102,6 +106,12 @@ export default function ServiceHero({
           zIndex: 0,
         }}
       />
+      {/* Halos colores animes (jeu de lumiere) — optionnel */}
+      {glow && (
+        <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', opacity: 0.55, mixBlendMode: 'screen' }}>
+          <GlowField variant="klein-pink" />
+        </div>
+      )}
       {/* Voile de lisibilite cale sur le theme */}
       <div
         aria-hidden
