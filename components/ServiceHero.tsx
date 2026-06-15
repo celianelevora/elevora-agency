@@ -77,8 +77,12 @@ export default function ServiceHero({
       style={{
         position: 'relative',
         overflow: 'hidden',
-        padding: '188px 0 132px',
-        minHeight: '92vh',
+        /* Annule le padding-top:76 de <main> pour que l'image colle au
+           tout en haut, sous le header flottant. Meme principe que la
+           page Agence (margin-top:-76 / padding-top:76). */
+        marginTop: -76,
+        padding: '206px 0 150px',
+        minHeight: '94vh',
         display: 'flex',
         alignItems: 'center',
         background: baseColor,
@@ -107,8 +111,21 @@ export default function ServiceHero({
           zIndex: 1,
           pointerEvents: 'none',
           background: isDark
-            ? 'linear-gradient(90deg, rgba(10,16,30,.78) 0%, rgba(10,16,30,.5) 42%, rgba(10,16,30,.16) 74%, transparent 100%)'
-            : 'linear-gradient(90deg, rgba(234,233,238,.92) 0%, rgba(234,233,238,.62) 44%, rgba(234,233,238,.12) 80%, transparent 100%)',
+            ? 'linear-gradient(90deg, rgba(10,16,30,.66) 0%, rgba(10,16,30,.42) 40%, rgba(10,16,30,.12) 72%, transparent 100%)'
+            : 'linear-gradient(90deg, rgba(234,233,238,.82) 0%, rgba(234,233,238,.5) 42%, rgba(234,233,238,.1) 78%, transparent 100%)',
+        }}
+      />
+      {/* Vignette douce pour la profondeur (sans assombrir le texte) */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: 'none',
+          background: isDark
+            ? 'radial-gradient(120% 80% at 70% 30%, transparent 40%, rgba(8,12,24,.45) 100%)'
+            : 'radial-gradient(120% 80% at 70% 30%, transparent 45%, rgba(26,26,46,.06) 100%)',
         }}
       />
       {/* Raccord bas : fondu vers la couleur de base => continuite avec S2 */}

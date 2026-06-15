@@ -21,7 +21,7 @@
 import Link from 'next/link';
 import ServiceHero from '@/components/ServiceHero';
 import CTASection from '@/components/CTASection';
-import { SectionBg, Reveal, RevealText, Counter } from '@/components/ServiceFX';
+import { SectionBg, Reveal, RevealText, Counter, PriceBlock, MiniFaq } from '@/components/ServiceFX';
 
 const IMG = '/services/landing-page';
 
@@ -63,8 +63,8 @@ export default function LandingClient() {
         tags={['Copywriting', 'A/B test', 'À partir de 900 €']}
       />
 
-      {/* 2 — UNE PAGE UN OBJECTIF (navy, img-1) — manifeste centre */}
-      <SectionBg image={`${IMG}/img-1.webp`} scrim="dark-strong" parallax={70} py={160}>
+      {/* 2 — UNE PAGE UN OBJECTIF (navy, img-5) — manifeste centre */}
+      <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={70} py={160}>
         <div style={{ maxWidth: 820, margin: '0 auto', textAlign: 'center' }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.7)', justifyContent: 'center' }}>
@@ -173,67 +173,101 @@ export default function LandingClient() {
         </div>
       </SectionBg>
 
-      {/* 5 — VITESSE / inclus (cream, img-6) — bandeau de pastilles */}
+      {/* 5 — TARIF & DELAIS (cream, img-6) — PriceBlock */}
       <SectionBg image={`${IMG}/img-6.webp`} scrim="light-strong" parallax={45} py={140}>
-        <div style={{ maxWidth: 880, margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto 56px', textAlign: 'center' }}>
           <Reveal>
-            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Toujours inclus</span>
+            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Tarif & délais</span>
           </Reveal>
           <RevealText
             as="h2"
-            text="Le nécessaire pour mesurer et améliorer."
-            emphasis="mesurer"
-            style={{ margin: '20px 0 44px', fontSize: 'clamp(28px,3.8vw,46px)', lineHeight: 1.1 }}
+            text="Un prix net, pour convertir vite."
+            emphasis="convertir"
+            style={{ margin: '20px 0 22px', fontSize: 'clamp(28px,3.8vw,46px)', lineHeight: 1.1 }}
           />
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center' }}>
-            {['Copywriting orienté conversion', 'Tracking & analytics', 'Connexion CRM / Brevo', 'Test A/B', 'Responsive parfait', 'Formulaire intelligent'].map((tag, i) => (
-              <Reveal key={tag} delay={i * 0.06}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    padding: '13px 22px',
-                    borderRadius: 999,
-                    background: 'rgba(255,255,255,.62)',
-                    border: '0.5px solid rgba(255,255,255,.85)',
-                    fontSize: 14.5,
-                    color: 'var(--ink)',
-                    boxShadow: '0 12px 30px -22px rgba(26,26,46,.4)',
-                  }}
-                >
-                  {tag}
-                </span>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.15}>
+            <p className="svc-lead" style={{ maxWidth: 560, margin: '0 auto' }}>
+              Une page, un objectif, un budget clair. Pensée pour être en ligne avant votre
+              prochaine campagne — sans semaines d&rsquo;attente ni ligne cachée.
+            </p>
+          </Reveal>
+        </div>
+        <div style={{ maxWidth: 940, margin: '0 auto' }}>
+          <PriceBlock
+            theme="light"
+            price="900"
+            delay="48 h à 1 semaine"
+            included={[
+              'Page unique haute conversion',
+              'Copywriting orienté action',
+              'Tracking & analytics posés',
+              'Connexion CRM / Brevo',
+              'Test A/B au lancement',
+              'Formulaire intelligent',
+              'Responsive mobile parfait',
+              'En ligne sous une semaine',
+              'Garantie 15 jours',
+            ]}
+            note="Idéale pour une campagne, un lancement ou une publicité. Paiement en deux fois possible, devis ferme renvoyé sous 48 h."
+            ctaLabel="Créer ma landing"
+            ctaHref="/contact"
+          />
         </div>
       </SectionBg>
 
-      {/* 6 — POUR QUELS USAGES (navy, img-4) — grille 2x2 sobre */}
-      <SectionBg image={`${IMG}/img-4.webp`} scrim="dark-strong" parallax={60} py={150}>
+      {/* 6 — POUR QUELS USAGES (cream, img-4) — grille 2x2 sobre */}
+      <SectionBg image={`${IMG}/img-4.webp`} scrim="light-strong" parallax={60} py={150}>
         <div style={{ maxWidth: 600, margin: '0 auto 56px', textAlign: 'center' }}>
           <Reveal>
-            <span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.7)', justifyContent: 'center' }}>Pour quels usages</span>
+            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Pour quels usages</span>
           </Reveal>
           <RevealText
             as="h2"
             text="Une page taillée pour chaque moment clé."
             emphasis="clé."
-            style={{ margin: '20px 0 0', color: '#EAE9EE', fontSize: 'clamp(28px,3.8vw,46px)', lineHeight: 1.1 }}
+            style={{ margin: '20px 0 0', fontSize: 'clamp(28px,3.8vw,46px)', lineHeight: 1.1 }}
           />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 20, maxWidth: 900, margin: '0 auto' }}>
           {USAGES.map((u, i) => (
             <Reveal key={u.t} delay={i * 0.1}>
-              <div style={{ padding: '30px 28px', borderRadius: 'var(--radius-lg)', background: 'rgba(255,255,255,.05)', border: '0.5px solid rgba(234,233,238,.16)', height: '100%', backdropFilter: 'blur(6px)' }}>
-                <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 30, color: i % 2 ? 'var(--pink)' : 'var(--klein-bright)', marginBottom: 16 }}>
+              <div style={{ padding: '30px 28px', borderRadius: 'var(--radius-lg)', background: 'rgba(255,255,255,.62)', border: '0.5px solid rgba(255,255,255,.85)', height: '100%', boxShadow: '0 20px 50px -36px rgba(26,26,46,.4)', backdropFilter: 'blur(8px)' }}>
+                <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 30, color: i % 2 ? 'var(--pink)' : 'var(--klein)', marginBottom: 16 }}>
                   {String(i + 1).padStart(2, '0')}
                 </div>
-                <h3 style={{ fontSize: 19, color: '#EAE9EE', marginBottom: 10 }}>{u.t}</h3>
-                <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'rgba(234,233,238,.68)' }}>{u.d}</p>
+                <h3 style={{ fontSize: 19, color: 'var(--ink)', marginBottom: 10 }}>{u.t}</h3>
+                <p style={{ fontSize: 14.5, lineHeight: 1.65, color: 'var(--ink-soft)' }}>{u.d}</p>
               </div>
             </Reveal>
           ))}
         </div>
+      </SectionBg>
+
+      {/* 6 bis — FAQ (navy, img-1) */}
+      <SectionBg image={`${IMG}/img-1.webp`} scrim="dark-strong" parallax={55} py={140}>
+        <MiniFaq
+          theme="dark"
+          title="Les questions qu'on nous pose le plus."
+          emphasis="pose"
+          items={[
+            {
+              q: 'Pourquoi une landing plutôt qu’une page de mon site ?',
+              a: 'Parce qu’une landing n’a qu’un seul objectif et zéro distraction : pas de menu, pas de liens qui font fuir. Tout est calibré pour transformer le visiteur en contact ou en client.',
+            },
+            {
+              q: 'Le tarif de 900 € est-il vraiment tout compris ?',
+              a: 'Oui : design, copywriting, tracking, connexion à votre CRM et test A/B au lancement. Le seul variable, c’est si vous voulez plusieurs versions de page ou une intégration spécifique.',
+            },
+            {
+              q: 'En combien de temps ma page est-elle en ligne ?',
+              a: 'De 48 h à une semaine selon votre réactivité sur les contenus. On sait qu’une landing accompagne souvent une campagne datée — on s’aligne sur votre échéance.',
+            },
+            {
+              q: 'Comment je sais si elle convertit ?',
+              a: 'On pose le tracking et les analytics dès le départ, et on peut lancer un test A/B. Vous voyez vos chiffres en clair : visites, conversions, coût par contact.',
+            },
+          ]}
+        />
       </SectionBg>
 
       {/* 7 — CTA (img-7 navy, noBleed) */}

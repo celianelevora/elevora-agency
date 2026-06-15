@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import ServiceHero from '@/components/ServiceHero';
 import CTASection from '@/components/CTASection';
-import { SectionBg, Reveal, RevealText, Counter, Tilt } from '@/components/ServiceFX';
+import { SectionBg, Reveal, RevealText, Counter, Tilt, PriceBlock, MiniFaq } from '@/components/ServiceFX';
 
 const IMG = '/services/site-ecommerce';
 
@@ -68,8 +68,8 @@ export default function EcommerceClient() {
         tags={['Stripe', 'Stocks & commandes', 'À partir de 3500 €']}
       />
 
-      {/* 2 — POUR QUI (cream, img-1) cartes Tilt */}
-      <SectionBg image={`${IMG}/img-1.webp`} scrim="light-strong" parallax={60} py={150}>
+      {/* 2 — POUR QUI (cream, img-5) cartes Tilt */}
+      <SectionBg image={`${IMG}/img-5.webp`} scrim="light-strong" parallax={60} py={150}>
         <div style={{ maxWidth: 600, marginBottom: 64 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Pour qui</span>
@@ -140,8 +140,8 @@ export default function EcommerceClient() {
         </div>
       </SectionBg>
 
-      {/* 4 — CE QU'ON CONSTRUIT (blush, img-4) — alternance gauche/droite */}
-      <SectionBg image={`${IMG}/img-4.webp`} scrim="light-strong" parallax={50} py={150}>
+      {/* 4 — CE QU'ON CONSTRUIT (cream, img-3) — alternance gauche/droite */}
+      <SectionBg image={`${IMG}/img-3.webp`} scrim="light-strong" parallax={50} py={150}>
         <div style={{ maxWidth: 600, margin: '0 auto 70px', textAlign: 'center' }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'var(--pink)', justifyContent: 'center' }}>Ce qu'on construit</span>
@@ -182,8 +182,8 @@ export default function EcommerceClient() {
         </div>
       </SectionBg>
 
-      {/* 5 — FONCTIONNALITES (navy, img-3) — mosaique de cartes */}
-      <SectionBg image={`${IMG}/img-3.webp`} scrim="dark-strong" parallax={60} py={150}>
+      {/* 5 — FONCTIONNALITES (navy, img-4) — mosaique de cartes */}
+      <SectionBg image={`${IMG}/img-4.webp`} scrim="dark-strong" parallax={60} py={150}>
         <div style={{ maxWidth: 600, marginBottom: 60 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.7)' }}>Fonctionnalités clés</span>
@@ -208,33 +208,74 @@ export default function EcommerceClient() {
         </div>
       </SectionBg>
 
-      {/* 6 — TARIF (cream, img-6) */}
-      <SectionBg image={`${IMG}/img-6.webp`} scrim="light-strong" parallax={45} py={150}>
-        <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
+      {/* 6 — TARIF (cream, img-5) */}
+      <SectionBg image={`${IMG}/img-5.webp`} scrim="light-strong" parallax={45} py={150}>
+        <div style={{ maxWidth: 720, margin: '0 auto 56px', textAlign: 'center' }}>
           <Reveal>
-            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Tarif</span>
+            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Tarif & délais</span>
           </Reveal>
           <RevealText
             as="h2"
             text="Votre boutique, à partir de 3500 €."
             emphasis="3500"
-            style={{ margin: '20px 0 24px', fontSize: 'clamp(30px,4vw,50px)', lineHeight: 1.08 }}
+            style={{ margin: '20px 0 22px', fontSize: 'clamp(30px,4vw,50px)', lineHeight: 1.08 }}
           />
           <Reveal delay={0.15}>
-            <p style={{ fontSize: 16, lineHeight: 1.75, color: 'var(--ink-soft)', maxWidth: 540, margin: '0 auto 44px' }}>
-              Le prix dépend de votre catalogue, vos intégrations, votre logistique. On chiffre précisément après un premier échange, sans engagement.
+            <p className="svc-lead" style={{ maxWidth: 560, margin: '0 auto' }}>
+              Le prix dépend de votre catalogue, de vos intégrations et de votre logistique.
+              On le chiffre précisément après un premier échange — voici la base de ce qui est
+              toujours inclus.
             </p>
           </Reveal>
-          <Reveal delay={0.25}>
-            <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>
-              Obtenir mon devis e-commerce
-              <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
-          </Reveal>
         </div>
+        <div style={{ maxWidth: 940, margin: '0 auto' }}>
+          <PriceBlock
+            theme="light"
+            price="3500"
+            delay="6 à 10 semaines"
+            included={[
+              'Boutique 100 % sur mesure',
+              'Paiement Stripe sécurisé',
+              'Gestion stocks & commandes',
+              'Fiches produits illimitées',
+              'Comptes clients & historique',
+              'Codes promo & relance panier',
+              'Responsive mobile & tablette',
+              'Référencement (SEO) natif',
+              'Formation + garantie 30 jours',
+            ]}
+            note="Le tarif final dépend de votre catalogue et de vos intégrations. Paiement échelonné possible : 30 % à la commande, le solde réparti sur le projet."
+            ctaLabel="Obtenir mon devis e-commerce"
+            ctaHref="/contact"
+          />
+        </div>
+      </SectionBg>
+
+      {/* 6 bis — FAQ (navy, img-6) */}
+      <SectionBg image={`${IMG}/img-6.webp`} scrim="dark-strong" parallax={55} py={140}>
+        <MiniFaq
+          theme="dark"
+          title="Ce que les marchands nous demandent."
+          emphasis="demandent."
+          items={[
+            {
+              q: 'Pourquoi pas Shopify ou une marketplace ?',
+              a: 'Parce qu’une boutique sur mesure vous appartient à 100 %. Aucune commission sur vos ventes, aucune dépendance à une plateforme, et une expérience pensée pour votre marque — pas pour un template.',
+            },
+            {
+              q: 'Comment se passent les paiements ?',
+              a: 'On intègre Stripe : cartes, Apple Pay, Google Pay, paiement en plusieurs fois. Sécurisé, conforme, et les fonds arrivent directement sur votre compte.',
+            },
+            {
+              q: 'Pourrai-je gérer mes produits seul ?',
+              a: 'Oui. Vous ajoutez vos produits, gérez vos stocks, suivez vos commandes et éditez vos prix depuis un back-office clair. On vous forme à la prise en main.',
+            },
+            {
+              q: 'Combien de temps pour lancer la boutique ?',
+              a: 'Comptez 6 à 10 semaines selon la taille du catalogue et les intégrations. On avance par étapes, avec des points réguliers pour valider ensemble.',
+            },
+          ]}
+        />
       </SectionBg>
 
       {/* 7 — CTA (img-7 blush, noBleed) */}

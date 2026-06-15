@@ -18,6 +18,7 @@
  *  - <Marbled>         : fin grain + veine marbre par-dessus un fond (texture premium).
  */
 
+import Link from 'next/link';
 import {
   useRef,
   useEffect,
@@ -48,6 +49,10 @@ const FX_CSS = `
   background-repeat: no-repeat; will-change: transform;
 }
 .svc-bg__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.svc-bg__fade {
+  position: absolute; left: 0; right: 0; height: 150px; z-index: 0;
+  pointer-events: none;
+}
 .svc-bg__content { position: relative; z-index: 1; }
 
 /* Eyebrow premium reutilise localement */
@@ -60,10 +65,25 @@ const FX_CSS = `
   content: ''; width: 26px; height: 1px; background: currentColor; opacity: .5;
 }
 
+/* Paragraphe d'introduction (lead) reutilise localement */
+.svc-lead {
+  font-size: clamp(16px, 1.4vw, 18.5px);
+  line-height: 1.68;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
 /* Carte verre (glassmorphism) sobre */
 .svc-glass {
   backdrop-filter: blur(14px) saturate(1.1);
   -webkit-backdrop-filter: blur(14px) saturate(1.1);
+}
+
+/* Bloc tarif riche */
+.svc-price { display: grid; grid-template-columns: minmax(0,0.82fr) 1px minmax(0,1.18fr); }
+@media (max-width: 880px) {
+  .svc-price { grid-template-columns: 1fr; }
+  .svc-price > .svc-price-divider { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -113,14 +133,22 @@ interface SectionBgProps {
 
 const SCRIMS: Record<Scrim, string> = {
   none: 'transparent',
-  dark: 'linear-gradient(180deg, rgba(10,16,30,.55), rgba(10,16,30,.68))',
-  'dark-strong': 'linear-gradient(180deg, rgba(8,13,26,.74), rgba(8,13,26,.82))',
-  light: 'linear-gradient(180deg, rgba(234,233,238,.55), rgba(234,233,238,.72))',
-  'light-strong': 'linear-gradient(180deg, rgba(234,233,238,.78), rgba(234,233,238,.88))',
-  'left-dark': 'linear-gradient(90deg, rgba(10,16,30,.82) 0%, rgba(10,16,30,.55) 38%, rgba(10,16,30,.12) 72%, transparent 100%)',
-  'left-light': 'linear-gradient(90deg, rgba(234,233,238,.9) 0%, rgba(234,233,238,.6) 40%, rgba(234,233,238,.08) 78%, transparent 100%)',
-  'bottom-dark': 'linear-gradient(180deg, transparent 0%, rgba(10,16,30,.2) 45%, rgba(10,16,30,.72) 100%)',
+  // Voiles nettement alleges : la texture (marbre, olivier, meandre, vase)
+  // doit RESTER visible. Le texte tient grace a la colonne + au calage des
+  // motifs sur les bords des images.
+  dark: 'linear-gradient(180deg, rgba(13,19,34,.30), rgba(13,19,34,.48))',
+  'dark-strong': 'linear-gradient(180deg, rgba(11,16,28,.46), rgba(11,16,28,.60))',
+  light: 'linear-gradient(180deg, rgba(234,233,238,.30), rgba(234,233,238,.48))',
+  'light-strong': 'linear-gradient(180deg, rgba(234,233,238,.48), rgba(234,233,238,.62))',
+  'left-dark': 'linear-gradient(90deg, rgba(11,16,28,.70) 0%, rgba(11,16,28,.42) 40%, rgba(11,16,28,.1) 74%, transparent 100%)',
+  'left-light': 'linear-gradient(90deg, rgba(234,233,238,.8) 0%, rgba(234,233,238,.5) 42%, rgba(234,233,238,.06) 80%, transparent 100%)',
+  'bottom-dark': 'linear-gradient(180deg, transparent 0%, rgba(11,16,28,.16) 45%, rgba(11,16,28,.6) 100%)',
 };
+
+/** Tonalite de fond derivee du voile (base solide + couleur des fondus de bord). */
+function toneBase(scrim: Scrim): string {
+  return scrim.includes('dark') ? '#0E1322' : '#EAE9EE';
+}
 
 export function SectionBg({
   image,
@@ -141,6 +169,7 @@ export function SectionBg({
     offset: ['start end', 'end start'],
   });
   const y = useTransform(scrollYProgress, [0, 1], [parallax, -parallax]);
+  const base = toneBase(scrim);
 
   return (
     <section
@@ -152,6 +181,9 @@ export function SectionBg({
         minHeight,
         display: minHeight ? 'flex' : undefined,
         alignItems: minHeight ? 'center' : undefined,
+        /* Base solide derriere l'image : supprime tout effet de
+           "transparence", garantit une tonalite franche. */
+        background: base,
         ...style,
       }}
     >
@@ -162,6 +194,18 @@ export function SectionBg({
       {scrim !== 'none' && (
         <div className="svc-bg__scrim" style={{ background: SCRIMS[scrim] }} />
       )}
+      {/* Fondus haut + bas : l'image se fond dans la tonalite de la section
+          => transitions parfaitement liees entre sections (plus de "cut"). */}
+      <div
+        aria-hidden
+        className="svc-bg__fade"
+        style={{ top: 0, background: `linear-gradient(to bottom, ${base}, transparent)` }}
+      />
+      <div
+        aria-hidden
+        className="svc-bg__fade"
+        style={{ bottom: 0, background: `linear-gradient(to top, ${base}, transparent)` }}
+      />
       <div className={`container svc-bg__content ${contentClassName}`}>
         {children}
       </div>
@@ -542,5 +586,189 @@ export function Marbled({ opacity = 0.5 }: { opacity?: number }) {
           "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
       }}
     />
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* PriceBlock — bloc tarif riche (prix + delai + inclus + paiement)    */
+/* ------------------------------------------------------------------ */
+interface PriceBlockProps {
+  theme?: 'light' | 'dark';
+  priceLabel?: string;
+  price: string;
+  unit?: string;
+  priceFontSize?: string;
+  delayLabel?: string;
+  delay: string;
+  includedTitle?: string;
+  included: string[];
+  note?: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+export function PriceBlock({
+  theme = 'light',
+  priceLabel = 'À partir de',
+  price,
+  unit = '€',
+  priceFontSize = 'clamp(44px,6vw,66px)',
+  delayLabel = 'Délai moyen',
+  delay,
+  includedTitle = 'Tout est compris',
+  included,
+  note,
+  ctaLabel,
+  ctaHref,
+}: PriceBlockProps) {
+  const dark = theme === 'dark';
+  const ink = dark ? '#EAE9EE' : 'var(--ink)';
+  const soft = dark ? 'rgba(234,233,238,.74)' : 'var(--ink-soft)';
+  const muted = dark ? 'rgba(234,233,238,.55)' : 'var(--ink-muted)';
+  const cardBg = dark ? 'rgba(255,255,255,.045)' : 'rgba(255,255,255,.62)';
+  const cardBorder = dark ? '0.5px solid rgba(234,233,238,.16)' : '0.5px solid rgba(255,255,255,.85)';
+  const line = dark ? 'rgba(234,233,238,.14)' : 'var(--line)';
+  const checkBg = dark ? 'rgba(43,108,196,.2)' : 'rgba(27,79,138,.1)';
+  const accent = dark ? 'var(--klein-bright)' : 'var(--klein)';
+
+  return (
+    <Reveal>
+      <div
+        className="svc-glass svc-price"
+        style={{
+          background: cardBg,
+          border: cardBorder,
+          borderRadius: 'var(--radius-xl)',
+          overflow: 'hidden',
+          boxShadow: dark
+            ? '0 40px 90px -50px rgba(0,0,0,.6)'
+            : '0 40px 90px -50px rgba(26,26,46,.4)',
+        }}
+      >
+        {/* Colonne gauche : prix / delai / paiement / CTA */}
+        <div style={{ padding: 'clamp(32px,4vw,46px)', display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <div>
+            <div style={{ fontSize: 13, color: muted, marginBottom: 8 }}>{priceLabel}</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
+              <span style={{ fontSize: priceFontSize, fontWeight: 500, letterSpacing: '-0.03em', color: 'var(--klein-bright)', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                {price}
+              </span>
+              {unit && (
+                <span style={{ fontSize: 24, fontWeight: 500, color: 'var(--klein-bright)' }}>{unit}</span>
+              )}
+            </div>
+          </div>
+          <div style={{ height: 1, background: line }} />
+          <div>
+            <div style={{ fontSize: 13, color: muted, marginBottom: 8 }}>{delayLabel}</div>
+            <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(26px,3vw,34px)', color: 'var(--pink)', lineHeight: 1.1 }}>
+              {delay}
+            </div>
+          </div>
+          {note && (
+            <p style={{ fontSize: 13.5, lineHeight: 1.65, color: soft, margin: 0 }}>{note}</p>
+          )}
+          <div style={{ marginTop: 'auto', paddingTop: 4 }}>
+            <Magnetic strength={0.35}>
+              <Link href={ctaHref} className="cta-big" style={{ display: 'inline-flex' }}>
+                {ctaLabel}
+                <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </Link>
+            </Magnetic>
+          </div>
+        </div>
+
+        {/* separateur vertical (masque en mobile) */}
+        <div className="svc-price-divider" style={{ background: line }} />
+
+        {/* Colonne droite : tout est compris */}
+        <div style={{ padding: 'clamp(32px,4vw,46px)' }}>
+          <div style={{ fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', fontWeight: 600, color: accent, marginBottom: 24 }}>
+            {includedTitle}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(210px,1fr))', gap: '15px 26px' }}>
+            {included.map((it) => (
+              <div key={it} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <span
+                  style={{
+                    flexShrink: 0,
+                    width: 22,
+                    height: 22,
+                    borderRadius: 999,
+                    background: checkBg,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 1,
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={accent} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </span>
+                <span style={{ fontSize: 14.5, lineHeight: 1.5, color: ink }}>{it}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* MiniFaq — questions frequentes (toutes visibles, layout editorial)  */
+/* ------------------------------------------------------------------ */
+interface MiniFaqProps {
+  theme?: 'light' | 'dark';
+  eyebrow?: string;
+  title: string;
+  emphasis?: string;
+  items: { q: string; a: string }[];
+}
+
+export function MiniFaq({
+  theme = 'light',
+  eyebrow = 'Questions fréquentes',
+  title,
+  emphasis = '',
+  items,
+}: MiniFaqProps) {
+  const dark = theme === 'dark';
+  const ink = dark ? '#EAE9EE' : 'var(--ink)';
+  const soft = dark ? 'rgba(234,233,238,.7)' : 'var(--ink-soft)';
+  const line = dark ? 'rgba(234,233,238,.14)' : 'var(--line)';
+  const accent = dark ? 'var(--pink)' : 'var(--klein)';
+
+  return (
+    <>
+      <div style={{ maxWidth: 600, marginBottom: 52 }}>
+        <Reveal>
+          <span className="svc-eyebrow" style={{ color: dark ? 'rgba(234,233,238,.7)' : 'var(--klein)' }}>
+            {eyebrow}
+          </span>
+        </Reveal>
+        <RevealText
+          as="h2"
+          text={title}
+          emphasis={emphasis}
+          style={{ margin: '20px 0 0', color: ink, fontSize: 'clamp(28px,3.8vw,46px)', lineHeight: 1.1 }}
+        />
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(330px,1fr))', gap: '0 64px' }}>
+        {items.map((it, i) => (
+          <Reveal key={it.q} delay={(i % 2) * 0.08} style={{ padding: '26px 0', borderTop: `0.5px solid ${line}` }}>
+            <h3 style={{ fontSize: 18, color: ink, marginBottom: 10, display: 'flex', gap: 12, lineHeight: 1.35 }}>
+              <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: accent, flexShrink: 0 }}>Q.</span>
+              <span>{it.q}</span>
+            </h3>
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: soft, paddingLeft: 30, margin: 0 }}>{it.a}</p>
+          </Reveal>
+        ))}
+      </div>
+    </>
   );
 }

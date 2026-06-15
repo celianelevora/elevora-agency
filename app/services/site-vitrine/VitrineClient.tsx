@@ -25,6 +25,8 @@ import {
   RevealText,
   Counter,
   Magnetic,
+  PriceBlock,
+  MiniFaq,
 } from '@/components/ServiceFX';
 
 const IMG = '/services/site-vitrine';
@@ -97,8 +99,8 @@ export default function VitrineClient() {
         tags={['Design sur mesure', 'SEO natif', 'À partir de 1500 €']}
       />
 
-      {/* 2 — POUR QUI (meme image 1, prolonge le hero, theme sombre) */}
-      <SectionBg image={`${IMG}/img-1.webp`} scrim="dark-strong" parallax={70} py={150}>
+      {/* 2 — POUR QUI (image 5, theme sombre — distinct du hero) */}
+      <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={70} py={150}>
         <div style={{ maxWidth: 560, marginBottom: 80 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.7)' }}>
@@ -286,7 +288,7 @@ export default function VitrineClient() {
 
       {/* 6 — TARIF & DELAIS (cream, image 6) */}
       <SectionBg image={`${IMG}/img-6.webp`} scrim="light-strong" parallax={45} py={150}>
-        <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto 56px', textAlign: 'center' }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Tarif & délais</span>
           </Reveal>
@@ -294,51 +296,63 @@ export default function VitrineClient() {
             as="h2"
             text="Un investissement clair, sans surprise."
             emphasis="clair,"
-            style={{ margin: '20px 0 50px', fontSize: 'clamp(30px,4vw,50px)', lineHeight: 1.08 }}
+            style={{ margin: '20px 0 22px', fontSize: 'clamp(30px,4vw,50px)', lineHeight: 1.08 }}
           />
-          <Reveal delay={0.2}>
-            <div
-              style={{
-                display: 'inline-grid',
-                gridTemplateColumns: '1fr 1px 1fr',
-                gap: 0,
-                background: 'rgba(255,255,255,.6)',
-                border: '0.5px solid rgba(255,255,255,.85)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '44px 56px',
-                boxShadow: '0 30px 70px -40px rgba(26,26,46,.35)',
-                alignItems: 'center',
-              }}
-            >
-              <div>
-                <div style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 10 }}>À partir de</div>
-                <div style={{ fontSize: 'clamp(40px,5vw,58px)', fontWeight: 500, letterSpacing: '-0.03em', color: 'var(--klein)', lineHeight: 1 }}>
-                  1500<span style={{ fontSize: 26 }}> €</span>
-                </div>
-              </div>
-              <div style={{ background: 'var(--line)', alignSelf: 'stretch', width: 1 }} />
-              <div>
-                <div style={{ fontSize: 13, color: 'var(--ink-muted)', marginBottom: 10 }}>Délai moyen</div>
-                <div style={{ fontSize: 'clamp(40px,5vw,58px)', fontWeight: 500, letterSpacing: '-0.03em', color: 'var(--pink)', lineHeight: 1, fontFamily: 'var(--serif)', fontStyle: 'italic' }}>
-                  4–6 <span style={{ fontSize: 22, fontStyle: 'normal', fontFamily: 'var(--sans)' }}>sem.</span>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <div style={{ marginTop: 40 }}>
-              <Magnetic strength={0.4}>
-                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>
-                  Demander un devis
-                  <svg className="ic arrow" width="18" height="18" viewBox="0 0 24 24">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </Link>
-              </Magnetic>
-            </div>
+          <Reveal delay={0.15}>
+            <p className="svc-lead" style={{ maxWidth: 560, margin: '0 auto' }}>
+              Un prix de départ, et tout ce qu&rsquo;il contient, posé noir sur blanc. Pas de
+              ligne cachée, pas de supplément qui tombe à la livraison.
+            </p>
           </Reveal>
         </div>
+        <div style={{ maxWidth: 940, margin: '0 auto' }}>
+          <PriceBlock
+            theme="light"
+            price="1500"
+            delay="4 à 6 semaines"
+            included={[
+              'Design 100 % sur mesure',
+              'Jusqu’à 6 pages soignées',
+              'Référencement (SEO) natif',
+              'Back-office pour tout modifier',
+              'Responsive mobile & tablette',
+              'Nom de domaine + e-mail pro',
+              'Hébergement la première année',
+              'Formation à la prise en main',
+              'Garantie 15 jours après livraison',
+            ]}
+            note="Paiement en deux fois : 30 % à la commande, le solde à la livraison. Devis ferme, sans engagement."
+            ctaLabel="Demander un devis"
+            ctaHref="/contact"
+          />
+        </div>
+      </SectionBg>
+
+      {/* 6 bis — FAQ (navy, image 3) */}
+      <SectionBg image={`${IMG}/img-3.webp`} scrim="dark-strong" parallax={55} py={140}>
+        <MiniFaq
+          theme="dark"
+          title="Ce que vous vous demandez sûrement."
+          emphasis="demandez"
+          items={[
+            {
+              q: 'Que comprend exactement le tarif de 1500 € ?',
+              a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro et hébergement la première année. Aucun coût caché.',
+            },
+            {
+              q: 'Pourrai-je modifier mon site moi-même ?',
+              a: 'Oui. On livre un back-office simple et on vous forme à sa prise en main. Vous changez vos textes, vos photos et vos actualités sans jamais toucher au code.',
+            },
+            {
+              q: 'Combien de temps avant la mise en ligne ?',
+              a: 'Comptez 4 à 6 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.',
+            },
+            {
+              q: 'Et une fois le site livré ?',
+              a: 'Vous avez 15 jours de garantie pour ajuster les derniers détails. Au-delà, on reste joignables pour faire évoluer votre vitrine quand vous en avez besoin.',
+            },
+          ]}
+        />
       </SectionBg>
 
       {/* 7 — CTA final (navy, image 7) — noBleed pour ne pas couper le footer */}

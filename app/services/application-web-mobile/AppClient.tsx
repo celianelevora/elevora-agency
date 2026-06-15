@@ -20,7 +20,7 @@
 import Link from 'next/link';
 import ServiceHero from '@/components/ServiceHero';
 import CTASection from '@/components/CTASection';
-import { SectionBg, Reveal, RevealText, Tilt, Counter } from '@/components/ServiceFX';
+import { SectionBg, Reveal, RevealText, Tilt, Counter, PriceBlock, MiniFaq } from '@/components/ServiceFX';
 
 const IMG = '/services/application';
 
@@ -75,8 +75,8 @@ export default function AppClient() {
         tags={['Next.js & React', 'Code à vous', 'Hébergé en Suisse']}
       />
 
-      {/* 2 — POUR QUI (blush, img-1) */}
-      <SectionBg image={`${IMG}/img-1.webp`} scrim="light-strong" parallax={60} py={150}>
+      {/* 2 — POUR QUI (blush, img-7) */}
+      <SectionBg image={`${IMG}/img-7.webp`} scrim="light-strong" parallax={60} py={150}>
         <div style={{ maxWidth: 600, marginBottom: 60 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Pour qui</span>
@@ -271,6 +271,79 @@ export default function AppClient() {
             ))}
           </div>
         </div>
+      </SectionBg>
+
+      {/* 6 bis — TARIF & DELAIS (cream, img-1) — PriceBlock sur devis */}
+      <SectionBg image={`${IMG}/img-1.webp`} scrim="light-strong" parallax={45} py={150}>
+        <div style={{ maxWidth: 720, margin: '0 auto 56px', textAlign: 'center' }}>
+          <Reveal>
+            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Tarif & délais</span>
+          </Reveal>
+          <RevealText
+            as="h2"
+            text="Un budget calé sur votre projet, pas l'inverse."
+            emphasis="projet,"
+            style={{ margin: '20px 0 22px', fontSize: 'clamp(28px,3.8vw,46px)', lineHeight: 1.1 }}
+          />
+          <Reveal delay={0.15}>
+            <p className="svc-lead" style={{ maxWidth: 560, margin: '0 auto' }}>
+              Une application se chiffre sur ce qu&rsquo;elle doit faire. On cadre le périmètre
+              ensemble, puis on pose un devis ferme — payé une fois, sans abonnement.
+            </p>
+          </Reveal>
+        </div>
+        <div style={{ maxWidth: 940, margin: '0 auto' }}>
+          <PriceBlock
+            theme="light"
+            priceLabel="Tarif"
+            price="Sur devis"
+            unit=""
+            priceFontSize="clamp(34px,4vw,48px)"
+            delay="8 à 14 semaines"
+            includedTitle="Toujours dans le projet"
+            included={[
+              'Application web ou mobile',
+              'Architecture sur mesure',
+              'Next.js & React modernes',
+              'Base de données dédiée',
+              'Comptes & rôles utilisateurs',
+              'Tableau de bord & exports',
+              'Code source à vous',
+              'Hébergement en Suisse',
+              'Garantie & suivi 90 jours',
+            ]}
+            note="Le devis dépend du nombre de modules, des intégrations et de la complexité métier. Payé une fois — aucun abonnement, et le code vous appartient."
+            ctaLabel="Cadrer mon projet"
+            ctaHref="/contact"
+          />
+        </div>
+      </SectionBg>
+
+      {/* 6 ter — FAQ (navy, img-4) */}
+      <SectionBg image={`${IMG}/img-4.webp`} scrim="dark-strong" parallax={55} py={140}>
+        <MiniFaq
+          theme="dark"
+          title="Ce qu'on nous demande avant de se lancer."
+          emphasis="lancer."
+          items={[
+            {
+              q: 'Web, mobile, ou les deux ?',
+              a: 'On part de vos usages. Une app web couvre la majorité des besoins métier ; on ajoute le mobile (iOS / Android) quand vos utilisateurs en ont vraiment besoin sur le terrain.',
+            },
+            {
+              q: 'Pourquoi payer une fois plutôt qu’un abonnement ?',
+              a: 'Parce qu’un SaaS vous facture à vie, par utilisateur. Une app sur mesure est un investissement unique : passé un certain volume, elle est largement plus rentable — et elle est à vous.',
+            },
+            {
+              q: 'Le code m’appartient vraiment ?',
+              a: 'Oui, à 100 %. On vous livre le code source et les accès. Vous pouvez le faire évoluer avec nous, en interne, ou avec qui vous voulez. Aucune dépendance.',
+            },
+            {
+              q: 'Combien de temps pour développer ?',
+              a: 'Comptez 8 à 14 semaines selon le périmètre. On avance par lots livrables, avec des démos régulières pour valider au fur et à mesure plutôt qu’à la toute fin.',
+            },
+          ]}
+        />
       </SectionBg>
 
       {/* 7 — CTA (img-7 cream, noBleed) */}

@@ -21,7 +21,7 @@
 import Link from 'next/link';
 import ServiceHero from '@/components/ServiceHero';
 import CTASection from '@/components/CTASection';
-import { SectionBg, Reveal, RevealText, Counter } from '@/components/ServiceFX';
+import { SectionBg, Reveal, RevealText, Counter, PriceBlock, MiniFaq } from '@/components/ServiceFX';
 
 const IMG = '/services/crm';
 
@@ -78,8 +78,8 @@ export default function CrmClient() {
         tags={['Payé une fois', 'Code à vous', 'Hébergé en Suisse']}
       />
 
-      {/* 2 — LE PROBLEME SAAS (navy, img-1) — 3 colonnes a filets */}
-      <SectionBg image={`${IMG}/img-1.webp`} scrim="dark-strong" parallax={70} py={150}>
+      {/* 2 — LE PROBLEME SAAS (navy, img-5) — 3 colonnes a filets */}
+      <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={70} py={150}>
         <div style={{ maxWidth: 640, marginBottom: 72 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.7)' }}>Le problème</span>
@@ -230,6 +230,79 @@ export default function CrmClient() {
             </Reveal>
           ))}
         </div>
+      </SectionBg>
+
+      {/* 6 bis — TARIF & DELAIS (cream, img-2 reuse) */}
+      <SectionBg image={`${IMG}/img-2.webp`} scrim="light-strong" parallax={45} py={150}>
+        <div style={{ maxWidth: 720, margin: '0 auto 56px', textAlign: 'center' }}>
+          <Reveal>
+            <span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Tarif & délais</span>
+          </Reveal>
+          <RevealText
+            as="h2"
+            text="Un outil qui se paie une fois, pas chaque mois."
+            emphasis="une fois,"
+            style={{ margin: '20px 0 22px', fontSize: 'clamp(30px,4vw,50px)', lineHeight: 1.08 }}
+          />
+          <Reveal delay={0.15}>
+            <p className="svc-lead" style={{ maxWidth: 580, margin: '0 auto' }}>
+              Le prix dépend de ce qu&rsquo;il y a à couvrir : nombre de modules, volume de
+              données, automatisations. On chiffre précisément, et c&rsquo;est payé une seule fois.
+            </p>
+          </Reveal>
+        </div>
+        <div style={{ maxWidth: 940, margin: '0 auto' }}>
+          <PriceBlock
+            theme="light"
+            priceLabel="Tarif"
+            price="Sur devis"
+            unit=""
+            priceFontSize="clamp(34px,4vw,48px)"
+            delay="8 à 16 semaines"
+            includedTitle="Toujours dans le projet"
+            included={[
+              'Outil 100 % sur mesure',
+              'Modules selon vos besoins',
+              'Devis, factures & exports',
+              'Suivi clients & projets',
+              'Comptes & droits par rôle',
+              'Données hébergées en Suisse',
+              'Code source à vous',
+              'Formation de vos équipes',
+              'Garantie & suivi 90 jours',
+            ]}
+            note="Le devis dépend des modules et des flux à couvrir. Payé une fois, l’outil est rentable dès ~18 mois face à un abonnement SaaS facturé par utilisateur."
+            ctaLabel="Cadrer mon outil"
+            ctaHref="/contact"
+          />
+        </div>
+      </SectionBg>
+
+      {/* 6 ter — FAQ (navy, img-1 reuse hero) */}
+      <SectionBg image={`${IMG}/img-1.webp`} scrim="dark-strong" parallax={55} py={140}>
+        <MiniFaq
+          theme="dark"
+          title="Ce qu’on nous demande le plus."
+          emphasis="demande"
+          items={[
+            {
+              q: 'En quoi un outil sur mesure vaut-il mieux qu’un SaaS ?',
+              a: 'Un SaaS vous impose ses menus, ses limites et son tarif par utilisateur. Un outil sur mesure épouse exactement vos process : vous ne payez plus pour des fonctions inutiles, et rien ne manque de ce dont vous avez vraiment besoin.',
+            },
+            {
+              q: '« Payé une fois », ça veut dire quoi concrètement ?',
+              a: 'Vous réglez le développement une seule fois, puis l’outil vous appartient. Pas d’abonnement mensuel qui grimpe avec le nombre d’utilisateurs : seul l’hébergement reste, pour quelques euros par mois.',
+            },
+            {
+              q: 'Où sont stockées mes données ?',
+              a: 'Sur des serveurs en Suisse, soumis au RGPD. Vos données restent les vôtres, exportables à tout moment, et ne sont jamais revendues ni exploitées par un tiers.',
+            },
+            {
+              q: 'Vous formez mon équipe à l’outil ?',
+              a: 'Oui. On vous accompagne à la prise en main, on fournit la documentation, et on reste joignables 90 jours après la livraison pour ajuster ce qui doit l’être.',
+            },
+          ]}
+        />
       </SectionBg>
 
       {/* 7 — CTA (img-7 navy, noBleed) */}
