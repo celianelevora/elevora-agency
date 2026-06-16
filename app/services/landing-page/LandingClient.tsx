@@ -38,14 +38,14 @@ const USAGES = [
 const INCLUS = [
   'Page unique haute conversion', 'Copywriting orienté action', 'Tracking & analytics posés',
   'Connexion CRM / Brevo', 'Test A/B au lancement', 'Formulaire intelligent',
-  'Responsive mobile parfait', 'En ligne sous une semaine', 'Garantie 15 jours',
+  'Responsive mobile parfait', 'En ligne sous une semaine', 'Garantie 30 jours',
 ];
 const TARIF_NOTE = 'Idéale pour une campagne, un lancement ou une publicité. Paiement en deux fois possible, devis ferme renvoyé sous 5 jours.';
 
 const FAQ = [
   { q: 'Pourquoi une landing plutôt qu’une page de mon site ?', a: 'Parce qu’une landing n’a qu’un seul objectif et zéro distraction : pas de menu, pas de liens qui font fuir. Tout est calibré pour transformer le visiteur en contact ou en client.' },
-  { q: 'Le tarif de 900 € est-il vraiment tout compris ?', a: 'Oui : design, copywriting, tracking, connexion à votre CRM et test A/B au lancement. Le seul variable, c’est si vous voulez plusieurs versions de page ou une intégration spécifique.' },
-  { q: 'En combien de temps ma page est-elle en ligne ?', a: 'D’une à quatre semaines selon l’ampleur du projet et votre réactivité sur les contenus. Pour une page simple on tient la semaine ; on s’aligne toujours sur l’échéance de votre campagne.' },
+  { q: 'Le tarif de 600 € est-il vraiment tout compris ?', a: 'Oui : design, copywriting, tracking, connexion à votre CRM et test A/B au lancement. Le seul variable, c’est si vous voulez plusieurs versions de page ou une intégration spécifique.' },
+  { q: 'En combien de temps ma page est-elle en ligne ?', a: 'De deux à quatre semaines selon l’ampleur du projet et votre réactivité sur les contenus. Pour une page simple et pressée, on peut tenir la semaine en express ; on s’aligne toujours sur l’échéance de votre campagne.' },
   { q: 'Comment je sais si elle convertit ?', a: 'On pose le tracking et les analytics dès le départ, et on peut lancer un test A/B. Vous voyez vos chiffres en clair : visites, conversions, coût par contact.' },
 ];
 
@@ -105,7 +105,7 @@ export default function LandingClient() {
         lead="Idéale pour une campagne, un lancement, un événement. Chaque élément est pensé pour transformer le visiteur en lead, puis en client."
         primary={{ label: 'Créer ma landing', href: '/contact' }}
         secondary={{ label: 'Voir nos réalisations', href: '/realisations' }}
-        tags={['Copywriting', 'A/B test', 'À partir de 900 €']}
+        tags={['Copywriting', 'A/B test', 'À partir de 600 € TTC']}
       />
 
       {/* 2 — LE PRINCIPE (img-2 blush) — manifeste centré */}
@@ -174,13 +174,14 @@ export default function LandingClient() {
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>À partir de</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>900</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>600</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein)', marginBottom: '0.08em' }}>€</span>
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>TTC</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'var(--line-strong)' }} aria-hidden />
                 <span style={{ fontSize: 14, color: 'var(--ink-muted)' }}>livré en</span>
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(25px,3vw,34px)', color: 'var(--pink)' }}>1 à 4 semaines</span>
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(25px,3vw,34px)', color: 'var(--pink)' }}>2 à 4 semaines</span>
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 400 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
@@ -245,6 +246,11 @@ const LAND_CSS = `
   animation: landFlow 7s linear infinite;
 }
 @keyframes landFlow { to { background-position: -220% 0; } }
+/* Filet de sécurité : si le navigateur ne sait pas clipper le texte, on
+   retombe sur une couleur pleine (sinon le texte serait invisible). */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .flow-text { color: var(--klein); -webkit-text-fill-color: var(--klein); }
+}
 
 /* Frise verticale (segments connectés, fin nette au dernier nœud) */
 .land-anat { position: relative; max-width: 760px; margin: 0 auto; }

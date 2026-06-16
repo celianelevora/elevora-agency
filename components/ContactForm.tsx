@@ -151,8 +151,8 @@ export default function ContactForm() {
         <label style={labelStyle} htmlFor="budget">Budget envisagé</label>
         <select style={inputStyle} id="budget" name="budget" defaultValue="">
           <option value="">Sélectionnez une fourchette</option>
-          <option value="<1500">Moins de 1 500 €</option>
-          <option value="1500-3000">1 500 – 3 000 €</option>
+          <option value="<1000">Moins de 1 000 €</option>
+          <option value="1000-3000">1 000 – 3 000 €</option>
           <option value="3000-5000">3 000 – 5 000 €</option>
           <option value="5000-10000">5 000 – 10 000 €</option>
           <option value=">10000">Plus de 10 000 €</option>

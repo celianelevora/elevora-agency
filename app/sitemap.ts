@@ -7,8 +7,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     { url: '/', priority: 1.0, changeFrequency: 'weekly' as const },
-    { url: '/services/sites-web', priority: 0.9, changeFrequency: 'monthly' as const },
-    { url: '/services/outils-de-gestion', priority: 0.9, changeFrequency: 'monthly' as const },
+    { url: '/services/site-vitrine', priority: 0.9, changeFrequency: 'monthly' as const },
+    { url: '/services/site-ecommerce', priority: 0.9, changeFrequency: 'monthly' as const },
+    { url: '/services/landing-page', priority: 0.8, changeFrequency: 'monthly' as const },
+    { url: '/services/application-web-mobile', priority: 0.9, changeFrequency: 'monthly' as const },
+    { url: '/services/crm-outil-de-gestion', priority: 0.9, changeFrequency: 'monthly' as const },
     { url: '/realisations', priority: 0.8, changeFrequency: 'monthly' as const },
     { url: '/methode', priority: 0.7, changeFrequency: 'monthly' as const },
     { url: '/tarifs', priority: 0.9, changeFrequency: 'monthly' as const },

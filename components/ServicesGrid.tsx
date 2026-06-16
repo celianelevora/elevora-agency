@@ -33,7 +33,7 @@ export default function ServicesGrid() {
 
         <div className="services-grid">
           {/* Sites web — carte claire */}
-          <Link href="/services/sites-web" className="service-card service-card-light">
+          <Link href="/services/site-vitrine" className="service-card service-card-light">
             <div className="service-card-head">
               <div className="icon-box icon-box-klein">
                 <svg className="ic" width="18" height="18" viewBox="0 0 24 24">
@@ -55,7 +55,7 @@ export default function ServicesGrid() {
               <span className="tag">Landing page</span>
             </div>
             <div className="service-card-foot">
-              <span className="service-card-price">À partir de 1500 €</span>
+              <span className="service-card-price">À partir de 1 000 € TTC</span>
               <span className="service-card-cta">
                 Découvrir
                 <svg className="ic" width="14" height="14" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export default function ServicesGrid() {
           </Link>
 
           {/* Outils de gestion — carte bleue */}
-          <Link href="/services/outils-de-gestion" className="service-card service-card-dark">
+          <Link href="/services/crm-outil-de-gestion" className="service-card service-card-dark">
             <div className="service-card-head">
               <div className="icon-box icon-box-pink-light">
                 <svg className="ic" width="18" height="18" viewBox="0 0 24 24">

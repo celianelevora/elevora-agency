@@ -2,10 +2,11 @@ import Link from 'next/link';
 import { Mail, Phone, MapPin, Server, Instagram, Linkedin } from 'lucide-react';
 
 const serviceLinks = [
-  { text: 'Sites web', href: '/services/sites-web' },
-  { text: 'Outils de gestion', href: '/services/outils-de-gestion' },
-  { text: 'Refonte', href: '/services/sites-web' },
-  { text: 'E-commerce', href: '/services/sites-web' },
+  { text: 'Site vitrine', href: '/services/site-vitrine' },
+  { text: 'Site e-commerce', href: '/services/site-ecommerce' },
+  { text: 'Landing page', href: '/services/landing-page' },
+  { text: 'Application web & mobile', href: '/services/application-web-mobile' },
+  { text: 'CRM & outil de gestion', href: '/services/crm-outil-de-gestion' },
 ];
 
 const agenceLinks = [

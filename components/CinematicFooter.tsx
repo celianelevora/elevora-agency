@@ -33,8 +33,8 @@ const MARQUEE = [
 ];
 
 const PILLS = [
-  { label: 'Sites web', href: '/services/sites-web' },
-  { label: 'Outils de gestion', href: '/services/outils-de-gestion' },
+  { label: 'Sites web', href: '/services/site-vitrine' },
+  { label: 'Outils de gestion', href: '/services/crm-outil-de-gestion' },
   { label: 'Méthode', href: '/methode' },
   { label: 'Tarifs', href: '/tarifs' },
 ];

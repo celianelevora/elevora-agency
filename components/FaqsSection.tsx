@@ -12,31 +12,31 @@ const questions = [
     id: "item-1",
     title: "Combien de temps faut-il pour créer mon site ?",
     content:
-      "En général, comptez 2 à 4 semaines pour un site vitrine, et 4 à 8 semaines pour un projet sur-mesure avec outils de gestion. Tout dépend du nombre de pages, des fonctionnalités et de votre réactivité sur les retours. On vous donne un planning précis dès le démarrage.",
+      "Comptez 2 à 4 semaines pour une landing, 4 à 8 semaines pour un site vitrine complet, et 6 à 12 semaines pour un outil de gestion sur mesure. Tout dépend du nombre de pages, des fonctionnalités et de votre réactivité sur les retours. On vous donne un planning précis dès le démarrage.",
   },
   {
     id: "item-2",
     title: "Est-ce que je pourrai modifier mon site moi-même ?",
     content:
-      "Oui. On vous livre un site que vous pouvez gérer en autonomie, et on vous forme à son utilisation. Pour les modifications plus techniques, on reste disponibles via nos formules d'accompagnement.",
+      "Oui. On vous livre un site que vous pouvez gérer en autonomie, et on vous forme à son utilisation. Pour les modifications plus techniques, on reste disponibles via un accompagnement à la demande, sans engagement.",
   },
   {
     id: "item-3",
-    title: "Quelle est la différence entre vos formules ?",
+    title: "Combien coûte un site avec Elevora ?",
     content:
-      "La formule Starter (300€ ou 39€/mois) couvre l'essentiel pour démarrer. La Standard (1500€ ou 59€/mois) est notre cœur de cible : un vrai site qui convertit. La Premium (2500-3500€) ajoute le sur-mesure complet, un CRM, de l'automatisation et un accompagnement renforcé.",
+      "Nos sites démarrent à 600 € TTC pour une landing, 1 000 € TTC pour un site vitrine et 1 500 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
   },
   {
     id: "item-4",
     title: "Proposez-vous un paiement en plusieurs fois ?",
     content:
-      "Oui. Nos formules Starter et Standard sont disponibles en mensualités sur 12 mois (39€/mois ou 59€/mois), pour étaler l'investissement sans bloquer votre trésorerie.",
+      "Oui. Selon le projet, on peut échelonner le règlement en plusieurs fois, calé sur les étapes de livraison, pour étaler l'investissement sans bloquer votre trésorerie. Aucun abonnement imposé.",
   },
   {
     id: "item-5",
     title: "Que se passe-t-il après la mise en ligne ?",
     content:
-      "On ne disparaît pas une fois le site livré. Selon votre formule, on assure le suivi, les mises à jour, et on reste joignables pour faire évoluer votre site au rythme de votre activité.",
+      "On ne disparaît pas une fois le site livré : suivi gratuit pendant 30 jours pour les ajustements et corrections, puis maintenance ou évolutions à la demande, sans engagement.",
   },
   {
     id: "item-6",

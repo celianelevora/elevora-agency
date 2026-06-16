@@ -61,20 +61,20 @@ const SOCLE_STATS = [
   { v: 100, s: '/100', l: 'Score de performance visé', d: 0 },
   { v: 99.9, s: '%', l: 'Disponibilité serveur', d: 1 },
   { v: 0, s: '€', l: 'Frais cachés', d: 0 },
-  { v: 15, s: ' j', l: 'Garantie incluse', d: 0 },
+  { v: 30, s: ' j', l: 'Garantie incluse', d: 0 },
 ];
 
 const INCLUS = [
   'Design 100 % sur mesure', 'Jusqu’à 6 pages soignées', 'Référencement (SEO) natif',
   'Back-office pour tout modifier', 'Responsive mobile & tablette', 'Nom de domaine + e-mail pro',
-  'Hébergement la première année', 'Formation à la prise en main', 'Garantie 15 jours après livraison',
+  'Hébergement la première année', 'Formation à la prise en main', 'Garantie 30 jours après livraison',
 ];
 const TARIF_NOTE = 'Paiement en deux fois : 30 % à la commande, le solde à la livraison. Devis ferme, sans engagement.';
 
 const FAQ = [
-  { q: 'Que comprend exactement le tarif de 1 500 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro et hébergement la première année. Aucun coût caché.' },
+  { q: 'Que comprend exactement le tarif de 1 000 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro et hébergement la première année. Aucun coût caché.' },
   { q: 'Pourrai-je modifier mon site moi-même ?', a: 'Oui. On livre un back-office simple et on vous forme à sa prise en main. Vous changez vos textes, vos photos et vos actualités sans jamais toucher au code.' },
-  { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 6 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },];
+  { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 8 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },];
 
 function Arrow() {
   return (
@@ -123,7 +123,7 @@ export default function VitrineClient() {
         lead="Le digne représentant de votre activité sur le web. Conçu pour rassurer, convaincre et retenir, dès le premier regard."
         primary={{ label: 'Démarrer mon projet', href: '/contact' }}
         secondary={{ label: 'Voir nos réalisations', href: '/realisations' }}
-        tags={['Design sur mesure', 'SEO natif', 'À partir de 1500 €']}
+        tags={['Design sur mesure', 'SEO natif', 'À partir de 1 000 € TTC']}
       />
 
       {/* 2 — POUR QUI (img-2, crème) — galerie éditoriale */}
@@ -244,13 +244,14 @@ export default function VitrineClient() {
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>À partir de</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 500</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 000</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein)', marginBottom: '0.08em' }}>€</span>
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>TTC</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'var(--line-strong)' }} aria-hidden />
                 <span style={{ fontSize: 14, color: 'var(--ink-muted)' }}>livré en</span>
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(25px,3vw,34px)', color: 'var(--pink)' }}>4 à 6 semaines</span>
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(25px,3vw,34px)', color: 'var(--pink)' }}>4 à 8 semaines</span>
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 400 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>

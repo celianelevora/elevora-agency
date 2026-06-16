@@ -74,7 +74,7 @@ function DrawLine({ delay = 0, color, width = '100%', height = 2, mb = 0 }: { de
 function HeroPourQui() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], [0, 90]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [56, -56]);
 
   const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } } };
   const item = {
@@ -85,7 +85,7 @@ function HeroPourQui() {
   return (
     <section ref={ref} style={{ position: 'relative', overflow: 'hidden', marginTop: -76, background: '#EAE9EE' }}>
       {/* UNE seule image de fond, couvre hero + pour qui sans coupure */}
-      <motion.div aria-hidden style={{ position: 'absolute', inset: '-6% 0 -6% 0', backgroundImage: `url(${IMG}/img-1.webp)`, backgroundSize: 'cover', backgroundPosition: 'center', y: imgY, zIndex: 0 }} />
+      <motion.div aria-hidden style={{ position: 'absolute', inset: '-14% 0 -14% 0', backgroundImage: `url(${IMG}/img-1.webp)`, backgroundSize: 'cover', backgroundPosition: 'center', y: imgY, zIndex: 0 }} />
       {/* Voile crème pour lisibilité */}
       <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'linear-gradient(90deg, rgba(234,233,238,.85) 0%, rgba(234,233,238,.52) 44%, rgba(234,233,238,.12) 80%, transparent 100%)' }} />
       {/* Halos blush (jeu de lumière) */}
@@ -115,7 +115,7 @@ function HeroPourQui() {
             </motion.div>
           </motion.div>
           <motion.div variants={item} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}>
-            {['Stripe', 'Stocks & commandes', 'À partir de 1500 €'].map((t) => (
+            {['Stripe', 'Stocks & commandes', 'À partir de 1 500 € TTC'].map((t) => (
               <motion.span key={t} whileHover={{ y: -4, scale: 1.06, backgroundColor: 'rgba(255,255,255,.85)' }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} style={{ fontSize: 12.5, letterSpacing: '.02em', padding: '8px 16px', borderRadius: 999, cursor: 'default', color: 'var(--ink-soft)', border: '0.5px solid var(--line)', background: 'rgba(255,255,255,.5)', backdropFilter: 'blur(8px)' }}>{t}</motion.span>
             ))}
           </motion.div>
@@ -224,6 +224,7 @@ export default function EcommerceClient() {
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(80px,12vw,148px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 500</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein)', marginBottom: '0.08em' }}>€</span>
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>TTC</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'var(--line-strong)' }} aria-hidden />
