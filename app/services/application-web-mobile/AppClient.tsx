@@ -224,6 +224,7 @@ export default function AppClient() {
       <CTASection
         bgImage={`${IMG}/img-7.webp`}
         noBleed
+        theme="light"
         eyebrow="On en parle ?"
         title={`Une idée d’application ?<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 500;">Donnons-lui vie.</span>`}
         description="Premier échange gratuit. Dites-nous ce que vous voulez construire, on cadre le projet et on vous chiffre tout ça sous 5 jours."

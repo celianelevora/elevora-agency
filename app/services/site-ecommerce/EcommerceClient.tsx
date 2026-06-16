@@ -93,7 +93,7 @@ function HeroPourQui() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         {/* HERO */}
-        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: '84vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 120, paddingBottom: 96 }}>
+        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: 'calc(100vh + 76px)', paddingTop: 'clamp(190px, 25vh, 310px)', paddingBottom: 64 }}>
           <motion.span variants={item} className="svc-eyebrow" style={{ color: 'var(--klein)', marginBottom: 26 }}>Site e-commerce</motion.span>
           <motion.h1 variants={item} style={{ margin: '18px 0 30px', maxWidth: 860, color: 'var(--ink)', lineHeight: 1.02 }}>
             Vendez en ligne.<br />
@@ -274,6 +274,7 @@ export default function EcommerceClient() {
       <CTASection
         bgImage={`${IMG}/img-7.webp`}
         noBleed
+        theme="light"
         eyebrow="Prêt à vendre ?"
         title={`Votre catalogue mérite<br>une <span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 500;">vraie</span> boutique.`}
         description="Premier échange gratuit. On évalue votre projet, votre catalogue, vos besoins, et on vous chiffre tout ça sous 5 jours."

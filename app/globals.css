@@ -495,8 +495,7 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   transition: all 0.25s var(--ease);
   pointer-events: none;
 }
-.hdr-dropdown-menu.open,
-.hdr-dropdown:focus-within .hdr-dropdown-menu {
+.hdr-dropdown-menu.open {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);

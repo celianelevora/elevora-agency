@@ -7,7 +7,7 @@
  * Fond img-1 CONTINU sur Hero + PourQui (un seul tenant, comme l'e-commerce),
  * puis alternance stricte sombre/clair, chaque bannière décalée d'un cran :
  *   Hero+PourQui img-1 sombre · Construit img-2 clair · Approche img-3 sombre ·
- *   Socle img-4 clair · Tarif+FAQ img-5 sombre · CTA img-7 sombre.  (img-6 inutilisée)
+ *   Socle img-4 clair · Tarif img-5 sombre · FAQ img-6 clair · CTA img-7 sombre.
  * Aucun widget : tarif = révélation typographique, approche = frise qui se dessine.
  * Sur les sections sombres : une lumière suit le curseur et révèle la texture.
  */
@@ -234,7 +234,7 @@ export default function VitrineClient() {
         </div>
       </SectionBg>
 
-      {/* 6 — TARIF & QUESTIONS (img-5, sombre) — révélation typographique + FAQ */}
+      {/* 6 — TARIF & DÉLAIS (img-5, sombre) — révélation typographique */}
       <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={45} py={144} glow="pink-klein">
         <div className="vit-price">
           <div>
@@ -277,12 +277,14 @@ export default function VitrineClient() {
             </div>
           </div>
         </div>
-
-        <div style={{ margin: 'clamp(60px,8vw,96px) 0 clamp(50px,6vw,72px)' }}><DrawLine color="rgba(234,233,238,.2)" height={1} /></div>
-        <MiniFaq theme="dark" eyebrow="Questions fréquentes" title="Ce que vous vous demandez sûrement." emphasis="demandez" items={FAQ} />
       </SectionBg>
 
-      {/* 7 — CTA final (img-7, sombre, noBleed) */}
+      {/* 7 — QUESTIONS FRÉQUENTES (img-6, clair) — FAQ éditoriale */}
+      <SectionBg image={`${IMG}/img-6.webp`} scrim="light-strong" parallax={55} py={144} glow="blush">
+        <MiniFaq theme="light" eyebrow="Questions fréquentes" title="Ce que vous vous demandez sûrement." emphasis="demandez" items={FAQ} />
+      </SectionBg>
+
+      {/* 8 — CTA final (img-7, sombre, noBleed) */}
       <CTASection
         bgImage={`${IMG}/img-7.webp`}
         noBleed

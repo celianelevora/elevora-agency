@@ -172,6 +172,20 @@ export default function ServiceHero({
     </motion.div>
   );
 
+  // Offset vertical UNIFORME du texte de hero : meme distance haut-de-page -> texte
+  // sur TOUTES les pages de service, quel que soit le mode (image hero seule ou
+  // hero + partie 2). Le hero remplit le viewport pour qu'aucune section suivante
+  // ne depasse sous une coupure nette.
+  const HERO_TOP = 'clamp(190px, 25vh, 310px)';
+  const heroScreen = {
+    minHeight: 'calc(100vh + 76px)',
+    paddingTop: HERO_TOP,
+    paddingBottom: 64,
+    position: 'relative',
+    zIndex: 2,
+    width: '100%',
+  } as const;
+
   return (
     <section
       ref={ref}
@@ -180,7 +194,6 @@ export default function ServiceHero({
         overflow: 'hidden',
         marginTop: -76,
         background: baseColor,
-        ...(below ? null : { padding: '120px 0 100px', minHeight: '84vh', display: 'flex', alignItems: 'center' }),
       }}
     >
       {/* Image de fond continue (img-1) — couvre hero + partie 2 si `below` */}
@@ -245,15 +258,13 @@ export default function ServiceHero({
 
       {below ? (
         <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
-          <div style={{ minHeight: '84vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 120, paddingBottom: 32 }}>
-            {heroContent}
-          </div>
+          <div style={heroScreen}>{heroContent}</div>
           <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: 'clamp(72px,9vw,124px)' }}>
             {below}
           </div>
         </div>
       ) : (
-        heroContent
+        <div style={heroScreen}>{heroContent}</div>
       )}
     </section>
   );

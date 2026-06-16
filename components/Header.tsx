@@ -29,6 +29,11 @@ export default function Header() {
   const closeServices = () => {
     setServicesOpen(false);
     setMenuOpen(false);
+    // Retire le focus du lien cliqué : évite que le menu reste affiché
+    // (un lien focalisé dans le dropdown le maintenait ouvert).
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   };
 
   return (

@@ -11,6 +11,9 @@ interface CTASectionProps {
   showContactInfo?: boolean;
   /** Image de fond optionnelle. Si fournie, remplace le gradient par défaut. */
   bgImage?: string;
+  /** Tonalité de la CTA. 'light' = image de fond claire visible + texte sombre
+      (pour les images img-7 claires : e-commerce, application). Défaut 'dark'. */
+  theme?: 'dark' | 'light';
   /** Quand la CTA est rendue APRES le footer (via PostFooterPortal). Supprime
       la margin negative qui sert a mordre sur le footer dans l'usage normal. */
   belowFooter?: boolean;
@@ -32,15 +35,40 @@ export default function CTASection({
   bgImage,
   belowFooter = false,
   noBleed = false,
+  theme = 'dark',
 }: CTASectionProps) {
+  const isLight = theme === 'light';
+  // Fallback sous l'image + voile de lisibilité + halos, calés sur la tonalité.
+  const baseGrad = isLight
+    ? 'linear-gradient(135deg, #ECEAEF 0%, #F3EEF0 55%, #E7E5EB 100%)'
+    : 'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)';
+  // Voile clair dégradé (texte à gauche lisible, image visible à droite) vs voile sombre.
+  const scrim = isLight
+    ? 'linear-gradient(90deg, rgba(234,233,238,.93) 0%, rgba(234,233,238,.7) 44%, rgba(234,233,238,.3) 78%, rgba(234,233,238,.08) 100%)'
+    : 'linear-gradient(135deg, rgba(10,18,38,0.80) 0%, rgba(11,32,70,0.66) 50%, rgba(20,20,42,0.82) 100%)';
+  const ambient = isLight
+    ? 'radial-gradient(ellipse at 82% 26%, rgba(201,38,106,0.10) 0%, transparent 58%),' +
+      'radial-gradient(ellipse at 10% 82%, rgba(27,79,138,0.07) 0%, transparent 60%)'
+    : bgImage
+      ? 'radial-gradient(ellipse at 18% 30%, rgba(27,79,138,0.18) 0%, transparent 55%)'
+      : 'radial-gradient(ellipse at 18% 30%, rgba(43,108,196,0.30) 0%, transparent 55%),' +
+        'radial-gradient(ellipse at 85% 75%, rgba(201,38,106,0.22) 0%, transparent 55%),' +
+        'radial-gradient(circle at 50% 100%, rgba(232,82,126,0.12) 0%, transparent 45%)';
+  const inkTitle = isLight ? 'var(--ink)' : 'var(--cream)';
+  const eyebrowCol = isLight ? 'var(--klein)' : 'rgba(245,240,232,0.6)';
+  const descCol = isLight ? 'var(--ink-soft)' : 'var(--cream)';
+  const secondaryBorder = isLight ? '0.5px solid var(--line-strong)' : '0.5px solid rgba(245,240,232,0.3)';
+  const secondaryCol = isLight ? 'var(--ink)' : 'var(--cream)';
+  const contactBorder = isLight ? '0.5px solid var(--line)' : '0.5px solid rgba(245,240,232,0.15)';
+  const contactCol = isLight ? 'var(--ink-soft)' : 'var(--cream)';
+
   return (
     <section
       className="cta-section"
       style={{
         /* Gradient de base toujours present (fallback solide sous l'image). */
-        background:
-          'linear-gradient(135deg, var(--night-deep) 0%, var(--klein-deep) 55%, var(--night) 100%)',
-        color: 'var(--cream)',
+        background: baseGrad,
+        color: inkTitle,
         padding: '120px 0 180px',
         position: 'relative',
         overflow: 'hidden',
@@ -75,8 +103,7 @@ export default function CTASection({
             position: 'absolute',
             inset: 0,
             pointerEvents: 'none',
-            background:
-              'linear-gradient(135deg, rgba(10,18,38,0.80) 0%, rgba(11,32,70,0.66) 50%, rgba(20,20,42,0.82) 100%)',
+            background: scrim,
           }}
         />
       )}
@@ -87,17 +114,13 @@ export default function CTASection({
           position: 'absolute',
           inset: 0,
           pointerEvents: 'none',
-          background: bgImage
-            ? 'radial-gradient(ellipse at 18% 30%, rgba(27,79,138,0.18) 0%, transparent 55%)'
-            : 'radial-gradient(ellipse at 18% 30%, rgba(43,108,196,0.30) 0%, transparent 55%),' +
-              'radial-gradient(ellipse at 85% 75%, rgba(201,38,106,0.22) 0%, transparent 55%),' +
-              'radial-gradient(circle at 50% 100%, rgba(232,82,126,0.12) 0%, transparent 45%)',
+          background: ambient,
         }}
       />
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: 640 }}>
           {eyebrow && (
-            <span className="eyebrow" style={{ color: 'rgba(245,240,232,0.6)' }}>
+            <span className="eyebrow" style={{ color: eyebrowCol }}>
               {eyebrow}
             </span>
           )}
@@ -105,14 +128,14 @@ export default function CTASection({
           <h2
             style={{
               margin: eyebrow ? '18px 0 28px' : '0 0 28px',
-              color: 'var(--cream)',
+              color: inkTitle,
               fontSize: 'clamp(38px, 4.5vw, 60px)',
             }}
             dangerouslySetInnerHTML={{ __html: title }}
           />
 
           {description && (
-            <p style={{ fontSize: 18, lineHeight: 1.6, opacity: 0.82, marginBottom: 40 }}>
+            <p style={{ fontSize: 18, lineHeight: 1.6, color: descCol, opacity: isLight ? 1 : 0.82, marginBottom: 40 }}>
               {description}
             </p>
           )}
@@ -145,11 +168,11 @@ export default function CTASection({
                 href={secondaryHref}
                 className="cta-final-secondary"
                 style={{
-                  color: 'var(--cream)',
+                  color: secondaryCol,
                   padding: '16px 28px',
                   fontSize: 15,
                   fontWeight: 500,
-                  border: '0.5px solid rgba(245,240,232,0.3)',
+                  border: secondaryBorder,
                   borderRadius: 10,
                 }}
               >
@@ -164,9 +187,10 @@ export default function CTASection({
                 display: 'flex',
                 gap: 36,
                 fontSize: 13,
-                opacity: 0.7,
+                color: contactCol,
+                opacity: isLight ? 0.85 : 0.7,
                 paddingTop: 28,
-                borderTop: '0.5px solid rgba(245,240,232,0.15)',
+                borderTop: contactBorder,
                 flexWrap: 'wrap',
               }}
             >
