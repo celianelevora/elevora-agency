@@ -8,11 +8,13 @@ import { usePathname } from 'next/navigation';
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const pathname = usePathname();
 
   // Ferme le menu mobile à chaque changement de page
   useEffect(() => {
     setMenuOpen(false);
+    setServicesOpen(false);
   }, [pathname]);
 
   // Détecte si on a scrollé (resserre le header)
@@ -24,6 +26,10 @@ export default function Header() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+  const closeServices = () => {
+    setServicesOpen(false);
+    setMenuOpen(false);
+  };
 
   return (
     <header className={`hdr ${scrolled ? 'scrolled' : ''}`}>
@@ -39,36 +45,44 @@ export default function Header() {
 
           {/* Nav desktop */}
           <nav className="hdr-nav" aria-label="Navigation principale">
-            <div className="hdr-dropdown">
+            <div
+              className="hdr-dropdown"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
               <a
                 href="#"
                 className="hdr-link has-dropdown"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setServicesOpen((o) => !o);
+                }}
                 aria-haspopup="true"
+                aria-expanded={servicesOpen}
               >
                 Services
                 <svg className="ic" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <polyline points="6 9 12 15 18 9" />
                 </svg>
               </a>
-              <div className="hdr-dropdown-menu hdr-dropdown-menu-wide">
-                <Link href="/services/site-vitrine" className="hdr-dropdown-item" onClick={closeMenu}>
+              <div className={`hdr-dropdown-menu hdr-dropdown-menu-wide ${servicesOpen ? 'open' : ''}`}>
+                <Link href="/services/site-vitrine" className="hdr-dropdown-item" onClick={closeServices}>
                   <span className="item-title">Site Vitrine</span>
                   <span className="item-sub">Présentez votre activité avec élégance</span>
                 </Link>
-                <Link href="/services/site-ecommerce" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/site-ecommerce" className="hdr-dropdown-item" onClick={closeServices}>
                   <span className="item-title">Site E-commerce</span>
                   <span className="item-sub">Vendez en ligne, simplement</span>
                 </Link>
-                <Link href="/services/landing-page" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/landing-page" className="hdr-dropdown-item" onClick={closeServices}>
                   <span className="item-title">Landing page</span>
                   <span className="item-sub">Une page qui convertit</span>
                 </Link>
-                <Link href="/services/application-web-mobile" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/application-web-mobile" className="hdr-dropdown-item" onClick={closeServices}>
                   <span className="item-title">Application</span>
                   <span className="item-sub">Web & mobile sur mesure</span>
                 </Link>
-                <Link href="/services/crm-outil-de-gestion" className="hdr-dropdown-item" onClick={closeMenu}>
+                <Link href="/services/crm-outil-de-gestion" className="hdr-dropdown-item" onClick={closeServices}>
                   <span className="item-title">CRM & Outil de gestion</span>
                   <span className="item-sub">Pilotez votre activité</span>
                 </Link>

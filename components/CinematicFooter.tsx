@@ -21,9 +21,7 @@
    <Footer> global, .site-footer) -> aucun doublon ici.
    ============================================================ */
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { gsap } from 'gsap';
 
 const MARQUEE = [
   'Outils de gestion sur mesure',
@@ -40,44 +38,11 @@ const PILLS = [
 ];
 
 export function CinematicFooter() {
-  const rootRef = useRef<HTMLElement>(null);
-
-  // Magnétisme léger (progressive enhancement). GSAP core uniquement,
-  // aucune dépendance au scroll ni au layout -> ne peut pas casser l'affichage.
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    if (window.matchMedia('(pointer: coarse)').matches) return; // pas sur tactile
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const cleanups: Array<() => void> = [];
-    root.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
-      const soft = el.dataset.magnetic === 'soft';
-      const k = soft ? 0.16 : 0.3;
-      const onMove = (e: MouseEvent) => {
-        const r = el.getBoundingClientRect();
-        const x = e.clientX - r.left - r.width / 2;
-        const y = e.clientY - r.top - r.height / 2;
-        gsap.to(el, { x: x * k, y: y * k, duration: 0.4, ease: 'power3.out' });
-      };
-      const onLeave = () =>
-        gsap.to(el, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)' });
-      el.addEventListener('mousemove', onMove);
-      el.addEventListener('mouseleave', onLeave);
-      cleanups.push(() => {
-        el.removeEventListener('mousemove', onMove);
-        el.removeEventListener('mouseleave', onLeave);
-        gsap.set(el, { clearProps: 'transform' });
-      });
-    });
-    return () => cleanups.forEach((c) => c());
-  }, []);
-
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
-      <section ref={rootRef} className="elv-cta" aria-label="Démarrer un projet">
+      <section className="elv-cta" aria-label="Démarrer un projet">
         {/* Calques d'ambiance (décoratifs, in-flow) */}
         <span className="elv-cta-grid" aria-hidden="true" />
         <span className="elv-cta-aurora" aria-hidden="true" />
@@ -111,7 +76,7 @@ export function CinematicFooter() {
           </p>
 
           <div className="elv-cta-actions">
-            <Link href="/demarrer-un-projet" className="elv-cta-btn" data-magnetic>
+            <Link href="/demarrer-un-projet" className="elv-cta-btn">
               <span className="elv-cta-btn-label">
                 Démarrer un projet
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -120,14 +85,14 @@ export function CinematicFooter() {
                 </svg>
               </span>
             </Link>
-            <Link href="/realisations" className="elv-cta-btn-ghost" data-magnetic="soft">
+            <Link href="/realisations" className="elv-cta-btn-ghost">
               Voir nos réalisations
             </Link>
           </div>
 
           <div className="elv-cta-pills">
             {PILLS.map((p) => (
-              <Link key={p.href + p.label} href={p.href} className="elv-cta-pill" data-magnetic="soft">
+              <Link key={p.href + p.label} href={p.href} className="elv-cta-pill">
                 {p.label}
               </Link>
             ))}

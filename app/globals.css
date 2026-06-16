@@ -467,6 +467,16 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
 
 /* Dropdown */
 .hdr-dropdown { position: relative; }
+/* Pont invisible : comble le decalage de 10px entre "Services" et le menu
+   pour que le survol reste continu jusqu'au menu (ouverture pilotee en JS). */
+.hdr-dropdown::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 14px;
+}
 .hdr-dropdown-menu {
   position: absolute;
   top: calc(100% + 10px);
@@ -485,7 +495,7 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   transition: all 0.25s var(--ease);
   pointer-events: none;
 }
-.hdr-dropdown:hover .hdr-dropdown-menu,
+.hdr-dropdown-menu.open,
 .hdr-dropdown:focus-within .hdr-dropdown-menu {
   opacity: 1;
   visibility: visible;
@@ -3753,6 +3763,75 @@ body:has(.home-with-cinematic-footer) {
   color: var(--ink);
   letter-spacing: -0.005em;
   line-height: 1.2;
+}
+
+/* ===========================================================
+   Interactions Réalisations — survols editoriaux soignes.
+   Aucun !important, aucune glass-card ajoutee : on enrichit le
+   tactile (zoom couverture, reflet, micro-mouvements puces & KPIs).
+   =========================================================== */
+.reali-project-cover {
+  position: relative;
+  transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s cubic-bezier(.22,1,.36,1);
+}
+.reali-project-cover img {
+  transition: transform .8s cubic-bezier(.22,1,.36,1);
+  will-change: transform;
+}
+/* Reflet diagonal qui balaie la couverture au survol */
+.reali-project-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.22) 48%, transparent 64%);
+  transform: translateX(-130%);
+  transition: transform 1s cubic-bezier(.22,1,.36,1);
+}
+.reali-project-cover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 36px 84px rgba(20, 20, 40, 0.20);
+}
+.reali-project-cover:hover img { transform: scale(1.05); }
+.reali-project-cover:hover::after { transform: translateX(130%); }
+/* Conserve le cadrage specifique de Mace Freddy meme au zoom */
+[data-project="mace-freddy"] .reali-project-cover:hover img { transform: scale(1.05); object-position: 60% 20%; }
+
+.reali-project-details img {
+  transition: transform .6s cubic-bezier(.22,1,.36,1), box-shadow .5s var(--ease);
+  will-change: transform;
+}
+.reali-project-details img:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 22px 48px rgba(20, 20, 40, 0.14);
+}
+
+/* Puces : la barre s'allonge et passe en framboise, le texte s'avance */
+.reali-project-bullets li { transition: color .3s var(--ease), transform .3s var(--ease); }
+.reali-project-bullets li::before { transition: width .35s cubic-bezier(.22,1,.36,1), background .35s var(--ease); }
+.reali-project-bullets li:hover { color: var(--ink); transform: translateX(5px); }
+.reali-project-bullets li:hover::before { width: 18px; background: var(--pink); }
+
+/* Cartes KPI : leger lift + halo framboise renforce */
+.reali-project-highlight { transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .4s var(--ease); }
+.reali-project-highlight::before { transition: opacity .4s var(--ease); }
+.reali-project-highlight:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 1px 1px rgba(255,255,255,0.85) inset,
+    0 -1px 1px rgba(27,79,138,0.04) inset,
+    0 24px 54px rgba(27, 79, 138, 0.18);
+}
+.reali-project-highlight:hover .reali-project-highlight-value { color: var(--klein); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reali-project-cover:hover,
+  .reali-project-cover:hover img,
+  .reali-project-cover:hover::after,
+  .reali-project-details img:hover,
+  .reali-project-bullets li:hover,
+  .reali-project-highlight:hover { transform: none; }
 }
 
 /* ===========================================================

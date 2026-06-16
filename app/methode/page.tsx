@@ -67,10 +67,10 @@ export default function MethodePage() {
             className="methode-step-first"
             aria-label="Étape 1 — Cadrage"
             style={{
-              backgroundImage: 'url(/methode-step-1.jpg)',
+              backgroundImage: 'url(/methode-step-1.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundColor: '#EBE8EF',
+              backgroundColor: '#F4E9F3',
             }}
           >
             <div className="methode-step">
@@ -112,10 +112,10 @@ export default function MethodePage() {
           <FlowSection
             aria-label="Étape 2 — Design"
             style={{
-              backgroundImage: 'url(/methode-step-2.jpg)',
+              backgroundImage: 'url(/methode-step-2.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundColor: '#001741',
+              backgroundColor: '#132758',
             }}
           >
             <div className="methode-step methode-step-dark">
@@ -153,30 +153,30 @@ export default function MethodePage() {
             </div>
           </FlowSection>
 
-          {/* ETAPE 03 — DEVELOPPEMENT : image statue mystique bleu nuit profond */}
+          {/* ETAPE 03 — DEVELOPPEMENT : image temple marbre lavande clair (theme clair) */}
           <FlowSection
             aria-label="Étape 3 — Développement"
             style={{
-              backgroundImage: 'url(/methode-step-3.jpg)',
+              backgroundImage: 'url(/methode-step-3.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundColor: '#090A1F',
+              backgroundColor: '#EFE5EC',
             }}
           >
-            <div className="methode-step methode-step-dark">
+            <div className="methode-step">
               <div className="methode-step-left">
                 <span className="methode-step-num methode-step-num-pink">03</span>
-                <span className="methode-step-tag methode-step-tag-light">Développement · ~ 3 à 5 semaines</span>
-                <h2 className="methode-step-title methode-step-title-light">
+                <span className="methode-step-tag">Développement · ~ 3 à 5 semaines</span>
+                <h2 className="methode-step-title">
                   Du code <span className="italic methode-italic-pink">propre.</span><br />
                   Pas de magie.
                 </h2>
-                <p className="methode-step-lead methode-step-lead-light">
+                <p className="methode-step-lead">
                   Développement par sprints hebdomadaires. Vous voyez le site
                   progresser semaine après semaine sur une URL privée. Aucune
                   surprise à la livraison.
                 </p>
-                <ul className="methode-step-points methode-step-points-light">
+                <ul className="methode-step-points">
                   <li>Sprints hebdomadaires avec démos en direct</li>
                   <li>Code propre, commenté, archivé sur GitHub</li>
                   <li>Tests sur tous les navigateurs et mobiles</li>
@@ -184,11 +184,11 @@ export default function MethodePage() {
                 </ul>
               </div>
               <div className="methode-step-right">
-                <div className="methode-deliverable methode-deliverable-dark">
+                <div className="methode-deliverable">
                   <div className="methode-deliverable-head">
-                    <span className="methode-deliverable-eyebrow methode-deliverable-eyebrow-light">Ce que vous repartez avec</span>
+                    <span className="methode-deliverable-eyebrow">Ce que vous repartez avec</span>
                   </div>
-                  <ul className="methode-deliverable-list methode-deliverable-list-light">
+                  <ul className="methode-deliverable-list">
                     <li><span className="bullet bullet-pink" /> Démos de progression chaque semaine</li>
                     <li><span className="bullet bullet-pink" /> Code source propre sur GitHub à votre nom</li>
                     <li><span className="bullet bullet-pink" /> Score PageSpeed 90+ garanti</li>
@@ -202,10 +202,10 @@ export default function MethodePage() {
           <FlowSection
             aria-label="Étape 4 — Livraison"
             style={{
-              backgroundImage: 'url(/methode-step-4.jpg)',
+              backgroundImage: 'url(/methode-step-4.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundColor: '#FDE6EA',
+              backgroundColor: '#FAE3E0',
             }}
           >
             <div className="methode-step">
