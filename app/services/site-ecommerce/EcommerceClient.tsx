@@ -242,7 +242,7 @@ export default function EcommerceClient() {
               {INCLUS.map((it, i) => (
                 <Reveal key={it} delay={i * 0.05} className="svc-inc">
                   <span className="svc-inc__check" aria-hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--klein)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg></span>
-                  <span style={{ fontSize: 15.5, lineHeight: 1.5, color: 'var(--ink)' }}>{it}</span>
+                  <span className="svc-inc__text">{it}</span>
                 </Reveal>
               ))}
             </div>
@@ -323,8 +323,8 @@ const ECOM_CSS = `
 
 /* Fonctionnalités — grille fiche technique (dot dans la gouttière, pas de saut au survol) */
 .ecom-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
-.ecom-feat { position: relative; padding: 28px 30px 30px 28px; border-top: 0.5px solid rgba(234,233,238,.14); overflow: hidden; }
-.ecom-feat__dot { position: absolute; left: 0; top: 36px; width: 8px; height: 8px; border-radius: 999px; transition: transform .4s, box-shadow .4s; }
+.ecom-feat { position: relative; padding: 28px 30px 30px 30px; border-top: 0.5px solid rgba(234,233,238,.14); }
+.ecom-feat__dot { position: absolute; left: 3px; top: 37px; width: 8px; height: 8px; border-radius: 999px; transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s; }
 .ecom-feat__body { transition: transform .4s cubic-bezier(.22,1,.36,1); }
 .ecom-feat:hover .ecom-feat__body { transform: translateX(10px); }
 .ecom-feat:hover .ecom-feat__dot { transform: scale(1.7); box-shadow: 0 0 16px 2px currentColor; }

@@ -76,7 +76,7 @@ export default function CTASection({
             inset: 0,
             pointerEvents: 'none',
             background:
-              'linear-gradient(135deg, rgba(11,18,34,0.84) 0%, rgba(13,21,40,0.66) 50%, rgba(26,26,46,0.82) 100%)',
+              'linear-gradient(135deg, rgba(10,18,38,0.93) 0%, rgba(11,32,70,0.85) 50%, rgba(20,20,42,0.92) 100%)',
           }}
         />
       )}

@@ -12,11 +12,10 @@
  */
 
 import Link from 'next/link';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ServiceHero from '@/components/ServiceHero';
 import CTASection from '@/components/CTASection';
-import { SectionBg, Reveal, RevealText, Counter } from '@/components/ServiceFX';
+import { SectionBg, Reveal, RevealText } from '@/components/ServiceFX';
 
 const IMG = '/services/landing-page';
 
@@ -41,12 +40,12 @@ const INCLUS = [
   'Connexion CRM / Brevo', 'Test A/B au lancement', 'Formulaire intelligent',
   'Responsive mobile parfait', 'En ligne sous une semaine', 'Garantie 15 jours',
 ];
-const TARIF_NOTE = 'Idéale pour une campagne, un lancement ou une publicité. Paiement en deux fois possible, devis ferme renvoyé sous 48 h.';
+const TARIF_NOTE = 'Idéale pour une campagne, un lancement ou une publicité. Paiement en deux fois possible, devis ferme renvoyé sous 5 jours.';
 
 const FAQ = [
   { q: 'Pourquoi une landing plutôt qu’une page de mon site ?', a: 'Parce qu’une landing n’a qu’un seul objectif et zéro distraction : pas de menu, pas de liens qui font fuir. Tout est calibré pour transformer le visiteur en contact ou en client.' },
   { q: 'Le tarif de 900 € est-il vraiment tout compris ?', a: 'Oui : design, copywriting, tracking, connexion à votre CRM et test A/B au lancement. Le seul variable, c’est si vous voulez plusieurs versions de page ou une intégration spécifique.' },
-  { q: 'En combien de temps ma page est-elle en ligne ?', a: 'De 48 h à une semaine selon votre réactivité sur les contenus. On sait qu’une landing accompagne souvent une campagne datée — on s’aligne sur votre échéance.' },
+  { q: 'En combien de temps ma page est-elle en ligne ?', a: 'D’une à quatre semaines selon l’ampleur du projet et votre réactivité sur les contenus. Pour une page simple on tient la semaine ; on s’aligne toujours sur l’échéance de votre campagne.' },
   { q: 'Comment je sais si elle convertit ?', a: 'On pose le tracking et les analytics dès le départ, et on peut lancer un test A/B. Vous voyez vos chiffres en clair : visites, conversions, coût par contact.' },
 ];
 
@@ -57,18 +56,23 @@ function DrawLine({ color, height = 1 }: { color: string; height?: number }) {
   return (<motion.span aria-hidden style={{ display: 'block', width: '100%', height, background: color, transformOrigin: 'left', borderRadius: 2 }} initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }} />);
 }
 
-/* Frise verticale qui se dessine au fil du scroll */
+/* Frise verticale : chaque segment se dessine en entrant dans le champ */
 function AnatomieTimeline() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 78%', 'end 58%'] });
-  const fillScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
   return (
-    <div ref={ref} className="land-anat">
-      <span className="land-anat__track" aria-hidden />
-      <motion.span className="land-anat__fill" aria-hidden style={{ scaleY: fillScale }} />
+    <div className="land-anat">
       {ANATOMIE.map((a, i) => (
         <Reveal key={a.t} delay={i * 0.1} className="land-anat__step">
-          <span className="land-anat__node">{i + 1}</span>
+          {i < ANATOMIE.length - 1 && (
+            <motion.span
+              className="land-anat__seg"
+              aria-hidden
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            />
+          )}
+          <span className="land-anat__node"><span>{i + 1}</span></span>
           <div className="land-anat__txt">
             <h3 style={{ fontSize: 'clamp(20px,2.1vw,25px)', fontWeight: 500, color: '#EAE9EE', marginBottom: 10, lineHeight: 1.2 }}>{a.t}</h3>
             <p style={{ fontSize: 15, lineHeight: 1.72, color: 'rgba(234,233,238,.68)' }}>{a.d}</p>
@@ -148,14 +152,14 @@ export default function LandingClient() {
         <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto' }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)', justifyContent: 'center' }}>Ce qu’on garantit</span></Reveal>
           <Reveal delay={0.1}>
-            <div className="flow-text" style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(96px,16vw,200px)', fontWeight: 500, letterSpacing: '-0.03em', lineHeight: 1, margin: '16px 0 6px', fontVariantNumeric: 'lining-nums' }}>
-              <Counter to={48} suffix="h" />
+            <div className="flow-text" style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(58px,9.5vw,124px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, margin: '16px 0 8px' }}>
+              1 semaine
             </div>
           </Reveal>
-          <RevealText as="h2" text="Votre landing en ligne en 48 heures chrono." emphasis="chrono." style={{ margin: '0 0 24px', color: '#EAE9EE', ...H2('clamp(26px,3.4vw,42px)') }} />
+          <RevealText as="h2" text="Votre landing en ligne dès une semaine." emphasis="semaine." style={{ margin: '0 0 24px', color: '#EAE9EE', ...H2('clamp(26px,3.4vw,42px)') }} />
           <Reveal delay={0.2}>
-            <p style={{ fontSize: 17, lineHeight: 1.75, color: 'rgba(234,233,238,.76)', maxWidth: 520, margin: '0 auto' }}>
-              Pour une landing simple et pressée, on peut aller très vite. Copywriting, design, tracking et mise en ligne : tout est prêt à capturer vos premiers leads en deux jours.
+            <p style={{ fontSize: 17, lineHeight: 1.75, color: 'rgba(234,233,238,.76)', maxWidth: 540, margin: '0 auto' }}>
+              Pour une page simple, on tient le délai d’une semaine. Sur un projet plus riche, comptez 2 à 4 semaines maximum — copywriting, design, tracking et mise en ligne compris.
             </p>
           </Reveal>
         </div>
@@ -176,7 +180,7 @@ export default function LandingClient() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'var(--line-strong)' }} aria-hidden />
                 <span style={{ fontSize: 14, color: 'var(--ink-muted)' }}>livré en</span>
-                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(25px,3vw,34px)', color: 'var(--pink)' }}>48 h à 1 semaine</span>
+                <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(25px,3vw,34px)', color: 'var(--pink)' }}>1 à 4 semaines</span>
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 400 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
@@ -190,7 +194,7 @@ export default function LandingClient() {
               {INCLUS.map((it, i) => (
                 <Reveal key={it} delay={i * 0.05} className="svc-inc">
                   <span className="svc-inc__check" aria-hidden><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--klein)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg></span>
-                  <span style={{ fontSize: 15.5, lineHeight: 1.5, color: 'var(--ink)' }}>{it}</span>
+                  <span className="svc-inc__text">{it}</span>
                 </Reveal>
               ))}
             </div>
@@ -242,15 +246,32 @@ const LAND_CSS = `
 }
 @keyframes landFlow { to { background-position: -220% 0; } }
 
-/* Frise verticale */
+/* Frise verticale (segments connectés, fin nette au dernier nœud) */
 .land-anat { position: relative; max-width: 760px; margin: 0 auto; }
-.land-anat__track, .land-anat__fill { position: absolute; left: 27px; top: 28px; bottom: 28px; width: 2px; border-radius: 2px; }
-.land-anat__track { background: rgba(234,233,238,.16); }
-.land-anat__fill { background: linear-gradient(180deg, var(--klein-bright), var(--pink)); transform-origin: top; }
-.land-anat__step { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: flex-start; padding-bottom: 44px; }
+.land-anat__step { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: flex-start; padding-bottom: 46px; }
 .land-anat__step:last-child { padding-bottom: 0; }
-.land-anat__node { width: 56px; height: 56px; border-radius: 50%; background: #13182b; border: 1.5px solid var(--klein-bright); color: #EAE9EE; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; font-size: 22px; position: relative; z-index: 1; transition: transform .4s, box-shadow .4s, border-color .4s, background .4s; }
-.land-anat__step:hover .land-anat__node { transform: scale(1.1); border-color: var(--pink); background: var(--pink); box-shadow: 0 14px 36px -12px rgba(201,38,106,.6); }
+.land-anat__seg { position: absolute; top: 28px; left: 27px; width: 2px; height: 100%; background: linear-gradient(180deg, var(--klein-bright), var(--pink)); transform-origin: top; border-radius: 2px; z-index: 0; }
+.land-anat__node {
+  position: relative; z-index: 1;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #13182b;
+  border: 1.5px solid rgba(43,108,196,.65);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .5s cubic-bezier(.22,1,.36,1), box-shadow .55s var(--ease), border-color .5s var(--ease);
+}
+.land-anat__node > span {
+  font-family: var(--serif); font-style: italic; font-size: 23px;
+  line-height: 1; color: #EAE9EE;
+  transform: translateY(0.06em);
+  font-variant-numeric: lining-nums;
+  transition: color .5s var(--ease);
+}
+.land-anat__step:hover .land-anat__node {
+  transform: scale(1.06);
+  border-color: var(--pink);
+  box-shadow: 0 0 0 5px rgba(201,38,106,.10), 0 14px 32px -12px rgba(201,38,106,.5);
+}
+.land-anat__step:hover .land-anat__node > span { color: var(--pink); }
 .land-anat__txt { padding-top: 7px; }
 
 /* Usages — colonnes éditoriales */
