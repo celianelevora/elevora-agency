@@ -264,7 +264,7 @@ const APP_CSS = `
 @keyframes appFlow { to { background-position: 15px 0; } }
 .app-step { text-align: center; position: relative; }
 .app-step__node { width: 54px; height: 54px; border-radius: 50%; background: #13182b; border: 1.5px solid rgba(43,108,196,.6); display: inline-flex; align-items: center; justify-content: center; position: relative; z-index: 1; transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .5s var(--ease), border-color .45s var(--ease); }
-.app-step__node > span { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1; color: #EAE9EE; transform: translateY(0.06em); font-variant-numeric: lining-nums; transition: color .45s var(--ease); }
+.app-step__node > span { font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1; color: #EAE9EE; transform: translate(-0.04em, 0.05em); font-variant-numeric: lining-nums; transition: color .45s var(--ease); }
 .app-step:hover .app-step__node { transform: scale(1.08); border-color: var(--pink); box-shadow: 0 0 0 5px rgba(201,38,106,.10), 0 14px 30px -12px rgba(201,38,106,.5); }
 .app-step:hover .app-step__node > span { color: var(--pink); }
 @media (max-width: 720px) {

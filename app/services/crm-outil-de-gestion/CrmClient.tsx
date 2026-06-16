@@ -173,12 +173,10 @@ export default function CrmClient() {
         </div>
         <div className="crm-why">
           {RAISONS.map((r, i) => (
-            <Reveal key={r.t} delay={i * 0.1} className="crm-why__row">
+            <Reveal key={r.t} delay={i * 0.1} className="crm-why__col">
               <span className="crm-why__big" aria-hidden style={{ color: i % 2 ? 'var(--pink)' : 'var(--klein-bright)' }}>{r.big}</span>
-              <div>
-                <h3 style={{ fontSize: 'clamp(20px,2.2vw,26px)', fontWeight: 500, color: '#EAE9EE', marginBottom: 10, lineHeight: 1.2 }}>{r.t}</h3>
-                <p style={{ fontSize: 15.5, lineHeight: 1.72, color: 'rgba(234,233,238,.68)', maxWidth: 560 }}>{r.d}</p>
-              </div>
+              <h3 className="crm-why__title">{r.t}</h3>
+              <p className="crm-why__desc">{r.d}</p>
             </Reveal>
           ))}
         </div>
@@ -298,13 +296,14 @@ const CRM_CSS = `
 }
 
 /* Pourquoi — grandes locutions serif */
-.crm-why { max-width: 960px; }
-.crm-why__row { display: grid; grid-template-columns: clamp(130px,17vw,230px) 1fr; gap: clamp(24px,4vw,60px); align-items: center; padding: 34px 0; border-top: 0.5px solid rgba(234,233,238,.13); transition: transform .45s cubic-bezier(.22,1,.36,1); }
-.crm-why__row:first-child { border-top: none; }
-.crm-why__big { font-family: var(--serif); font-style: italic; font-size: clamp(30px,4vw,54px); line-height: 0.95; transition: transform .45s cubic-bezier(.22,1,.36,1); }
-.crm-why__row:hover { transform: translateX(8px); }
-.crm-why__row:hover .crm-why__big { transform: scale(1.05); }
-@media (max-width: 680px) { .crm-why__row { grid-template-columns: 1fr; gap: 12px; } }
+.crm-why { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px,4vw,56px); max-width: 1120px; }
+.crm-why__col { position: relative; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+.crm-why__big { display: block; font-family: var(--serif); font-style: italic; font-size: clamp(34px,4vw,56px); line-height: 0.95; margin-bottom: 20px; transition: transform .45s cubic-bezier(.22,1,.36,1); }
+.crm-why__title { font-size: clamp(19px,2vw,24px); font-weight: 500; color: #EAE9EE; margin-bottom: 11px; line-height: 1.22; letter-spacing: -0.01em; }
+.crm-why__desc { font-size: 15px; line-height: 1.7; color: rgba(234,233,238,.68); }
+.crm-why__col:hover { transform: translateY(-4px); }
+.crm-why__col:hover .crm-why__big { transform: scale(1.04); }
+@media (max-width: 820px) { .crm-why { grid-template-columns: 1fr; gap: 38px; } }
 
 /* Tarif */
 .crm-price { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(40px,6vw,90px); align-items: start; }

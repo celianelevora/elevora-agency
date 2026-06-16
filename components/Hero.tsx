@@ -23,9 +23,11 @@ interface HeroProps {
   leftOffsetPercent?: number;
   /** Si true, supprime le fond cream pour laisser passer un wrapper parent. */
   transparentBg?: boolean;
+  /** Si true, le héros occupe ~84vh avec texte centré verticalement (cohérence cross-pages). */
+  tall?: boolean;
 }
 
-export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding, leftOffsetPercent, transparentBg }: HeroProps) {
+export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgImage, topPadding, leftOffsetPercent, transparentBg, tall }: HeroProps) {
   const padTop = topPadding ?? 100;
   const leftOffset = leftOffsetPercent ?? 0;
   return (
@@ -35,6 +37,7 @@ export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgI
         position: 'relative',
         overflow: 'hidden',
         background: transparentBg ? 'transparent' : '#EAE9EE',
+        ...(tall ? { minHeight: '84vh', display: 'flex', flexDirection: 'column' as const, justifyContent: 'center' } : null),
       }}
     >
       {bgImage && (

@@ -160,7 +160,11 @@ export default function AgencePage() {
 
         /* ── Hero agence ───────────────────────────────── */
         .agence-hero {
-          padding: 80px 0 40px;
+          min-height: 84vh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 110px 0 70px;
           background: transparent;
           position: relative;
           overflow: hidden;

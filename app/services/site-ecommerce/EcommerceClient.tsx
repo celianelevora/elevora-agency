@@ -74,7 +74,7 @@ function DrawLine({ delay = 0, color, width = '100%', height = 2, mb = 0 }: { de
 function HeroPourQui() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], [56, -56]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } } };
   const item = {
@@ -85,7 +85,7 @@ function HeroPourQui() {
   return (
     <section ref={ref} style={{ position: 'relative', overflow: 'hidden', marginTop: -76, background: '#EAE9EE' }}>
       {/* UNE seule image de fond, couvre hero + pour qui sans coupure */}
-      <motion.div aria-hidden style={{ position: 'absolute', inset: '-14% 0 -14% 0', backgroundImage: `url(${IMG}/img-1.webp)`, backgroundSize: 'cover', backgroundPosition: 'center', y: imgY, zIndex: 0 }} />
+      <motion.div aria-hidden style={{ position: 'absolute', inset: '-8% 0 -8% 0', backgroundImage: `url(${IMG}/img-1.webp)`, backgroundSize: 'cover', backgroundPosition: 'right center', y: imgY, zIndex: 0 }} />
       {/* Voile crème pour lisibilité */}
       <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'linear-gradient(90deg, rgba(234,233,238,.85) 0%, rgba(234,233,238,.52) 44%, rgba(234,233,238,.12) 80%, transparent 100%)' }} />
       {/* Halos blush (jeu de lumière) */}
@@ -93,7 +93,7 @@ function HeroPourQui() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         {/* HERO */}
-        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 160, paddingBottom: 110 }}>
+        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: '84vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 120, paddingBottom: 96 }}>
           <motion.span variants={item} className="svc-eyebrow" style={{ color: 'var(--klein)', marginBottom: 26 }}>Site e-commerce</motion.span>
           <motion.h1 variants={item} style={{ margin: '18px 0 30px', maxWidth: 860, color: 'var(--ink)', lineHeight: 1.02 }}>
             Vendez en ligne.<br />
@@ -122,7 +122,7 @@ function HeroPourQui() {
         </motion.div>
 
         {/* POUR QUI (même image, prolongée) */}
-        <div className="container" style={{ paddingBottom: 'clamp(96px,12vw,148px)' }}>
+        <div className="container" style={{ paddingBottom: 'clamp(64px,8vw,104px)' }}>
           <div className="ecom-pourqui">
             <div className="ecom-pourqui__head">
               <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Pour qui</span></Reveal>

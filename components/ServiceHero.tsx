@@ -85,8 +85,8 @@ export default function ServiceHero({
            tout en haut, sous le header flottant. Meme principe que la
            page Agence (margin-top:-76 / padding-top:76). */
         marginTop: -76,
-        padding: '206px 0 150px',
-        minHeight: '100vh',
+        padding: '120px 0 100px',
+        minHeight: '84vh',
         display: 'flex',
         alignItems: 'center',
         background: baseColor,
@@ -265,44 +265,6 @@ export default function ServiceHero({
             ))}
           </motion.div>
         )}
-      </motion.div>
-
-      {/* Indicateur de scroll discret */}
-      <motion.div
-        aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.8 }}
-        style={{
-          position: 'absolute',
-          bottom: 30,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 2,
-        }}
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          style={{
-            width: 24,
-            height: 38,
-            borderRadius: 999,
-            border: `1.5px solid ${isDark ? 'rgba(234,233,238,.4)' : 'rgba(26,26,46,.3)'}`,
-            display: 'flex',
-            justifyContent: 'center',
-            paddingTop: 7,
-          }}
-        >
-          <div
-            style={{
-              width: 3,
-              height: 8,
-              borderRadius: 999,
-              background: isDark ? 'rgba(234,233,238,.6)' : 'rgba(26,26,46,.45)',
-            }}
-          />
-        </motion.div>
       </motion.div>
     </section>
   );

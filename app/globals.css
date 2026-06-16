@@ -1453,10 +1453,13 @@ body:has(.home-with-cinematic-footer) {
   color: #B8B8B8;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  /* PAS de margin-top : sinon une bande de fond #EAE9EE apparait entre
-     la section CTA (fond nuit) et le footer (fond nuit aussi).
-     Le CTA lui-meme a deja un padding bas de 140px. */
-  margin-top: 0;
+  /* Le footer mord legerement (-28px) sur la section au-dessus et passe
+     par-dessus (z-index) : ainsi ses coins arrondis revelent la section
+     superieure (sombre quand c'est un CTA) au lieu du fond clair -> plus de
+     liseres blancs disgracieux. Marge NEGATIVE = chevauchement, jamais de bande. */
+  margin-top: -28px;
+  position: relative;
+  z-index: 2;
 }
 .site-footer-inner {
   max-width: 1240px;
@@ -3873,7 +3876,7 @@ body:has(.home-with-cinematic-footer) {
   margin-top: -76px;
   padding-top: 76px;
   background-image: url('/fond-tarifs-master.png');
-  background-size: 100% auto;
+  background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   background-color: var(--cream);
@@ -4252,7 +4255,7 @@ body:has(.home-with-cinematic-footer) {
   isolation: isolate;
   overflow: hidden;
   background: var(--cream);
-  min-height: 0;
+  min-height: 84vh;
 }
 .methode-hero-bg {
   position: absolute;
@@ -4283,11 +4286,10 @@ body:has(.home-with-cinematic-footer) {
 .methode-hero-inner {
   position: relative;
   z-index: 1;
-  /* Padding-top reduit au MAX : 130px -> 95px.
-     Le header fixe occupe ~90px, donc 95px = juste 5px d'air sous le header. */
   display: flex;
-  align-items: flex-start;
-  padding: 95px 5vw 50px 5vw;
+  align-items: center;
+  min-height: 84vh;
+  padding: 110px 5vw 70px 5vw;
 }
 .methode-hero-content {
   /* Texte cale a gauche : on prend 55% max et on s'aligne a gauche */
