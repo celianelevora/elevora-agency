@@ -14,10 +14,8 @@ export default function ContactPage() {
             Une question, <span className="italic">un échange</span> ?
           </h1>
           <p className="form-page-lead">
-            Vous avez une question, besoin d'un renseignement ou souhaitez
-            simplement échanger avec nous ? Remplissez ce formulaire, nous
-            reviendrons vers vous rapidement avec une réponse claire et adaptée
-            à votre demande.
+            Une question, un renseignement, ou simplement envie d'échanger ?
+            Remplissez ce formulaire : on revient vers vous rapidement.
           </p>
         </header>
 

@@ -2,14 +2,14 @@
 
 /**
  * ServiceHero — hero des pages de service.
- * Particularite demandee : le hero NE possede PAS sa propre image, il herite
- * de l'image de la section 2 (passee en prop `image`). L'image est posee en
- * fond, et un long degrade vers le bas assure une continuite visuelle parfaite
- * avec la section 2 qui suit (qui reutilise la meme image).
+ * L'image (prop `image`, = img-1) est posee en fond. Quand `below` est fourni,
+ * l'image couvre HERO + PARTIE 2 d'un seul tenant, sans coupure entre les deux
+ * (meme principe que la page e-commerce). La partie 2 est rendue sous le hero,
+ * sur la meme image continue. Sinon, le hero occupe ~84vh seul.
  *
- * Variantes de theme :
- *  - 'dark'  : image navy, texte clair (titre cream, lead clair)
- *  - 'light' : image cream/blush, texte sombre (titre encre, lead doux)
+ * Themes :
+ *  - 'dark'  : image navy, texte clair
+ *  - 'light' : image cream/blush, texte sombre
  */
 
 import Link from 'next/link';
@@ -31,6 +31,9 @@ interface ServiceHeroProps {
   tags?: string[];
   /** halos colores animes derriere l'image (defaut: off). */
   glow?: boolean;
+  /** Contenu de la "partie 2" rendu SOUS le hero, sur la MEME image continue
+      (img-1). Quand fourni, l'image couvre hero + partie 2 sans coupure. */
+  below?: ReactNode;
 }
 
 export default function ServiceHero({
@@ -43,13 +46,13 @@ export default function ServiceHero({
   secondary,
   tags,
   glow = false,
+  below,
 }: ServiceHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   });
-  // L'image se deplace lentement vers le haut, le contenu monte un peu plus vite.
   const imgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
@@ -58,7 +61,6 @@ export default function ServiceHero({
   const ink = isDark ? '#EAE9EE' : 'var(--ink)';
   const leadCol = isDark ? 'rgba(234,233,238,.82)' : 'var(--ink-soft)';
   const eyebrowCol = isDark ? 'rgba(234,233,238,.7)' : 'var(--klein)';
-  // raccord bas vers la couleur de base de la section 2
   const baseColor = isDark ? '#1A1A2E' : '#EAE9EE';
 
   const stagger = {
@@ -75,24 +77,113 @@ export default function ServiceHero({
     },
   };
 
+  const heroContent = (
+    <motion.div
+      className="container"
+      style={{ position: 'relative', zIndex: 2, y: contentY, opacity: contentOpacity }}
+      variants={stagger}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.span variants={item} className="svc-eyebrow" style={{ color: eyebrowCol, marginBottom: 26 }}>
+        {eyebrow}
+      </motion.span>
+
+      <motion.h1 variants={item} style={{ margin: '18px 0 30px', maxWidth: 860, color: ink, lineHeight: 1.02 }}>
+        {title}
+      </motion.h1>
+
+      <motion.p variants={item} className="lead" style={{ marginBottom: 44, maxWidth: 600, color: leadCol }}>
+        {lead}
+      </motion.p>
+
+      <motion.div variants={item} style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+        <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
+          <Link
+            href={primary.href}
+            style={{
+              background: 'var(--pink)',
+              color: '#fff',
+              padding: '16px 30px',
+              borderRadius: 999,
+              fontSize: 15,
+              fontWeight: 500,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              textDecoration: 'none',
+              boxShadow: '0 16px 40px rgba(201,38,106,.4)',
+            }}
+          >
+            {primary.label}
+            <svg className="ic" width="18" height="18" viewBox="0 0 24 24">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </Link>
+        </motion.div>
+        {secondary && (
+          <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
+            <Link
+              href={secondary.href}
+              style={{
+                color: ink,
+                padding: '16px 28px',
+                fontSize: 15,
+                fontWeight: 500,
+                border: isDark ? '0.5px solid rgba(234,233,238,.32)' : '0.5px solid var(--line-strong)',
+                borderRadius: 999,
+                textDecoration: 'none',
+                backdropFilter: 'blur(6px)',
+                display: 'inline-flex',
+              }}
+            >
+              {secondary.label}
+            </Link>
+          </motion.div>
+        )}
+      </motion.div>
+
+      {tags && tags.length > 0 && (
+        <motion.div variants={item} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}>
+          {tags.map((t) => (
+            <motion.span
+              key={t}
+              whileHover={{ y: -4, scale: 1.06, backgroundColor: isDark ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.85)' }}
+              whileTap={{ scale: 0.94 }}
+              transition={{ type: 'spring', stiffness: 420, damping: 20 }}
+              style={{
+                fontSize: 12.5,
+                letterSpacing: '.02em',
+                padding: '8px 16px',
+                borderRadius: 999,
+                cursor: 'default',
+                color: isDark ? 'rgba(234,233,238,.86)' : 'var(--ink-soft)',
+                border: isDark ? '0.5px solid rgba(234,233,238,.2)' : '0.5px solid var(--line)',
+                background: isDark ? 'rgba(255,255,255,.04)' : 'rgba(255,255,255,.5)',
+                backdropFilter: 'blur(8px)',
+              }}
+            >
+              {t}
+            </motion.span>
+          ))}
+        </motion.div>
+      )}
+    </motion.div>
+  );
+
   return (
     <section
       ref={ref}
       style={{
         position: 'relative',
         overflow: 'hidden',
-        /* Annule le padding-top:76 de <main> pour que l'image colle au
-           tout en haut, sous le header flottant. Meme principe que la
-           page Agence (margin-top:-76 / padding-top:76). */
         marginTop: -76,
-        padding: '120px 0 100px',
-        minHeight: '84vh',
-        display: 'flex',
-        alignItems: 'center',
         background: baseColor,
+        ...(below ? null : { padding: '120px 0 100px', minHeight: '84vh', display: 'flex', alignItems: 'center' }),
       }}
     >
-      {/* Image de fond (heritee de la section 2) */}
+      {/* Image de fond continue (img-1) — couvre hero + partie 2 si `below` */}
       <motion.div
         aria-hidden
         style={{
@@ -106,7 +197,6 @@ export default function ServiceHero({
           zIndex: 0,
         }}
       />
-      {/* Halos colores animes (jeu de lumiere) — optionnel */}
       {glow && (
         <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', opacity: 0.55, mixBlendMode: 'screen' }}>
           <GlowField variant="klein-pink" />
@@ -125,7 +215,7 @@ export default function ServiceHero({
             : 'linear-gradient(90deg, rgba(234,233,238,.82) 0%, rgba(234,233,238,.5) 42%, rgba(234,233,238,.1) 78%, transparent 100%)',
         }}
       />
-      {/* Vignette douce pour la profondeur (sans assombrir le texte) */}
+      {/* Vignette douce */}
       <div
         aria-hidden
         style={{
@@ -138,7 +228,7 @@ export default function ServiceHero({
             : 'radial-gradient(120% 80% at 70% 30%, transparent 45%, rgba(26,26,46,.06) 100%)',
         }}
       />
-      {/* Raccord bas : fondu vers la couleur de base => continuite avec S2 */}
+      {/* Raccord bas : fondu vers la couleur de base => transition vers la section suivante */}
       <div
         aria-hidden
         style={{
@@ -153,119 +243,18 @@ export default function ServiceHero({
         }}
       />
 
-      <motion.div
-        className="container"
-        style={{ position: 'relative', zIndex: 2, y: contentY, opacity: contentOpacity }}
-        variants={stagger}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.span
-          variants={item}
-          className="svc-eyebrow"
-          style={{ color: eyebrowCol, marginBottom: 26 }}
-        >
-          {eyebrow}
-        </motion.span>
-
-        <motion.h1
-          variants={item}
-          style={{ margin: '18px 0 30px', maxWidth: 860, color: ink, lineHeight: 1.02 }}
-        >
-          {title}
-        </motion.h1>
-
-        <motion.p
-          variants={item}
-          className="lead"
-          style={{ marginBottom: 44, maxWidth: 600, color: leadCol }}
-        >
-          {lead}
-        </motion.p>
-
-        <motion.div
-          variants={item}
-          style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}
-        >
-          <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
-            <Link
-              href={primary.href}
-              style={{
-                background: 'var(--pink)',
-                color: '#fff',
-                padding: '16px 30px',
-                borderRadius: 999,
-                fontSize: 15,
-                fontWeight: 500,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 10,
-                textDecoration: 'none',
-                boxShadow: '0 16px 40px rgba(201,38,106,.4)',
-              }}
-            >
-              {primary.label}
-              <svg className="ic" width="18" height="18" viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </Link>
-          </motion.div>
-          {secondary && (
-            <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
-              <Link
-                href={secondary.href}
-                style={{
-                  color: ink,
-                  padding: '16px 28px',
-                  fontSize: 15,
-                  fontWeight: 500,
-                  border: isDark
-                    ? '0.5px solid rgba(234,233,238,.32)'
-                    : '0.5px solid var(--line-strong)',
-                  borderRadius: 999,
-                  textDecoration: 'none',
-                  backdropFilter: 'blur(6px)',
-                  display: 'inline-flex',
-                }}
-              >
-                {secondary.label}
-              </Link>
-            </motion.div>
-          )}
-        </motion.div>
-
-        {tags && tags.length > 0 && (
-          <motion.div
-            variants={item}
-            style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}
-          >
-            {tags.map((t) => (
-              <motion.span
-                key={t}
-                whileHover={{ y: -4, scale: 1.06, backgroundColor: isDark ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.85)' }}
-                whileTap={{ scale: 0.94 }}
-                transition={{ type: 'spring', stiffness: 420, damping: 20 }}
-                style={{
-                  fontSize: 12.5,
-                  letterSpacing: '.02em',
-                  padding: '8px 16px',
-                  borderRadius: 999,
-                  cursor: 'default',
-                  color: isDark ? 'rgba(234,233,238,.86)' : 'var(--ink-soft)',
-                  border: isDark
-                    ? '0.5px solid rgba(234,233,238,.2)'
-                    : '0.5px solid var(--line)',
-                  background: isDark ? 'rgba(255,255,255,.04)' : 'rgba(255,255,255,.5)',
-                  backdropFilter: 'blur(8px)',
-                }}
-              >
-                {t}
-              </motion.span>
-            ))}
-          </motion.div>
-        )}
-      </motion.div>
+      {below ? (
+        <div style={{ position: 'relative', zIndex: 2, width: '100%' }}>
+          <div style={{ minHeight: '84vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 120, paddingBottom: 32 }}>
+            {heroContent}
+          </div>
+          <div className="container" style={{ position: 'relative', zIndex: 2, paddingBottom: 'clamp(72px,9vw,124px)' }}>
+            {below}
+          </div>
+        </div>
+      ) : (
+        heroContent
+      )}
     </section>
   );
 }
