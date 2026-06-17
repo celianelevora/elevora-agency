@@ -42,7 +42,6 @@ const FOUNDERS = [
     hoverTagline: "Pose les questions que les autres oublient.",
     description:
       "Paloma conçoit. Sites web, identités, parcours utilisateur — elle pose les questions que les autres oublient de poser. Elle développe aussi le réseau d'Elevora avec une précision qu'on aurait tort de sous-estimer.",
-    linkedin: 'https://www.linkedin.com/in/paloma-morio/',
   },
 ];
 
@@ -163,8 +162,8 @@ export default function AgencePage() {
           min-height: 84vh;
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          padding: 110px 0 70px;
+          justify-content: flex-start;
+          padding: 116px 0 90px;
           background: transparent;
           position: relative;
           overflow: hidden;
@@ -805,13 +804,15 @@ export default function AgencePage() {
                 <div className="founder-name">{f.prenom}</div>
                 <div className="founder-role">{f.nom} — {f.role}</div>
                 <p className="founder-desc">{f.description}</p>
-                <a href={f.linkedin} target="_blank" rel="noopener noreferrer" className="founder-linkedin">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                    <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-                  </svg>
-                  LinkedIn
-                </a>
+                {f.linkedin && (
+                  <a href={f.linkedin} target="_blank" rel="noopener noreferrer" className="founder-linkedin">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                      <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                    </svg>
+                    LinkedIn
+                  </a>
+                )}
               </div>
             ))}
           </div>

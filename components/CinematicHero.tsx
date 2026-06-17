@@ -206,7 +206,8 @@ export default function CinematicHero({
       ref={sectionRef}
       className="cine2"
       data-roman-section
-      data-roman="I"
+      data-roman="01"
+      data-roman-title="La promesse"
       data-roman-tone="dark"
       id="intro"
     >

@@ -94,7 +94,7 @@ export default function MethodSteps() {
 
       <div className="container method2-inner">
         <div className="method2-head">
-          <span className="method2-eyebrow">06 — Notre méthode</span>
+          <span className="method2-eyebrow">07 — Notre méthode</span>
           <h2 className="method2-title">
             De l'idée à la mise en ligne,<br />
             un chemin <span className="italic">clair et balisé.</span>

@@ -31,33 +31,33 @@ export default function HomePage() {
           frame. Tout est dans CinematicHero (section + scène sticky). */}
       <CinematicHero />
 
-      {/* Parties 1+2 — fond gris commun (Le constat + Pour qui) */}
+      {/* Parties 2+3 — fond gris commun (Le constat + Pour qui) */}
       <div className="lp-group lp-group-intro">
-        {/* 01 — Le constat */}
-        <div id="constat" data-roman-section data-roman="II"><WhyNow /></div>
-        {/* 02 — Pour qui */}
-        <div id="pour-qui" data-roman-section data-roman="III"><ForWho /></div>
+        {/* 02 — Le constat */}
+        <div id="constat" data-roman-section data-roman="02" data-roman-title="Le constat"><WhyNow /></div>
+        {/* 03 — Pour qui */}
+        <div id="pour-qui" data-roman-section data-roman="03" data-roman-title="Pour qui"><ForWho /></div>
       </div>
 
-      {/* 03 — Pourquoi Elevora (engagements) — vidéo brumeuse, transitions fondues */}
-      <div id="pourquoi" data-roman-section data-roman="IV" className="lp-group-engage"><EngagementsGrid /></div>
+      {/* 04 — Pourquoi Elevora (engagements) — vidéo brumeuse, transitions fondues */}
+      <div id="pourquoi" data-roman-section data-roman="04" data-roman-title="Pourquoi Elevora" className="lp-group-engage"><EngagementsGrid /></div>
 
-      {/* Parties 4+5 — fond commun (Manifeste + Réalisations) */}
+      {/* Parties 5+6 — fond commun (Manifeste + Réalisations) */}
       <div className="lp-group lp-group-work">
         {/* Manifeste */}
-        <div id="manifeste" data-roman-section data-roman="V"><Manifesto /></div>
-        {/* 04 — Réalisations */}
-        <div id="realisations" data-roman-section data-roman="VI" className="sec-warm"><ProjectShowcase /></div>
+        <div id="manifeste" data-roman-section data-roman="05" data-roman-title="Manifeste"><Manifesto /></div>
+        {/* 06 — Réalisations */}
+        <div id="realisations" data-roman-section data-roman="06" data-roman-title="Réalisations" className="sec-warm"><ProjectShowcase /></div>
       </div>
 
-      {/* 05 — Méthode (sombre) */}
-      <div id="methode" data-roman-section data-roman="VII" data-roman-tone="dark" className="sec-night"><MethodSteps /></div>
+      {/* 07 — Méthode (sombre) */}
+      <div id="methode" data-roman-section data-roman="07" data-roman-title="Notre méthode" data-roman-tone="dark" className="sec-night"><MethodSteps /></div>
 
-      {/* 06 — Témoignages */}
-      <div id="temoignages" data-roman-section data-roman="VIII" className="sec-warm"><TestimonialsSection /></div>
+      {/* 08 — Témoignages */}
+      <div id="temoignages" data-roman-section data-roman="08" data-roman-title="Témoignages" className="sec-warm"><TestimonialsSection /></div>
 
-      {/* FAQ */}
-      <div id="faq" data-roman-section data-roman="IX" className="sec-white"><FaqsSection /></div>
+      {/* 09 — FAQ */}
+      <div id="faq" data-roman-section data-roman="09" data-roman-title="FAQ" className="sec-white"><FaqsSection /></div>
 
       {/* Fil de chiffres romains — couvre intro + toutes les parties */}
       <RomanRail />

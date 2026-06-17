@@ -16,9 +16,7 @@ export default function MethodePage() {
         <div className="methode-hero-inner">
           <div className="methode-hero-content">
             <div className="methode-hero-meta">
-              <span className="methode-hero-num">04</span>
-              <span className="methode-hero-meta-line" />
-              <span className="methode-hero-meta-label">étapes · 6 à 10 semaines</span>
+              <span className="methode-hero-meta-label">4 étapes · 6 à 10 semaines</span>
             </div>
             <h1 className="methode-hero-title">
               De l'idée à la mise en ligne,<br />

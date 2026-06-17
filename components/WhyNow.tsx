@@ -41,7 +41,7 @@ export default function WhyNow() {
       <div className="lux-bg" aria-hidden="true" />
       <div className="container">
         <div className="whynow-head">
-          <span className="eyebrow">01 — Le constat</span>
+          <span className="eyebrow">02 — Le constat</span>
           <h2 className="whynow-title">
             Pourquoi un site, <span className="italic">pourquoi maintenant</span> ?
           </h2>

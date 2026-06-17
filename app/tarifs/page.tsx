@@ -135,8 +135,7 @@ export default function TarifsPage() {
           title={`Le juste prix,<br><span class="italic">annoncé d’avance.</span>`}
           lead="Pas de grille rigide, pas de prix gonflé. On part de votre besoin réel, on cadre le périmètre, et on vous remet un devis ferme. Voici nos points de départ."
           transparentBg
-          tall
-          topPadding={80}
+          topPadding={84}
         />
 
         {/* Nos points de départ */}

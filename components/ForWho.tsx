@@ -8,7 +8,7 @@ export default function ForWho() {
       <div className="lux-bg" aria-hidden="true" />
       <div className="container forwho-container">
         <BlurFade inView delay={0}>
-          <span className="eyebrow">02 — Pour qui</span>
+          <span className="eyebrow">03 — Pour qui</span>
         </BlurFade>
 
         <blockquote className="forwho-quote">

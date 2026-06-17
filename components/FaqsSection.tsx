@@ -24,7 +24,7 @@ const questions = [
     id: "item-3",
     title: "Combien coûte un site avec Elevora ?",
     content:
-      "Nos sites démarrent à 600 € TTC pour une landing, 1 000 € TTC pour un site vitrine et 1 500 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
+      "Nos sites démarrent à 600 € TTC pour une landing page, 1 000 € TTC pour un site vitrine et 1 500 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
   },
   {
     id: "item-4",
@@ -56,7 +56,6 @@ export function FaqsSection() {
       <div className="container faq-container">
         <div className="faq-head">
           <span className="eyebrow">
-            <span className="eyebrow-dot" aria-hidden="true" />
             09 — Questions fréquentes
           </span>
           <h2 className="faq-title">

@@ -8,7 +8,7 @@ export default function Manifesto() {
       <div className="lux-bg" aria-hidden="true" />
       <div className="container manifesto-container">
         <BlurFade inView delay={0}>
-          <span className="eyebrow">04 — Notre manifeste</span>
+          <span className="eyebrow">05 — Notre manifeste</span>
         </BlurFade>
         <BlurFade inView delay={0.08}>
           <h2 className="manifesto-title">

@@ -79,7 +79,7 @@ interface EngagementsGridProps {
   title?: React.ReactNode;
 }
 
-export default function EngagementsGrid({ eyebrow = '03 — Pourquoi Elevora', title }: EngagementsGridProps) {
+export default function EngagementsGrid({ eyebrow = '04 — Pourquoi Elevora', title }: EngagementsGridProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 

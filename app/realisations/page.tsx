@@ -19,14 +19,14 @@ const gradientSVG = (color1: string, color2: string, label: string) => {
 
 // Charte V2 : Bleu / Framboise / Nuit / Gris
 const GRID_ITEMS: ScrollTiltedGridItem[] = [
-  { src: gradientSVG('%231B4F8A', '%230D2B50', 'Bleu Klein'), caption: 'La signature' },
-  { src: gradientSVG('%23C9266A', '%238A1245', 'Framboise'), caption: "L'accent" },
   { src: gradientSVG('%23EAE9EE', '%23B8B8B8', 'Gris perle'), caption: 'Le fond' },
   { src: gradientSVG('%232B6CC4', '%231B4F8A', 'Bleu clair'), caption: "L'éclat" },
+  { src: gradientSVG('%231B4F8A', '%230D2B50', 'Bleu Klein'), caption: 'La signature' },
   { src: gradientSVG('%23E8527E', '%23C9266A', 'Rose framboise'), caption: 'La douceur' },
-  { src: gradientSVG('%231A1A2E', '%230D0D1A', 'Nuit'), caption: 'Le contraste' },
+  { src: gradientSVG('%23C9266A', '%238A1245', 'Framboise'), caption: "L'accent" },
   { src: gradientSVG('%23383838', '%237A7A7A', 'Gris foncé'), caption: "L'équilibre" },
   { src: gradientSVG('%230D2B50', '%231A1A2E', 'Nuit profonde'), caption: 'La profondeur' },
+  { src: gradientSVG('%231A1A2E', '%230D0D1A', 'Nuit'), caption: 'Le contraste' },
 ];
 
 export const metadata = {
@@ -41,7 +41,7 @@ type Project = {
   year: string;
   type: 'Site' | 'Outil métier';
   mission: string;
-  status: 'En production' | 'En développement' | 'Livré';
+  status: 'Livré' | 'En développement';
   intro: string;
   bullets: string[];
   highlights: { label: string; value: string }[];
@@ -59,7 +59,7 @@ const PROJECTS: Project[] = [
     year: '2026',
     type: 'Site',
     mission: 'Site vitrine complet',
-    status: 'En production',
+    status: 'Livré',
     intro:
       "Site vitrine kawaii pour une prothésiste ongulaire nantaise, pensé pour transformer ses visiteuses en rendez-vous fermes. Univers visuel cocon (couleurs pastel, photos rondes, micro-illustrations fraise) totalement personnalisé, et un système de cartes cadeaux qui ouvre un nouveau canal de vente.",
     bullets: [
@@ -74,7 +74,7 @@ const PROJECTS: Project[] = [
       { label: 'Mission', value: 'Vitrine + cartes cadeaux' },
       { label: 'Délai', value: '5 semaines' },
     ],
-    cover: '/projets/lily-berry-cover.jpg',
+    cover: '/projets/lily-berry-nails.png',
     details: ['/projets/lily-berry-prestations.jpg', '/projets/lily-berry-tarifs.jpg'],
     bg: '#FFE7EC',
   },
@@ -85,7 +85,7 @@ const PROJECTS: Project[] = [
     year: '2026',
     type: 'Site',
     mission: 'Site vitrine local',
-    status: 'En production',
+    status: 'Livré',
     intro:
       "Site sombre et impactant pour un garage indépendant agréé assurances de l'agglomération nazairienne. Direction artistique radicale (fond noir, accent orange, photo grand format) pour casser les codes du garage \"site Wix moyen\". L'appel direct et la note Google sont mis en avant dès le hero.",
     bullets: [
@@ -111,7 +111,7 @@ const PROJECTS: Project[] = [
     year: '2026',
     type: 'Site',
     mission: 'Refonte premium',
-    status: 'En production',
+    status: 'Livré',
     intro:
       "Refonte premium pour un institut parisien spécialisé en soins coréens (K-Beauty, Hydrafacial, Peau de verre). DA bordeaux profond + or, typographie Cochin italique, galerie immersive avec cartes inclinées 3D pour révéler l'institut en images. Mise en scène d'une technologie phare unique par carrousel élégant.",
     bullets: [
@@ -137,7 +137,7 @@ const PROJECTS: Project[] = [
     year: '2026',
     type: 'Outil métier',
     mission: 'CRM sur mesure',
-    status: 'En production',
+    status: 'Livré',
     intro:
       "Outil métier complet pour piloter un entrepôt en temps réel : commandes du jour, picking en cours, expéditions, taux d'erreur, classement opérateurs, heatmap d'activité. Conçu pour remplacer trois logiciels qui ne se parlaient pas. Interface dense mais lisible, alertes critiques toujours visibles, KPIs hebdo exportables PDF.",
     bullets: [
@@ -197,9 +197,7 @@ export default function RealisationsPage() {
                 <div className="reali-project-meta">
                   <span className="tag">{p.type}</span>
                   <span className="tag">{p.year}</span>
-                  <span className={`tag tag-status tag-status-${p.status === 'En production' ? 'live' : p.status === 'En développement' ? 'wip' : 'done'}`}>
-                    {p.status}
-                  </span>
+
                 </div>
                 <span className="reali-project-tagline">{p.tag}</span>
                 <h2 className="reali-project-name">{p.name}</h2>

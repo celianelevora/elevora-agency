@@ -93,7 +93,7 @@ function HeroPourQui() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         {/* HERO */}
-        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: 'calc(100vh + 76px)', paddingTop: 'clamp(190px, 25vh, 310px)', paddingBottom: 64 }}>
+        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: 'calc(100vh + 76px)', paddingTop: 'clamp(116px, 14vh, 188px)', paddingBottom: 64 }}>
           <motion.span variants={item} className="svc-eyebrow" style={{ color: 'var(--klein)', marginBottom: 26 }}>Site e-commerce</motion.span>
           <motion.h1 variants={item} style={{ margin: '18px 0 30px', maxWidth: 860, color: 'var(--ink)', lineHeight: 1.02 }}>
             Vendez en ligne.<br />
@@ -290,11 +290,22 @@ export default function EcommerceClient() {
 /* ---------------------------------------------------------------- */
 const ECOM_CSS = `
 /* Pour qui — entête + liste verticale */
-.ecom-pourqui { display: grid; grid-template-columns: minmax(0,0.85fr) minmax(0,1.15fr); gap: clamp(40px,6vw,90px); align-items: start; }
+.ecom-pourqui { display: grid; grid-template-columns: minmax(0,0.85fr) minmax(0,1.15fr); gap: clamp(40px,6vw,90px); align-items: start;
+  /* Le hero est forcé à 100vh : on garantit TOUJOURS une respiration avant
+     pour-qui (l'image continue derrière, donc ce padding ne montre que l'image). */
+  padding-top: clamp(40px, 6vh, 88px); }
 .ecom-aud { padding: 26px 0; }
 .ecom-aud:first-child { padding-top: 0; }
 .ecom-aud__row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
-@media (max-width: 880px) { .ecom-pourqui { grid-template-columns: 1fr; gap: 44px; } }
+@media (max-width: 880px) { .ecom-pourqui { grid-template-columns: 1fr; gap: 44px; padding-top: clamp(48px, 11vw, 80px); } }
+/* Écrans COURTS (ex. laptop 1366×768) : le hero 100vh laisse peu d'espace sous lui.
+   On cible la hauteur (pas la largeur) pour rétablir la séparation sur ces écrans. */
+@media (max-height: 820px) {
+  .ecom-pourqui { padding-top: clamp(56px, 10vh, 104px); }
+}
+@media (max-width: 880px) {
+  .ecom-pourqui { padding-top: clamp(56px, 11vw, 88px); }
+}
 
 /* Bandeau de chiffres */
 .ecom-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }

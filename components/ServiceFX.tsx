@@ -364,7 +364,7 @@ export function RevealText({
         return (
           <span
             key={i}
-            style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'top' }}
+            style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom' }}
           >
             <motion.span
               style={{

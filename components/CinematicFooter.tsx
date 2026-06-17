@@ -114,8 +114,9 @@ const STYLES = `
   align-items: center;
   justify-content: center;
   /* padding bas généreux : laisse respirer le filigrane ELEVORA et donne
-     une assise propre au footer navy (carte arrondie) qui suit juste après. */
-  padding: clamp(124px, 19vh, 208px) 24px clamp(140px, 20vh, 220px);
+     une assise propre au footer navy (carte arrondie) qui suit juste après.
+     Top resserré pour que le marquee serve de raccord visuel avec la FAQ. */
+  padding: clamp(92px, 13vh, 150px) 24px clamp(140px, 20vh, 220px);
   background: var(--cream, #EAE9EE);
   color: var(--ink, #1A1A2E);
   font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;

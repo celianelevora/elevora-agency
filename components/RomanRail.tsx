@@ -14,12 +14,12 @@ import { useEffect, useRef, useState } from "react";
    ============================================================ */
 
 const ROMAN = [
-  "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
+  "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
 ];
 
 /* Titres lisibles affichés au survol d'un chiffre (un seul à la fois). */
 const TITLES: Record<string, string> = {
-  intro: "Accueil",
+  intro: "La promesse",
   constat: "Le constat",
   "pour-qui": "Pour qui ?",
   pourquoi: "Nos engagements",

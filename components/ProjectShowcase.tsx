@@ -16,7 +16,7 @@ const PROJECTS: Project[] = [
     name: 'Lily Berry',
     tag: 'Nail Artist · Nantes',
     catchphrase: "Site vitrine kawaii avec prise de RDV en ligne et système de cartes cadeaux.",
-    cover: '/projets/lily-berry-cover.jpg',
+    cover: '/projets/lily-berry-nails.png',
     span: 'large',
     bg: '#FFE7EC',
   },
@@ -54,13 +54,11 @@ export default function ProjectShowcase() {
     <section className="projects-section">
       <div className="container">
         <div className="projects-head">
-          <div>
-            <span className="eyebrow">05 — Réalisations</span>
-            <h2 className="projects-title">
-              Ce qu'on a livré<br />
-              <span className="italic">jusqu'ici.</span>
-            </h2>
-          </div>
+          <span className="eyebrow">06 — Réalisations</span>
+          <h2 className="projects-title">
+            Ce qu'on a livré<br />
+            <span className="italic">jusqu'ici.</span>
+          </h2>
           <Link href="/realisations" className="projects-cta">
             Voir tous les projets
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

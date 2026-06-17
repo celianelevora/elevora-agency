@@ -139,15 +139,15 @@ export default function VitrineClient() {
                 <Reveal key={p.t} delay={i * 0.12} className="vit-aud__col">
                   <span className="vit-aud__glow" aria-hidden />
                   <DrawLine delay={i * 0.12 + 0.2} color="var(--klein-bright)" mb={28} />
-                  <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 17, color: 'var(--pink)', marginBottom: 14 }}>{p.kw}</div>
-                  <h3 style={{ fontSize: 'clamp(21px,2.1vw,26px)', fontWeight: 500, marginBottom: 14, lineHeight: 1.16, color: '#EAE9EE' }}>{p.t}</h3>
+                  <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(26px,2.8vw,36px)', color: 'var(--pink)', marginBottom: 10, lineHeight: 1.1 }}>{p.kw}</div>
+                  <h3 style={{ fontSize: 'clamp(14px,1.4vw,17px)', fontWeight: 500, marginBottom: 14, lineHeight: 1.28, color: 'rgba(234,233,238,.72)', textTransform: 'uppercase', letterSpacing: '.06em' }}>{p.t}</h3>
                   <p style={{ fontSize: 15, lineHeight: 1.72, color: 'rgba(234,233,238,.72)' }}>{p.d}</p>
                 </Reveal>
               ))}
             </div>
 
             <Reveal delay={0.2}>
-              <p style={{ marginTop: 58, fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(20px,2.1vw,27px)', color: 'rgba(234,233,238,.82)', maxWidth: 760, lineHeight: 1.38 }}>
+              <p className="vit-pourquoi-outro">
                 {POURQUOI_OUTRO}
               </p>
             </Reveal>
@@ -214,7 +214,8 @@ export default function VitrineClient() {
             <Reveal>
               <span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Le socle technique</span>
             </Reveal>
-            <RevealText as="h2" text="Les bonnes technos. Pas les plus à la mode." emphasis="bonnes" style={{ margin: '22px 0 24px', ...H2('clamp(30px,3.9vw,50px)') }} />
+            <RevealText as="h2" text="Les bonnes technos." emphasis="bonnes" style={{ margin: '22px 0 0', ...H2('clamp(30px,3.9vw,50px)') }} />
+            <RevealText as="h2" text="Pas les plus à la mode." emphasis="" delay={0.1} style={{ margin: '0 0 24px', ...H2('clamp(30px,3.9vw,50px)') }} />
             <Reveal delay={0.15}>
               <p style={{ fontSize: 16.5, lineHeight: 1.75, color: 'var(--ink-soft)', maxWidth: 440 }}>{SOCLE_LEAD}</p>
             </Reveal>
@@ -302,6 +303,19 @@ export default function VitrineClient() {
 
 /* ---------------------------------------------------------------- */
 const VITRINE_CSS = `
+/* Phrase de synthèse "Pour qui" — sur une seule ligne en desktop, wrap en mobile */
+.vit-pourquoi-outro {
+  margin-top: 58px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2vw, 24px);
+  color: rgba(234,233,238,.82);
+  line-height: 1.38;
+  white-space: nowrap;
+}
+@media (max-width: 960px) {
+  .vit-pourquoi-outro { white-space: normal; font-size: 19px; max-width: 640px; }
+}
 /* Pour qui — galerie 3 colonnes */
 .vit-aud { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
 .vit-aud__col { position: relative; padding: 4px 38px; border-left: 0.5px solid rgba(234,233,238,.14); transition: transform .45s cubic-bezier(.22,1,.36,1); overflow: hidden; }

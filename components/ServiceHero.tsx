@@ -55,7 +55,9 @@ export default function ServiceHero({
   });
   const imgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  // On ne fade plus le contenu au scroll (problème sur petits écrans : le texte
+  // disparaissait trop tôt car 70% du scroll se produisait rapidement)
+  const contentOpacity = useTransform(scrollYProgress, [0, 1], [1, 1]);
 
   const isDark = theme === 'dark';
   const ink = isDark ? '#EAE9EE' : 'var(--ink)';
@@ -176,7 +178,7 @@ export default function ServiceHero({
   // sur TOUTES les pages de service, quel que soit le mode (image hero seule ou
   // hero + partie 2). Le hero remplit le viewport pour qu'aucune section suivante
   // ne depasse sous une coupure nette.
-  const HERO_TOP = 'clamp(190px, 25vh, 310px)';
+  const HERO_TOP = 'clamp(116px, 14vh, 188px)';
   const heroScreen = {
     minHeight: 'calc(100vh + 76px)',
     paddingTop: HERO_TOP,

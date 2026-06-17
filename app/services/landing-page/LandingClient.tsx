@@ -25,7 +25,7 @@ const ANATOMIE = [
   { t: 'Une accroche qui claque', d: 'Les 3 premières secondes décident de tout. On écrit un titre qui capte et donne envie de lire la suite.' },
   { t: 'Une promesse claire', d: 'Le visiteur doit comprendre en un instant ce qu’il gagne. Pas de jargon, pas de flou : un bénéfice net.' },
   { t: 'La preuve qui rassure', d: 'Témoignages, chiffres, logos clients. On lève les doutes avant même qu’ils n’apparaissent.' },
-  { t: 'Un seul appel à l’action', d: 'Une landing = un objectif. Tout converge vers un bouton, répété au bon moment, impossible à manquer.' },
+  { t: 'Un seul appel à l’action', d: 'Une landing page = un objectif. Tout converge vers un bouton, répété au bon moment, impossible à manquer.' },
 ];
 
 const USAGES = [
@@ -43,7 +43,7 @@ const INCLUS = [
 const TARIF_NOTE = 'Idéale pour une campagne, un lancement ou une publicité. Paiement en deux fois possible, devis ferme renvoyé sous 5 jours.';
 
 const FAQ = [
-  { q: 'Pourquoi une landing plutôt qu’une page de mon site ?', a: 'Parce qu’une landing n’a qu’un seul objectif et zéro distraction : pas de menu, pas de liens qui font fuir. Tout est calibré pour transformer le visiteur en contact ou en client.' },
+  { q: 'Pourquoi une landing page plutôt qu’une page de mon site ?', a: 'Parce qu’une landing page n’a qu’un seul objectif et zéro distraction : pas de menu, pas de liens qui font fuir. Tout est calibré pour transformer le visiteur en contact ou en client.' },
   { q: 'Le tarif de 600 € est-il vraiment tout compris ?', a: 'Oui : design, copywriting, tracking, connexion à votre CRM et test A/B au lancement. Le seul variable, c’est si vous voulez plusieurs versions de page ou une intégration spécifique.' },
   { q: 'En combien de temps ma page est-elle en ligne ?', a: 'De deux à quatre semaines selon l’ampleur du projet et votre réactivité sur les contenus. Pour une page simple et pressée, on peut tenir la semaine en express ; on s’aligne toujours sur l’échéance de votre campagne.' },
   { q: 'Comment je sais si elle convertit ?', a: 'On pose le tracking et les analytics dès le départ, et on peut lancer un test A/B. Vous voyez vos chiffres en clair : visites, conversions, coût par contact.' },
@@ -103,7 +103,7 @@ export default function LandingClient() {
           </>
         }
         lead="Idéale pour une campagne, un lancement, un événement. Chaque élément est pensé pour transformer le visiteur en lead, puis en client."
-        primary={{ label: 'Créer ma landing', href: '/contact' }}
+        primary={{ label: 'Créer ma landing page', href: '/contact' }}
         secondary={{ label: 'Voir nos réalisations', href: '/realisations' }}
         tags={['Copywriting', 'A/B test', 'À partir de 600 € TTC']}
       />
@@ -112,7 +112,7 @@ export default function LandingClient() {
       <SectionBg image={`${IMG}/img-2.webp`} scrim="light-strong" parallax={50} py={150} glow="blush">
         <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'var(--pink)', justifyContent: 'center' }}>Le principe</span></Reveal>
-          <RevealText as="h2" text="Un site disperse l’attention. Une landing la concentre." emphasis="concentre." style={{ margin: '24px 0 28px', ...H2('clamp(31px,4.4vw,56px)') }} />
+          <RevealText as="h2" text="Un site disperse l’attention. Une landing page la concentre." emphasis="concentre." style={{ margin: '24px 0 28px', ...H2('clamp(31px,4.4vw,56px)') }} />
           <Reveal delay={0.2}>
             <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--ink-soft)', maxWidth: 600, margin: '0 auto' }}>
               Pas de menu qui distrait, pas de lien qui fait fuir. Juste un message, une promesse, une action. C’est cette concentration qui fait grimper vos conversions.
@@ -156,7 +156,7 @@ export default function LandingClient() {
               1 semaine
             </div>
           </Reveal>
-          <RevealText as="h2" text="Votre landing en ligne dès une semaine." emphasis="semaine." style={{ margin: '0 0 24px', color: '#EAE9EE', ...H2('clamp(26px,3.4vw,42px)') }} />
+          <RevealText as="h2" text="Votre landing page en ligne dès une semaine." emphasis="semaine." style={{ margin: '0 0 24px', color: '#EAE9EE', ...H2('clamp(26px,3.4vw,42px)') }} />
           <Reveal delay={0.2}>
             <p style={{ fontSize: 17, lineHeight: 1.75, color: 'rgba(234,233,238,.76)', maxWidth: 540, margin: '0 auto' }}>
               Pour une page simple, on tient le délai d’une semaine. Sur un projet plus riche, comptez 2 à 4 semaines maximum — copywriting, design, tracking et mise en ligne compris.
@@ -225,8 +225,8 @@ export default function LandingClient() {
         noBleed
         eyebrow="On lance ?"
         title={`Une campagne en vue ?<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 500;">Donnons-lui une page.</span>`}
-        description="Premier échange gratuit. Dites-nous votre objectif, on vous propose la landing qui convertit — et le devis sous 5 jours."
-        primaryLabel="Créer ma landing"
+        description="Premier échange gratuit. Dites-nous votre objectif, on vous propose la landing page qui convertit — et le devis sous 5 jours."
+        primaryLabel="Créer ma landing page"
         secondaryLabel="Voir la méthode"
         secondaryHref="/methode"
         showContactInfo
@@ -253,7 +253,7 @@ const LAND_CSS = `
 }
 
 /* Frise verticale (segments connectés, fin nette au dernier nœud) */
-.land-anat { position: relative; max-width: 760px; margin: 0 auto; }
+.land-anat { position: relative; max-width: 980px; margin: 0 auto; }
 .land-anat__step { position: relative; display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: flex-start; padding-bottom: 46px; }
 .land-anat__step:last-child { padding-bottom: 0; }
 .land-anat__seg { position: absolute; top: 28px; left: 27px; width: 2px; height: 100%; background: linear-gradient(180deg, var(--klein-bright), var(--pink)); transform-origin: top; border-radius: 2px; z-index: 0; }
@@ -279,6 +279,10 @@ const LAND_CSS = `
 }
 .land-anat__step:hover .land-anat__node > span { color: var(--pink); }
 .land-anat__txt { padding-top: 7px; }
+.land-anat__txt p { white-space: nowrap; }
+@media (max-width: 1040px) {
+  .land-anat__txt p { white-space: normal; text-wrap: pretty; }
+}
 
 /* Usages — colonnes éditoriales */
 .land-usages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }

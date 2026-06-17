@@ -57,7 +57,7 @@ export default function Header() {
             >
               <a
                 href="#"
-                className="hdr-link has-dropdown"
+                className={`hdr-link has-dropdown${pathname.startsWith('/services') ? ' is-active' : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
                   setServicesOpen((o) => !o);
@@ -71,33 +71,33 @@ export default function Header() {
                 </svg>
               </a>
               <div className={`hdr-dropdown-menu hdr-dropdown-menu-wide ${servicesOpen ? 'open' : ''}`}>
-                <Link href="/services/site-vitrine" className="hdr-dropdown-item" onClick={closeServices}>
+                <Link href="/services/site-vitrine" className={`hdr-dropdown-item${pathname === '/services/site-vitrine' ? ' is-active' : ''}`} onClick={closeServices}>
                   <span className="item-title">Site Vitrine</span>
                   <span className="item-sub">Présentez votre activité avec élégance</span>
                 </Link>
-                <Link href="/services/site-ecommerce" className="hdr-dropdown-item" onClick={closeServices}>
+                <Link href="/services/site-ecommerce" className={`hdr-dropdown-item${pathname === '/services/site-ecommerce' ? ' is-active' : ''}`} onClick={closeServices}>
                   <span className="item-title">Site E-commerce</span>
                   <span className="item-sub">Vendez en ligne, simplement</span>
                 </Link>
-                <Link href="/services/landing-page" className="hdr-dropdown-item" onClick={closeServices}>
+                <Link href="/services/landing-page" className={`hdr-dropdown-item${pathname === '/services/landing-page' ? ' is-active' : ''}`} onClick={closeServices}>
                   <span className="item-title">Landing page</span>
                   <span className="item-sub">Une page qui convertit</span>
                 </Link>
-                <Link href="/services/application-web-mobile" className="hdr-dropdown-item" onClick={closeServices}>
+                <Link href="/services/application-web-mobile" className={`hdr-dropdown-item${pathname === '/services/application-web-mobile' ? ' is-active' : ''}`} onClick={closeServices}>
                   <span className="item-title">Application</span>
                   <span className="item-sub">Web & mobile sur mesure</span>
                 </Link>
-                <Link href="/services/crm-outil-de-gestion" className="hdr-dropdown-item" onClick={closeServices}>
+                <Link href="/services/crm-outil-de-gestion" className={`hdr-dropdown-item${pathname === '/services/crm-outil-de-gestion' ? ' is-active' : ''}`} onClick={closeServices}>
                   <span className="item-title">CRM & Outil de gestion</span>
                   <span className="item-sub">Pilotez votre activité</span>
                 </Link>
               </div>
             </div>
-            <Link href="/realisations" className="hdr-link" onClick={closeMenu}>Réalisations</Link>
-            <Link href="/methode" className="hdr-link" onClick={closeMenu}>Méthode</Link>
-            <Link href="/tarifs" className="hdr-link" onClick={closeMenu}>Tarifs</Link>
-            <Link href="/agence" className="hdr-link" onClick={closeMenu}>Agence</Link>
-            <Link href="/contact" className="hdr-link" onClick={closeMenu}>Contact</Link>
+            <Link href="/realisations" className={`hdr-link${pathname === '/realisations' ? ' is-active' : ''}`} onClick={closeMenu}>Réalisations</Link>
+            <Link href="/methode" className={`hdr-link${pathname === '/methode' ? ' is-active' : ''}`} onClick={closeMenu}>Méthode</Link>
+            <Link href="/tarifs" className={`hdr-link${pathname === '/tarifs' ? ' is-active' : ''}`} onClick={closeMenu}>Tarifs</Link>
+            <Link href="/agence" className={`hdr-link${pathname === '/agence' ? ' is-active' : ''}`} onClick={closeMenu}>Agence</Link>
+            <Link href="/contact" className={`hdr-link${pathname === '/contact' ? ' is-active' : ''}`} onClick={closeMenu}>Contact</Link>
           </nav>
 
           {/* CTA droite — toujours dans le DOM, masque proprement en CSS au scroll
