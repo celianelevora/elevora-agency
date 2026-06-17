@@ -72,7 +72,7 @@ export default function Manifesto() {
           <BlurFade inView delay={0.05}>
             <p className="manifesto-text">
               Ce qu'on vous promet en retour&nbsp;: vous parlez à un humain
-              (Celian, fondateur — pas un commercial qui passe la main après la
+              (Célian, fondateur — pas un commercial qui passe la main après la
               signature), un seul interlocuteur du devis à la mise en ligne, et un
               engagement clair sur les délais, le prix et la qualité. Pas de bla-bla.
             </p>
@@ -81,7 +81,7 @@ export default function Manifesto() {
           <BlurFade inView delay={0.05}>
             <div className="manifesto-signature">
               <div className="manifesto-signature-text">
-                <span className="manifesto-signature-name">Celian Soulet Lapetina</span>
+                <span className="manifesto-signature-name">Célian Soulet Lapetina</span>
                 <span className="manifesto-signature-role">Fondateur d'Elevora</span>
               </div>
             </div>

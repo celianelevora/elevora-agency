@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { StaggerText } from '@/components/ui/stagger-text';
 
 interface Project {
   slug: string;
@@ -16,7 +19,7 @@ const PROJECTS: Project[] = [
     name: 'Lily Berry',
     tag: 'Nail Artist · Nantes',
     catchphrase: "Site vitrine kawaii avec prise de RDV en ligne et système de cartes cadeaux.",
-    cover: '/projets/lily-berry-nails.png',
+    cover: '/projets/lily-berry.png',
     span: 'large',
     bg: '#FFE7EC',
   },
@@ -56,8 +59,8 @@ export default function ProjectShowcase() {
         <div className="projects-head">
           <span className="eyebrow">06 — Réalisations</span>
           <h2 className="projects-title">
-            Ce qu'on a livré<br />
-            <span className="italic">jusqu'ici.</span>
+            <StaggerText text="Ce qu'on a livré" /><br />
+            <span className="italic"><StaggerText text="jusqu'ici." /></span>
           </h2>
           <Link href="/realisations" className="projects-cta">
             Voir tous les projets
@@ -96,7 +99,12 @@ function ProjectCard({ project }: { project: Project }) {
     >
       <div className="project-cover">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={project.cover} alt={project.name} />
+        <img
+          src={project.cover}
+          alt={`${project.name} — ${project.tag}, projet web réalisé par Elevora`}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className="project-info">
         <div className="project-info-head">

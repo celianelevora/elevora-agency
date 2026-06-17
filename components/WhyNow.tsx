@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { StaggerText } from '@/components/ui/stagger-text';
+import { BlurFade } from '@/components/ui/blur-fade';
 
 const POINTS = [
   {
@@ -43,13 +45,17 @@ export default function WhyNow() {
         <div className="whynow-head">
           <span className="eyebrow">02 — Le constat</span>
           <h2 className="whynow-title">
-            Pourquoi un site, <span className="italic">pourquoi maintenant</span> ?
+            <StaggerText text="Pourquoi un site, " />
+            <span className="italic"><StaggerText text="pourquoi maintenant" /></span>
+            <StaggerText text=" ?" />
           </h2>
-          <p className="whynow-lead">
-            On ne va pas vous mentir : refondre son site ou changer ses outils,
-            ce n'est jamais le bon moment. Sauf que pendant qu'on attend, le
-            monde, lui, n'attend pas.
-          </p>
+          <BlurFade inView delay={0.1}>
+            <p className="whynow-lead">
+              On ne va pas vous mentir : refondre son site ou changer ses outils,
+              ce n'est jamais le bon moment. Sauf que pendant qu'on attend, le
+              monde, lui, n'attend pas.
+            </p>
+          </BlurFade>
         </div>
 
         <div className="whynow-grid">

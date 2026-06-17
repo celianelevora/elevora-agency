@@ -172,9 +172,11 @@ export const CircularTestimonials = ({
             <img
               key={testimonial.src}
               src={testimonial.src}
-              alt={testimonial.name}
+              alt={`${testimonial.name}, client Elevora — avis sur le projet livré`}
               className="testimonial-image"
               data-index={index}
+              loading="lazy"
+              decoding="async"
               style={getImageStyle(index)}
             />
           ))}

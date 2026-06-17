@@ -42,7 +42,7 @@ export default function Header() {
         <div className={`bar ${menuOpen ? 'menu-open' : ''}`}>
           {/* Logo */}
           <Link href="/" className="hdr-logo" onClick={closeMenu} aria-label="Elevora — Accueil">
-            <Image src="/logo-elevora.png" alt="Elevora" width={300} height={42} priority />
+            <Image src="/logo-elevora.png" alt="Logo Elevora, agence digitale à Nantes" width={300} height={42} priority />
             <span className="hdr-logo-tag">Agence digitale Nantes</span>
           </Link>
 

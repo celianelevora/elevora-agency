@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BlurFade } from '@/components/ui/blur-fade';
 
 type CTAProp = { label: string; href: string };
 type StatProp = {
@@ -85,18 +86,23 @@ export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgI
         </>
       )}
       <div className="container" style={{ position: 'relative', zIndex: 2, paddingLeft: leftOffset > 0 ? `${leftOffset}%` : undefined }}>
-        <h1
-          style={{ margin: '0 0 28px', maxWidth: 880 }}
-          dangerouslySetInnerHTML={{ __html: title }}
-        />
+        <BlurFade delay={0} yOffset={10} blur="8px" duration={0.6}>
+          <h1
+            style={{ margin: '0 0 28px', maxWidth: 880 }}
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+        </BlurFade>
 
         {lead && (
-          <p className="lead" style={{ marginBottom: 44 }}>
-            {lead}
-          </p>
+          <BlurFade delay={0.14} yOffset={8} duration={0.6}>
+            <p className="lead" style={{ marginBottom: 44 }}>
+              {lead}
+            </p>
+          </BlurFade>
         )}
 
         {(primaryCTA || secondaryCTA) && (
+          <BlurFade delay={0.26} yOffset={8} duration={0.6}>
           <div
             style={{
               display: 'flex',
@@ -121,9 +127,11 @@ export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgI
               </Link>
             )}
           </div>
+          </BlurFade>
         )}
 
         {stats && (
+          <BlurFade delay={0.34} yOffset={8} duration={0.6}>
           <div
             style={{
               display: 'grid',
@@ -155,6 +163,7 @@ export default function Hero({ title, lead, primaryCTA, secondaryCTA, stats, bgI
               </div>
             ))}
           </div>
+          </BlurFade>
         )}
       </div>
     </section>

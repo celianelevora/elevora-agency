@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { type Transition, type HTMLMotionProps, motion, useInView } from 'framer-motion';
+import { type Transition, type HTMLMotionProps, motion, useInView, useReducedMotion } from 'framer-motion';
 
 /* ----------------------------------------------------------------------------
    StaggerText — animation lettre par lettre, declenchee au scroll.
@@ -83,8 +83,19 @@ export function StaggerText({
 }: StaggerTextProps) {
   const ref = React.useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, amount });
+  const prefersReducedMotion = useReducedMotion();
   const words = text.split(' ');
   const charTransition: Transition = transition ?? { ease: DEFAULT_EASE, duration: 0.5 };
+
+  // Accessibilite : si l'utilisateur a demande moins de mouvement, on rend le
+  // texte directement dans son etat final, sans animation lettre par lettre.
+  if (prefersReducedMotion) {
+    return (
+      <span className={className} style={{ display: 'inline-block', ...((rest.style as React.CSSProperties) ?? {}) }}>
+        {text}
+      </span>
+    );
+  }
 
   return (
     <motion.span

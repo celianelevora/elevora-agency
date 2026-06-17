@@ -49,10 +49,10 @@ export function CinematicFooter() {
         <span className="elv-cta-aurora elv-cta-aurora-2" aria-hidden="true" />
         <span className="elv-cta-giant" aria-hidden="true">ELEVORA</span>
 
-        {/* Marquee de marque (légèrement incliné) */}
+        {/* Marquee de marque (droit, defile en continu sans vide) */}
         <div className="elv-cta-marquee" aria-hidden="true">
           <div className="elv-cta-marquee-track">
-            {[0, 1].map((dup) => (
+            {[0, 1, 2, 3].map((dup) => (
               <div className="elv-cta-marquee-set" key={dup}>
                 {MARQUEE.map((m, i) => (
                   <span className="elv-cta-marquee-item" key={`${dup}-${i}`}>
@@ -181,7 +181,6 @@ const STYLES = `
 .elv-cta-marquee {
   position: absolute; top: clamp(18px, 3vh, 32px); left: -4%; z-index: 1;
   width: 108%;
-  transform: rotate(-2deg);
   border-top: 1px solid rgba(26,26,46,.10);
   border-bottom: 1px solid rgba(26,26,46,.10);
   background: rgba(255,255,255,.46);
@@ -200,7 +199,7 @@ const STYLES = `
 }
 .elv-cta-star { color: var(--c-framboise, #C9266A); margin: 0 2.4rem; font-size: .6rem; }
 .elv-cta-marquee-item:nth-child(2n) .elv-cta-star { color: var(--klein-bright, #2B6CC4); }
-@keyframes elvCtaMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes elvCtaMarquee { from { transform: translateX(0); } to { transform: translateX(-25%); } }
 
 /* Contenu central */
 .elv-cta-inner {
@@ -272,14 +271,16 @@ const STYLES = `
   border: 1px solid rgba(26,26,46,.14);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   box-shadow: 0 8px 22px -14px rgba(26,26,46,.4);
-  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease;
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease, transform .3s ease;
 }
 .elv-cta-btn-ghost:hover {
   background: rgba(255,255,255,.82);
   border-color: rgba(27,79,138,.4);
   color: var(--c-bleu, #1B4F8A);
   box-shadow: 0 14px 30px -14px rgba(27,79,138,.45);
+  transform: translateY(-2px);
 }
+.elv-cta-btn:active, .elv-cta-btn-ghost:active { transform: scale(0.97); }
 
 /* Pavés secondaires */
 .elv-cta-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }

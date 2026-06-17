@@ -70,7 +70,7 @@ const ENGAGEMENTS = [
     ),
     iconClass: 'icon-box-blue',
     title: 'Suivi 30 jours inclus',
-    desc: "Apres mise en ligne, on reste joignables : bugs, ajustements, formation. Vous n'etes pas largue.",
+    desc: "Après mise en ligne, on reste joignables : bugs, ajustements, formation. Vous n'êtes pas largué.",
   },
 ];
 

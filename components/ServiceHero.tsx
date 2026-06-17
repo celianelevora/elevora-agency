@@ -34,10 +34,6 @@ interface ServiceHeroProps {
   /** Contenu de la "partie 2" rendu SOUS le hero, sur la MEME image continue
       (img-1). Quand fourni, l'image couvre hero + partie 2 sans coupure. */
   below?: ReactNode;
-  /** Echelle de l'image de fond (defaut 1 = cover plein). <1 dezoome : l'image
-      retrecit vers le centre et les marges revelees prennent la baseColor (qui
-      correspond au navy/creme de base de l'image, donc fondu sans couture). */
-  imageScale?: number;
 }
 
 export default function ServiceHero({
@@ -51,7 +47,6 @@ export default function ServiceHero({
   tags,
   glow = false,
   below,
-  imageScale = 1,
 }: ServiceHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -214,8 +209,6 @@ export default function ServiceHero({
           backgroundPosition: 'center top',
           backgroundRepeat: 'no-repeat',
           y: imgY,
-          scale: imageScale,
-          transformOrigin: 'center',
           zIndex: 0,
         }}
       />

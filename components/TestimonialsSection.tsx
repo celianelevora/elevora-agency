@@ -1,14 +1,16 @@
 "use client";
 
 import { CircularTestimonials } from "@/components/ui/circular-testimonials";
+import { StaggerText } from "@/components/ui/stagger-text";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 const testimonials = [
   {
     quote:
       "Le site franchement c'est vraiment super, visuellement c'est vraiment mon univers, c'est super bluffant.",
     name: "Lily",
-    designation: "Lily Berry — Nail Artist · lala-k.elevora-agency.com",
-    src: "/testimonials/Testimonial1.jpg",
+    designation: "Lily Berry — Nail Artist · lily-berry.elevora-agency.com",
+    src: "/testimonials/Testimonial1.png",
   },
   {
     quote:
@@ -26,11 +28,15 @@ export default function TestimonialsSection() {
       <div className="testi-bg" aria-hidden="true" />
       <div className="container">
         <div className="faq-head">
-          <span className="eyebrow">
-            08 — Ils nous font confiance
-          </span>
+          <BlurFade inView delay={0}>
+            <span className="eyebrow">
+              08 — Ils nous font confiance
+            </span>
+          </BlurFade>
           <h2 className="faq-title">
-            Ce qu'en disent <em>nos clients</em>.
+            <StaggerText text="Ce qu'en disent " />
+            <em><StaggerText text="nos clients" /></em>
+            <StaggerText text="." />
           </h2>
         </div>
         <div className="testimonials-wrap">

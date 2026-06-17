@@ -6,6 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { StaggerText } from "@/components/ui/stagger-text";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 const questions = [
   {
@@ -55,15 +57,21 @@ export function FaqsSection() {
       <div className="faq-bg" aria-hidden="true" />
       <div className="container faq-container">
         <div className="faq-head">
-          <span className="eyebrow">
-            09 — Questions fréquentes
-          </span>
+          <BlurFade inView delay={0}>
+            <span className="eyebrow">
+              09 — Questions fréquentes
+            </span>
+          </BlurFade>
           <h2 className="faq-title">
-            Tout ce que vous vous <em>demandez</em>.
+            <StaggerText text="Tout ce que vous vous " />
+            <em><StaggerText text="demandez" /></em>
+            <StaggerText text="." />
           </h2>
-          <p className="faq-sub">
-            Vous ne trouvez pas votre réponse ? Écrivez-nous, on répond vite.
-          </p>
+          <BlurFade inView delay={0.12}>
+            <p className="faq-sub">
+              Vous ne trouvez pas votre réponse ? Écrivez-nous, on répond vite.
+            </p>
+          </BlurFade>
         </div>
 
         <Accordion

@@ -48,11 +48,21 @@ const BUDGETS = [
 export default function StartProjectForm() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [rgpdError, setRgpdError] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError(false);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    // Consentement RGPD obligatoire (le formulaire est en noValidate).
+    if (!formData.get('rgpd')) {
+      setRgpdError(true);
+      return;
+    }
+    setRgpdError(false);
     setSubmitting(true);
-    const formData = new FormData(e.currentTarget);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -60,12 +70,13 @@ export default function StartProjectForm() {
       });
       if (res.ok) {
         setSuccess(true);
-        e.currentTarget.reset();
+        form.reset();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        alert("Une erreur est survenue, merci de réessayer.");
+        setError(true);
       }
     } catch {
-      alert("Une erreur est survenue, merci de réessayer.");
+      setError(true);
     } finally {
       setSubmitting(false);
     }
@@ -88,6 +99,18 @@ export default function StartProjectForm() {
   return (
     <form className="form-card" onSubmit={handleSubmit} noValidate>
       <input type="hidden" name="form_type" value="start_project" />
+      {/* Honeypot anti-spam : invisible et inaccessible aux humains. Si rempli,
+          la requête est traitée comme un bot côté serveur. Nom neutre
+          (« confirm_field ») pour éviter que l'autofill du navigateur ne le
+          remplisse à la place d'un vrai visiteur. */}
+      <input
+        type="text"
+        name="confirm_field"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+      />
 
       {/* SECTION 1 — Vos coordonnées */}
       <div className="form-section">
@@ -96,18 +119,18 @@ export default function StartProjectForm() {
 
         <div className="form-grid-2">
           <div className="form-field">
-            <label className="form-label">Prénom *</label>
-            <input className="form-input" type="text" name="first_name" required />
+            <label className="form-label" htmlFor="first_name">Prénom *</label>
+            <input className="form-input" id="first_name" type="text" name="first_name" required />
           </div>
           <div className="form-field">
-            <label className="form-label">Nom *</label>
-            <input className="form-input" type="text" name="last_name" required />
+            <label className="form-label" htmlFor="last_name">Nom *</label>
+            <input className="form-input" id="last_name" type="text" name="last_name" required />
           </div>
         </div>
 
         <div className="form-field">
-          <label className="form-label">Adresse email *</label>
-          <input className="form-input" type="email" name="email" required />
+          <label className="form-label" htmlFor="email">Adresse email *</label>
+          <input className="form-input" id="email" type="email" name="email" required />
         </div>
 
         <PhoneInput name="phone" required label="Numéro de téléphone *" />
@@ -120,18 +143,18 @@ export default function StartProjectForm() {
 
         <div className="form-grid-2">
           <div className="form-field">
-            <label className="form-label">
+            <label className="form-label" htmlFor="company">
               Nom de l'entreprise
               <span className="form-optional"> (optionnel)</span>
             </label>
-            <input className="form-input" type="text" name="company" />
+            <input className="form-input" id="company" type="text" name="company" />
           </div>
           <div className="form-field">
-            <label className="form-label">
+            <label className="form-label" htmlFor="sector">
               Secteur d'activité
               <span className="form-optional"> (optionnel)</span>
             </label>
-            <input className="form-input" type="text" name="sector" placeholder="Ex. : Restauration, e-commerce…" />
+            <input className="form-input" id="sector" type="text" name="sector" placeholder="Ex. : Restauration, e-commerce…" />
           </div>
         </div>
       </div>
@@ -142,8 +165,8 @@ export default function StartProjectForm() {
         <p className="form-section-sub">Quel type de projet souhaitez-vous lancer ?</p>
 
         <div className="form-field">
-          <label className="form-label">Type de projet *</label>
-          <select className="form-select" name="project_type" required defaultValue="">
+          <label className="form-label" htmlFor="project_type">Type de projet *</label>
+          <select className="form-select" id="project_type" name="project_type" required defaultValue="">
             <option value="" disabled>Choisissez un type de projet…</option>
             {PROJECT_TYPES.map((t) => (
               <option key={t} value={t}>{t}</option>
@@ -152,9 +175,10 @@ export default function StartProjectForm() {
         </div>
 
         <div className="form-field">
-          <label className="form-label">Description du projet *</label>
+          <label className="form-label" htmlFor="description">Description du projet *</label>
           <textarea
             className="form-textarea"
+            id="description"
             name="description"
             required
             placeholder="Décrivez votre projet en quelques phrases : contexte, besoins, attentes principales…"
@@ -163,8 +187,8 @@ export default function StartProjectForm() {
         </div>
 
         <div className="form-field">
-          <label className="form-label">Objectif principal *</label>
-          <select className="form-select" name="objective" required defaultValue="">
+          <label className="form-label" htmlFor="objective">Objectif principal *</label>
+          <select className="form-select" id="objective" name="objective" required defaultValue="">
             <option value="" disabled>Choisissez un objectif…</option>
             {OBJECTIVES.map((o) => (
               <option key={o} value={o}>{o}</option>
@@ -174,18 +198,18 @@ export default function StartProjectForm() {
 
         <div className="form-grid-2">
           <div className="form-field">
-            <label className="form-label">
+            <label className="form-label" htmlFor="pages">
               Nombre de pages ou sections
               <span className="form-optional"> (optionnel)</span>
             </label>
-            <input className="form-input" type="text" name="pages" placeholder="Ex. : 5-10 pages" />
+            <input className="form-input" id="pages" type="text" name="pages" placeholder="Ex. : 5-10 pages" />
           </div>
           <div className="form-field">
-            <label className="form-label">
+            <label className="form-label" htmlFor="deadline">
               Date de lancement souhaitée
               <span className="form-optional"> (optionnel)</span>
             </label>
-            <input className="form-input" type="text" name="deadline" placeholder="Ex. : Q1 2026, dès que possible…" />
+            <input className="form-input" id="deadline" type="text" name="deadline" placeholder="Ex. : Q1 2026, dès que possible…" />
           </div>
         </div>
 
@@ -211,12 +235,13 @@ export default function StartProjectForm() {
         <p className="form-section-sub">Optionnel : ce que vous avez déjà.</p>
 
         <div className="form-field">
-          <label className="form-label">
+          <label className="form-label" htmlFor="branding">
             Identité visuelle existante
             <span className="form-optional"> (optionnel)</span>
           </label>
           <input
             className="form-input"
+            id="branding"
             type="text"
             name="branding"
             placeholder="Logo, couleurs, typographies, charte graphique… Précisez ce qui est déjà défini."
@@ -224,12 +249,13 @@ export default function StartProjectForm() {
         </div>
 
         <div className="form-field">
-          <label className="form-label">
+          <label className="form-label" htmlFor="inspirations">
             Exemples ou inspirations
             <span className="form-optional"> (optionnel)</span>
           </label>
           <input
             className="form-input"
+            id="inspirations"
             type="text"
             name="inspirations"
             placeholder="Liens vers des sites qui vous plaisent, références visuelles…"
@@ -237,12 +263,13 @@ export default function StartProjectForm() {
         </div>
 
         <div className="form-field">
-          <label className="form-label">
+          <label className="form-label" htmlFor="content">
             Contenus déjà disponibles
             <span className="form-optional"> (optionnel)</span>
           </label>
           <input
             className="form-input"
+            id="content"
             type="text"
             name="content"
             placeholder="Textes, photos, vidéos, catalogue produits, offres…"
@@ -258,11 +285,11 @@ export default function StartProjectForm() {
         </p>
 
         <div className="form-field">
-          <label className="form-label">
+          <label className="form-label" htmlFor="budget">
             Budget estimé
             <span className="form-optional"> (optionnel)</span>
           </label>
-          <select className="form-select" name="budget" defaultValue="">
+          <select className="form-select" id="budget" name="budget" defaultValue="">
             <option value="">Sélectionnez une fourchette…</option>
             {BUDGETS.map((b) => (
               <option key={b} value={b}>{b}</option>
@@ -271,12 +298,13 @@ export default function StartProjectForm() {
         </div>
 
         <div className="form-field">
-          <label className="form-label">
+          <label className="form-label" htmlFor="extra_message">
             Message complémentaire
             <span className="form-optional"> (optionnel)</span>
           </label>
           <textarea
             className="form-textarea"
+            id="extra_message"
             name="extra_message"
             placeholder="Une précision, une contrainte particulière, une question avant de démarrer…"
             rows={4}
@@ -284,12 +312,13 @@ export default function StartProjectForm() {
         </div>
 
         <div className="form-field">
-          <label className="form-label">
+          <label className="form-label" htmlFor="attachment">
             Pièce jointe
             <span className="form-optional"> (optionnel — brief, cahier des charges, mood-board…)</span>
           </label>
           <input
             className="form-input"
+            id="attachment"
             type="file"
             name="attachment"
             accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.zip"
@@ -298,15 +327,42 @@ export default function StartProjectForm() {
       </div>
 
       <div className="form-rgpd">
-        <label className="form-check" style={{ margin: 0 }}>
-          <input type="checkbox" name="rgpd" required />
+        <label className="form-check" style={{ margin: 0 }} htmlFor="rgpd">
+          <input
+            type="checkbox"
+            id="rgpd"
+            name="rgpd"
+            required
+            aria-invalid={rgpdError || undefined}
+            aria-describedby={rgpdError ? 'rgpd-error' : undefined}
+          />
           <span>
             J'accepte que mes informations soient traitées par Elevora dans le
             cadre de l'analyse de ma demande de projet, conformément à la{' '}
             <a href="/confidentialite">politique de confidentialité</a>. *
           </span>
         </label>
+        {rgpdError && (
+          <p
+            id="rgpd-error"
+            role="alert"
+            aria-live="polite"
+            style={{ color: 'var(--pink)', fontSize: 14, margin: '8px 0 0' }}
+          >
+            Vous devez accepter la politique de confidentialité pour envoyer le formulaire.
+          </p>
+        )}
       </div>
+
+      {error && (
+        <p
+          role="alert"
+          aria-live="polite"
+          style={{ color: 'var(--pink)', fontSize: 14, margin: '0 0 12px' }}
+        >
+          Une erreur est survenue, merci de réessayer.
+        </p>
+      )}
 
       <button type="submit" className="form-submit" disabled={submitting}>
         {submitting ? 'Envoi en cours…' : (

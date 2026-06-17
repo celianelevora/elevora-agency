@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
+import { StaggerText } from '@/components/ui/stagger-text';
+import { BlurFade } from '@/components/ui/blur-fade';
 
 const STEPS = [
   {
@@ -22,7 +24,7 @@ const STEPS = [
     label: 'Développement',
     title: 'On construit, vous suivez',
     desc: "Code propre, performances optimisées, environnement de test partagé pour suivre l'avancement en direct.",
-    duration: '~ 3-6 semaines',
+    duration: '~ 3-5 semaines',
   },
   {
     num: '04',
@@ -96,13 +98,16 @@ export default function MethodSteps() {
         <div className="method2-head">
           <span className="method2-eyebrow">07 — Notre méthode</span>
           <h2 className="method2-title">
-            De l'idée à la mise en ligne,<br />
-            un chemin <span className="italic">clair et balisé.</span>
+            <StaggerText text="De l'idée à la mise en ligne," /><br />
+            <StaggerText text="un chemin " />
+            <span className="italic"><StaggerText text="clair et balisé." /></span>
           </h2>
-          <p className="method2-intro">
-            Pas de zone d'ombre, pas de jargon. Chaque étape est cadrée, validée
-            avec vous, et vous savez en permanence où en est votre projet.
-          </p>
+          <BlurFade inView delay={0.1}>
+            <p className="method2-intro">
+              Pas de zone d'ombre, pas de jargon. Chaque étape est cadrée, validée
+              avec vous, et vous savez en permanence où en est votre projet.
+            </p>
+          </BlurFade>
         </div>
 
         <div className="method2-time">
