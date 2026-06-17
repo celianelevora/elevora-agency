@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { StaggerText } from '@/components/ui/stagger-text';
 
 interface Project {
@@ -98,12 +99,12 @@ function ProjectCard({ project }: { project: Project }) {
       style={{ ['--project-bg' as any]: project.bg }}
     >
       <div className="project-cover">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={project.cover}
           alt={`${project.name} — ${project.tag}, projet web réalisé par Elevora`}
-          loading="lazy"
-          decoding="async"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={{ objectFit: 'cover', objectPosition: 'center' }}
         />
       </div>
       <div className="project-info">

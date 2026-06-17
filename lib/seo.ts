@@ -154,32 +154,26 @@ export function faqSchema(items: FaqItem[]): Record<string, unknown> {
  * AggregateRating rattaché au node Organization (même @id → Google fusionne
  * les nodes). À rendre sur les pages qui exposent la preuve sociale (accueil,
  * réalisations), pas en site-wide.
- *
- * ⚠️ DÉSACTIVÉ : avec seulement 2 avis, l'AggregateRating n'est pas crédible
- * aux yeux de Google (et peut être pénalisant / déclencher un avertissement
- * Rich Results). À réactiver UNIQUEMENT lorsqu'on dispose de 10+ avis
- * vérifiables. Décommenter le bloc ci-dessous et ré-importer la fonction dans
- * app/page.tsx et app/realisations/page.tsx.
  */
-// export function aggregateRatingSchema(
-//   ratingValue: number,
-//   reviewCount: number,
-// ): Record<string, unknown> {
-//   return {
-//     '@context': 'https://schema.org',
-//     '@type': 'Organization',
-//     '@id': ORG_ID,
-//     name: SITE.name,
-//     url: SITE.url,
-//     aggregateRating: {
-//       '@type': 'AggregateRating',
-//       ratingValue: String(ratingValue),
-//       bestRating: '5',
-//       worstRating: '1',
-//       reviewCount: String(reviewCount),
-//     },
-//   };
-// }
+export function aggregateRatingSchema(
+  ratingValue: number,
+  reviewCount: number,
+): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: SITE.name,
+    url: SITE.url,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: String(ratingValue),
+      bestRating: '5',
+      worstRating: '1',
+      reviewCount: String(reviewCount),
+    },
+  };
+}
 
 export interface HowToStepInput {
   name: string;

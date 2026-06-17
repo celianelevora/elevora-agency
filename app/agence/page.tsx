@@ -1,13 +1,25 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StaggerText } from '@/components/ui/stagger-text';
 import CountUp from '@/components/ui/count-up';
 import ScrollRevealText from '@/components/ui/scroll-reveal-text';
 import { BlurFade } from '@/components/ui/blur-fade';
+import StructuredData from '@/components/StructuredData';
+import { breadcrumbSchema } from '@/lib/seo';
 
-export const metadata = {
-  title: "L'agence | Elevora",
-  description: "Trois personnes, une conviction : le web artisanal existe encore. Découvrez l'équipe derrière Elevora.",
+export const metadata: Metadata = {
+  title: { absolute: "L'agence Elevora — équipe web nantaise & artisanale" },
+  description:
+    "Découvrez Elevora : trois personnes, une conviction — le web artisanal existe encore. Une équipe nantaise, ses valeurs et sa façon de bâtir vos projets.",
+  alternates: { canonical: '/agence' },
+  openGraph: {
+    title: "L'agence Elevora — équipe web nantaise & artisanale",
+    description:
+      "Découvrez Elevora : trois personnes, une conviction — le web artisanal existe encore. Une équipe nantaise, ses valeurs et sa façon de bâtir vos projets.",
+    url: 'https://elevora-agency.com/agence',
+    type: 'website',
+  },
 };
 
 const FOUNDERS = [
@@ -146,6 +158,7 @@ function Icon({ name }: { name: string }) {
 export default function AgencePage() {
   return (
     <>
+      <StructuredData data={breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: "L'agence", path: '/agence' }])} />
       <style>{`
         /* ── Hero + Origine wrapper (image de fond commune) ─ */
         .agence-hero-origine {
@@ -342,23 +355,30 @@ export default function AgencePage() {
           max-width: 600px;
         }
         .agence-approche-link {
-          font-size: 15px; letter-spacing: 0.04em; font-weight: 500;
+          font-size: 14px; letter-spacing: 0.02em; font-weight: 500;
           color: var(--klein); text-decoration: none;
-          padding: 10px 20px;
-          border: 1.5px solid var(--klein);
+          padding: 13px 24px;
+          border: 1px solid rgba(27, 79, 138, 0.22);
           border-radius: 999px;
-          background: rgba(255,255,255,0.5);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          transition: all 0.3s var(--ease);
+          background: rgba(255, 255, 255, 0.62);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          box-shadow: 0 6px 18px -12px rgba(27, 79, 138, 0.4);
+          transition: background 0.35s var(--ease), border-color 0.35s var(--ease), color 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease), gap 0.35s var(--ease);
           display: inline-flex; align-items: center; gap: 9px;
           flex-shrink: 0;
         }
+        .agence-approche-link svg { transition: transform 0.35s var(--ease); }
         .agence-approche-link:hover {
           background: var(--klein);
           color: var(--cream);
+          border-color: var(--klein);
           gap: 13px;
+          transform: translateY(-2px);
+          box-shadow: 0 14px 30px -12px rgba(27, 79, 138, 0.5);
         }
+        .agence-approche-link:hover svg { transform: translateX(3px); }
+        .agence-approche-link:active { transform: scale(0.97); }
         .approche-grid {
           display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
           border-top: 1px solid var(--line);
@@ -792,9 +812,10 @@ export default function AgencePage() {
                 <div className="founder-photo-wrap">
                   <Image
                     src={f.photo}
-                    alt={`${f.prenom} ${f.nom}`}
+                    alt={`${f.prenom} ${f.nom}, ${f.role} d'Elevora`}
                     fill
                     sizes="(max-width: 900px) 100vw, 33vw"
+                    loading="lazy"
                   />
                   <div className="founder-photo-overlay" aria-hidden="true">
                     <p className="founder-photo-overlay-text">{f.hoverTagline}</p>

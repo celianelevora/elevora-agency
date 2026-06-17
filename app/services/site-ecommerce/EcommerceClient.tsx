@@ -104,14 +104,10 @@ function HeroPourQui() {
           </motion.p>
           <motion.div variants={item} style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
             <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
-              <Link href="/contact" style={{ background: 'var(--pink)', color: '#fff', padding: '16px 30px', borderRadius: 999, fontSize: 15, fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none', boxShadow: '0 16px 40px rgba(201,38,106,.4)' }}>
-                Lancer ma boutique<Arrow />
-              </Link>
+              <Link href="/contact" className="svc-cta"><span>Lancer ma boutique</span><Arrow /></Link>
             </motion.div>
             <motion.div whileHover={{ y: -3, scale: 1.03 }} whileTap={{ scale: 0.95 }} transition={{ type: 'spring', stiffness: 420, damping: 22 }} style={{ display: 'inline-flex' }}>
-              <Link href="/methode" style={{ color: 'var(--ink)', padding: '16px 28px', fontSize: 15, fontWeight: 500, border: '0.5px solid var(--line-strong)', borderRadius: 999, textDecoration: 'none', backdropFilter: 'blur(6px)', display: 'inline-flex' }}>
-                Voir la méthode
-              </Link>
+              <Link href="/methode" className="svc-cta-ghost"><span>Voir la méthode</span></Link>
             </motion.div>
           </motion.div>
           <motion.div variants={item} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}>
@@ -233,7 +229,7 @@ export default function EcommerceClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 420 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Obtenir mon devis<Arrow /></Link>
+                <Link href="/contact" className="svc-cta"><span>Obtenir mon devis</span><Arrow /></Link>
               </div>
             </Reveal>
           </div>

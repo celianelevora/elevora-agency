@@ -104,8 +104,8 @@ export default function CrmClient() {
         <div className="crm-prob">
           <div>
             <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Le problème</span></Reveal>
-            <RevealText as="h2" text="Vous avez essayé les outils du marché. Ils ne vous vont pas." emphasis="pas." style={{ margin: '22px 0 18px', ...H2('clamp(29px,3.8vw,48px)') }} />
-            <Reveal delay={0.15}><p style={{ fontSize: 16, lineHeight: 1.74, color: 'var(--ink-soft)', maxWidth: 360 }}>Un logiciel pensé pour tout le monde n’est jamais pensé pour vous.</p></Reveal>
+            <RevealText as="h2" text="Vous avez essayé les outils du marché. Ils ne vous vont pas." emphasis="pas" style={{ margin: '22px 0 18px', ...H2('clamp(29px,3.8vw,48px)') }} />
+            <Reveal delay={0.1}><p style={{ fontSize: 16, lineHeight: 1.74, color: 'var(--ink-soft)', maxWidth: 360 }}>Un logiciel pensé pour tout le monde n’est jamais pensé pour vous.</p></Reveal>
           </div>
           <div className="crm-prob__list">
             {PROBLEME.map((p, i) => (
@@ -125,7 +125,7 @@ export default function CrmClient() {
       <SectionBg image={`${IMG}/img-3.webp`} scrim="dark-strong" parallax={60} py={146} glow="klein-pink">
         <div style={{ maxWidth: 660, margin: '0 auto 56px', textAlign: 'center' }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)', justifyContent: 'center' }}>Ce qu’on développe</span></Reveal>
-          <RevealText as="h2" text="Tout ce qui vous fait gagner du temps." emphasis="temps." style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,50px)') }} />
+          <RevealText as="h2" text="Tout ce qui vous fait gagner du temps." emphasis="temps" style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,50px)') }} />
         </div>
         <div className="crm-rows">
           {CATEGORIES.map((c, i) => (
@@ -147,7 +147,7 @@ export default function CrmClient() {
       <SectionBg image={`${IMG}/img-4.webp`} scrim="light-strong" parallax={50} py={146} glow="blush">
         <div style={{ maxWidth: 660, margin: '0 auto 56px', textAlign: 'center' }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>SaaS vs sur-mesure</span></Reveal>
-          <RevealText as="h2" text="Le standard du marché, ou le vôtre." emphasis="le vôtre." style={{ margin: '22px 0 0', ...H2('clamp(29px,3.8vw,48px)') }} />
+          <RevealText as="h2" text="Le standard du marché, ou le vôtre." emphasis="vôtre" style={{ margin: '22px 0 0', ...H2('clamp(29px,3.8vw,48px)') }} />
         </div>
         <div className="crm-cmp">
           <div className="crm-cmp__head">
@@ -169,7 +169,7 @@ export default function CrmClient() {
       <SectionBg image={`${IMG}/img-5.webp`} scrim="dark-strong" parallax={68} py={150} glow="pink-klein">
         <div style={{ maxWidth: 660, marginBottom: 60 }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)' }}>Pourquoi le sur-mesure</span></Reveal>
-          <RevealText as="h2" text="Trois raisons de passer au sur-mesure." emphasis="sur-mesure." style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,48px)') }} />
+          <RevealText as="h2" text="Trois raisons de passer au sur-mesure." emphasis="sur-mesure" style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,48px)') }} />
         </div>
         <div className="crm-why">
           {RAISONS.map((r, i) => (
@@ -187,7 +187,7 @@ export default function CrmClient() {
         <div className="crm-price">
           <div>
             <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Tarif & délais</span></Reveal>
-            <RevealText as="h2" text="Un outil à vous, un budget cadré." emphasis="cadré." style={{ margin: '20px 0 36px', ...H2('clamp(29px,3.7vw,46px)') }} />
+            <RevealText as="h2" text="Un outil à vous, un budget cadré." emphasis="cadré" style={{ margin: '20px 0 36px', ...H2('clamp(29px,3.7vw,46px)') }} />
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>Budget</div>
               <div style={{ marginTop: 8 }}>
@@ -200,7 +200,7 @@ export default function CrmClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 420 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Discuter de mon outil<Arrow /></Link>
+                <Link href="/contact" className="svc-cta"><span>Discuter de mon outil</span><Arrow /></Link>
               </div>
             </Reveal>
           </div>

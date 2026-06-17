@@ -38,9 +38,9 @@
     --line-strong: rgba(26, 26, 46, 0.18);
     /* === TYPOGRAPHIE — CHARTE V2 ===
        Titres : Cochin (commercial, present sur Mac/iOS) -> fallback Cormorant Garamond
-       Corps  : Roboto */
+       Corps  : Satoshi (Fontshare) — Roboto/Google Fonts supprimes (charte Elevora) */
     --serif: 'Cochin', 'Nicolas Cochin', var(--font-playfair), 'Cormorant Garamond', Georgia, serif;
-    --sans: var(--font-roboto), 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --sans: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --max: 1280px;
     --gutter: 32px;
     --radius-sm: 6px;
@@ -114,6 +114,29 @@
   width: 24px;
   height: 1px;
   background: var(--ink-muted);
+}
+
+/* === Landing : eyebrows des sections 02 a 09 agrandis de 50% (12->18px, trait
+   24->36px, gap 10->15px). Scopé a .home-with-cinematic-footer pour ne PAS
+   toucher la section 01 ni les autres pages (agence, tarifs, services...). === */
+.home-with-cinematic-footer .whynow-head .eyebrow,
+.home-with-cinematic-footer .forwho-section .eyebrow,
+.home-with-cinematic-footer .eng-eyebrow,
+.home-with-cinematic-footer .manifesto-section .eyebrow,
+.home-with-cinematic-footer .projects-head .eyebrow,
+.home-with-cinematic-footer .method2-eyebrow,
+.home-with-cinematic-footer .faq-head .eyebrow {
+  font-size: 18px;
+  gap: 15px;
+}
+.home-with-cinematic-footer .whynow-head .eyebrow::before,
+.home-with-cinematic-footer .forwho-section .eyebrow::before,
+.home-with-cinematic-footer .eng-eyebrow::before,
+.home-with-cinematic-footer .manifesto-section .eyebrow::before,
+.home-with-cinematic-footer .projects-head .eyebrow::before,
+.home-with-cinematic-footer .method2-eyebrow::before,
+.home-with-cinematic-footer .faq-head .eyebrow::before {
+  width: 36px;
 }
 
 h1, h2, h3, h4, h5 {
@@ -6101,3 +6124,182 @@ html.cine-hero{
 .cta-final-secondary:active { transform: translateY(-1px) scale(0.97); }
 
 
+/* ============================================================
+   AMÉLIORATIONS ANIMATIONS & BOUTONS (v55+)
+   Ajouts non destructifs : reflet lumineux, press, ghost,
+   underline header, focus champs, CTA services unifiés.
+   ============================================================ */
+
+/* — Bouton submit formulaire : reflet lumineux glissant + press — */
+.form-submit { position: relative; overflow: hidden; isolation: isolate; }
+.form-submit::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.30) 48%, transparent 72%);
+  transform: translateX(-130%);
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.form-submit:hover::before { transform: translateX(130%); }
+.form-submit > * { position: relative; z-index: 1; }
+.form-submit:active { transform: translateY(0) scale(0.97); }
+
+/* — Press scale sur boutons primaires/ghost du footer cinématique — */
+.elv-cta-btn:active { transform: scale(0.97); }
+.elv-cta-btn-ghost { transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease, transform .3s ease; }
+.elv-cta-btn-ghost:hover { transform: translateY(-2px); }
+.elv-cta-btn-ghost:active { transform: scale(0.97); }
+
+/* — Boutons ghost / liens-flèche : léger soulèvement au hover — */
+.projects-cta { transition: gap 0.25s var(--ease), transform 0.3s var(--ease), color 0.25s var(--ease); }
+.projects-cta:hover { transform: translateY(-2px); }
+.agence-approche-link:hover { transform: translateY(-2px); }
+
+/* — Header : underline qui glisse de gauche à droite — */
+.hdr-link::after { transform-origin: left; }
+
+/* — Champs de formulaire : glow bleu Klein plus marqué au focus — */
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 3px rgba(27, 79, 138, 0.18), 0 0 0 1px var(--klein);
+}
+
+/* — CTA services unifiés (remplace les styles inline disparates) — */
+.svc-cta {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 30px; border-radius: 999px;
+  background: var(--klein); color: var(--cream);
+  font-family: var(--sans); font-size: 15px; font-weight: 600; letter-spacing: .01em;
+  text-decoration: none; cursor: pointer; border: none;
+  box-shadow: 0 12px 26px -10px rgba(27,79,138,.55);
+  transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s var(--ease), filter .35s ease;
+}
+.svc-cta::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.30) 48%, transparent 72%);
+  transform: translateX(-130%);
+  transition: transform .7s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.svc-cta:hover::before { transform: translateX(130%); }
+.svc-cta > * { position: relative; z-index: 1; }
+.svc-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 34px -10px rgba(27,79,138,.62); filter: brightness(1.04); }
+.svc-cta:active { transform: scale(0.97); }
+
+.svc-cta-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 28px; border-radius: 999px;
+  background: rgba(255,255,255,.55); color: var(--ink);
+  font-family: var(--sans); font-size: 15px; font-weight: 600; letter-spacing: .01em;
+  text-decoration: none; cursor: pointer;
+  border: 1px solid rgba(26,26,46,.16);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.svc-cta-ghost:hover { background: rgba(255,255,255,.82); border-color: rgba(27,79,138,.4); transform: translateY(-2px); box-shadow: 0 14px 30px -14px rgba(27,79,138,.45); }
+.svc-cta-ghost:active { transform: scale(0.97); }
+
+/* Focus clavier visible (WCAG 2.2 AA) sur les CTA services */
+.svc-cta:focus-visible,
+.svc-cta-ghost:focus-visible {
+  outline: 2px solid var(--klein);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   REWORK VISUEL DES BOUTONS — uniformisation « pill premium »
+   Le site mélangeait des rectangles (radius 12px) datés et des
+   pills. On harmonise tout en pills + reflet lumineux + press.
+   ============================================================ */
+
+/* .cta-big : rectangle 12px -> pill (cohérence avec tout le site) */
+.cta-big { border-radius: 999px; }
+
+/* .cta-secondary : refonte. Avant = rectangle 12px qui se remplissait
+   de noir au survol (dur, daté). Après = ghost pill en verre, soulèvement
+   doux + teinte Klein, comme les autres boutons secondaires. */
+.cta-secondary {
+  border-radius: 999px !important;
+  padding: 17px 30px;
+  border: 1px solid rgba(26, 26, 46, .16) !important;
+  background: rgba(255, 255, 255, .55) !important;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 8px 22px -14px rgba(26, 26, 46, .4);
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease, transform .3s ease;
+}
+.cta-secondary:hover {
+  background: rgba(255, 255, 255, .85) !important;
+  border-color: rgba(27, 79, 138, .4) !important;
+  color: var(--klein) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -14px rgba(27, 79, 138, .45);
+}
+.cta-secondary:active { transform: scale(0.97); }
+
+/* Pills primaires existantes (méthode, bannière réalisations) :
+   on ajoute le reflet lumineux glissant + l'effet de press. */
+.methode-cta-link,
+.reali-cta-banner-link { position: relative; overflow: hidden; isolation: isolate; }
+.methode-cta-link::before,
+.reali-cta-banner-link::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+  background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, .30) 48%, transparent 72%);
+  transform: translateX(-130%);
+  transition: transform .7s cubic-bezier(.16, 1, .3, 1);
+  pointer-events: none;
+}
+.methode-cta-link:hover::before,
+.reali-cta-banner-link:hover::before { transform: translateX(130%); }
+.methode-cta-link > svg,
+.reali-cta-banner-link > svg { position: relative; z-index: 1; }
+.methode-cta-link:active,
+.reali-cta-banner-link:active { transform: translateY(-1px) scale(0.97); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-secondary:hover,
+  .cta-secondary:active,
+  .methode-cta-link:active,
+  .reali-cta-banner-link:active { transform: none; }
+  .methode-cta-link::before,
+  .reali-cta-banner-link::before { display: none; }
+}
+
+/* — Accessibilité : neutralise les transforms/reflets ci-dessus — */
+@media (prefers-reduced-motion: reduce) {
+  .form-submit::before,
+  .svc-cta::before { display: none; }
+  .form-submit:active,
+  .elv-cta-btn:active,
+  .elv-cta-btn-ghost:hover,
+  .elv-cta-btn-ghost:active,
+  .projects-cta:hover,
+  .agence-approche-link:hover,
+  .svc-cta:hover,
+  .svc-cta:active,
+  .svc-cta-ghost:hover,
+  .svc-cta-ghost:active { transform: none; }
+}
+
+
+
+/* — Accessibilité : lien d'évitement (skip link). Masqué visuellement mais
+   accessible au clavier ; devient visible au focus (Tab dès l'arrivée). — */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -100px;
+  z-index: 2000;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #1A1A2E;
+  color: #EAE9EE;
+  font-size: 14px;
+  text-decoration: none;
+  transition: top 0.18s ease;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid #1B4F8A;
+  outline-offset: 2px;
+}

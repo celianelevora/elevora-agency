@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import LegalLayout from '@/components/LegalLayout';
 
-export const metadata = { title: 'Politique de cookies — Elevora Agency' };
+export const metadata: Metadata = {
+  title: { absolute: 'Politique de cookies — Elevora' },
+  description:
+    "Politique de cookies d'Elevora : cookies utilisés sur elevora-agency.com, consentement, durée de conservation et paramétrage de votre navigateur.",
+  alternates: { canonical: '/cookies' },
+  openGraph: {
+    title: 'Politique de cookies — Elevora',
+    description:
+      "Politique de cookies d'Elevora : cookies utilisés sur elevora-agency.com, consentement, durée de conservation et paramétrage de votre navigateur.",
+    url: 'https://elevora-agency.com/cookies',
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
+};
 
 const TOC = [
   { id: 'definition', label: 'Définition' },

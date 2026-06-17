@@ -43,7 +43,7 @@ export default function Error({
             margin: '0 auto 40px',
           }}
         >
-          Quelque chose s'est mal passé de notre côté. Notre équipe a été automatiquement notifiée. Vous pouvez réessayer ou revenir plus tard.
+          Une erreur inattendue est survenue. Vous pouvez rafraîchir la page pour réessayer, ou revenir à l'accueil.
         </p>
         <div
           style={{

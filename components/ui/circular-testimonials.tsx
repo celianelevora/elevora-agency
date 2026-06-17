@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
+import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -168,16 +169,24 @@ export const CircularTestimonials = ({
       <div className="testimonial-grid">
         <div className="image-container" ref={imageContainerRef}>
           {testimonials.map((testimonial, index) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            // next/image en mode `fill` : le parent .image-container est
+            // position:relative avec une hauteur fixe (24rem). Les styles
+            // visuels de .testimonial-image (radius, ombre, object-fit) sont
+            // passes en inline car styled-jsx ne scope pas les composants
+            // enfants comme <Image>. Le transform 3D vient de getImageStyle.
+            <Image
               key={testimonial.src}
               src={testimonial.src}
               alt={`${testimonial.name}, client Elevora — avis sur le projet livré`}
-              className="testimonial-image"
+              fill
+              sizes="(max-width: 768px) 100vw, 420px"
               data-index={index}
-              loading="lazy"
-              decoding="async"
-              style={getImageStyle(index)}
+              style={{
+                objectFit: "cover",
+                borderRadius: "1.5rem",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+                ...getImageStyle(index),
+              }}
             />
           ))}
         </div>

@@ -185,7 +185,7 @@ export default function LandingClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 400 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Créer ma landing<Arrow /></Link>
+                <Link href="/contact" className="svc-cta"><span>Créer ma landing</span><Arrow /></Link>
               </div>
             </Reveal>
           </div>

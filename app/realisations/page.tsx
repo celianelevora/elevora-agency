@@ -1,5 +1,10 @@
+import type { Metadata } from 'next';
 import Hero from '@/components/Hero';
 import { ScrollTiltedGrid, type ScrollTiltedGridItem } from '@/components/ui/scroll-tilted-grid';
+import { StaggerText } from '@/components/ui/stagger-text';
+import { BlurFade } from '@/components/ui/blur-fade';
+import StructuredData from '@/components/StructuredData';
+import { breadcrumbSchema } from '@/lib/seo';
 
 /** Generation de tuiles colorees pour la grille Inspirations (charte V2) */
 const gradientSVG = (color1: string, color2: string, label: string) => {
@@ -34,9 +39,18 @@ const GRID_ITEMS: ScrollTiltedGridItem[] = [
   { src: gradientSVG('%23383838', '%237A7A7A', 'Gris foncé'), caption: "L'équilibre" },
 ];
 
-export const metadata = {
-  title: 'Réalisations | Nos projets livrés',
-  description: "Découvrez les projets réalisés par Elevora : sites vitrine, refontes premium et outils de gestion sur mesure.",
+export const metadata: Metadata = {
+  title: { absolute: 'Réalisations Elevora — sites & outils sur mesure livrés' },
+  description:
+    "Découvrez les projets livrés par Elevora : sites vitrines, e-commerce, refontes premium et CRM sur mesure. Des preuves concrètes, documentées avec honnêteté.",
+  alternates: { canonical: '/realisations' },
+  openGraph: {
+    title: 'Réalisations Elevora — sites & outils sur mesure livrés',
+    description:
+      "Découvrez les projets livrés par Elevora : sites vitrines, e-commerce, refontes premium et CRM sur mesure. Des preuves concrètes, documentées avec honnêteté.",
+    url: 'https://elevora-agency.com/realisations',
+    type: 'website',
+  },
 };
 
 type Project = {
@@ -79,7 +93,7 @@ const PROJECTS: Project[] = [
       { label: 'Mission', value: 'Vitrine + cartes cadeaux' },
       { label: 'Délai', value: '5 semaines' },
     ],
-    cover: '/projets/lily-berry-nails.png',
+    cover: '/projets/lily-berry.png',
     details: ['/projets/lily-berry-prestations.jpg', '/projets/lily-berry-tarifs.jpg'],
     bg: '#FFE7EC',
   },
@@ -168,6 +182,7 @@ const PROJECTS: Project[] = [
 export default function RealisationsPage() {
   return (
     <>
+      <StructuredData data={[breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Réalisations', path: '/realisations' }])]} />
       <Hero
         title={`Nos projets.<br><span class="italic">Sans filtre.</span>`}
         lead="Voici les projets que nous avons livrés et ceux en cours. Sites vitrines, refontes premium, outils métier — chaque cas est documenté avec honnêteté : ce qu'on a fait, dans quel délai, pour quoi faire."
@@ -176,7 +191,7 @@ export default function RealisationsPage() {
       <section className="reali-projects">
         <div className="reali-projects-bg" aria-hidden="true" />
         <div className="container">
-          {PROJECTS.map((p) => (
+          {PROJECTS.map((p, idx) => (
             <article
               key={p.slug}
               data-project={p.slug}
@@ -186,13 +201,19 @@ export default function RealisationsPage() {
               <div className="reali-project-media">
                 <div className="reali-project-cover">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.cover} alt={p.name} />
+                  <img
+                    src={p.cover}
+                    alt={`${p.name} — ${p.tag}, projet réalisé par Elevora`}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={idx === 0 ? 'high' : 'auto'}
+                    decoding="async"
+                  />
                 </div>
                 {p.details && p.details.length > 0 && (
                   <div className="reali-project-details">
                     {p.details.map((src, i) => (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img key={i} src={src} alt={`${p.name} — détail ${i + 1}`} />
+                      <img key={i} src={src} alt={`${p.name} — détail ${i + 1} du projet réalisé par Elevora`} loading="lazy" decoding="async" />
                     ))}
                   </div>
                 )}
@@ -205,14 +226,18 @@ export default function RealisationsPage() {
 
                 </div>
                 <span className="reali-project-tagline">{p.tag}</span>
-                <h2 className="reali-project-name">{p.name}</h2>
-                <p className="reali-project-intro">{p.intro}</p>
+                <h2 className="reali-project-name"><StaggerText text={p.name} /></h2>
+                <BlurFade inView delay={0.08}>
+                  <p className="reali-project-intro">{p.intro}</p>
+                </BlurFade>
 
-                <ul className="reali-project-bullets">
-                  {p.bullets.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
+                <BlurFade inView delay={0.16}>
+                  <ul className="reali-project-bullets">
+                    {p.bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                </BlurFade>
 
                 <div className="reali-project-highlights">
                   {p.highlights.map((h) => (
@@ -234,13 +259,15 @@ export default function RealisationsPage() {
         <div className="container inspirations-head">
           <span className="eyebrow inspirations-eyebrow">Notre univers</span>
           <h2 className="inspirations-title">
-            Inspirations &<br />
-            <span className="italic">références.</span>
+            <StaggerText text="Inspirations &" /><br />
+            <span className="italic"><StaggerText text="références." /></span>
           </h2>
-          <p className="inspirations-lead">
-            Une sélection visuelle de l'univers dans lequel on évolue :
-            couleurs, formes, ambiances qui nourrissent nos créations.
-          </p>
+          <BlurFade inView delay={0.1}>
+            <p className="inspirations-lead">
+              Une sélection visuelle de l'univers dans lequel on évolue :
+              couleurs, formes, ambiances qui nourrissent nos créations.
+            </p>
+          </BlurFade>
         </div>
 
         <ScrollTiltedGrid
@@ -258,12 +285,14 @@ export default function RealisationsPage() {
         <div className="reali-cta-banner-inner">
           <div className="reali-cta-banner-content">
             <h2 className="reali-cta-banner-title">
-              Le prochain projet,<br />
-              <span className="italic">c'est le vôtre ?</span>
+              <StaggerText text="Le prochain projet," /><br />
+              <span className="italic"><StaggerText text="c'est le vôtre ?" /></span>
             </h2>
-            <p className="reali-cta-banner-lead">
-              Premier échange gratuit. On comprend votre besoin et on vous dit honnêtement si on peut vous aider.
-            </p>
+            <BlurFade inView delay={0.1}>
+              <p className="reali-cta-banner-lead">
+                Premier échange gratuit. On comprend votre besoin et on vous dit honnêtement si on peut vous aider.
+              </p>
+            </BlurFade>
             <a href="/demarrer-un-projet" className="reali-cta-banner-link">
               Démarrer un projet
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

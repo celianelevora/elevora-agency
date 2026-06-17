@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import LegalLayout from '@/components/LegalLayout';
 
-export const metadata = { title: 'Conditions générales de vente — Elevora Agency' };
+export const metadata: Metadata = {
+  title: { absolute: 'Conditions générales de vente — Elevora' },
+  description:
+    "Conditions générales de vente d'Elevora : devis, prix, paiement, exécution des prestations numériques, obligations, responsabilité et droit applicable.",
+  alternates: { canonical: '/cgv' },
+  openGraph: {
+    title: 'Conditions générales de vente — Elevora',
+    description:
+      "Conditions générales de vente d'Elevora : devis, prix, paiement, exécution des prestations numériques, obligations, responsabilité et droit applicable.",
+    url: 'https://elevora-agency.com/cgv',
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
+};
 
 const TOC = [
   { id: 'objet', label: 'Objet' },
@@ -54,9 +68,8 @@ export default function CGVPage() {
         <h3>3.2 Modalités de paiement</h3>
         <p>Sauf disposition contraire au devis, les modalités de paiement sont les suivantes :</p>
         <ul>
-          <li><strong>Acompte de 40 %</strong> à la signature du devis ;</li>
-          <li><strong>30 %</strong> à la validation des maquettes ;</li>
-          <li><strong>Solde de 30 %</strong> à la livraison finale et la mise en ligne.</li>
+          <li><strong>Acompte de 30 %</strong> à la signature du devis ;</li>
+          <li><strong>Solde de 70 %</strong> à la livraison finale et la mise en ligne.</li>
         </ul>
         <p>Les paiements s'effectuent par virement bancaire ou tout autre moyen accepté par Elevora. Aucun escompte n'est accordé en cas de paiement anticipé.</p>
 

@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: '/tarifs', priority: 0.9, changeFrequency: 'monthly' as const },
     { url: '/agence', priority: 0.7, changeFrequency: 'monthly' as const },
     { url: '/contact', priority: 0.8, changeFrequency: 'yearly' as const },
+    { url: '/demarrer-un-projet', priority: 0.8, changeFrequency: 'yearly' as const },
     { url: '/mentions-legales', priority: 0.2, changeFrequency: 'yearly' as const },
     { url: '/confidentialite', priority: 0.2, changeFrequency: 'yearly' as const },
     { url: '/cgv', priority: 0.2, changeFrequency: 'yearly' as const },

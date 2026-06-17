@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /* ============================================================
    CookieBanner — conformité CNIL (minimal).
@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
    dans localStorage ; le bandeau ne s'affiche que tant qu'aucun choix n'a
    été fait.
    ============================================================ */
-
 const STORAGE_KEY = 'elevora-cookie-consent';
 
 export default function CookieBanner() {

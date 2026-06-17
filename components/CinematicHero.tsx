@@ -221,7 +221,7 @@ export default function CinematicHero({
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           tabIndex={-1}
           disablePictureInPicture
         >

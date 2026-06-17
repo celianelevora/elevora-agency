@@ -59,7 +59,7 @@ const APPROCHE = [
 
 const SOCLE_LEAD = 'Next.js, hébergement suisse Infomaniak, base de données fiable. Un socle solide, durable, prêt à grandir avec vous.';
 const SOCLE_STATS = [
-  { v: 100, s: '/100', l: 'Score de performance visé', d: 0 },
+  { v: 90, s: '+/100', l: 'Score PageSpeed garanti', d: 0 },
   { v: 99.9, s: '%', l: 'Disponibilité serveur', d: 1 },
   { v: 0, s: '€', l: 'Frais cachés', d: 0 },
   { v: 30, s: ' j', l: 'Garantie incluse', d: 0 },
@@ -68,12 +68,12 @@ const SOCLE_STATS = [
 const INCLUS = [
   'Design 100 % sur mesure', 'Jusqu’à 6 pages soignées', 'Référencement (SEO) natif',
   'Back-office pour tout modifier', 'Responsive mobile & tablette', 'Nom de domaine + e-mail pro',
-  'Hébergement la première année', 'Formation à la prise en main', 'Garantie 30 jours après livraison',
+  'Formation à la prise en main', 'Garantie 30 jours après livraison',
 ];
 const TARIF_NOTE = 'Paiement en deux fois : 30 % à la commande, le solde à la livraison. Devis ferme, sans engagement.';
 
 const FAQ = [
-  { q: 'Que comprend exactement le tarif de 1 000 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro et hébergement la première année. Aucun coût caché.' },
+  { q: 'Que comprend exactement le tarif de 1 000 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro. Aucun coût caché.' },
   { q: 'Pourrai-je modifier mon site moi-même ?', a: 'Oui. On livre un back-office simple et on vous forme à sa prise en main. Vous changez vos textes, vos photos et vos actualités sans jamais toucher au code.' },
   { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 8 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },];
 
@@ -110,7 +110,6 @@ export default function VitrineClient() {
         image={`${IMG}/img-1.webp`}
         theme="dark"
         glow
-        imageScale={0.85}
         eyebrow="Site vitrine"
         title={
           <>
@@ -258,7 +257,7 @@ export default function VitrineClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'rgba(234,233,238,.72)', maxWidth: 400 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Link href="/contact" style={{ background: 'var(--pink)', color: '#fff', padding: '16px 30px', borderRadius: 999, fontSize: 15, fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none', boxShadow: '0 16px 40px rgba(201,38,106,.4)' }}>Demander un devis<Arrow /></Link>
+                <Link href="/contact" className="svc-cta"><span>Demander un devis</span><Arrow /></Link>
               </div>
             </Reveal>
           </div>

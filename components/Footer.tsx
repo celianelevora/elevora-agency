@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin, Server, Instagram, Linkedin } from 'lucide-react';
 
 const serviceLinks = [
@@ -31,8 +32,15 @@ export default function Footer() {
           {/* Colonne marque */}
           <div className="site-footer-brand">
             <Link href="/" className="site-footer-logo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo-elevora-full.png" alt="Logo Elevora, agence web et outils de gestion à Nantes" className="site-footer-logo-img" loading="lazy" decoding="async" />
+              <Image
+                src="/logo-elevora-full.png"
+                alt="Logo Elevora, agence web et outils de gestion à Nantes"
+                width={150}
+                height={150}
+                className="site-footer-logo-img"
+                style={{ height: 'auto' }}
+                loading="lazy"
+              />
             </Link>
             <p className="site-footer-desc">
               Agence digitale nantaise. Sites web qui convertissent et outils de

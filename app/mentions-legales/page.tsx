@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import LegalLayout from '@/components/LegalLayout';
 
-export const metadata = { title: 'Mentions légales — Elevora Agency' };
+export const metadata: Metadata = {
+  title: { absolute: 'Mentions légales — Elevora' },
+  description:
+    "Mentions légales d'Elevora : éditeur du site elevora-agency.com, SAS au capital de 102 €, SIREN 105 274 112, hébergeur et coordonnées de contact.",
+  alternates: { canonical: '/mentions-legales' },
+  openGraph: {
+    title: 'Mentions légales — Elevora',
+    description:
+      "Mentions légales d'Elevora : éditeur du site elevora-agency.com, SAS au capital de 102 €, SIREN 105 274 112, hébergeur et coordonnées de contact.",
+    url: 'https://elevora-agency.com/mentions-legales',
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
+};
 
 const TOC = [
   { id: 'editeur', label: 'Éditeur du site' },
@@ -47,7 +61,7 @@ export default function MentionsLegalesPage() {
         <h2>Direction de la publication</h2>
         <p>Le directeur de la publication du site, au sens de l'article 6-III de la LCEN, est :</p>
         <dl>
-          <dt>Nom</dt><dd>Celian Soulet Lapetina</dd>
+          <dt>Nom</dt><dd>Célian Soulet Lapetina</dd>
           <dt>Qualité</dt><dd>Président de la société Elevora</dd>
           <dt>Contact</dt><dd><a href="mailto:contact@elevora-agency.com">contact@elevora-agency.com</a></dd>
         </dl>

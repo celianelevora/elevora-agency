@@ -1,11 +1,24 @@
 import Hero from "@/components/Hero";
 import CTASection from "@/components/CTASection";
 import PostFooterPortal from "@/components/PostFooterPortal";
+import { StaggerText } from "@/components/ui/stagger-text";
+import { BlurFade } from "@/components/ui/blur-fade";
+import StructuredData from "@/components/StructuredData";
+import { faqSchema } from "@/lib/seo";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Tarifs création de site web | Elevora — Devis gratuit",
+export const metadata: Metadata = {
+  title: { absolute: "Tarifs création de site web — Elevora | Devis gratuit" },
   description:
-    "Nos points de départ : landing à partir de 600 € TTC, site vitrine 1 000 € TTC, e-commerce 1 500 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours. Agence Elevora, Nantes.",
+    "Tarifs Elevora : landing dès 600 € TTC, site vitrine 1 000 € TTC, e-commerce 1 500 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
+  alternates: { canonical: "/tarifs" },
+  openGraph: {
+    title: "Tarifs création de site web — Elevora | Devis gratuit",
+    description:
+      "Tarifs Elevora : landing dès 600 € TTC, site vitrine 1 000 € TTC, e-commerce 1 500 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
+    url: "https://elevora-agency.com/tarifs",
+    type: "website",
+  },
 };
 
 const POINTS = [
@@ -129,6 +142,11 @@ const TZ_CSS = `
 export default function TarifsPage() {
   return (
     <>
+      <StructuredData
+        data={faqSchema(
+          FAQ_ITEMS.map((item) => ({ question: item.q, answer: item.a }))
+        )}
+      />
       <style dangerouslySetInnerHTML={{ __html: TZ_CSS }} />
       <div className="tarifs-page-bg">
         <Hero
@@ -144,12 +162,15 @@ export default function TarifsPage() {
             <div className="tz-head">
               <span className="eyebrow">Nos points de départ</span>
               <h2 className="tz-h2">
-                Combien pour <em>votre projet ?</em>
+                <StaggerText text="Combien pour " />
+                <em><StaggerText text="votre projet ?" /></em>
               </h2>
-              <p className="tz-sub">
-                Voici à partir de combien démarre chaque type de projet. Le tarif
-                final dépend du périmètre — on l’établit ensemble, sans coût caché.
-              </p>
+              <BlurFade inView delay={0.1}>
+                <p className="tz-sub">
+                  Voici à partir de combien démarre chaque type de projet. Le tarif
+                  final dépend du périmètre — on l’établit ensemble, sans coût caché.
+                </p>
+              </BlurFade>
             </div>
 
             <div className="tz-list">
@@ -207,7 +228,8 @@ export default function TarifsPage() {
             <div className="tz-head">
               <span className="eyebrow">Comment on fixe le prix</span>
               <h2 className="tz-h2">
-                Transparent, <em>du premier échange à la facture.</em>
+                <StaggerText text="Transparent, " />
+                <em><StaggerText text="du premier échange à la facture." /></em>
               </h2>
             </div>
             <div className="tz-how-grid">
@@ -228,8 +250,9 @@ export default function TarifsPage() {
             <div className="tarifs-included-head">
               <span className="eyebrow">Inclus dans chaque projet</span>
               <h2 className="tarifs-included-title">
-                Quel que soit votre projet,<br />
-                vous <span className="italic">repartez avec.</span>
+                <StaggerText text="Quel que soit votre projet," /><br />
+                <StaggerText text="vous " />
+                <span className="italic"><StaggerText text="repartez avec." /></span>
               </h2>
             </div>
 
@@ -255,7 +278,7 @@ export default function TarifsPage() {
                 },
                 {
                   title: 'Fondateurs accessibles',
-                  desc: "Pas d'intermédiaire commercial. Vous parlez directement à Celian de A à Z.",
+                  desc: "Pas d'intermédiaire commercial. Vous parlez directement à Célian de A à Z.",
                   icon: (<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>),
                   color: 'pink',
                 },
@@ -292,13 +315,16 @@ export default function TarifsPage() {
               <div className="tarifs-faq-head">
                 <span className="eyebrow">Questions fréquentes</span>
                 <h2 className="tarifs-faq-title">
-                  Vos questions<br />
-                  sur nos <span className="italic">tarifs.</span>
+                  <StaggerText text="Vos questions" /><br />
+                  <StaggerText text="sur nos " />
+                  <span className="italic"><StaggerText text="tarifs." /></span>
                 </h2>
-                <p className="tarifs-faq-lead">
-                  Des réponses claires sur notre façon de chiffrer un projet et
-                  de travailler avec vous.
-                </p>
+                <BlurFade inView delay={0.1}>
+                  <p className="tarifs-faq-lead">
+                    Des réponses claires sur notre façon de chiffrer un projet et
+                    de travailler avec vous.
+                  </p>
+                </BlurFade>
                 <span className="tarifs-faq-underline" aria-hidden="true" />
               </div>
 

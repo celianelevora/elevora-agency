@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import LegalLayout from '@/components/LegalLayout';
 
-export const metadata = { title: 'Politique de confidentialité — Elevora Agency' };
+export const metadata: Metadata = {
+  title: { absolute: 'Politique de confidentialité — Elevora' },
+  description:
+    "Politique de confidentialité d'Elevora : traitement de vos données personnelles dans le respect du RGPD, finalités, durées de conservation et vos droits.",
+  alternates: { canonical: '/confidentialite' },
+  openGraph: {
+    title: 'Politique de confidentialité — Elevora',
+    description:
+      "Politique de confidentialité d'Elevora : traitement de vos données personnelles dans le respect du RGPD, finalités, durées de conservation et vos droits.",
+    url: 'https://elevora-agency.com/confidentialite',
+    type: 'website',
+  },
+  robots: { index: true, follow: true },
+};
 
 const TOC = [
   { id: 'responsable', label: 'Responsable de traitement' },
@@ -27,7 +41,7 @@ export default function ConfidentialitePage() {
         <span className="legal-section-num">01</span>
         <h2>Responsable de traitement</h2>
         <p>Le responsable du traitement des données collectées via le site elevora-agency.com est :</p>
-        <p><strong>Elevora</strong>, société par actions simplifiée au capital de 102 €, immatriculée au Registre du Commerce et des Sociétés de Nantes sous le numéro <strong>105 274 112</strong>, dont le siège social est situé au 96 rue des Sports, 44840 Les Sorinières (France), représentée par son Président, Celian Soulet Lapetina.</p>
+        <p><strong>Elevora</strong>, société par actions simplifiée au capital de 102 €, immatriculée au Registre du Commerce et des Sociétés de Nantes sous le numéro <strong>105 274 112</strong>, dont le siège social est situé au 96 rue des Sports, 44840 Les Sorinières (France), représentée par son Président, Célian Soulet Lapetina.</p>
         <p>Pour toute question relative au traitement de vos données : <a href="mailto:contact@elevora-agency.com">contact@elevora-agency.com</a>.</p>
         <div className="legal-note">
           <div>

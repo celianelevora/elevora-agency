@@ -54,7 +54,7 @@ export default function PhoneInput({
   return (
     <div className="form-field">
       {label && (
-        <label className="form-label">
+        <label className="form-label" htmlFor={name}>
           {label}
           {!required && <span className="form-optional"> (optionnel)</span>}
         </label>
@@ -66,6 +66,7 @@ export default function PhoneInput({
           onClick={() => setOpen(!open)}
           aria-haspopup="listbox"
           aria-expanded={open}
+          aria-label={`Indicatif téléphonique : ${country.name} (+${country.code})`}
         >
           <span className="phone-code-flag">{country.flag}</span>
           <span className="phone-code-num">+{country.code}</span>
@@ -75,7 +76,9 @@ export default function PhoneInput({
         </button>
         <input
           type="tel"
+          id={name}
           name={name}
+          autoComplete="tel-national"
           className="phone-num-input"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -93,6 +96,7 @@ export default function PhoneInput({
               <input
                 type="text"
                 placeholder="Rechercher un pays…"
+                aria-label="Rechercher un pays"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 autoFocus

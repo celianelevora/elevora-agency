@@ -8,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ['/api/'],
     },
     sitemap: 'https://elevora-agency.com/sitemap.xml',
+    host: 'https://elevora-agency.com',
   };
 }

@@ -9,16 +9,61 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import { FaqsSection } from '@/components/FaqsSection';
 import { CinematicFooter } from '@/components/CinematicFooter';
 import RomanRail from '@/components/RomanRail';
+import StructuredData from '@/components/StructuredData';
+import { faqSchema } from '@/lib/seo';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Elevora — Agence digitale à Nantes | Sites web & outils de gestion',
+export const metadata: Metadata = {
+  title: { absolute: 'Agence digitale à Nantes — Elevora | Sites web & gestion' },
   description:
     'Elevora, agence digitale nantaise. Sites web qui convertissent et outils de gestion sur mesure pour indépendants et PME. Devis ferme, hébergement Infomaniak.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Agence digitale à Nantes — Elevora | Sites web & gestion',
+    description:
+      'Elevora, agence digitale nantaise. Sites web qui convertissent et outils de gestion sur mesure pour indépendants et PME. Devis ferme, hébergement Infomaniak.',
+    url: 'https://elevora-agency.com/',
+    type: 'website',
+  },
 };
 
 export default function HomePage() {
   return (
     <div className="home-with-cinematic-footer">
+      <StructuredData
+        data={[faqSchema([
+          {
+            question: 'Combien de temps faut-il pour créer mon site ?',
+            answer:
+              "Comptez 2 à 4 semaines pour une landing, 4 à 8 semaines pour un site vitrine complet, et 6 à 12 semaines pour un outil de gestion sur mesure. Tout dépend du nombre de pages, des fonctionnalités et de votre réactivité sur les retours. On vous donne un planning précis dès le démarrage.",
+          },
+          {
+            question: 'Est-ce que je pourrai modifier mon site moi-même ?',
+            answer:
+              "Oui. On vous livre un site que vous pouvez gérer en autonomie, et on vous forme à son utilisation. Pour les modifications plus techniques, on reste disponibles via un accompagnement à la demande, sans engagement.",
+          },
+          {
+            question: 'Combien coûte un site avec Elevora ?',
+            answer:
+              "Nos sites démarrent à 600 € TTC pour une landing page, 1 000 € TTC pour un site vitrine et 1 500 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
+          },
+          {
+            question: 'Proposez-vous un paiement en plusieurs fois ?',
+            answer:
+              "Oui. Selon le projet, on peut échelonner le règlement en plusieurs fois, calé sur les étapes de livraison, pour étaler l'investissement sans bloquer votre trésorerie. Aucun abonnement imposé.",
+          },
+          {
+            question: 'Que se passe-t-il après la mise en ligne ?',
+            answer:
+              "On ne disparaît pas une fois le site livré : suivi gratuit pendant 30 jours pour les ajustements et corrections, puis maintenance ou évolutions à la demande, sans engagement.",
+          },
+          {
+            question: 'Travaillez-vous avec des entreprises hors de Nantes ?',
+            answer:
+              "Bien sûr. On est basés à Nantes mais on accompagne des indépendants et PME partout en France. Tout se gère à distance, avec des points réguliers en visio.",
+          },
+        ])]}
+      />
       {/* Habillage de fond continu (halos + grille), derrière TOUT le contenu
           (z-index:-1). La cinématique d'ouverture, opaque, le recouvre ; les
           parties 01+ (transparentes) le laissent transparaître. */}

@@ -1,38 +1,81 @@
 import Link from 'next/link';
 import FlowArt, { FlowSection } from '@/components/ui/story-scroll';
+import { StaggerText } from '@/components/ui/stagger-text';
+import { BlurFade } from '@/components/ui/blur-fade';
+import StructuredData from '@/components/StructuredData';
+import { howToSchema } from '@/lib/seo';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Méthode | Comment on travaille',
+export const metadata: Metadata = {
+  title: { absolute: 'Méthode Elevora en 4 étapes — création de site web' },
   description:
-    "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre.",
+    "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre. Devis ferme et suivi 30 jours inclus.",
+  alternates: { canonical: '/methode' },
+  openGraph: {
+    title: 'Méthode Elevora en 4 étapes — création de site web',
+    description:
+      "Notre méthode en 4 étapes : cadrage, design, développement, livraison. Transparente, jalonnée, sans zone d'ombre. Devis ferme et suivi 30 jours inclus.",
+    url: 'https://elevora-agency.com/methode',
+    type: 'website',
+  },
 };
 
 export default function MethodePage() {
   return (
     <>
+      <StructuredData
+        data={howToSchema({
+          name: 'La méthode Elevora en 4 étapes',
+          description:
+            "De l'idée à la mise en ligne : cadrage, design, développement, livraison.",
+          steps: [
+            {
+              name: 'Cadrage',
+              text: 'Atelier de découverte, objectifs business, contraintes techniques, devis ferme. ~1 semaine.',
+            },
+            {
+              name: 'Design',
+              text: 'Maquettes interactives Figma validées page par page avant le code. ~2 semaines.',
+            },
+            {
+              name: 'Développement',
+              text: 'Code propre par sprints hebdomadaires, environnement de test partagé. ~3 à 5 semaines.',
+            },
+            {
+              name: 'Livraison',
+              text: 'Mise en ligne, formation à la gestion, suivi 30 jours inclus. ~1 semaine + suivi.',
+            },
+          ],
+        })}
+      />
       {/* HERO custom : texte aligne a GAUCHE, image colonne marbre a DROITE */}
       <section className="methode-hero">
         <div className="methode-hero-bg" aria-hidden="true" />
         <div className="methode-hero-inner">
           <div className="methode-hero-content">
             <div className="methode-hero-meta">
-              <span className="methode-hero-meta-label">4 étapes · 6 à 10 semaines</span>
+              <span className="methode-hero-meta-label">4 étapes · 7 à 9 semaines</span>
             </div>
             <h1 className="methode-hero-title">
-              De l'idée à la mise en ligne,<br />
-              un chemin <span className="italic">clair et balisé.</span>
+              <StaggerText text="De l'idée à la mise en ligne," /><br />
+              <StaggerText text="un chemin " />
+              <span className="italic"><StaggerText text="clair et balisé." /></span>
             </h1>
-            <p className="methode-hero-lead">
-              Un projet digital se passe mal quand le client ne sait pas où il
-              en est, ce qu'on attend de lui, et combien ça va coûter. On a
-              structuré notre méthode pour que ces trois informations soient
-              toujours sur la table.
-            </p>
+            <BlurFade delay={0.16} yOffset={8}>
+              <p className="methode-hero-lead">
+                Un projet digital se passe mal quand le client ne sait pas où il
+                en est, ce qu'on attend de lui, et combien ça va coûter. On a
+                structuré notre méthode pour que ces trois informations soient
+                toujours sur la table.
+              </p>
+            </BlurFade>
+            <BlurFade delay={0.28} yOffset={8}>
             <div className="methode-hero-chips">
               <span className="methode-chip">Devis ferme</span>
               <span className="methode-chip">Livraison annoncée</span>
               <span className="methode-chip">Suivi 30 jours offert</span>
             </div>
+            </BlurFade>
           </div>
         </div>
       </section>
@@ -45,14 +88,18 @@ export default function MethodePage() {
             Comment ça se passe
           </div>
           <h2 className="methode-intro-title">
-            Chaque étape a un <span className="italic">objectif</span>,<br />
-            une durée et un livrable.
+            <StaggerText text="Chaque étape a un " />
+            <span className="italic"><StaggerText text="objectif" /></span>
+            <StaggerText text="," /><br />
+            <StaggerText text="une durée et un livrable." />
           </h2>
-          <p className="methode-intro-text">
-            Pas de jargon, pas de zone floue. À la fin de chaque étape, vous
-            savez exactement ce que vous avez en main et ce qui vient ensuite.
-            Vous gardez la main du début à la fin.
-          </p>
+          <BlurFade inView delay={0.12} yOffset={8}>
+            <p className="methode-intro-text">
+              Pas de jargon, pas de zone floue. À la fin de chaque étape, vous
+              savez exactement ce que vous avez en main et ce qui vient ensuite.
+              Vous gardez la main du début à la fin.
+            </p>
+          </BlurFade>
         </div>
       </section>
 
@@ -223,7 +270,7 @@ export default function MethodePage() {
                   <li>Mise en ligne sur votre nom de domaine</li>
                   <li>Formation 1h30 (captée en vidéo, offerte)</li>
                   <li>30 jours de suivi corrections inclus</li>
-                  <li>Maintenance technique 12 mois incluse</li>
+                  <li>Maintenance annuelle en option (tarif selon le site)</li>
                 </ul>
               </div>
               <div className="methode-step-right">
@@ -253,14 +300,16 @@ export default function MethodePage() {
         <div className="methode-banner-content">
           <span className="methode-banner-eyebrow">Notre méthode</span>
           <h2 className="methode-banner-title">
-            Comprendre<br />
-            <span className="methode-banner-em">avant d'agir,</span><br />
-            c'est faire mieux.
+            <StaggerText text="Comprendre" /><br />
+            <span className="methode-banner-em"><StaggerText text="avant d'agir," /></span><br />
+            <StaggerText text="c'est faire mieux." />
           </h2>
-          <p className="methode-banner-sub">
-            Chaque projet commence par l'écoute et l'analyse. Nous prenons le temps
-            de comprendre vos enjeux pour construire des solutions sur-mesure, utiles et durables.
-          </p>
+          <BlurFade inView delay={0.14} yOffset={8}>
+            <p className="methode-banner-sub">
+              Chaque projet commence par l'écoute et l'analyse. Nous prenons le temps
+              de comprendre vos enjeux pour construire des solutions sur-mesure, utiles et durables.
+            </p>
+          </BlurFade>
           <div className="methode-banner-pillars">
             <div className="methode-banner-pillar">
               <span className="methode-banner-ic" aria-hidden="true">
@@ -303,13 +352,16 @@ export default function MethodePage() {
         <div className="container methode-cta-inner">
           <span className="methode-cta-eyebrow">Démarrer</span>
           <h2 className="methode-cta-title">
-            Tout commence par<br />
-            un <span className="italic">échange.</span>
+            <StaggerText text="Tout commence par" /><br />
+            <StaggerText text="un " />
+            <span className="italic"><StaggerText text="échange." /></span>
           </h2>
-          <p className="methode-cta-lead">
-            30 minutes en visio ou en café à Nantes. Vous nous racontez votre
-            projet, on vous dit ce qu'on en pense. Aucun engagement.
-          </p>
+          <BlurFade inView delay={0.14} yOffset={8}>
+            <p className="methode-cta-lead">
+              30 minutes en visio ou en café à Nantes. Vous nous racontez votre
+              projet, on vous dit ce qu'on en pense. Aucun engagement.
+            </p>
+          </BlurFade>
           <Link href="/demarrer-un-projet" className="methode-cta-link">
             Prendre rendez-vous
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

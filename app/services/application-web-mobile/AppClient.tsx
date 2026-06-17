@@ -99,7 +99,7 @@ export default function AppClient() {
       <SectionBg image={`${IMG}/img-2.webp`} scrim="dark-strong" parallax={65} py={146} glow="klein-pink">
         <div style={{ maxWidth: 660, marginBottom: 60 }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)' }}>Pour qui</span></Reveal>
-          <RevealText as="h2" text="Pour celles et ceux qui transforment une idée en produit." emphasis="produit." style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,50px)') }} />
+          <RevealText as="h2" text="Pour celles et ceux qui transforment une idée en produit." emphasis="produit" style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,50px)') }} />
         </div>
         <div className="app-who">
           {POURQUOI.map((p, i) => (
@@ -118,7 +118,7 @@ export default function AppClient() {
       <SectionBg image={`${IMG}/img-3.webp`} scrim="light-strong" parallax={50} py={146} glow="blush">
         <div style={{ textAlign: 'center', maxWidth: 660, margin: '0 auto 60px' }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)', justifyContent: 'center' }}>Ce qu’on construit</span></Reveal>
-          <RevealText as="h2" text="De l’idée au produit qui tourne." emphasis="tourne." style={{ margin: '22px 0 0', ...H2('clamp(30px,4vw,50px)') }} />
+          <RevealText as="h2" text="De l’idée au produit qui tourne." emphasis="tourne" style={{ margin: '22px 0 0', ...H2('clamp(30px,4vw,50px)') }} />
         </div>
         <div className="app-mods">
           {MODULES.map((m, i) => (
@@ -135,7 +135,7 @@ export default function AppClient() {
       <SectionBg image={`${IMG}/img-4.webp`} scrim="dark-strong" parallax={60} py={146} glow="pink-klein">
         <div style={{ textAlign: 'center', maxWidth: 660, margin: '0 auto 66px' }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)', justifyContent: 'center' }}>Le parcours</span></Reveal>
-          <RevealText as="h2" text="Un parcours clair, sans effet tunnel." emphasis="tunnel." style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,48px)') }} />
+          <RevealText as="h2" text="Un parcours clair, sans effet tunnel." emphasis="tunnel" style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(30px,3.9vw,48px)') }} />
         </div>
         <div className="app-flow">
           <span className="app-flow__line" aria-hidden />
@@ -154,7 +154,7 @@ export default function AppClient() {
         <div className="app-price">
           <div>
             <Reveal><span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Tarif & délais</span></Reveal>
-            <RevealText as="h2" text="Un produit sur mesure, un budget cadré." emphasis="cadré." style={{ margin: '20px 0 36px', ...H2('clamp(29px,3.7vw,46px)') }} />
+            <RevealText as="h2" text="Un produit sur mesure, un budget cadré." emphasis="cadré" style={{ margin: '20px 0 36px', ...H2('clamp(29px,3.7vw,46px)') }} />
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>Budget</div>
               <div style={{ marginTop: 8 }}>
@@ -167,7 +167,7 @@ export default function AppClient() {
               </div>
               <p style={{ marginTop: 28, fontSize: 14.5, lineHeight: 1.7, color: 'var(--ink-soft)', maxWidth: 420 }}>{TARIF_NOTE}</p>
               <div style={{ marginTop: 32 }}>
-                <Link href="/contact" className="cta-big" style={{ display: 'inline-flex' }}>Décrire mon projet<Arrow /></Link>
+                <Link href="/contact" className="svc-cta"><span>Décrire mon projet</span><Arrow /></Link>
               </div>
             </Reveal>
           </div>
@@ -189,7 +189,7 @@ export default function AppClient() {
       <SectionBg image={`${IMG}/img-6.webp`} scrim="dark-strong" parallax={55} py={146} glow="klein-pink">
         <div style={{ maxWidth: 640, marginBottom: 52 }}>
           <Reveal><span className="svc-eyebrow" style={{ color: 'rgba(234,233,238,.72)' }}>Sous le capot</span></Reveal>
-          <RevealText as="h2" text="Un socle technique solide." emphasis="solide." style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(28px,3.6vw,46px)') }} />
+          <RevealText as="h2" text="Un socle technique solide." emphasis="solide" style={{ margin: '22px 0 0', color: '#EAE9EE', ...H2('clamp(28px,3.6vw,46px)') }} />
         </div>
         <div className="app-stack">
           {STACK.map((s, i) => (
