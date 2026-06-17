@@ -248,8 +248,54 @@ export default function MethodePage() {
       {/* BANNIERE IMAGE PURE — Recodee en <div> (et non <section>) pour ne pas
           heriter du `section { padding: 120px 0 }` global qui creait une bande
           grise visible entre l'etape 4 et cette image. */}
-      <div className="methode-banner" aria-label="Comprendre avant d'agir" role="img">
+      <div className="methode-banner">
         <div className="methode-banner-bg" aria-hidden="true" />
+        <div className="methode-banner-content">
+          <span className="methode-banner-eyebrow">Notre méthode</span>
+          <h2 className="methode-banner-title">
+            Comprendre<br />
+            <span className="methode-banner-em">avant d'agir,</span><br />
+            c'est faire mieux.
+          </h2>
+          <p className="methode-banner-sub">
+            Chaque projet commence par l'écoute et l'analyse. Nous prenons le temps
+            de comprendre vos enjeux pour construire des solutions sur-mesure, utiles et durables.
+          </p>
+          <div className="methode-banner-pillars">
+            <div className="methode-banner-pillar">
+              <span className="methode-banner-ic" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9.4 10.2a4.6 4.6 0 0 1 9.2 0c0 3.7-3.7 4.3-3.7 7a2.35 2.35 0 0 1-4.7 0" />
+                  <path d="M11.9 10.2a2.1 2.1 0 0 1 4.2 0" />
+                  <path d="M4.3 7.9c-.85 1.7-.85 3.4 0 5.1" />
+                  <path d="M6.9 9c-.46 .98-.46 1.9 0 2.9" />
+                </svg>
+              </span>
+              <h3 className="methode-banner-pillar-t">Écoute active</h3>
+              <p className="methode-banner-pillar-d">On pose les bonnes questions.</p>
+            </div>
+            <div className="methode-banner-pillar">
+              <span className="methode-banner-ic" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12.4" cy="12.4" r="6.6" />
+                  <line x1="17.1" y1="17.1" x2="22.4" y2="22.4" />
+                </svg>
+              </span>
+              <h3 className="methode-banner-pillar-t">Analyse précise</h3>
+              <p className="methode-banner-pillar-d">On identifie vos vrais besoins.</p>
+            </div>
+            <div className="methode-banner-pillar">
+              <span className="methode-banner-ic" aria-hidden="true">
+                <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.9 7.4 16.8 3.3a1.6 1.6 0 0 0-2.3 0L4 13.8 3 21l7.2-1 10.7-10.7a1.6 1.6 0 0 0 0-2.3z" />
+                  <path d="M14 5.8 18.5 10.3" />
+                </svg>
+              </span>
+              <h3 className="methode-banner-pillar-t">Stratégie claire</h3>
+              <p className="methode-banner-pillar-d">On construit un plan d'action concret.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* CTA — Demarrer un projet */}

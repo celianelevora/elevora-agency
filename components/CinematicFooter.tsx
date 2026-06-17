@@ -117,6 +117,10 @@ const STYLES = `
      une assise propre au footer navy (carte arrondie) qui suit juste après.
      Top resserré pour que le marquee serve de raccord visuel avec la FAQ. */
   padding: clamp(92px, 13vh, 150px) 24px clamp(140px, 20vh, 220px);
+  /* Remonte la section dans le padding-bas (vide, 120px) de la FAQ : le marquee
+     se retrouve A CHEVAL sur la couture FAQ->CTA. Creme sur creme => sans raccord
+     visible, et ca supprime la bande creme morte de la transition. */
+  margin-top: clamp(-56px, -5.2vh, -40px);
   background: var(--cream, #EAE9EE);
   color: var(--ink, #1A1A2E);
   font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;

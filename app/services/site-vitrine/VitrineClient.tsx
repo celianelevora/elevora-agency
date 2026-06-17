@@ -110,6 +110,7 @@ export default function VitrineClient() {
         image={`${IMG}/img-1.webp`}
         theme="dark"
         glow
+        imageScale={0.85}
         eyebrow="Site vitrine"
         title={
           <>
