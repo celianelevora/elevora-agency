@@ -156,7 +156,7 @@ export default function VitrineClient() {
       />
 
       {/* 3 — CE QU'ON CONSTRUIT (img-2, clair) — lignes */}
-      <SectionBg image={`${IMG}/img-2.webp`} scrim="light-strong" parallax={65} py={144} glow="blush">
+      <SectionBg image={`${IMG}/img-2.webp`} scrim="light-strong" parallax={65} py={144} glow="blush" bgPosition="center 72%">
         <div style={{ maxWidth: 680, marginBottom: 58 }}>
           <Reveal>
             <span className="svc-eyebrow" style={{ color: 'var(--klein)' }}>Ce qu’on construit</span>
@@ -208,7 +208,7 @@ export default function VitrineClient() {
       </SectionBg>
 
       {/* 5 — SOCLE TECHNIQUE (img-4, clair) — grands chiffres */}
-      <SectionBg image={`${IMG}/img-4.webp`} scrim="light-strong" parallax={65} py={144} glow="blush">
+      <SectionBg image={`${IMG}/img-4.webp`} scrim="light-strong" parallax={65} py={144} glow="blush" bgPosition="center 28%">
         <div className="vit-socle">
           <div>
             <Reveal>

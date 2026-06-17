@@ -175,7 +175,7 @@ const STYLES = `
 
 /* Marquee */
 .elv-cta-marquee {
-  position: absolute; top: clamp(34px, 6vh, 64px); left: -4%; z-index: 1;
+  position: absolute; top: clamp(18px, 3vh, 32px); left: -4%; z-index: 1;
   width: 108%;
   transform: rotate(-2deg);
   border-top: 1px solid rgba(26,26,46,.10);

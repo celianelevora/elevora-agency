@@ -135,8 +135,22 @@ export default function RomanRail() {
   const go = (id: string, i: number) => {
     const el = elsRef.current[i] || document.getElementById(id);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: Math.max(0, top + 4), behavior: "smooth" });
+    // Première section (hero) : retour tout en haut de la page.
+    if (i === 0) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    // On vise le CONTENU de la section (eyebrow / titre), pas son haut
+    // décoratif (ex. la statue + padding de la FAQ qui faisait arriver
+    // « trop haut »). querySelector renvoie le 1er élément dans l'ordre du DOM.
+    const anchor = el.querySelector<HTMLElement>(
+      "h1, h2, .eyebrow, .eng-eyebrow, .method2-eyebrow, .cine2-promise-eyebrow"
+    );
+    const HEADER_OFFSET = 112; // header fixe (~76px) + respiration
+    const top = anchor
+      ? anchor.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET
+      : el.getBoundingClientRect().top + window.scrollY + 4;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
   };
 
   return (

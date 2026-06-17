@@ -19,14 +19,19 @@ const gradientSVG = (color1: string, color2: string, label: string) => {
 
 // Charte V2 : Bleu / Framboise / Nuit / Gris
 const GRID_ITEMS: ScrollTiltedGridItem[] = [
-  { src: gradientSVG('%23EAE9EE', '%23B8B8B8', 'Gris perle'), caption: 'Le fond' },
-  { src: gradientSVG('%232B6CC4', '%231B4F8A', 'Bleu clair'), caption: "L'éclat" },
+  // Grille 2 colonnes -> chaque RANGÉE = une famille de couleur (charte graphique).
+  // Rangée 1 : les bleus
   { src: gradientSVG('%231B4F8A', '%230D2B50', 'Bleu Klein'), caption: 'La signature' },
-  { src: gradientSVG('%23E8527E', '%23C9266A', 'Rose framboise'), caption: 'La douceur' },
+  { src: gradientSVG('%232B6CC4', '%231B4F8A', 'Bleu clair'), caption: "L'éclat" },
+  // Rangée 2 : les roses / framboise
   { src: gradientSVG('%23C9266A', '%238A1245', 'Framboise'), caption: "L'accent" },
-  { src: gradientSVG('%23383838', '%237A7A7A', 'Gris foncé'), caption: "L'équilibre" },
-  { src: gradientSVG('%230D2B50', '%231A1A2E', 'Nuit profonde'), caption: 'La profondeur' },
+  { src: gradientSVG('%23E8527E', '%23C9266A', 'Rose framboise'), caption: 'La douceur' },
+  // Rangée 3 : les nuits / sombres
   { src: gradientSVG('%231A1A2E', '%230D0D1A', 'Nuit'), caption: 'Le contraste' },
+  { src: gradientSVG('%230D2B50', '%231A1A2E', 'Nuit profonde'), caption: 'La profondeur' },
+  // Rangée 4 : les neutres / gris
+  { src: gradientSVG('%23EAE9EE', '%23B8B8B8', 'Gris perle'), caption: 'Le fond' },
+  { src: gradientSVG('%23383838', '%237A7A7A', 'Gris foncé'), caption: "L'équilibre" },
 ];
 
 export const metadata = {

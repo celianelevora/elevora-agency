@@ -64,6 +64,10 @@ const FX_CSS = `
 .svc-eyebrow::before {
   content: ''; width: 26px; height: 1px; background: currentColor; opacity: .5;
 }
+/* Eyebrow du HERO uniquement = nom de la page : plus grand et lisible
+   (le nom de page était « écrit tout petit » et on ne savait pas où on était). */
+.svc-hero-eyebrow { font-size: 15px; letter-spacing: .16em; font-weight: 600; }
+.svc-hero-eyebrow::before { width: 34px; opacity: .65; }
 
 /* Paragraphe d'introduction (lead) reutilise localement */
 .svc-lead {

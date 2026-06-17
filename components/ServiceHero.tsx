@@ -87,7 +87,7 @@ export default function ServiceHero({
       initial="hidden"
       animate="visible"
     >
-      <motion.span variants={item} className="svc-eyebrow" style={{ color: eyebrowCol, marginBottom: 26 }}>
+      <motion.span variants={item} className="svc-eyebrow svc-hero-eyebrow" style={{ color: eyebrowCol, marginBottom: 22 }}>
         {eyebrow}
       </motion.span>
 
@@ -178,7 +178,7 @@ export default function ServiceHero({
   // sur TOUTES les pages de service, quel que soit le mode (image hero seule ou
   // hero + partie 2). Le hero remplit le viewport pour qu'aucune section suivante
   // ne depasse sous une coupure nette.
-  const HERO_TOP = 'clamp(116px, 14vh, 188px)';
+  const HERO_TOP = 'clamp(104px, 12vh, 156px)';
   const heroScreen = {
     minHeight: 'calc(100vh + 76px)',
     paddingTop: HERO_TOP,

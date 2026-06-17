@@ -127,7 +127,6 @@ export default function MethodSteps() {
                 <span className="method2-card-glow" aria-hidden="true" />
                 <span className="method2-ghost" aria-hidden="true">{step.num}</span>
                 <div className="method2-card-top">
-                  <span className="method2-step-num">{step.num}</span>
                   <span className="method2-label">{step.label}</span>
                   <span className="method2-duration">{step.duration}</span>
                 </div>

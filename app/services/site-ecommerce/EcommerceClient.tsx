@@ -93,8 +93,8 @@ function HeroPourQui() {
 
       <div style={{ position: 'relative', zIndex: 2 }}>
         {/* HERO */}
-        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: 'calc(100vh + 76px)', paddingTop: 'clamp(116px, 14vh, 188px)', paddingBottom: 64 }}>
-          <motion.span variants={item} className="svc-eyebrow" style={{ color: 'var(--klein)', marginBottom: 26 }}>Site e-commerce</motion.span>
+        <motion.div className="container" variants={stagger} initial="hidden" animate="visible" style={{ minHeight: 'calc(100vh + 76px)', paddingTop: 'clamp(104px, 12vh, 156px)', paddingBottom: 64 }}>
+          <motion.span variants={item} className="svc-eyebrow svc-hero-eyebrow" style={{ color: 'var(--klein)', marginBottom: 22 }}>Site e-commerce</motion.span>
           <motion.h1 variants={item} style={{ margin: '18px 0 30px', maxWidth: 860, color: 'var(--ink)', lineHeight: 1.02 }}>
             Vendez en ligne.<br />
             <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', color: 'var(--pink)', fontWeight: 500 }}>Vraiment.</span>
