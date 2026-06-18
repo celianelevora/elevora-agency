@@ -42,6 +42,16 @@ const nextConfig = {
   reactStrictMode: true,
   // Supprime l'en-tête X-Powered-By (ne révèle plus la stack Next.js).
   poweredByHeader: false,
+  // BUILD INFOMANIAK — anti-SIGABRT.
+  // La génération statique de Next 14 parallélise le rendu des pages sur
+  // plusieurs workers. Sur un hébergement à mémoire contrainte (Infomaniak),
+  // ces workers font un abort() natif (signal SIGABRT, exit code null) dès
+  // « Generating static pages ». On force un rendu séquentiel mono-worker :
+  // le pic mémoire s'effondre et le build passe de façon déterministe.
+  experimental: {
+    workerThreads: false,
+    cpus: 1,
+  },
   async headers() {
     return [
       {
