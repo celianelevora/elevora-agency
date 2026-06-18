@@ -57,11 +57,22 @@ export const metadata: Metadata = {
     siteName: "Elevora",
     locale: "fr_FR",
     type: "website",
+    // Image OG statique 1200x630 servie depuis /public (plus d'edge runtime
+    // ni de génération dynamique @vercel/og — évite le SIGABRT au build Infomaniak).
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Elevora — Agence digitale à Nantes",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Elevora — Agence digitale à Nantes",
     description: "Sites web qui convertissent et outils de gestion sur mesure.",
+    images: ["/og-image.png"],
   },
 };
 
