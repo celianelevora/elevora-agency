@@ -34,8 +34,17 @@ const FIELD_MAX: Record<string, number> = {
 };
 const FIELD_MAX_DEFAULT = 1000;
 
-function isAllowedOrigin(origin: string): boolean {
+function isAllowedOrigin(origin: string, host: string | null): boolean {
   if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Same-origin : si l'origine correspond à l'hôte qui sert l'app (ex.
+  // test.elevora-agency.com, www., apex…), la requête vient du site lui-même.
+  // Une requête same-origin n'est jamais du CSRF tiers : on l'autorise donc quel
+  // que soit le domaine de déploiement, sans avoir à maintenir une liste.
+  try {
+    if (host && new URL(origin).host === host) return true;
+  } catch {
+    /* origin non parsable : on retombe sur les règles ci-dessous */
+  }
   // En développement uniquement, autoriser localhost, 127.0.0.1, 0.0.0.0 et les
   // IP du réseau local (ex. 192.168.x.x pour tester depuis un téléphone), tout
   // port confondu. En production, seuls ALLOWED_ORIGINS sont acceptés.
@@ -229,8 +238,11 @@ function confirmEmail(formType: string, d: Record<string, any>): { subject: stri
 export async function POST(request: NextRequest) {
   try {
     // — Vérification d'origine (anti-CSRF / abus d'API tierce) —
+    // L'hôte réel est porté par x-forwarded-host derrière le proxy Infomaniak,
+    // sinon par l'en-tête Host classique.
     const origin = request.headers.get('origin');
-    if (origin && !isAllowedOrigin(origin)) {
+    const host = request.headers.get('x-forwarded-host') || request.headers.get('host');
+    if (origin && !isAllowedOrigin(origin, host)) {
       return NextResponse.json({ error: 'Origine non autorisée.' }, { status: 403 });
     }
 
