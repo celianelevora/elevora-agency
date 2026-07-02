@@ -6123,11 +6123,22 @@ html.cine-hero{
 
 /* ---------- responsive ---------- */
 @media (max-width:760px){
-  /* Mobile : plus de scrub canvas (voir CinematicHero) -> la vidéo reste
-     visible en boucle. On raccourcit un peu la section (le scrub n'ayant plus
-     besoin de tout ce budget de défilement), sans descendre trop bas pour ne
-     pas perturber l'épinglage sticky de la scène ni le timing de la promesse. */
-  .cine2{ height:360vh; }
+  /* ============================================================
+     MOBILE — hero simplifié et FIABLE.
+     Le hero cinématique de bureau repose sur une scène en position:sticky +
+     un scrub de 122 frames. Sous 768px ce montage casse :
+       1. le sticky ne tient pas (scène qui défile puis disparaît -> écran
+          vide qu'on traverse au scroll — le bug signalé) ;
+       2. les 122 frames 1916x1080 = ~1 Go de bitmaps, impossible à garder en
+          mémoire sur mobile -> canvas vide.
+     On remplace donc par un hero net : UNE hauteur d'écran, vidéo plein cadre
+     (avec son poster en repli) + titre. Pas de sticky, pas de scrub, pas de
+     canvas. La suite du site enchaîne directement dessous.
+     ============================================================ */
+  .cine2{ height:100dvh; margin-top:-76px; }
+  .cine2-stage{ position:relative; height:100dvh; }
+  .cine2-canvas{ display:none; }   /* jamais de scrub sur mobile */
+  .cine2-promise{ display:none; }  /* révélée par le scrub -> sans objet ici */
   .cine2-hero-ui{ flex-direction:column; align-items:flex-start; justify-content:flex-end; gap:18px; padding:100px 22px 56px; }
   .cine2-title{ font-size:clamp(34px,9vw,56px); }
   .cine2-tagline{ text-align:left; align-self:flex-start; max-width:none; }
@@ -6362,7 +6373,10 @@ html.cine-hero{
 @media (max-width: 768px) {
   html,
   body {
-    overflow-x: hidden;
+    /* clip (et non hidden) : empêche le scroll horizontal parasite SANS créer
+       de conteneur de défilement — donc sans casser position:sticky des
+       descendants (hidden sur html/body neutralise le sticky sur mobile). */
+    overflow-x: clip;
     max-width: 100%;
   }
 }
