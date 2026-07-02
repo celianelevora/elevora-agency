@@ -77,6 +77,13 @@ export default function CinematicHero({
     for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       img.decoding = "async";
+      // Les frames du scrub sont NOMBREUSES (122). En priorité normale, leurs
+      // requêtes saturent le pool de connexions et retardent les vraies photos
+      // du site (logos, covers, avatars). La 1re frame reste prioritaire (elle
+      // s'affiche tout de suite), les suivantes passent en priorité basse pour
+      // laisser passer le contenu visible d'abord.
+      (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority =
+        i === 0 ? "high" : "low";
       img.onload = () => {
         loaded[i] = true;
         // dès que la 1re frame est prête, on la peint (utile pour la liaison)
