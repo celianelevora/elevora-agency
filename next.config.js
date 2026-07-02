@@ -42,11 +42,14 @@ const nextConfig = {
   reactStrictMode: true,
   // Supprime l'en-tête X-Powered-By (ne révèle plus la stack Next.js).
   poweredByHeader: false,
-  // Optimisation d'images next/image : sert de l'AVIF en priorité (meilleure
-  // compression que le WebP), avec repli WebP. minimumCacheTTL long : les images
-  // optimisées (covers, logos) sont immuables, on les met en cache 30 jours.
+  // Optimisation d'images next/image : WebP uniquement.
+  // On N'active PAS l'AVIF : il compresse un peu mieux mais s'encode ~2x plus
+  // lentement, et sur l'hébergement Infomaniak (1 seul CPU) chaque image
+  // ré-optimisée à la volée au 1er chargement devient lente. Le WebP offre le
+  // meilleur compromis poids/vitesse d'encodage sur ce serveur.
+  // minimumCacheTTL long : les images optimisées sont immuables -> cache 30 j.
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/webp'],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   // BUILD INFOMANIAK — anti-SIGABRT.
