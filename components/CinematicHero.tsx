@@ -66,31 +66,43 @@ export default function CinematicHero({
     if (!ctx) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // MOBILE : le scrub canvas charge 122 frames en 1916x1080. Une fois
+    // décodées, elles représentent ~1 Go de bitmaps en mémoire — un navigateur
+    // mobile ne peut pas les conserver, il les évince, le canvas reste alors
+    // VIDE. Comme drive() masque la vidéo (opacity 0) pour révéler le canvas,
+    // on se retrouvait avec un écran sombre pendant tout le défilement du hero.
+    // => Sur mobile on désactive complètement le scrub : on garde la vidéo (ou
+    // son poster) visible, on ne charge aucune frame, on ne bascule jamais vers
+    // le canvas. La statue reste donc visible via la vidéo en boucle.
+    const isMobile = window.matchMedia("(max-width: 760px)").matches;
     const root = document.documentElement;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (isMobile) section.classList.add("cine2--mobile");
 
-    // ---- préchargement des frames ----
+    // ---- préchargement des frames (desktop uniquement) ----
     const frames: HTMLImageElement[] = new Array(frameCount);
     const loaded: boolean[] = new Array(frameCount).fill(false);
     let lastDrawn = -1;
 
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.decoding = "async";
-      // Les frames du scrub sont NOMBREUSES (122). En priorité normale, leurs
-      // requêtes saturent le pool de connexions et retardent les vraies photos
-      // du site (logos, covers, avatars). La 1re frame reste prioritaire (elle
-      // s'affiche tout de suite), les suivantes passent en priorité basse pour
-      // laisser passer le contenu visible d'abord.
-      (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority =
-        i === 0 ? "high" : "low";
-      img.onload = () => {
-        loaded[i] = true;
-        // dès que la 1re frame est prête, on la peint (utile pour la liaison)
-        if (i === 0 && lastDrawn < 0) draw(0);
-      };
-      img.src = `${framesDir}/f_${pad3(i + 1)}.webp`;
-      frames[i] = img;
+    if (!isMobile) {
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.decoding = "async";
+        // Les frames du scrub sont NOMBREUSES (122). En priorité normale, leurs
+        // requêtes saturent le pool de connexions et retardent les vraies photos
+        // du site (logos, covers, avatars). La 1re frame reste prioritaire (elle
+        // s'affiche tout de suite), les suivantes passent en priorité basse pour
+        // laisser passer le contenu visible d'abord.
+        (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority =
+          i === 0 ? "high" : "low";
+        img.onload = () => {
+          loaded[i] = true;
+          // dès que la 1re frame est prête, on la peint (utile pour la liaison)
+          if (i === 0 && lastDrawn < 0) draw(0);
+        };
+        img.src = `${framesDir}/f_${pad3(i + 1)}.webp`;
+        frames[i] = img;
+      }
     }
 
     let vh = window.innerHeight;
@@ -142,7 +154,9 @@ export default function CinematicHero({
 
     const drive = (P: number) => {
       // ---- LIAISON hero -> canvas (fondu, les 2 montrent la même pose) ----
-      const xfade = map(P, 0.07, 0.15);
+      // Sur mobile : xfade forcé à 0 -> la vidéo reste visible, le canvas (vide,
+      // non chargé) n'est jamais révélé. Fini l'écran sombre au scroll.
+      const xfade = isMobile ? 0 : map(P, 0.07, 0.15);
       heroVid.style.opacity = (1 - xfade).toFixed(3);
       canvas.style.opacity = xfade.toFixed(3);
 

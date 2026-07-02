@@ -45,6 +45,17 @@ function isAllowedOrigin(origin: string, host: string | null): boolean {
   } catch {
     /* origin non parsable : on retombe sur les règles ci-dessous */
   }
+  // Environnements de preview / staging Infomaniak : l'URL publique est un
+  // sous-domaine *.hosting-ik.com (ex. 16hvmytb5jc.preview.hosting-ik.com).
+  // Derrière leur proxy, l'en-tête host ne correspond pas toujours à l'origine,
+  // ce qui fait échouer la comparaison same-origin ci-dessus. On autorise donc
+  // explicitement ces domaines pour que les formulaires marchent en preview
+  // (le domaine de prod elevora-agency.com reste couvert par ALLOWED_ORIGINS).
+  try {
+    if (new URL(origin).hostname.endsWith('.hosting-ik.com')) return true;
+  } catch {
+    /* origin non parsable */
+  }
   // En développement uniquement, autoriser localhost, 127.0.0.1, 0.0.0.0 et les
   // IP du réseau local (ex. 192.168.x.x pour tester depuis un téléphone), tout
   // port confondu. En production, seuls ALLOWED_ORIGINS sont acceptés.
@@ -77,45 +88,90 @@ function esc(v: unknown): string {
     .replace(/"/g, '&quot;');
 }
 
-// ---- Briques d'e-mail (tables + inline styles, compatibles clients mail) ----
+// ---- Système de design e-mail (tables + inline styles, compatibles Outlook) ----
+// Palette : ink (encre navi) + or, sur fond crème chaud. Fini le tableau zébré et
+// l'accent magenta : hiérarchie éditoriale, espacements généreux = perçu premium.
 
-const SERIF = "'Cochin',Georgia,'Times New Roman',serif";
-const SANS = "'Helvetica Neue',Arial,sans-serif";
+const SERIF = "Georgia,'Times New Roman',serif";
+const SANS = "'Helvetica Neue',Helvetica,Arial,sans-serif";
+const INK = '#15151F';        // encre / masthead / titres
+const INK2 = '#33333F';       // texte courant
+const MUTE = '#7C7C88';       // texte secondaire
+const GOLD = '#B08A3E';       // or (contraste sur blanc)
+const GOLD_L = '#C6A35A';     // or clair (sur fond sombre)
+const CANVAS = '#EDEAE4';     // fond extérieur crème
+const HAIR = '#ECEAF0';       // filets
+const SOFT = '#F6F5F1';       // cartes douces
 
-function header(title: string, subtitle: string): string {
+// Enveloppe fluid-hybride : centrée, 600px cappé, coins arrondis, préheader caché.
+function shell(inner: string, preheader = ''): string {
   return `
-  <tr><td style="background:#1A1A2E;padding:34px 40px 28px">
-    <div style="font-family:${SANS};font-size:11px;letter-spacing:4px;color:#C6A35A;text-transform:uppercase">ELEVORA &#183; AGENCE DIGITALE</div>
-    <div style="font-family:${SERIF};font-size:26px;line-height:1.2;color:#EAE9EE;margin-top:12px">${title}</div>
-    <div style="font-family:${SANS};font-size:13px;color:#8A8AA0;margin-top:7px">${subtitle}</div>
-  </td></tr>
-  <tr><td style="height:3px;background:#C9266A;line-height:3px;font-size:1px">&nbsp;</td></tr>`;
-}
-
-function footer(note: string): string {
-  return `
-  <tr><td style="background:#FFFFFF;padding:24px 40px 30px;border-top:1px solid #ECEAEF">
-    <div style="font-family:${SANS};font-size:12px;line-height:1.65;color:#7A7A7A">${note}</div>
-    <div style="margin-top:14px;font-family:${SANS};font-size:11px;letter-spacing:1.5px;color:#9A9AA8;text-transform:uppercase">Nantes &#183; France &nbsp;&middot;&nbsp; elevora-agency.com</div>
-  </td></tr>`;
-}
-
-function shell(inner: string): string {
-  return `
-  <div style="background:#EAE9EE;padding:30px 16px;font-family:${SANS}">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="max-width:600px;width:100%;margin:0 auto;background:#FFFFFF;border-radius:12px;overflow:hidden">
-      ${inner}
+  <div style="margin:0;padding:0;background:${CANVAS};">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;font-size:1px;line-height:1px;color:${CANVAS};mso-hide:all;">${preheader}&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;&#8203;</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${CANVAS};">
+      <tr><td align="center" style="padding:40px 14px;">
+        <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center" style="width:100%;max-width:600px;background:#FFFFFF;border-radius:20px;overflow:hidden;border:1px solid ${HAIR};">
+          ${inner}
+        </table>
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center" style="width:100%;max-width:600px;">
+          <tr><td align="center" style="padding:24px 20px 6px;font-family:${SANS};font-size:11px;letter-spacing:.4px;color:#A0A0AC;line-height:1.7;">
+            Elevora — Agence digitale &#183; Nantes, France<br>
+            <a href="https://elevora-agency.com" style="color:#A0A0AC;text-decoration:none;">elevora-agency.com</a>
+          </td></tr>
+        </table>
+        <!--[if mso]></td></tr></table><![endif]-->
+      </td></tr>
     </table>
   </div>`;
 }
 
-function row(label: string, value: string, alt: boolean): string {
-  const bg = alt ? '#F7F6F9' : '#FFFFFF';
-  const pre = /Description|Message/.test(label) ? 'white-space:pre-wrap;' : '';
-  return `<tr>
-    <td style="padding:11px 22px;font-family:${SANS};font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:#C9266A;background:${bg};border-bottom:1px solid #ECEAEF;width:165px;vertical-align:top;font-weight:bold">${label}</td>
-    <td style="padding:11px 22px;font-family:${SANS};font-size:14px;line-height:1.55;color:#2E2E4A;background:${bg};border-bottom:1px solid #ECEAEF;${pre}">${value}</td>
-  </tr>`;
+// Masthead : fond encre, sur-titre or espacé, titre serif, filet or inséré.
+function masthead(eyebrow: string, title: string, subtitle: string): string {
+  return `
+  <tr><td style="background:${INK};padding:40px 46px 34px;">
+    <div style="font-family:${SANS};font-size:10.5px;letter-spacing:3.5px;color:${GOLD_L};text-transform:uppercase;font-weight:700;">${eyebrow}</div>
+    <div style="font-family:${SERIF};font-size:29px;line-height:1.25;color:#FBFAF7;margin-top:15px;">${title}</div>
+    ${subtitle ? `<div style="font-family:${SANS};font-size:13.5px;line-height:1.55;color:#9C9CB0;margin-top:10px;">${subtitle}</div>` : ''}
+  </td></tr>
+  <tr><td style="background:${INK};padding:0 46px 4px;"><div style="height:2px;width:46px;background:${GOLD_L};font-size:0;line-height:2px;">&nbsp;</div></td></tr>`;
+}
+
+// Champ « définition » : micro-label or en capitales, valeur en dessous, filet bas.
+function field(label: string, value: string, isLong = false): string {
+  return `
+  <tr><td style="padding:0 46px;">
+    <div style="padding:17px 0;border-bottom:1px solid ${HAIR};">
+      <div style="font-family:${SANS};font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:${GOLD};font-weight:700;">${label}</div>
+      <div style="font-family:${SANS};font-size:15px;line-height:1.55;color:${INK2};margin-top:7px;${isLong ? 'white-space:pre-wrap;' : ''}">${value}</div>
+    </div>
+  </td></tr>`;
+}
+
+// Bouton bulletproof (bgcolor sur le td pour Outlook).
+function button(href: string, label: string): string {
+  return `
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+    <td align="center" bgcolor="${INK}" style="border-radius:100px;">
+      <a href="${href}" style="display:inline-block;padding:15px 34px;font-family:${SANS};font-size:13px;letter-spacing:.4px;color:#FBFAF7;text-decoration:none;font-weight:600;">${label}</a>
+    </td>
+  </tr></table>`;
+}
+
+// Note de pied de carte.
+function footerNote(note: string): string {
+  return `
+  <tr><td style="padding:28px 46px 42px;">
+    <div style="border-top:1px solid ${HAIR};padding-top:24px;font-family:${SANS};font-size:12px;line-height:1.7;color:${MUTE};">${note}</div>
+  </td></tr>`;
+}
+
+// Assemble une liste de champs en ignorant les valeurs vides ('—').
+function fieldList(items: Array<[string, string, boolean?]>): string {
+  return items
+    .filter(([, value]) => value && value !== '—')
+    .map(([label, value, isLong]) => field(label, value, isLong))
+    .join('');
 }
 
 // ---- Mail INTERNE (reçu par Elevora) ----
@@ -123,58 +179,72 @@ function internalEmail(formType: string, d: Record<string, any>): { subject: str
   const fullName = `${d.first_name} ${d.last_name}`.trim();
   const phone = d.phone_full || d.phone;
   const features = Array.isArray(d.features) ? d.features.join(', ') : d.features;
-  const mail = `<a href="mailto:${esc(d.email)}" style="color:#1B4F8A;text-decoration:none">${esc(d.email)}</a>`;
+  const mail = `<a href="mailto:${esc(d.email)}" style="color:${GOLD};text-decoration:none;font-weight:600;">${esc(d.email)}</a>`;
 
   let subject: string;
   let title: string;
   let summary: string;
-  let rows = '';
-  let i = 0;
+  let rows: string;
 
   if (formType === 'start_project') {
     subject = `Nouveau projet — ${d.project_type} — ${fullName}`;
     title = 'Nouvelle demande de projet';
-    summary = [esc(d.project_type), `Budget ${esc(d.budget)}`, esc(d.objective)].join(' &nbsp;&middot;&nbsp; ');
-    rows += row('Nom', esc(fullName), i++ % 2 === 1);
-    rows += row('Email', mail, i++ % 2 === 1);
-    rows += row('Téléphone', esc(phone), i++ % 2 === 1);
-    rows += row('Entreprise', esc(d.company), i++ % 2 === 1);
-    rows += row('Secteur', esc(d.sector), i++ % 2 === 1);
-    rows += row('Type de projet', esc(d.project_type), i++ % 2 === 1);
-    rows += row('Objectif', esc(d.objective), i++ % 2 === 1);
-    rows += row('Nombre de pages', esc(d.pages), i++ % 2 === 1);
-    rows += row('Budget', esc(d.budget), i++ % 2 === 1);
-    rows += row('Délai souhaité', esc(d.deadline), i++ % 2 === 1);
-    rows += row('Fonctionnalités', esc(features), i++ % 2 === 1);
-    rows += row('Description', esc(d.description), i++ % 2 === 1);
-    rows += row('Identité / charte', esc(d.branding), i++ % 2 === 1);
-    rows += row('Inspirations', esc(d.inspirations), i++ % 2 === 1);
-    rows += row('Contenus dispo.', esc(d.content), i++ % 2 === 1);
-    rows += row('Message complémentaire', esc(d.extra_message), i++ % 2 === 1);
+    summary = [esc(d.project_type), `Budget ${esc(d.budget)}`, esc(d.objective)]
+      .filter((s) => s && s !== '—')
+      .join(' &nbsp;·&nbsp; ');
+    rows = fieldList([
+      ['Contact', esc(fullName)],
+      ['Email', mail],
+      ['Téléphone', esc(phone)],
+      ['Entreprise', esc(d.company)],
+      ['Secteur', esc(d.sector)],
+      ['Type de projet', esc(d.project_type)],
+      ['Objectif', esc(d.objective)],
+      ['Nombre de pages', esc(d.pages)],
+      ['Budget', esc(d.budget)],
+      ['Délai souhaité', esc(d.deadline)],
+      ['Fonctionnalités', esc(features)],
+      ['Description', esc(d.description), true],
+      ['Identité / charte', esc(d.branding)],
+      ['Inspirations', esc(d.inspirations), true],
+      ['Contenus disponibles', esc(d.content)],
+      ['Message complémentaire', esc(d.extra_message), true],
+    ]);
   } else {
     subject = `Contact — ${d.subject} — ${fullName}`;
     title = 'Nouveau message de contact';
     summary = esc(d.subject);
-    rows += row('Nom', esc(fullName), i++ % 2 === 1);
-    rows += row('Email', mail, i++ % 2 === 1);
-    rows += row('Téléphone', esc(phone), i++ % 2 === 1);
-    rows += row('Sujet', esc(d.subject), i++ % 2 === 1);
-    rows += row('Message', esc(d.message), i++ % 2 === 1);
+    rows = fieldList([
+      ['Contact', esc(fullName)],
+      ['Email', mail],
+      ['Téléphone', esc(phone)],
+      ['Sujet', esc(d.subject)],
+      ['Message', esc(d.message), true],
+    ]);
   }
 
   const body = `
-  <tr><td style="background:#FFFFFF;padding:28px 40px 8px">
-    <div style="font-family:${SERIF};font-size:23px;color:#1A1A2E">${esc(fullName)}</div>
-    <div style="font-family:${SANS};font-size:13px;color:#7A7A7A;margin-top:6px">${summary}</div>
+  <tr><td style="padding:34px 46px 6px;">
+    <div style="font-family:${SERIF};font-size:24px;line-height:1.2;color:${INK};">${esc(fullName)}</div>
+    <div style="font-family:${SANS};font-size:13px;line-height:1.6;color:${MUTE};margin-top:8px;">${summary}</div>
   </td></tr>
-  <tr><td style="padding:18px 0 0">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">${rows}</table>
+  <tr><td style="height:20px;font-size:0;line-height:20px;">&nbsp;</td></tr>
+  ${rows}
+  <tr><td style="padding:30px 46px 4px;">
+    ${button(`mailto:${esc(d.email)}`, `Répondre à ${esc(d.first_name)}`)}
   </td></tr>`;
 
   const html = shell(
-    header(title, formType === 'start_project' ? 'Formulaire « Démarrer un projet »' : 'Formulaire « Contact »') +
-    body +
-    footer('Répondez directement à cet e-mail pour recontacter le prospect (l\'adresse de réponse est la sienne).')
+    masthead(
+      'Elevora · Notification',
+      title,
+      formType === 'start_project' ? 'Formulaire « Démarrer un projet »' : 'Formulaire « Contact »',
+    ) +
+      body +
+      footerNote(
+        'Répondez directement à cet e-mail pour recontacter le prospect — l\'adresse de réponse est déjà la sienne.',
+      ),
+    `${title} — ${fullName}`,
   );
 
   return { subject, html };
@@ -183,53 +253,53 @@ function internalEmail(formType: string, d: Record<string, any>): { subject: str
 // ---- Mail de CONFIRMATION (reçu par le prospect) ----
 function confirmEmail(formType: string, d: Record<string, any>): { subject: string; html: string } {
   const prenom = esc(d.first_name);
-  const recap =
-    formType === 'start_project'
-      ? `Projet : <strong style="color:#1A1A2E">${esc(d.project_type)}</strong>`
-      : `Objet : <strong style="color:#1A1A2E">${esc(d.subject)}</strong>`;
+  const recapLabel = formType === 'start_project' ? 'Votre projet' : 'Votre demande';
+  const recapValue =
+    formType === 'start_project' ? esc(d.project_type) : esc(d.subject);
 
   const body = `
-  <tr><td style="background:#FFFFFF;padding:38px 40px 4px">
-    <div style="font-family:${SERIF};font-size:30px;line-height:1.15;color:#1A1A2E">Merci, ${prenom}.</div>
-    <p style="font-family:${SANS};font-size:15px;line-height:1.7;color:#2E2E4A;margin:18px 0 0">
-      Votre demande nous est bien parvenue. On l'étudie attentivement et on revient vers vous
-      <strong style="color:#1A1A2E">sous 48&nbsp;heures ouvrées</strong> avec une première réponse — et, si c'est pertinent, les prochaines étapes.
+  <tr><td style="padding:44px 46px 0;">
+    <div style="font-family:${SERIF};font-size:34px;line-height:1.12;color:${INK};">Merci, ${prenom}.</div>
+    <p style="font-family:${SANS};font-size:15.5px;line-height:1.75;color:${INK2};margin:20px 0 0;">
+      Votre demande nous est bien parvenue. Nous l'étudions attentivement et revenons vers vous
+      <strong style="color:${INK};">sous 48&nbsp;heures ouvrées</strong> avec une première réponse — et, si c'est pertinent, les prochaines étapes.
     </p>
   </td></tr>
 
-  <tr><td style="background:#FFFFFF;padding:22px 40px 6px">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F6F9;border:1px solid #ECEAEF;border-radius:10px">
-      <tr><td style="padding:18px 22px">
-        <div style="font-family:${SANS};font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;color:#C9266A;font-weight:bold">Votre demande</div>
-        <div style="font-family:${SANS};font-size:14px;line-height:1.6;color:#2E2E4A;margin-top:8px">${recap}</div>
-      </td></tr>
+  <tr><td style="padding:28px 46px 0;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${SOFT};border-radius:12px;">
+      <tr>
+        <td width="3" bgcolor="${GOLD}" style="background:${GOLD};border-radius:12px 0 0 12px;font-size:0;line-height:0;">&nbsp;</td>
+        <td style="padding:20px 24px;">
+          <div style="font-family:${SANS};font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:${GOLD};font-weight:700;">${recapLabel}</div>
+          <div style="font-family:${SERIF};font-size:19px;line-height:1.35;color:${INK};margin-top:8px;">${recapValue}</div>
+        </td>
+      </tr>
     </table>
   </td></tr>
 
-  <tr><td style="background:#FFFFFF;padding:28px 40px 0">
-    <div style="border-top:1px solid #ECEAEF;padding-top:22px">
-      <span style="font-family:${SERIF};font-size:16px;color:#C6A35A">&#10022;</span>
-      <span style="font-family:${SERIF};font-style:italic;font-size:17px;color:#1A1A2E;margin-left:8px">Un seul interlocuteur, du devis à la mise en ligne.</span>
+  <tr><td style="padding:30px 46px 0;">
+    <div style="border-top:1px solid ${HAIR};padding-top:26px;font-family:${SERIF};font-style:italic;font-size:18px;line-height:1.5;color:${INK};">
+      <span style="color:${GOLD};font-style:normal;">&#10022;</span>&nbsp; Un seul interlocuteur, du devis à la mise en ligne.
     </div>
   </td></tr>
 
-  <tr><td style="background:#FFFFFF;padding:26px 40px 6px">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
-      <td bgcolor="#1B4F8A" style="border-radius:999px">
-        <a href="https://elevora-agency.com/realisations" style="display:inline-block;padding:13px 28px;font-family:${SANS};font-size:14px;color:#FFFFFF;text-decoration:none">Voir nos réalisations</a>
-      </td>
-    </tr></table>
+  <tr><td style="padding:28px 46px 0;">
+    ${button('https://elevora-agency.com/realisations', 'Découvrir nos réalisations')}
   </td></tr>
 
-  <tr><td style="background:#FFFFFF;padding:26px 40px 34px">
-    <div style="font-family:${SERIF};font-size:18px;color:#1A1A2E">L'équipe Elevora</div>
-    <div style="font-family:${SANS};font-size:12px;color:#7A7A7A;margin-top:3px">Agence digitale &#183; Nantes</div>
+  <tr><td style="padding:32px 46px 8px;">
+    <div style="font-family:${SERIF};font-size:19px;color:${INK};">L'équipe Elevora</div>
+    <div style="font-family:${SANS};font-size:12px;letter-spacing:.4px;color:${MUTE};margin-top:4px;">Agence digitale &#183; Nantes</div>
   </td></tr>`;
 
   const html = shell(
-    header('Elevora', 'Votre demande est bien reçue') +
-    body +
-    footer('Cet e-mail confirme la réception de votre message. Si vous n\'êtes pas à l\'origine de cette demande, vous pouvez l\'ignorer.')
+    masthead('Elevora · Agence digitale', 'Votre demande est bien reçue', '') +
+      body +
+      footerNote(
+        'Cet e-mail confirme la réception de votre message. Si vous n\'êtes pas à l\'origine de cette demande, vous pouvez l\'ignorer.',
+      ),
+    `Merci ${prenom}, votre demande est bien reçue — réponse sous 48h.`,
   );
 
   return { subject: 'Nous avons bien reçu votre demande — Elevora', html };
