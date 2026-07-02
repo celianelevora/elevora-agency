@@ -25,6 +25,22 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Menu mobile ouvert : bloque le scroll du body (évite le défilement de la page
+  // sous l'overlay) et ferme le menu à la touche Échap (accessibilité clavier).
+  useEffect(() => {
+    if (!menuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [menuOpen]);
+
   const closeMenu = () => setMenuOpen(false);
   const closeServices = () => {
     setServicesOpen(false);
@@ -137,11 +153,20 @@ export default function Header() {
 
       {/* Drawer mobile */}
       <div className={`hdr-mobile-drawer ${menuOpen ? 'open' : ''}`}>
-        <Link href="/services/site-vitrine" className="drawer-link" onClick={closeMenu}>Site Vitrine</Link>
-        <Link href="/services/site-ecommerce" className="drawer-link" onClick={closeMenu}>Site E-commerce</Link>
-        <Link href="/services/landing-page" className="drawer-link" onClick={closeMenu}>Landing page</Link>
-        <Link href="/services/application-web-mobile" className="drawer-link" onClick={closeMenu}>Application</Link>
-        <Link href="/services/crm-outil-de-gestion" className="drawer-link" onClick={closeMenu}>CRM & Outil de gestion</Link>
+        {/* Groupe SERVICES — libellé de catégorie pour qu'on comprenne que les
+            5 liens suivants sont les pages de services (et non de la nav à plat). */}
+        <span className="drawer-group-label" aria-hidden="true">Services</span>
+        <div className="drawer-group" role="group" aria-label="Services">
+          <Link href="/services/site-vitrine" className="drawer-link drawer-link-sub" onClick={closeMenu}>Site Vitrine</Link>
+          <Link href="/services/site-ecommerce" className="drawer-link drawer-link-sub" onClick={closeMenu}>Site E-commerce</Link>
+          <Link href="/services/landing-page" className="drawer-link drawer-link-sub" onClick={closeMenu}>Landing page</Link>
+          <Link href="/services/application-web-mobile" className="drawer-link drawer-link-sub" onClick={closeMenu}>Application</Link>
+          <Link href="/services/crm-outil-de-gestion" className="drawer-link drawer-link-sub" onClick={closeMenu}>CRM & Outil de gestion</Link>
+        </div>
+
+        {/* Séparateur entre le groupe Services et la navigation principale. */}
+        <span className="drawer-divider" aria-hidden="true" />
+
         <Link href="/realisations" className="drawer-link" onClick={closeMenu}>Réalisations</Link>
         <Link href="/methode" className="drawer-link" onClick={closeMenu}>Méthode</Link>
         <Link href="/tarifs" className="drawer-link" onClick={closeMenu}>Tarifs</Link>

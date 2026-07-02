@@ -225,7 +225,8 @@ export default function AgencePage() {
         .agence-founders {
           padding: 100px 0 120px;
           background-color: var(--night);
-          background-image: url('/agence-bg-fondateurs.jpg');
+          background-image: url('/agence-bg-fondateurs.jpg'); /* fallback sans image-set */
+          background-image: image-set(url('/agence-bg-fondateurs.webp') type('image/webp'), url('/agence-bg-fondateurs.jpg') type('image/jpeg'));
           background-size: cover;
           background-position: center;
           background-repeat: no-repeat;

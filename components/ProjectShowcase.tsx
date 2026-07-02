@@ -43,11 +43,11 @@ const PROJECTS: Project[] = [
     bg: '#1A0A0F',
   },
   {
-    slug: 'pole-embal',
-    name: 'Pôle Embal',
+    slug: 'embaleo',
+    name: 'Embaléo',
     tag: 'CRM gestion d\'entrepôt · Loire-Atlantique',
     catchphrase: "Outil métier sur mesure : pilotage temps réel, suivi des commandes, performance opérateurs, heatmap activité.",
-    cover: '/projets/pole-embal-cover.jpg',
+    cover: '/projets/embaleo-cover.jpg',
     span: 'large',
     bg: '#0F1729',
   },
@@ -79,7 +79,7 @@ export default function ProjectShowcase() {
               <ProjectCard key={p.slug} project={p} />
             ))}
           </div>
-          {/* Row 2 : Lala-K (small) + Pole Embal (large) */}
+          {/* Row 2 : Lala-K (small) + Embaléo (large) */}
           <div className="projects-row projects-row-2">
             {PROJECTS.slice(2, 4).map((p) => (
               <ProjectCard key={p.slug} project={p} />

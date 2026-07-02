@@ -72,6 +72,9 @@ export default function Guarantees() {
     let raf: number | null = null;
     function tick() {
       raf = null;
+      const section = sectionRef.current;
+      const track = trackRef.current;
+      if (!section || !track) return;
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
       // Progression dans la section, 0 = section arrive en bas du viewport,

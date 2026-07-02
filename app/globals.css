@@ -657,6 +657,38 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   justify-content: center;
   gap: 8px;
 }
+/* Drawer mobile — catégorisation : libellé « Services », sous-liens indentés,
+   séparateur. Rend explicite que les 5 premiers liens sont des pages de services. */
+.drawer-group-label {
+  display: block;
+  padding: 6px 16px 2px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--klein);
+  opacity: 0.85;
+}
+.drawer-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  /* léger liseré à gauche pour matérialiser le groupe de services */
+  border-left: 2px solid rgba(27, 79, 138, 0.18);
+  margin-left: 8px;
+  padding-left: 4px;
+}
+.drawer-link-sub {
+  font-size: 15px;
+  color: var(--ink);
+}
+.drawer-divider {
+  display: block;
+  height: 1px;
+  margin: 8px 12px;
+  background: rgba(10, 10, 10, 0.08);
+}
 
 @media (max-width: 1024px) {
   .hdr-nav { display: none; }
@@ -1660,7 +1692,8 @@ body:has(.home-with-cinematic-footer) {
   /* Nova en COVER center : remplit toute la section, effet centre derriere le titre.
      L'image (1020x1542) a deja sa transition vers #EAE9EE integree sur ses bords. */
   position: absolute; inset: 0;
-  background: url('/method-fond.png') center center / cover no-repeat;
+  background: url('/method-fond.png') center center / cover no-repeat; /* fallback sans image-set */
+  background-image: image-set(url('/method-fond.webp') type('image/webp'), url('/method-fond.png') type('image/png'));
   background-color: #EAE9EE;
   opacity: 1;
 }
@@ -2197,7 +2230,8 @@ body:has(.home-with-cinematic-footer) {
   /* aspect-ratio = ratio EXACT de eng-fond.png (1448x1086), sinon le conteneur
      est mal dimensionne et la dechirure cree une ligne horizontale nette. */
   aspect-ratio: 1448 / 1086;
-  background: url('/eng-fond.png') top center / 100% auto no-repeat;
+  background: url('/eng-fond.png') top center / 100% auto no-repeat; /* fallback sans image-set */
+  background-image: image-set(url('/eng-fond.webp') type('image/webp'), url('/eng-fond.png') type('image/png'));
   background-color: #EAE9EE;
   container-type: size;
   container-name: stage;
@@ -2391,7 +2425,8 @@ body:has(.home-with-cinematic-footer) {
   top: 0; left: 0; right: 0;
   width: 100%;
   aspect-ratio: 1115 / 1091;
-  background: url('/faq-fond.png') top center / 100% auto no-repeat;
+  background: url('/faq-fond.png') top center / 100% auto no-repeat; /* fallback sans image-set */
+  background-image: image-set(url('/faq-fond.webp') type('image/webp'), url('/faq-fond.png') type('image/png'));
   background-color: #EAE9EE;
   z-index: 0;
   pointer-events: none;
@@ -2702,7 +2737,8 @@ body:has(.home-with-cinematic-footer) {
    =========================================================== */
 .form-page {
   background-color: var(--cream);
-  background-image: url('/fond-demarrer-projet.jpg');
+  background-image: url('/fond-demarrer-projet.jpg'); /* fallback sans image-set */
+  background-image: image-set(url('/fond-demarrer-projet.webp') type('image/webp'), url('/fond-demarrer-projet.jpg') type('image/jpeg'));
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -3640,6 +3676,7 @@ body:has(.home-with-cinematic-footer) {
   gap: 14px;
 }
 .reali-project-cover {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 11;
   border-radius: 18px;
@@ -4000,7 +4037,8 @@ body:has(.home-with-cinematic-footer) {
 .tarifs-page-bg {
   margin-top: -76px;
   padding-top: 76px;
-  background-image: url('/fond-tarifs-master.png');
+  background-image: url('/fond-tarifs-master.png'); /* fallback sans image-set */
+  background-image: image-set(url('/fond-tarifs-master.webp') type('image/webp'), url('/fond-tarifs-master.png') type('image/png'));
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
@@ -6303,3 +6341,90 @@ html.cine-hero{
   outline: 2px solid #1B4F8A;
   outline-offset: 2px;
 }
+
+/* ============================================================
+   AUDIT RESPONSIVE — RAFFINEMENTS MOBILE & TABLETTE
+   Elevora · 2026-06-18
+   Règles 100% en max-width → le rendu DESKTOP reste strictement
+   inchangé. Aucune couleur charte modifiée. Issu d'un audit mesuré
+   (Playwright) à 320 / 360 / 768px sur l'ensemble des pages.
+   ============================================================ */
+
+/* 1) ANTI MICRO-SCROLL HORIZONTAL
+   À 320/360px, la marquee décorative de la CTA finale (.elv-cta-marquee)
+   laisse fuiter ~8px de largeur → une barre de scroll horizontale parasite.
+   On la neutralise au niveau du document, uniquement sur petits écrans.
+   (Le desktop, > 768px, garde son comportement d'origine.) */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+}
+
+/* 2) CHAMPS DE FORMULAIRE — anti-zoom iOS
+   Safari iOS zoome automatiquement dès qu'un champ a une police < 16px.
+   Les valeurs desktop (14px) restent intactes au-dessus de 768px ; on ne
+   relève qu'en mobile/tablette pour supprimer ce zoom intempestif au focus. */
+@media (max-width: 768px) {
+  .form-input,
+  .form-textarea,
+  .phone-num-input,
+  .phone-code-btn,
+  .phone-dropdown-search input {
+    font-size: 16px;
+  }
+}
+
+/* 3) CIBLES TACTILES ≥ 44px (Apple HIG / WCAG 2.5.8)
+   Les liens texte du footer, en inline, n'offrent qu'une zone de frappe
+   ~20px de haut. On agrandit la zone cliquable via un padding vertical
+   compensé par une marge négative égale : la surface de tap atteint ~44px
+   sans déplacer le texte ni modifier l'espacement visuel des colonnes. */
+@media (max-width: 768px) {
+  .site-footer-col a,
+  .site-footer-legal a {
+    display: inline-block;
+    padding-block: 12px;
+    margin-block: -12px;
+  }
+  /* Bouton « indicatif pays » du champ téléphone : hauteur confortable. */
+  .phone-code-btn {
+    min-height: 44px;
+  }
+  /* Case à cocher RGPD légèrement agrandie pour le doigt.
+     IMPORTANT : .form-check est le LABEL (case + texte en flex) ; il ne faut
+     surtout pas lui donner une taille fixe (sinon le texte déborde). On cible
+     uniquement l'INPUT case/radio à l'intérieur. */
+  .form-check input[type="checkbox"],
+  .form-check input[type="radio"] {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* 4) MICRO-TYPOGRAPHIE
+   Le préfixe « À partir de » des cartes tarifs (11px) passe à 12px minimum
+   sur mobile pour rester confortablement lisible sur petit écran. */
+@media (max-width: 768px) {
+  .tz-row__from {
+    font-size: 12px;
+  }
+}
+
+/* 5) JAMBAGES DES TITRES NON ROGNÉS (g, p, y, j, q)
+   Sur mobile, le line-height très serré des grands titres (0.92 / 1.0 / 1.04)
+   combiné au `overflow: clip` des sections (.svc-bg) rognait le bas des lettres
+   à jambage — les « g » apparaissaient coupés. On donne un filet d'air vertical :
+   un padding-bas minime (qui repousse la limite de découpe sous la dernière
+   ligne) + un plancher de line-height sur les titres de base. Purement mobile :
+   le rythme typographique du desktop reste identique. */
+@media (max-width: 768px) {
+  h1, h2, h3, h4, h5, h6 {
+    padding-bottom: 0.14em;
+  }
+  h1 { line-height: 1.02; }
+  h2 { line-height: 1.08; }
+}
+

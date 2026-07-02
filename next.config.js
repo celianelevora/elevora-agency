@@ -42,6 +42,13 @@ const nextConfig = {
   reactStrictMode: true,
   // Supprime l'en-tête X-Powered-By (ne révèle plus la stack Next.js).
   poweredByHeader: false,
+  // Optimisation d'images next/image : sert de l'AVIF en priorité (meilleure
+  // compression que le WebP), avec repli WebP. minimumCacheTTL long : les images
+  // optimisées (covers, logos) sont immuables, on les met en cache 30 jours.
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+  },
   // BUILD INFOMANIAK — anti-SIGABRT.
   // La génération statique de Next 14 parallélise le rendu des pages sur
   // plusieurs workers. Sur un hébergement à mémoire contrainte (Infomaniak),

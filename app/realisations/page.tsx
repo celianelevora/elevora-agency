@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Hero from '@/components/Hero';
 import { ScrollTiltedGrid, type ScrollTiltedGridItem } from '@/components/ui/scroll-tilted-grid';
 import { StaggerText } from '@/components/ui/stagger-text';
@@ -150,8 +151,8 @@ const PROJECTS: Project[] = [
     bg: '#1A0A0F',
   },
   {
-    slug: 'pole-embal',
-    name: 'Pôle Embal',
+    slug: 'embaleo',
+    name: 'Embaléo',
     tag: "CRM gestion d'entrepôt · Loire-Atlantique",
     year: '2026',
     type: 'Outil métier',
@@ -172,8 +173,8 @@ const PROJECTS: Project[] = [
       { label: 'Mission', value: 'CRM/WMS sur mesure' },
       { label: 'Délai', value: '14 semaines' },
     ],
-    cover: '/projets/pole-embal-cover.jpg',
-    details: ['/projets/pole-embal-detail.jpg'],
+    cover: '/projets/embaleo-cover.jpg',
+    details: ['/projets/embaleo-detail.jpg'],
     bg: '#0F1729',
     reversed: true,
   },
@@ -200,13 +201,13 @@ export default function RealisationsPage() {
             >
               <div className="reali-project-media">
                 <div className="reali-project-cover">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={p.cover}
                     alt={`${p.name} — ${p.tag}, projet réalisé par Elevora`}
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={idx === 0 ? 'high' : 'auto'}
-                    decoding="async"
+                    fill
+                    sizes="(max-width: 980px) 100vw, 50vw"
+                    priority={idx === 0}
+                    quality={82}
                   />
                 </div>
                 {p.details && p.details.length > 0 && (
