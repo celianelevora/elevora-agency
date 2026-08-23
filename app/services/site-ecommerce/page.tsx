@@ -4,7 +4,7 @@ import { serviceSchema, breadcrumbSchema } from '@/lib/seo';
 import EcommerceClient from './EcommerceClient';
 
 const description =
-  "Boutique en ligne sur mesure : catalogue, paiement Stripe, gestion stocks, transporteurs. Vendez, fidélisez, scalez. À partir de 1 500 € TTC. Elevora, Nantes.";
+  "Boutique en ligne sur mesure : catalogue, paiement Stripe, gestion stocks, transporteurs. Vendez, fidélisez, scalez. À partir de 2 000 € TTC. Elevora, Nantes.";
 
 export const metadata: Metadata = {
   title: { absolute: 'Création de site e-commerce sur mesure | Elevora' },

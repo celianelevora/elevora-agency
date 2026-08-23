@@ -281,8 +281,9 @@ export default function CinematicHero({
             Sites web, identité visuelle
             <br />& accompagnement digital. Nantes.
           </p>
+          {/* Indice de scroll : trait lumineux seul — le mot « défiler » a été
+              retiré (demande Célian, 23/08). Le div reste : le JS anime cueRef. */}
           <div ref={cueRef} className="cine2-cue" aria-hidden="true">
-            <span>défiler</span>
             <i />
           </div>
         </div>

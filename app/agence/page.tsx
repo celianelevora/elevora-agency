@@ -109,7 +109,7 @@ const CONCERNS = [
     label: 'Design & identité',
     title: 'Un site qui vous ressemble.',
     desc: "Pas de template. Identité visuelle pensée pour votre métier, vos clients, votre ton. Maquettes validées avant la première ligne de code.",
-    tags: ['Figma', 'Sur-mesure', 'Direction artistique'],
+    tags: ['Maquettes haute-fidélité', 'Sur-mesure', 'Direction artistique'],
   },
   {
     icon: 'chart',

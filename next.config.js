@@ -6,16 +6,15 @@ const isDev = process.env.NODE_ENV !== 'production';
 // - script/style 'unsafe-inline' : Next (scripts d'hydratation) + styles inline
 //   omniprésents (Framer Motion, GSAP, style={{…}}). 'unsafe-eval' + ws: uniquement
 //   en dev pour ne pas casser le HMR.
-// - Titres (Cormorant) : self-hostés via next/font (servis en 'self').
-// - Corps (Satoshi) : Fontshare → CSS sur api.fontshare.com, fichiers sur
-//   cdn.fontshare.com (autorisés ci-dessous). Resend est appelé côté SERVEUR
-//   → pas besoin en connect-src.
+// - Polices (Noto Serif Display + Montserrat, charte 2026) : self-hostées via
+//   next/font → servies en 'self', AUCUNE origine externe nécessaire.
+//   Resend est appelé côté SERVEUR → pas besoin en connect-src.
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com",
+  "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
-  "font-src 'self' https://fonts.gstatic.com https://cdn.fontshare.com data:",
+  "font-src 'self' data:",
   "media-src 'self'",
   `connect-src 'self'${isDev ? ' ws:' : ''}`,
   "object-src 'none'",
@@ -62,11 +61,32 @@ const nextConfig = {
     workerThreads: false,
     cpus: 1,
   },
+  // SEO — Search Console.
+  // 1) www → apex en 308 : évite le contenu dupliqué « sans URL canonique »
+  //    si le sous-domaine www pointe vers ce même site.
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.elevora-agency.com' }],
+        destination: 'https://elevora-agency.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
         source: '/:path*',
         headers: securityHeaders,
+      },
+      // 2) Le domaine de PRÉPRODUCTION sert exactement le même contenu que la
+      //    prod → Google le voit comme un doublon. X-Robots-Tag: noindex
+      //    uniquement quand la requête arrive par test.elevora-agency.com.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'test.elevora-agency.com' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
     ];
   },

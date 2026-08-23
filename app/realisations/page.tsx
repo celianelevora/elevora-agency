@@ -17,7 +17,7 @@ const gradientSVG = (color1: string, color2: string, label: string) => {
       </linearGradient>
     </defs>
     <rect width='300' height='400' fill='url(%23g)'/>
-    <text x='50%25' y='52%25' text-anchor='middle' font-family='Cochin, Georgia, serif' font-style='italic' font-size='18' fill='rgba(255,255,255,0.92)' letter-spacing='0.5'>${label}</text>
+    <text x='50%25' y='52%25' text-anchor='middle' font-family='Noto Serif Display, Georgia, serif' font-style='italic' font-size='18' fill='rgba(255,255,255,0.92)' letter-spacing='0.5'>${label}</text>
     <line x1='30%25' y1='58%25' x2='70%25' y2='58%25' stroke='rgba(255,255,255,0.5)' stroke-width='0.5'/>
   </svg>`;
   return `data:image/svg+xml;charset=utf-8,${svg.replace(/\n/g, '').replace(/\s+/g, ' ')}`;
@@ -72,6 +72,33 @@ type Project = {
 };
 
 const PROJECTS: Project[] = [
+  {
+    slug: 'horizon',
+    name: 'Horizon',
+    tag: 'Coach en développement personnel · Belgique',
+    year: '2026',
+    type: 'Site',
+    mission: 'Site + espace client sur mesure',
+    status: 'Livré',
+    intro:
+      "Premier client signé par Elevora : la plateforme du coach Robin Wilmotte (horizon-coach.be). Univers chaleureux entièrement dessiné pour la marque — brun profond, illustrations au trait, soleil levant — et bien plus qu'une vitrine : un véritable espace client avec réservation de séances en ligne et paiement sécurisé.",
+    bullets: [
+      'Parcours d’accompagnement (Sérénité, Essentiel) présentés comme des chemins guidés',
+      'Bilans découverte réservables directement en ligne',
+      'Espace client : réservation de séances, suivi du parcours',
+      'Paiement sécurisé Stripe, factures et créneaux synchronisés',
+      'Illustrations au trait sur mesure, animées au fil du scroll',
+    ],
+    highlights: [
+      { label: 'Pages', value: '8' },
+      { label: 'Mission', value: 'Site + espace client' },
+      { label: 'Modules', value: 'Réservation + Stripe' },
+    ],
+    cover: '/projets/horizon-cover.jpg',
+    details: ['/projets/horizon-parcours.jpg'],
+    bg: '#3B2A28',
+    reversed: true,
+  },
   {
     slug: 'lily-berry',
     name: 'Lily Berry',

@@ -62,17 +62,16 @@ elevora-agency/
 
 ---
 
-## 🎨 Design system
+## 🎨 Design system — charte 2026
 
-Toutes les couleurs et typos sont dans `tailwind.config.js` :
+Toutes les couleurs et typos sont définies dans `app/globals.css` (:root) :
 
-- **Bleu Klein** : `bg-klein` / `text-klein` (#0033A0)
-- **Crème** : `bg-cream` / `text-cream` (#F5F0E8)
-- **Rose** : `bg-pink` / `text-pink` (#C9569E)
-- **Ink** : couleurs de texte (#0A0A0A et nuances)
-- **Polices** : `font-serif` (Fraunces) et `font-sans` (Geist)
-
-Les variables CSS Elevora (`--klein`, `--cream`, etc.) sont conservées pour la rétrocompatibilité.
+- **Bleu** : `--klein` #1B4F8A (clair #2B6CC4, foncé #0D2B50)
+- **Framboise** : `--pink` #C9266A (rose #E8527E, bordeaux #8A1245)
+- **Nuit** : `--night` #1A1A2E (clair #2E2E4A, foncé #0D0D1A)
+- **Fond gris perle** : `--cream` #EAE9EE (calé sur les images de transition)
+- **Teintes pastel** : `--klein-tint` / `--pink-tint` / `--night-tint`
+- **Polices** : Noto Serif Display (titres & logotype, Light 300) + Montserrat (corps) — self-hostées via next/font, aucun appel Google/Fontshare au runtime.
 
 ---
 
@@ -99,4 +98,4 @@ npm install resend
 
 - `app/mentions-legales/page.tsx` : SIRET, RCS, TVA (les `[À compléter]`)
 - Témoignage n°2 sur l'accueil (placeholder en attente)
-- Favicon dans `app/favicon.ico`
+- ~~Favicon~~ ✅ fait : `app/icon.svg` + `app/apple-icon.png` (buste mascotte sur pastille perle)

@@ -2,7 +2,7 @@
 
 /**
  * PAGE 4 — APPLICATION WEB & MOBILE  ·  refonte
- * Charte : titres Cochin (fallback Cormorant Garamond), corps Roboto.
+ * Charte 2026 : titres Noto Serif Display, corps Montserrat.
  * Identité propre (≠ vitrine, ≠ e-commerce, ≠ landing) : PRODUIT / SYSTÈME /
  *   MULTI-ÉCRANS. Deux interactions signatures : crochets de focus (sélection
  *   d'interface) au survol des modules, et ligne de données animée (tirets qui

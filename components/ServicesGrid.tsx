@@ -55,7 +55,7 @@ export default function ServicesGrid() {
               <span className="tag">Landing page</span>
             </div>
             <div className="service-card-foot">
-              <span className="service-card-price">À partir de 1 000 € TTC</span>
+              <span className="service-card-price">À partir de 750 € TTC</span>
               <span className="service-card-cta">
                 Découvrir
                 <svg className="ic" width="14" height="14" viewBox="0 0 24 24">

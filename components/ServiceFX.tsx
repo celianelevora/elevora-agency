@@ -377,7 +377,7 @@ export function RevealText({
                 fontStyle: isEmph ? 'italic' : undefined,
                 color: isEmph ? 'var(--pink)' : undefined,
                 fontWeight: isEmph ? 400 : undefined,
-                // Cormorant/Cochin en italique paraissent plus petits : on compense
+                // Noto Serif Display en italique parait plus petit : on compense
                 fontSize: isEmph ? '1.1em' : undefined,
               }}
               initial={{ y: '110%' }}

@@ -16,6 +16,8 @@ const agenceLinks = [
   { text: 'Réalisations', href: '/realisations' },
   { text: 'Tarifs', href: '/tarifs' },
   { text: 'Nos engagements', href: '/agence#engagements' },
+  { text: 'Contact', href: '/contact' },
+  { text: 'Démarrer un projet', href: '/demarrer-un-projet' },
 ];
 
 const contactInfo = [

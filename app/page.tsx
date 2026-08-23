@@ -10,7 +10,7 @@ import { FaqsSection } from '@/components/FaqsSection';
 import { CinematicFooter } from '@/components/CinematicFooter';
 import RomanRail from '@/components/RomanRail';
 import StructuredData from '@/components/StructuredData';
-import { faqSchema } from '@/lib/seo';
+import { faqSchema, videoSchema } from '@/lib/seo';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -45,7 +45,7 @@ export default function HomePage() {
           {
             question: 'Combien coûte un site avec Elevora ?',
             answer:
-              "Nos sites démarrent à 600 € TTC pour une landing page, 1 000 € TTC pour un site vitrine et 1 500 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
+              "Nos sites démarrent à 600 € TTC pour une landing page, 750 € TTC pour un site vitrine et 2 000 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
           },
           {
             question: 'Proposez-vous un paiement en plusieurs fois ?',
@@ -62,7 +62,26 @@ export default function HomePage() {
             answer:
               "Bien sûr. On est basés à Nantes mais on accompagne des indépendants et PME partout en France. Tout se gère à distance, avec des points réguliers en visio.",
           },
-        ])]}
+        ]),
+        // VideoObject : décrit les 2 vidéos de la page pour Search Console
+        // (« vidéo non indexée : pas sur une page de lecture »).
+        videoSchema({
+          name: 'Elevora — ouverture cinématique',
+          description:
+            "Séquence d'ouverture du site Elevora : la statue emblème de l'agence, entre marbre et lumière, introduit notre univers — sites web qui convertissent et outils de gestion sur mesure.",
+          contentPath: '/hero-intro.mp4',
+          thumbnailPath: '/scrub-frames/f_001.webp',
+          uploadDate: '2026-07-02',
+        }),
+        videoSchema({
+          name: 'Elevora — nos engagements',
+          description:
+            "Ambiance visuelle de la section « Pourquoi Elevora » : nos engagements d'agence — devis ferme, code propre, accompagnement de A à Z.",
+          contentPath: '/eng-video.mp4',
+          thumbnailPath: '/eng-fond.webp',
+          uploadDate: '2026-07-02',
+        }),
+        ]}
       />
       {/* Habillage de fond continu (halos + grille), derrière TOUT le contenu
           (z-index:-1). La cinématique d'ouverture, opaque, le recouvre ; les

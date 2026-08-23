@@ -354,7 +354,7 @@ const STYLES = `
   padding: clamp(80px, 12vh, 140px) 16px;
   background: #0B1428;
   color: var(--cream, #EAE9EE);
-  font-family: var(--font-roboto), 'Roboto', sans-serif;
+  font-family: var(--font-montserrat), 'Montserrat', sans-serif;
 }
 
 /* ---- fonds ---- */
@@ -403,7 +403,7 @@ const STYLES = `
   pointer-events: none; text-align: center;
 }
 .kx-eyebrow {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-playfair), 'Noto Serif Display', serif;
   font-style: italic; font-size: clamp(1rem, 1.6vw, 1.35rem);
   color: rgba(234,233,238,.9);
 }
@@ -421,7 +421,7 @@ const STYLES = `
 }
 .kx-type-line {
   white-space: nowrap; line-height: .78; font-weight: 700;
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-playfair), 'Noto Serif Display', serif;
   font-size: clamp(5rem, 14vh, 12rem);
   color: #ffffff; opacity: .05; user-select: none; text-transform: lowercase;
 }
@@ -441,7 +441,7 @@ const STYLES = `
 }
 .kx-word {
   position: relative; z-index: 1;
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-playfair), 'Noto Serif Display', serif;
   font-weight: 500; text-transform: uppercase; letter-spacing: 0;
   font-size: clamp(2.6rem, 9vw, 8.5rem); line-height: 1;
   color: rgba(234,233,238,.42);

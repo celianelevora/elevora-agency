@@ -123,7 +123,7 @@ const STYLES = `
   margin-top: clamp(-56px, -5.2vh, -40px);
   background: var(--cream, #EAE9EE);
   color: var(--ink, #1A1A2E);
-  font-family: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
+  font-family: var(--font-montserrat), 'Montserrat', -apple-system, sans-serif;
 }
 
 /* Grille technique discrète, masquée vers les bords */
@@ -167,7 +167,7 @@ const STYLES = `
 .elv-cta-giant {
   position: absolute; left: 50%; bottom: -2.5vh; z-index: 0;
   transform: translateX(-50%);
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-playfair), 'Noto Serif Display', serif;
   font-weight: 800; letter-spacing: -.03em; line-height: .8;
   font-size: clamp(4rem, 21vw, 20rem);
   white-space: nowrap; user-select: none; pointer-events: none;
@@ -208,7 +208,7 @@ const STYLES = `
   max-width: 880px; margin: 0 auto;
 }
 .elv-cta-title {
-  font-family: var(--font-playfair), 'Playfair Display', serif;
+  font-family: var(--font-playfair), 'Noto Serif Display', serif;
   font-weight: 600; line-height: 1.04; letter-spacing: -.01em;
   font-size: clamp(2.6rem, 6.4vw, 5.2rem);
   color: var(--ink, #1A1A2E);

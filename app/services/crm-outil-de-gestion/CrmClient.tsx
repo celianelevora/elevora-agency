@@ -2,7 +2,7 @@
 
 /**
  * PAGE 5 — CRM & OUTIL DE GESTION  ·  refonte
- * Charte : titres Cochin (fallback Cormorant Garamond), corps Roboto.
+ * Charte 2026 : titres Noto Serif Display, corps Montserrat.
  * Identité propre (≠ vitrine, e-commerce, landing, application) : GESTION /
  *   PROPRIÉTÉ / PILOTAGE. Deux interactions signatures : sélection de ligne
  *   façon tableur CRM au survol des modules, et tableau comparatif SaaS vs

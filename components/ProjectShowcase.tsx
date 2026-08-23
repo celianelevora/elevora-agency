@@ -51,6 +51,15 @@ const PROJECTS: Project[] = [
     span: 'large',
     bg: '#0F1729',
   },
+  {
+    slug: 'horizon',
+    name: 'Horizon',
+    tag: 'Coach en développement personnel · Belgique',
+    catchphrase: "Site + espace client pour le premier client signé d'Elevora : réservation de séances en ligne, paiement Stripe, univers illustré sur mesure.",
+    cover: '/projets/horizon-cover.jpg',
+    span: 'large',
+    bg: '#3B2A28',
+  },
 ];
 
 export default function ProjectShowcase() {
@@ -82,6 +91,12 @@ export default function ProjectShowcase() {
           {/* Row 2 : Lala-K (small) + Embaléo (large) */}
           <div className="projects-row projects-row-2">
             {PROJECTS.slice(2, 4).map((p) => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
+          </div>
+          {/* Row 3 : Horizon (pleine largeur) — premier client signé */}
+          <div className="projects-row projects-row-3">
+            {PROJECTS.slice(4, 5).map((p) => (
               <ProjectCard key={p.slug} project={p} />
             ))}
           </div>

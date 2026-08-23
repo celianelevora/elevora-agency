@@ -2,7 +2,7 @@
 
 /**
  * PAGE 1 — SITE VITRINE  ·  refonte v3
- * Charte : titres Cochin (fallback Cormorant Garamond), corps Roboto.
+ * Charte 2026 : titres Noto Serif Display, corps Montserrat.
  * Fil rouge : LA RÉVÉLATION — une vitrine qui dévoile une marque.
  * Fond img-1 CONTINU sur Hero + PourQui (un seul tenant, comme l'e-commerce),
  * puis alternance stricte sombre/clair, chaque bannière décalée d'un cran :
@@ -73,7 +73,7 @@ const INCLUS = [
 const TARIF_NOTE = 'Paiement en deux fois : 30 % à la commande, le solde à la livraison. Devis ferme, sans engagement.';
 
 const FAQ = [
-  { q: 'Que comprend exactement le tarif de 1 000 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro. Aucun coût caché.' },
+  { q: 'Que comprend exactement le tarif de 750 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro. Aucun coût caché.' },
   { q: 'Pourrai-je modifier mon site moi-même ?', a: 'Oui. On livre un back-office simple et on vous forme à sa prise en main. Vous changez vos textes, vos photos et vos actualités sans jamais toucher au code.' },
   { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 8 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },];
 
@@ -124,7 +124,7 @@ export default function VitrineClient() {
         lead="Le digne représentant de votre activité sur le web. Conçu pour rassurer, convaincre et retenir, dès le premier regard."
         primary={{ label: 'Démarrer mon projet', href: '/contact' }}
         secondary={{ label: 'Voir nos réalisations', href: '/realisations' }}
-        tags={['Design sur mesure', 'SEO natif', 'À partir de 1 000 € TTC']}
+        tags={['Design sur mesure', 'SEO natif', 'À partir de 750 € TTC']}
         below={
           <>
             <div style={{ maxWidth: 820, marginBottom: 66 }}>

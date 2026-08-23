@@ -37,7 +37,7 @@ export const organizationSchema: Record<string, unknown> = {
   legalName: SITE.legalName,
   url: SITE.url,
   logo: `${SITE.url}/logo-elevora-full.png`,
-  image: `${SITE.url}/opengraph-image`,
+  image: `${SITE.url}/og-image.png`,
   description: SITE.description,
   email: SITE.email,
   telephone: SITE.phone,
@@ -77,7 +77,7 @@ export const localBusinessSchema: Record<string, unknown> = {
   '@type': 'ProfessionalService',
   '@id': LOCAL_ID,
   name: SITE.name,
-  image: `${SITE.url}/opengraph-image`,
+  image: `${SITE.url}/og-image.png`,
   url: SITE.url,
   telephone: SITE.phone,
   email: SITE.email,
@@ -196,5 +196,35 @@ export function howToSchema(input: {
       name: s.name,
       text: s.text,
     })),
+  };
+}
+
+export interface VideoSchemaInput {
+  name: string;
+  description: string;
+  /** Chemin relatif du fichier vidéo dans /public (ex. '/hero-intro.mp4'). */
+  contentPath: string;
+  /** Chemin relatif de la miniature dans /public. */
+  thumbnailPath: string;
+  /** Date de mise en ligne, format ISO (YYYY-MM-DD). */
+  uploadDate: string;
+}
+
+/**
+ * VideoObject — Search Console signalait la vidéo comme « non indexée car pas
+ * sur une page de lecture » : ce balisage décrit explicitement chaque vidéo
+ * (nom, description, miniature, URL du fichier) sur la page qui l'héberge.
+ */
+export function videoSchema(input: VideoSchemaInput): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: input.name,
+    description: input.description,
+    contentUrl: `${SITE.url}${input.contentPath}`,
+    thumbnailUrl: [`${SITE.url}${input.thumbnailPath}`],
+    uploadDate: input.uploadDate,
+    inLanguage: 'fr-FR',
+    publisher: { '@id': ORG_ID },
   };
 }

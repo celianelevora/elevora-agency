@@ -5,7 +5,7 @@ import { useState } from 'react';
 const FAQS = [
   {
     q: 'Combien coûte un site avec Elevora ?',
-    a: "Nos sites vitrines démarrent à 1 000 €. Le tarif final dépend du nombre de pages, des fonctionnalités demandées et du niveau de design. Pour un outil de gestion sur mesure, nous établissons un devis personnalisé après un premier échange. Dans tous les cas, le prix annoncé est ferme.",
+    a: "Nos sites vitrines démarrent à 750 €. Le tarif final dépend du nombre de pages, des fonctionnalités demandées et du niveau de design. Pour un outil de gestion sur mesure, nous établissons un devis personnalisé après un premier échange. Dans tous les cas, le prix annoncé est ferme.",
   },
   {
     q: 'Quels sont vos délais de livraison ?',

@@ -2,7 +2,7 @@
 
 /**
  * PAGE 3 — LANDING PAGE  ·  refonte v2
- * Charte : titres Cochin (fallback Cormorant Garamond), corps Roboto.
+ * Charte 2026 : titres Noto Serif Display, corps Montserrat.
  * Identité propre (≠ vitrine, ≠ e-commerce) : CONVERSION / FOCUS / VERTICAL.
  *   Manifeste centré · frise verticale qui se dessine au scroll · grand chiffre
  *   au dégradé animé (texte « liquide ») · usages éditoriaux.

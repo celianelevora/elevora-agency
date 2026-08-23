@@ -20,10 +20,14 @@
     --pink: #C9266A;
     --pink-light: #E8527E;
     --pink-deep: #8A1245;
-    --pink-soft: #FBEAF0;
+    --pink-soft: #F8E3EC;
     --night: #1A1A2E;
     --night-light: #2E2E4A;
     --night-deep: #0D0D1A;
+    /* Teintes pastel charte 2026 (fonds tres clairs par famille) */
+    --klein-tint: #E3EDF8;
+    --pink-tint: #F8E3EC;
+    --night-tint: #E6E5F0;
     /* === FOND GRIS DE BASE — RECAP-PROJET.md ===
        #EAE9EE = gris de fond du site (rgb 234,233,238).
        Toutes les images de transition sont calees sur ce gris exact. */
@@ -37,10 +41,10 @@
     --line-soft: rgba(26, 26, 46, 0.06);
     --line-strong: rgba(26, 26, 46, 0.18);
     /* === TYPOGRAPHIE — CHARTE V2 ===
-       Titres : Cochin (commercial, present sur Mac/iOS) -> fallback Cormorant Garamond
-       Corps  : Satoshi (Fontshare) — Roboto/Google Fonts supprimes (charte Elevora) */
-    --serif: 'Cochin', 'Nicolas Cochin', var(--font-playfair), 'Cormorant Garamond', Georgia, serif;
-    --sans: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+       Titres : Noto Serif Display (charte 2026) — via next/font, self-hostee au build
+       Corps  : Montserrat (charte 2026) — via next/font, self-hostee au build */
+    --serif: var(--font-playfair), 'Noto Serif Display', Georgia, serif;
+    --sans: var(--font-montserrat), 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --max: 1280px;
     --gutter: 32px;
     --radius-sm: 6px;
@@ -437,8 +441,24 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   margin-left: 0;
   border-left-color: transparent;
 }
-@media (max-width: 1180px) {
+/* Depuis la charte 2026 (Montserrat, plus large que Satoshi), le contenu du
+   header AVEC le badge demande ~1302px : il ne tient plus dans la pilule
+   plafonnée à 1240px (.bar-wrap) — le CTA débordait à TOUTES les largeurs
+   au-dessus de 1180px (+62px mesurés à 1920, +165px à 1200). Deux gardes :
+   1) le badge n'apparaît qu'à partir de 1440px d'écran ;
+   2) à ces largeurs, la pilule se compacte légèrement (voir bloc suivant). */
+@media (max-width: 1439px) {
   .hdr-logo-tag { display: none; }
+}
+/* Pilule compactée quand le badge est visible : -88px de contenu, pour que
+   logo + badge + 6 liens + CTA tiennent dans les 1240px avec de la marge.
+   NB : sélecteurs volontairement plus spécifiques (.hdr-nav .hdr-link, etc.) —
+   ce bloc est écrit AVANT les styles de base dans le fichier, il doit gagner. */
+@media (min-width: 1440px) {
+  .hdr .bar { gap: 14px; }
+  .hdr-nav .hdr-link { padding: 12px 12px; }
+  .hdr-nav .hdr-link::after { left: 12px; right: 12px; }
+  .hdr .bar .hdr-cta { padding: 13px 20px; }
 }
 
 .hdr-divider {
@@ -688,6 +708,24 @@ html.cine-hero .hdr .hdr-menu-toggle { color: rgba(234,233,238,0.9); }
   height: 1px;
   margin: 8px 12px;
   background: rgba(10, 10, 10, 0.08);
+}
+
+/* ============================================================
+   HEADER COMPACT (1025px -> 1170px) — correctif « bouton qui dépasse ».
+   Sur cette tranche, logo + 6 liens + CTA ne tiennent plus dans la pilule :
+   le CTA « Démarrer un projet » débordait du .bar (pas d'overflow:hidden,
+   nécessaire au dropdown Services) et flottait PAR-DESSUS le contenu de la
+   page (+68px mesurés à 1100px). On resserre tout pour qu'il reste dedans.
+   ============================================================ */
+@media (min-width: 1025px) and (max-width: 1170px) {
+  .bar { gap: 12px; padding: 12px 12px 12px 16px; }
+  .hdr-logo { margin-left: 6px; gap: 8px; }
+  .hdr-logo img { height: 16px; }
+  .hdr-divider { display: none; }
+  .hdr-nav { gap: 0; }
+  .hdr-link { padding: 9px 10px; font-size: 14.5px; }
+  .hdr-link::after { left: 10px; right: 10px; }
+  .hdr-cta { padding: 12px 18px; margin-left: 2px; font-size: 15px; gap: 7px; }
 }
 
 @media (max-width: 1024px) {
@@ -1372,7 +1410,7 @@ body:has(.home-with-cinematic-footer) > .site-footer {
   --ink: #1A1A2E;
   --ink-soft: #2E2E4A;
   --ink-muted: #7A7A7A;
-  --sans: var(--font-roboto), 'Roboto', -apple-system, sans-serif;
+  --sans: var(--font-montserrat), 'Montserrat', -apple-system, sans-serif;
   /* Palette charte complète — nuances disponibles */
   --c-bleu-clair: #2B6CC4;
   --c-bleu: #1B4F8A;
@@ -3526,8 +3564,9 @@ body:has(.home-with-cinematic-footer) {
 }
 .projects-row-1 { grid-template-columns: 1.45fr 1fr; }
 .projects-row-2 { grid-template-columns: 1fr 1.45fr; }
+.projects-row-3 { grid-template-columns: 1fr; } /* Horizon : carte pleine largeur */
 @media (max-width: 900px) {
-  .projects-row-1, .projects-row-2 { grid-template-columns: 1fr; }
+  .projects-row-1, .projects-row-2, .projects-row-3 { grid-template-columns: 1fr; }
 }
 
 .project-card {
@@ -4820,7 +4859,7 @@ article [data-flow-section] {
   content: ''; width: 24px; height: 1px; background: var(--pink); display: inline-block;
 }
 .methode-banner-title {
-  font-family: var(--serif), 'Playfair Display', serif;
+  font-family: var(--serif), 'Noto Serif Display', serif;
   font-weight: 500;
   font-size: clamp(34px, 4.4vw, 58px);
   line-height: 1.05;

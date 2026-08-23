@@ -3,7 +3,7 @@ import FlowArt, { FlowSection } from '@/components/ui/story-scroll';
 import { StaggerText } from '@/components/ui/stagger-text';
 import { BlurFade } from '@/components/ui/blur-fade';
 import StructuredData from '@/components/StructuredData';
-import { howToSchema } from '@/lib/seo';
+import { howToSchema, breadcrumbSchema } from '@/lib/seo';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default function MethodePage() {
   return (
     <>
       <StructuredData
-        data={howToSchema({
+        data={[breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Méthode', path: '/methode' }]), howToSchema({
           name: 'La méthode Elevora en 4 étapes',
           description:
             "De l'idée à la mise en ligne : cadrage, design, développement, livraison.",
@@ -35,7 +35,7 @@ export default function MethodePage() {
             },
             {
               name: 'Design',
-              text: 'Maquettes interactives Figma validées page par page avant le code. ~2 semaines.',
+              text: 'Design conçu directement dans votre futur site, validé page par page sur une URL privée. Deux allers-retours d’ajustement inclus. ~2 semaines.',
             },
             {
               name: 'Développement',
@@ -46,7 +46,7 @@ export default function MethodePage() {
               text: 'Mise en ligne, formation à la gestion, suivi 30 jours inclus. ~1 semaine + suivi.',
             },
           ],
-        })}
+        })]}
       />
       {/* HERO custom : texte aligne a GAUCHE, image colonne marbre a DROITE */}
       <section className="methode-hero">
@@ -172,15 +172,16 @@ export default function MethodePage() {
                   Vous <span className="italic methode-italic-pink">validez.</span>
                 </h2>
                 <p className="methode-step-lead methode-step-lead-light">
-                  Maquettes interactives sur Figma : vous cliquez, vous naviguez,
-                  vous testez avant qu'une seule ligne de code soit écrite.
-                  Retours gratuits et illimités à cette étape.
+                  Pas de maquette figée : on conçoit vos pages directement dans
+                  votre futur site, sur une URL privée. Vous cliquez, vous
+                  naviguez, vous testez en conditions réelles. Deux
+                  allers-retours d’ajustement sont inclus à cette étape.
                 </p>
                 <ul className="methode-step-points methode-step-points-light">
                   <li>Direction artistique sur 2-3 pistes</li>
                   <li>Maquettes haute-fidélité de toutes les pages</li>
-                  <li>Prototype cliquable navigable sur Figma</li>
-                  <li>Allers-retours jusqu'à validation finale</li>
+                  <li>Aperçu navigable sur URL privée, sur tous vos écrans</li>
+                  <li>Deux allers-retours d’ajustement inclus</li>
                 </ul>
               </div>
               <div className="methode-step-right">
@@ -191,7 +192,7 @@ export default function MethodePage() {
                   <ul className="methode-deliverable-list methode-deliverable-list-light">
                     <li><span className="bullet bullet-pink" /> Maquettes haute-fidélité de toutes les pages</li>
                     <li><span className="bullet bullet-pink" /> Charte graphique appliquée à l'ensemble</li>
-                    <li><span className="bullet bullet-pink" /> Prototype cliquable sur Figma</li>
+                    <li><span className="bullet bullet-pink" /> Aperçu en ligne sur URL privée</li>
                   </ul>
                 </div>
               </div>

@@ -2,7 +2,7 @@
 
 /**
  * PAGE 2 — SITE E-COMMERCE  ·  refonte v3
- * Charte : titres Cochin (fallback Cormorant Garamond), corps Roboto.
+ * Charte 2026 : titres Noto Serif Display, corps Montserrat.
  * Identité propre (≠ vitrine) : circulation, abondance, commerce.
  *   Bandeau de chiffres · piliers en zigzag · grille « fiche technique ».
  * IMAGE 1 (crème, 4:3) couvre le HERO + « Pour qui » comme UNE SEULE image
@@ -111,7 +111,7 @@ function HeroPourQui() {
             </motion.div>
           </motion.div>
           <motion.div variants={item} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}>
-            {['Stripe', 'Stocks & commandes', 'À partir de 1 500 € TTC'].map((t) => (
+            {['Stripe', 'Stocks & commandes', 'À partir de 2 000 € TTC'].map((t) => (
               <motion.span key={t} whileHover={{ y: -4, scale: 1.06, backgroundColor: 'rgba(255,255,255,.85)' }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} style={{ fontSize: 12.5, letterSpacing: '.02em', padding: '8px 16px', borderRadius: 999, cursor: 'default', color: 'var(--ink-soft)', border: '0.5px solid var(--line)', background: 'rgba(255,255,255,.5)', backdropFilter: 'blur(8px)' }}>{t}</motion.span>
             ))}
           </motion.div>

@@ -1,21 +1,20 @@
 import Hero from "@/components/Hero";
 import CTASection from "@/components/CTASection";
-import PostFooterPortal from "@/components/PostFooterPortal";
 import { StaggerText } from "@/components/ui/stagger-text";
 import { BlurFade } from "@/components/ui/blur-fade";
 import StructuredData from "@/components/StructuredData";
-import { faqSchema } from "@/lib/seo";
+import { faqSchema, breadcrumbSchema } from "@/lib/seo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: { absolute: "Tarifs création de site web — Elevora | Devis gratuit" },
   description:
-    "Tarifs Elevora : landing dès 600 € TTC, site vitrine 1 000 € TTC, e-commerce 1 500 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
+    "Tarifs Elevora : landing dès 600 € TTC, site vitrine 750 € TTC, e-commerce 2 000 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
   alternates: { canonical: "/tarifs" },
   openGraph: {
     title: "Tarifs création de site web — Elevora | Devis gratuit",
     description:
-      "Tarifs Elevora : landing dès 600 € TTC, site vitrine 1 000 € TTC, e-commerce 1 500 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
+      "Tarifs Elevora : landing dès 600 € TTC, site vitrine 750 € TTC, e-commerce 2 000 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
     url: "https://elevora-agency.com/tarifs",
     type: "website",
   },
@@ -33,14 +32,14 @@ const POINTS = [
     name: "Site vitrine",
     desc: "Votre présence pro : design sur mesure, SEO natif, back-office simple.",
     from: "À partir de",
-    amount: "1 000 € TTC",
+    amount: "750 € TTC",
     href: "/services/site-vitrine",
   },
   {
     name: "Site e-commerce",
     desc: "Boutique complète : catalogue, paiement Stripe, stocks, livraison.",
     from: "À partir de",
-    amount: "1 500 € TTC",
+    amount: "2 000 € TTC",
     href: "/services/site-ecommerce",
   },
   {
@@ -143,9 +142,12 @@ export default function TarifsPage() {
   return (
     <>
       <StructuredData
-        data={faqSchema(
-          FAQ_ITEMS.map((item) => ({ question: item.q, answer: item.a }))
-        )}
+        data={[
+          breadcrumbSchema([{ name: 'Accueil', path: '/' }, { name: 'Tarifs', path: '/tarifs' }]),
+          faqSchema(
+            FAQ_ITEMS.map((item) => ({ question: item.q, answer: item.a }))
+          ),
+        ]}
       />
       <style dangerouslySetInnerHTML={{ __html: TZ_CSS }} />
       <div className="tarifs-page-bg">
@@ -345,19 +347,21 @@ export default function TarifsPage() {
       </div>
       {/* /tarifs-page-bg */}
 
-      <PostFooterPortal>
-        <CTASection
-          eyebrow="Parlons de votre projet"
-          title={`Discutons de<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">votre projet.</span>`}
-          description="Pas sûr du périmètre idéal ? On en discute lors d'un premier échange gratuit et sans engagement, puis on vous remet un devis détaillé sous 5 jours."
-          primaryLabel="Prendre rendez-vous"
-          secondaryLabel="07 78 43 57 21"
-          secondaryHref="tel:+33778435721"
-          showContactInfo
-          bgImage="/tarifs-bg-cta.jpg"
-          belowFooter
-        />
-      </PostFooterPortal>
+      {/* CTA replacée AVANT le footer (flux normal, comme sur les pages
+          services). L'ancien montage PostFooterPortal la rendait APRÈS le
+          footer : celui-ci, avec sa marge négative et son z-index de carte,
+          passait par-dessus la section « Parlons de votre projet ». */}
+      <CTASection
+        eyebrow="Parlons de votre projet"
+        title={`Discutons de<br><span style="font-family: var(--serif); font-style: italic; color: var(--pink); font-weight: 400;">votre projet.</span>`}
+        description="Pas sûr du périmètre idéal ? On en discute lors d'un premier échange gratuit et sans engagement, puis on vous remet un devis détaillé sous 5 jours."
+        primaryLabel="Prendre rendez-vous"
+        secondaryLabel="07 78 43 57 21"
+        secondaryHref="tel:+33778435721"
+        showContactInfo
+        bgImage="/tarifs-bg-cta.jpg"
+        noBleed
+      />
     </>
   );
 }

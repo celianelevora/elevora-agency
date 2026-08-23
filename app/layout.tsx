@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Cormorant_Garamond } from "next/font/google";
+import { Noto_Serif_Display, Montserrat } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageEnter from "@/components/PageEnter";
@@ -9,21 +9,26 @@ import StructuredData from "@/components/StructuredData";
 import CookieBanner from "@/components/CookieBanner";
 import { organizationSchema, websiteSchema, localBusinessSchema } from "@/lib/seo";
 
-// POLICES — conformité charte Elevora.
-// • CORPS : Satoshi (Fontshare), chargée via <link> Fontshare dans le <head>
-//   ci-dessous — police « Agence/Moderne » prescrite par la charte. Remplace
-//   Roboto (banni : Google Fonts).
-// • TITRES : Cochin (charte, fonte Linotype commerciale) quand l'OS la fournit
-//   (Mac/iOS) ; sinon fallback web le plus fidele a son elegance francaise :
-//   Cormorant Garamond. EXCEPTION ASSUMEE — Cormorant Garamond n'existe PAS sur
-//   Fontshare ; on la conserve donc en next/font/google (self-hostee au build,
-//   aucun appel runtime a Google). La variable garde le nom --font-playfair
-//   pour rester compatible avec tous les usages deja en place dans le projet.
-const playfair = Cormorant_Garamond({
+// POLICES — charte Elevora 2026 (« Trois polices, trois rôles »).
+// • TITRES éditoriaux & logotype : Noto Serif Display Light (300).
+// • CORPS / interface : Montserrat.
+// Les deux sont chargées via next/font/google : self-hostées AU BUILD, donc
+// AUCUN appel runtime à Google (conforme à la règle « pas de Google Fonts »).
+// La variable des titres garde le nom --font-playfair pour rester compatible
+// avec tous les usages déjà en place dans le projet (globals.css, composants).
+const playfair = Noto_Serif_Display({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-montserrat",
   display: "swap",
 });
 
@@ -78,17 +83,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={playfair.variable}>
-      <head>
-        {/* Police de corps Satoshi via Fontshare (charte Elevora). Preconnect
-            aux deux origines Fontshare pour reduire la latence du chargement. */}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap"
-        />
-      </head>
+    <html lang="fr" className={`${playfair.variable} ${montserrat.variable}`}>
+      {/* Plus aucun <link> de police externe : Noto Serif Display et Montserrat
+          sont self-hostées par next/font (zéro requête Fontshare/Google au runtime). */}
       <body>
         <a href="#main-content" className="skip-link">Aller au contenu principal</a>
         <StructuredData data={[organizationSchema, websiteSchema, localBusinessSchema]} />

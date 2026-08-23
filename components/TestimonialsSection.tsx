@@ -19,6 +19,13 @@ const testimonials = [
     designation: "Lala K — Institut beauté · lala-k.elevora-agency.com",
     src: "/testimonials/Testimonial2.jpg",
   },
+  {
+    quote:
+      "Un site qui me ressemble vraiment, et un espace client qui gère les réservations et les paiements à ma place. Je peux me concentrer sur mes accompagnements, Elevora s'occupe du reste.",
+    name: "Robin",
+    designation: "Robin Wilmotte — Coach, Horizon · horizon-coach.be",
+    src: "/testimonials/Testimonial3.jpg",
+  },
 ];
 
 export default function TestimonialsSection() {

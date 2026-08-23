@@ -19,23 +19,23 @@ module.exports = {
       colors: {
         // Palette Elevora
         klein: {
-          DEFAULT: "#0033A0",
-          deep: "#002074",
-          bright: "#0044CC",
+          DEFAULT: "#1B4F8A",
+          deep: "#0D2B50",
+          bright: "#2B6CC4",
         },
         cream: {
-          DEFAULT: "#F5F0E8",
-          warm: "#EFE8DC",
+          DEFAULT: "#EAE9EE",
+          warm: "#EAE9EE",
         },
         pink: {
-          DEFAULT: "#C9569E",
-          deep: "#993556",
-          light: "#FBEAF0",
+          DEFAULT: "#C9266A",
+          deep: "#8A1245",
+          light: "#F8E3EC",
         },
         ink: {
-          DEFAULT: "#0A0A0A",
-          soft: "#2D2D2D",
-          muted: "#6B6B6B",
+          DEFAULT: "#1A1A2E",
+          soft: "#2E2E4A",
+          muted: "#7A7A7A",
         },
         line: {
           DEFAULT: "#E5E0D7",
@@ -78,8 +78,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        serif: ['var(--font-fraunces)', 'Georgia', 'serif'],
-        sans: ['var(--font-geist)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-playfair)', 'Noto Serif Display', 'Georgia', 'serif'],
+        sans: ['var(--font-montserrat)', 'Montserrat', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
