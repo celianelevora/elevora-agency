@@ -1,0 +1,996 @@
+<title>Brief CRM Elevora</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&f[]=jetbrains-mono@400,500&display=swap">
+<style>
+  :root{
+    --bg:#0b0b0f; --bg2:#131319; --bg3:#1a1a22; --bg4:#22222c;
+    --line:#26262f; --line2:#33333f;
+    --ink:#eceaf2; --ink2:#a5a2b5; --ink3:#6f6c80;
+    --blue:#4d8fd6; --blue-dim:rgba(77,143,214,.12);
+    --rose:#d94a86; --rose-dim:rgba(217,74,134,.12);
+    --green:#3ed19a; --green-dim:rgba(62,209,154,.12);
+    --amber:#e8b04b; --amber-dim:rgba(232,176,75,.12);
+    --red:#f0685f;
+    --font:'Satoshi',ui-sans-serif,system-ui,sans-serif;
+    --display:'Clash Display','Satoshi',ui-sans-serif,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--font);
+    margin:0; padding:0 1.25rem 6rem; line-height:1.62; font-size:15.5px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* ---- en-tête ---- */
+  header{padding:4rem 0 2.25rem;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--blue);margin-bottom:1rem
+  }
+  h1{
+    font-family:var(--display);font-size:clamp(2.1rem,5.5vw,3.4rem);font-weight:600;
+    line-height:1.05;letter-spacing:-.025em;margin:0 0 .9rem
+  }
+  .lede{font-size:1.02rem;color:var(--ink2);max-width:64ch;margin:0}
+  .facts{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.6rem}
+  .fact{
+    font-family:var(--mono);font-size:11.5px;padding:.4rem .7rem;border-radius:6px;
+    background:var(--bg3);border:1px solid var(--line);color:var(--ink2)
+  }
+  .fact b{color:var(--ink);font-weight:500}
+
+  /* ---- notice ---- */
+  .notice{
+    margin:2.25rem 0;padding:1.15rem 1.35rem;border-radius:12px;
+    background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--amber)
+  }
+  .notice.blue{border-left-color:var(--blue)}
+  .notice h3{
+    font-family:var(--display);font-size:1rem;font-weight:600;margin:0 0 .5rem;letter-spacing:-.01em
+  }
+  .notice p{margin:0 0 .5rem;color:var(--ink2);font-size:14.5px}
+  .notice p:last-child{margin-bottom:0}
+  .notice ol,.notice ul{margin:.5rem 0 0;padding-left:1.15rem;color:var(--ink2);font-size:14.5px}
+  .notice li{margin-bottom:.35rem}
+  code{
+    font-family:var(--mono);font-size:.87em;background:var(--bg4);
+    padding:.13em .42em;border-radius:4px;color:#c9d8ea
+  }
+
+  /* ---- barre d'action ---- */
+  .bar{
+    position:sticky;top:0;z-index:50;background:rgba(11,11,15,.9);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+    margin:0 -1.25rem;padding:.7rem 1.25rem;display:flex;gap:.6rem;
+    align-items:center;flex-wrap:wrap
+  }
+  .bar .grow{flex:1;min-width:0}
+  .bar .label{font-family:var(--mono);font-size:11px;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
+  button.act{
+    font-family:var(--font);font-size:13.5px;font-weight:700;cursor:pointer;
+    padding:.55rem 1.05rem;border-radius:8px;border:1px solid var(--line2);
+    background:var(--bg3);color:var(--ink);transition:all .15s
+  }
+  button.act:hover{background:var(--bg4);border-color:var(--blue)}
+  button.act.primary{background:var(--blue);border-color:var(--blue);color:#08131f}
+  button.act.primary:hover{background:#5b9ce0}
+
+  /* ---- sections du prompt ---- */
+  .sec{margin-top:2.5rem}
+  .sec-head{
+    display:flex;align-items:baseline;gap:.85rem;margin-bottom:.8rem;
+    padding-bottom:.55rem;border-bottom:1px solid var(--line)
+  }
+  .sec-num{
+    font-family:var(--mono);font-size:12px;color:var(--blue);
+    background:var(--blue-dim);padding:.2rem .5rem;border-radius:5px;flex-shrink:0
+  }
+  .sec-title{font-family:var(--display);font-size:1.22rem;font-weight:600;letter-spacing:-.015em;margin:0}
+  pre.block{
+    margin:0;padding:1.35rem 1.5rem;background:var(--bg2);border:1px solid var(--line);
+    border-radius:12px;overflow-x:auto;font-family:var(--mono);font-size:13px;
+    line-height:1.72;color:#d3d0de;white-space:pre-wrap;word-wrap:break-word;
+    tab-size:2
+  }
+  pre.block::selection,pre.block *::selection{background:rgba(77,143,214,.35)}
+
+  /* ---- sommaire ---- */
+  nav.toc{
+    margin:2.5rem 0 0;padding:1.25rem 1.4rem;background:var(--bg2);
+    border:1px solid var(--line);border-radius:12px
+  }
+  nav.toc h3{font-family:var(--display);font-size:.95rem;font-weight:600;margin:0 0 .75rem}
+  nav.toc ol{margin:0;padding-left:1.3rem;columns:2;column-gap:2rem;font-size:14px}
+  nav.toc li{margin-bottom:.3rem;break-inside:avoid}
+  nav.toc a{color:var(--ink2);text-decoration:none;border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+  @media(max-width:640px){nav.toc ol{columns:1}}
+
+  footer{
+    margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink3)
+  }
+  footer a{color:var(--ink2)}
+
+  .toast{
+    position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(120%);
+    background:var(--green);color:#04150e;font-weight:700;font-size:13.5px;
+    padding:.7rem 1.3rem;border-radius:9px;z-index:99;
+    opacity:0;pointer-events:none;
+    transition:transform .28s cubic-bezier(.3,1.4,.5,1),opacity .18s
+  }
+  .toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Elevora Agency · brief d'ingénierie</div>
+  <h1>Brief CRM Elevora</h1>
+  <p class="lede">Le prompt intégral à donner à Claude Code (Opus&nbsp;5) pour auditer, réparer et faire évoluer le CRM interne. Écrit d'après une lecture complète du code déployé.</p>
+  <div class="facts">
+    <span class="fact">Cible&nbsp;: <b>Claude Code · Opus 5</b></span>
+    <span class="fact">Effort recommandé&nbsp;: <b>xhigh</b></span>
+    <span class="fact">Base analysée&nbsp;: <b>28 500 lignes</b></span>
+    <span class="fact">Lots&nbsp;: <b>phase 0 + 10</b></span>
+  </div>
+</header>
+
+<div class="notice blue">
+  <h3>Comment s'en servir</h3>
+  <ol>
+    <li>Décompresse <code>crm-admin.elevora-agency.com.zip</code> dans un dossier, et fais-en un dépôt git (<code>git init &amp;&amp; git add . &amp;&amp; git commit</code>) — le prompt s'appuie sur des commits incrémentaux.</li>
+    <li>Lance Claude Code <b>dans ce dossier</b>, pas à la racine de <code>elevora-agency</code>&nbsp;: le CRM est un projet à part (HTML/PHP vanilla), et le <code>CLAUDE.md</code> global impose Next.js — il ne doit pas s'appliquer ici.</li>
+    <li>Règle le modèle sur <b>Opus 5</b> et l'effort sur <b>xhigh</b>.</li>
+    <li>Clique sur <b>Copier le prompt</b> ci-dessous et colle-le en premier message. En un seul bloc&nbsp;: Opus 5 travaille nettement mieux avec la spécification complète en entrée qu'avec des consignes distillées tour par tour.</li>
+  </ol>
+</div>
+
+<div class="notice">
+  <h3>À joindre au message</h3>
+  <p>Deux fichiers, en pièce jointe ou déposés dans le dossier&nbsp;: le <b>zip du CRM décompressé</b>, et l'<b>export du schéma Supabase</b> (<code>Supabase Snippet Untitled query.csv</code>). Le message d'erreur de la création de compte est déjà intégré au prompt, tu n'as rien à recopier. Si tu as une capture de la vue d'ensemble actuelle, joins-la aussi — elle aide, sans être nécessaire.</p>
+</div>
+
+<div class="notice blue">
+  <h3>Ce que le prompt demande, en quinze lignes</h3>
+  <p style="font-size:14px;margin-bottom:.7rem">Pour ne pas avoir à lire les 60&nbsp;000 caractères.</p>
+  <ul style="font-size:14.5px">
+    <li><b>Phase 0</b> — lire tout le code, cartographier, détecter les boutons morts et les appels API fantômes, tester chaque écran dans un navigateur, produire <code>AUDIT.md</code> chiffré, corriger, et me donner le nombre de bugs corrigés. Plus <code>schema-complet.sql</code> (toutes les tables Supabase, à recoller) et <code>CRONS.md</code> (les quatre tâches planifiées à créer).</li>
+    <li><b>Lot 1 · Vue d'ensemble</b> — cinq nouveaux chiffres centrés sur les clients qu'on a. Zéro conversion, zéro perdus. Les camemberts partent, de vraies courbes arrivent, grille bento au lieu d'une colonne.</li>
+    <li><b>Lot 2 · Comptabilité</b> — le gros morceau&nbsp;: réparer l'entrée des mouvements Qonto, catégorisation qui apprend, apports des associés hors CA, rapprochement par IBAN avec paiements partiels et ordre des factures, TVA réelle avec exceptions, détection des récurrences, échéancier fiscal, synchro automatique par cron.</li>
+    <li><b>Lot 3 · Équipe</b> — corriger la création de compte, avec le protocole de diagnostic à suivre.</li>
+    <li><b>Lot 4 · Étapes de paiement</b> — l'échéancier du contrat génère les étapes de paiement dans la liste des étapes du projet.</li>
+    <li><b>Lot 5 · Visuel</b> — plus aucun emoji, bouton de téléchargement refait.</li>
+    <li><b>Lot 6 · Notifications</b> — regroupement par client, catégories métier, fin de vie automatique, anti-doublon.</li>
+    <li><b>Lot 7 · Historique</b> — vue jour / semaine / mois et chargement progressif.</li>
+    <li><b>Lot 8 · Suppressions</b> — export CSV de Rapports, tuile CA potentiel, indicateurs de conversion, emojis, sélecteur de modèle.</li>
+    <li><b>Lot 9 · Signaux</b> — comprendre pourquoi « Rien d'urgent », ajouter huit règles, et faire en sorte que le moteur signale ses propres pannes.</li>
+    <li><b>Lot 10 · Modèle IA</b> — tout sur Haiku, plus de choix dans l'interface, sorties structurées pour fiabiliser.</li>
+  </ul>
+</div>
+
+<nav class="toc">
+  <h3>Contenu du prompt</h3>
+  <ol id="toc"></ol>
+</nav>
+
+<div class="bar">
+  <div class="grow"><span class="label">Prompt intégral</span></div>
+  <button class="act" onclick="copyOne()">Copier la phase 0 seule</button>
+  <button class="act primary" onclick="copyAll()">Copier le prompt</button>
+</div>
+
+<div id="render"></div>
+
+<footer>
+  Brief rédigé par Claude d'après l'analyse de <code>index.html</code>, <code>api.php</code>, <code>client.html</code>, <code>templates.js</code> et des migrations SQL du CRM déployé.
+  Document interne — <a href="https://elevora-agency.com" target="_blank" rel="noopener">Elevora Agency</a>.
+</footer>
+</div>
+
+<div class="toast" id="toast">Copié</div>
+
+<script type="text/plain" id="src">
+%%0 · Mission%%
+<mission>
+Tu reprends la maintenance et l'évolution du CRM interne d'Elevora Agency — une agence web de trois personnes (Célian, Raphaël, Paloma). Ce CRM tourne en production sur https://crm-admin.elevora-agency.com : il gère de vrais clients, de vrais contrats signés et de vrais mouvements bancaires. Ce que tu casses se voit le lendemain en rendez-vous client.
+
+Tu ne connais pas ce projet. Tu vas d'abord le lire entièrement, en dresser l'état des lieux, corriger ce qui est cassé, puis appliquer les neuf lots d'évolution décrits plus bas, dans l'ordre.
+
+Le livrable est un CRM qui fonctionne de bout en bout — pas un rapport, pas une liste de recommandations, pas des TODO laissés dans le code.
+</mission>
+
+%%1 · Contexte technique%%
+<contexte_technique>
+Stack réelle, à respecter telle quelle. Aucune migration de stack n'est demandée et aucune n'est souhaitée.
+
+- Front admin : `index.html` — application monopage en HTML/CSS/JS vanilla, ~19 600 lignes, 1,3 Mo, un seul fichier. Chart.js chargé en CDN. Aucun framework, aucune étape de build.
+- Front client : `client.html` (~2 600 lignes) — espace client : suivi de projet, documents, signature.
+- Backend : `api.php` (~6 270 lignes) — point d'entrée unique, un grand `switch ($action)`. POST uniquement, réponses JSON.
+- Base de données : Supabase (PostgREST). Deux chemins d'accès coexistent, et la distinction est structurante :
+    · le front lit directement via le SDK Supabase avec la clé publishable (`db.from('table')`) — donc soumis au RLS ;
+    · les écritures passent par `api.php` avec la clé service (`admin_db`, `save_client`, …), protégées par session PHP + jeton CSRF.
+- Secrets : `../../elevora-secrets.php`, hors du dossier public, expose `$CONFIG`. Contient supabase_url, supabase_key, anthropic_key, resend_key, qonto_login / qonto_secret, cron_secret, from_email.
+- Emails : Resend. IA : API Anthropic (`api.anthropic.com/v1/messages`). Banque : API Qonto v2 (`thirdparty.qonto.com/v2`).
+- Autres fichiers : `templates.js` (gabarits de documents), `sign-mobile.html`, `google-callback.php`, `service-worker.js` (PWA), `dette-scan.js` (script de scan externe), et une série de `migration-*.sql`.
+
+Ce qu'il faut savoir avant de toucher quoi que ce soit :
+
+- Plusieurs tables citées par le code n'ont pas leur fichier `.sql` dans le dépôt. Un export partiel du schéma Supabase (`information_schema.columns`) est fourni avec ce brief et confirme l'existence de : `clients`, `projects`, `documents`, `users`, `tasks`, `notifications`, `echeances`, `payment_matches`, `client_history`, `client_events`, `client_messages`, `case_studies`, `dette_technique`, `automations`, `email_log`, `relances`, `fiscal_deadlines`, `push_subscriptions`, `google_calendar`, `expense_categories`.
+
+  Deux observations sur cet export, à traiter et non à supposer :
+    · `transactions` n'y apparaît pas — mais l'export est tronqué (99 lignes, la console SQL de Supabase plafonne l'affichage), donc son absence n'est PAS une preuve. C'est le premier point à vérifier, et il conditionne tout le lot 2. Demande-moi de relancer la requête complète si besoin.
+    · `expense_categories` existe en base et n'est **jamais utilisée par le code** (zéro occurrence dans `api.php` et `index.html`). Elle porte une colonne `case_sensitive`, ce qui suggère une table de correspondance mot-clé → catégorie prévue puis abandonnée. Regarde son contenu réel avant d'inventer une nouvelle table au lot 2.2 : soit tu la reprends, soit tu la remplaces explicitement et tu le documentes.
+
+  Quand tu ajoutes une colonne ou une table, tu écris un nouveau fichier `migration-*.sql` idempotent (`add column if not exists`, `create table if not exists`, `create index if not exists`) — jamais de `drop`, jamais d'`alter` destructif.
+- Le RLS est actif. Toute table lue directement par le front a besoin d'une policy `select`. Toute table écrite uniquement par `api.php` ne doit pas recevoir de policy d'écriture publique. Les fichiers `migration-phase10` et `migration-phase11` donnent le modèle exact à suivre.
+- `api.php` applique un CSRF global : toute action hors liste d'exemption exige l'en-tête `X-CSRF-Token`.
+- Rate limiting par fichier et par IP sur presque toutes les actions.
+- Fuseau et devise : Europe/Paris, EUR, formats français (`toLocaleString('fr-FR')`, dates JJ/MM/AAAA).
+- Exercice comptable Elevora : SAS créée le 1er avril 2026 (`COMPTA_START_DATE` dans `index.html`). Exercice du 1er avril au 31 mars. Régime réel simplifié, déclaration annuelle CA12. Premier exercice en cours : aucun acompte de TVA n'est dû.
+</contexte_technique>
+
+%%2 · Règles de travail%%
+<regles_de_travail>
+
+<investigation>
+Ne fais aucune affirmation sur du code que tu n'as pas ouvert. Avant de répondre ou de modifier, lis le fichier concerné. Si une conclusion dépend d'une table ou d'une colonne, vérifie sa présence dans les `migration-*.sql`, ou dis explicitement que tu ne peux pas la vérifier depuis le dépôt.
+</investigation>
+
+<perimetre>
+Livre exactement ce qui est demandé, au niveau de détail demandé. Prends toi-même les décisions de routine. Ne pose une question que si deux lectures raisonnables de la demande mèneraient à un travail matériellement différent. Si une demande te paraît discutable, ou si tu vois mieux, dis-le en une phrase et fais quand même ce qui est demandé — sans rétrécir, élargir ni transformer la tâche en silence. Termine chaque lot en entier avant de passer au suivant.
+</perimetre>
+
+<preservation>
+Tu ne supprimes aucun contenu, aucune fonctionnalité ni aucune section existante, sauf là où ce document le demande explicitement. Il y a exactement trois suppressions demandées, listées au lot 8. Partout ailleurs : tu ajoutes, tu corriges, tu complètes.
+</preservation>
+
+<sobriete>
+Pas de sur-ingénierie. Pas de nouvelle couche d'abstraction, pas de framework, pas d'étape de build, pas de fichier de configuration pour un besoin ponctuel, pas de gestion d'erreur pour des cas qui ne peuvent pas se produire. Le bon niveau de complexité est le minimum qui fait le travail.
+
+Respecte le style du fichier que tu modifies : mêmes conventions de nommage, même façon de construire le HTML (template literals + `esc()`), et surtout la même densité de commentaires. Ce code est commenté en français et explique le *pourquoi* d'une décision, souvent en citant le bug qui l'a motivée. Continue exactement dans cette veine : quand tu corriges quelque chose de non évident, laisse en commentaire la raison, pas la paraphrase du code.
+</sobriete>
+
+<securite>
+Aucune clé, aucun token, aucun mot de passe en dur. Toute nouvelle action `api.php` : vérification de session, vérification de rôle si l'action est réservée aux administrateurs, rate limiting, validation stricte des entrées côté serveur. L'échappement XSS se fait à l'affichage via `esc()`, jamais au stockage — c'est la convention en place, ne l'inverse pas. Toute nouvelle donnée bancaire ou personnelle (IBAN notamment) est écrite via `api.php`, jamais exposée en écriture à la clé publishable.
+</securite>
+
+<generalite>
+Écris des solutions générales, pas des rustines qui ne marchent que sur un cas. N'écris pas de script auxiliaire pour contourner un problème que l'outil standard résout. Si une tâche est infaisable, ou si une consigne de ce document se révèle fausse au vu du code, dis-le au lieu de bricoler autour.
+</generalite>
+
+<etat_et_commits>
+Le travail est long et couvrira plusieurs fenêtres de contexte. Tiens deux fichiers à la racine :
+- `AUDIT.md` — le rapport de la phase 0, puis tenu à jour au fil des corrections (statut par bug).
+- `PROGRESS.md` — où tu en es : lot en cours, décisions prises et pourquoi, ce qui reste, ce qui bloque.
+
+Un commit par changement logique, message en français, préfixé par le lot : `[Lot 2] Qonto : accepte les identifiants de transaction non-UUID`. Jamais de commit fourre-tout.
+
+Ton contexte sera compacté automatiquement à l'approche de la limite : tu peux donc continuer indéfiniment. N'interromps jamais une tâche par anticipation pour des raisons de budget de tokens. Sauvegarde ton état dans `PROGRESS.md` avant que la fenêtre ne se recycle, et reprends.
+</etat_et_commits>
+
+<subagents>
+Ne délègue à un sous-agent que pour une exploration large et réellement parallélisable — par exemple inventorier en parallèle les handlers morts d'`index.html` et les actions manquantes d'`api.php`. Ne délègue pas ce que tu fais toi-même en quelques appels d'outils, et n'utilise pas de sous-agent pour relire ton propre travail. Si un seul suffit, n'en lance qu'un. Garde le nombre bas.
+</subagents>
+
+<communication>
+Réponds en français. Avant ton premier appel d'outil, dis en une phrase ce que tu vas faire. Pendant le travail, ne donne un point d'étape que lorsque tu trouves quelque chose d'important ou que tu changes de direction. À la fin de chaque lot, commence par le résultat : première phrase = ce qui a changé et ce qui fonctionne maintenant, détails ensuite.
+
+Reste concis. Les fichiers Markdown que tu écris couvrent le fond sans sections de remplissage, sans résumé redondant et sans boilerplate.
+</communication>
+
+</regles_de_travail>
+
+%%3 · Phase 0 — état des lieux et correction%%
+<phase_0>
+Cette phase précède toute évolution. Objectif : savoir ce qui est cassé, le corriger, et me le chiffrer.
+
+<lecture>
+Lis `index.html`, `api.php`, `client.html`, `templates.js` et tous les `migration-*.sql`. Produis d'abord dans `AUDIT.md` une carte du CRM : pour chaque section de navigation, sa fonction de rendu, les tables qu'elle lit ou écrit, les actions `api.php` qu'elle appelle. Cette carte te sert de repère pour tout le reste du travail.
+</lecture>
+
+<inventaire_statique>
+Le CRM ne peut pas tourner en local sans les secrets de production. Commence donc par quatre inventaires automatisables qui trouvent, sans navigateur, la majorité des interactions mortes :
+
+1. Handlers morts — extrais d'`index.html` et `client.html` tous les noms de fonctions appelés depuis `onclick=`, `oninput=`, `onchange=`, `onsubmit=`, `onmouseenter=`, `ondrop=`, et vérifie que chacun est bien défini. Tout appel non résolu = bouton mort.
+2. Cibles DOM manquantes — extrais tous les `getElementById('x')` et `querySelector('#x')`, et vérifie que l'`id` existe dans le HTML statique ou est créé par une fonction que tu identifies. Tout `id` introuvable = rendu silencieusement mort.
+3. Actions API fantômes — extrais tous les `action:'x'` envoyés depuis le front et compare-les à la liste des `case 'x':` du switch d'`api.php`. Dans les deux sens : action appelée mais absente du switch = « erreur réseau » côté utilisateur ; action définie mais jamais appelée = code mort, à signaler sans supprimer.
+4. Tables et colonnes — extrais tous les `db.from('table').select(...)` du front et toutes les URLs `/rest/v1/table?...` d'`api.php`, et confronte-les aux `migration-*.sql`. Signale toute table absente des migrations : elle existe peut-être en base, donc signale sans conclure.
+
+Ces inventaires se font avec `grep` / `rg` et un petit script jetable. Supprime le script en fin de phase.
+</inventaire_statique>
+
+<test_navigateur>
+Ensuite, teste réellement l'interface. Monte un harnais local : un serveur statique pour `index.html` plus un `api.php` de simulation — ou un intercepteur `fetch` injecté — qui répond avec un jeu de données représentatif : 8 à 10 clients couvrant tous les états, 3 projets avec des avancements différents, 5 factures dont 2 payées et 1 en retard, 40 transactions bancaires incluant des virements récurrents et des libellés inconnus, 10 notifications de priorités variées, 3 comptes utilisateurs, des tâches en retard. Si un serveur MCP de pilotage de navigateur est disponible, utilise-le ; sinon un script Playwright ou Puppeteer local fait l'affaire.
+
+Puis parcours l'interface exhaustivement, section par section : chaque bouton, chaque onglet, chaque filtre, chaque champ de formulaire, chaque modale (ouverture, validation, annulation, fermeture au clic extérieur, touche Échap), chaque tri de colonne, chaque action de ligne, chaque état vide, chaque transition. Pour chaque écran, relève aussi : erreurs console, requêtes en échec, éléments qui se chevauchent, textes tronqués, contrastes illisibles, focus clavier perdu, et le rendu à 375 px de large.
+
+Le harnais et son jeu de données sont jetables : supprime-les à la fin de la phase 0, ou range-les dans un dossier `dev/` explicitement exclu du déploiement.
+</test_navigateur>
+
+<rapport>
+Consigne tout dans `AUDIT.md`, sous forme de tableau, une ligne par constat :
+
+`# | Fichier:ligne | Section | Symptôme observé | Cause | Gravité | Statut`
+
+Gravité :
+- P0 — fonctionnalité inutilisable, perte ou corruption de données, faille de sécurité.
+- P1 — fonctionnalité dégradée, ou chiffre faux affiché à l'écran.
+- P2 — gêne visible à l'usage.
+- P3 — cosmétique.
+
+Relève tout ce que tu trouves, sans filtrer au moment du constat : le tri se fait ensuite, dans la colonne Gravité. Un constat dont tu n'es pas certain est noté « à confirmer » plutôt qu'omis.
+</rapport>
+
+<correction>
+Corrige ensuite tous les P0, puis les P1, puis les P2. Les P3 cosmétiques qui recoupent le lot 5 (emojis, boutons) seront traités dans ce lot : note-les, ne les corrige pas deux fois.
+
+Une correction = un commit. Chaque ligne d'`AUDIT.md` passe en `corrigé` avec le hash du commit correspondant.
+</correction>
+
+<pistes_deja_identifiees>
+Ces points sortent d'une première lecture du code faite avant toi. Vérifie-les — ils ne remplacent pas ton propre audit, et certains peuvent être faux.
+
+- `index.html` (topbar, ~ligne 596) : le bouton burger est dupliqué à l'identique, deux `<button class="burger-btn">` consécutifs.
+- `index.html:17846` — `renderAllNotifsModal()` ne lit que `_bddNotifications`. La modale « toutes les notifications » n'affiche donc ni les notifications compta générées dynamiquement, ni les signaux du moteur, alors que le panneau latéral les affiche. L'utilisateur voit moins de notifications dans « voir tout » que dans le panneau.
+- `api.php:4086` — les transactions Qonto dont l'identifiant n'est pas un UUID strict sont écartées silencieusement par un `continue`. Voir le lot 2.
+- `api.php:4095` — `transaction_date` vaut `settled_at ?? emitted_at`, donc `null` pour une transaction en attente ; or `index.html:14062` filtre sur `transaction_date >= COMPTA_START_DATE`, ce qui exclut définitivement ces lignes de l'affichage.
+- `api.php:3977` — `qonto_sync` exige une session admin. La synchronisation bancaire ne peut donc jamais tourner en tâche planifiée, seulement au clic. Voir le lot 2.
+- `api.php:1167` — `resolveAnthropicModel()` ne connaît pas Claude Opus 5 ni Claude Sonnet 5 ; les valeurs de repli pointent vers `claude-sonnet-4-6`.
+- `index.html:3974` — `loadHistory()` est plafonné à 30 entrées, sans pagination : au-delà, l'historique ancien est inaccessible. Voir le lot 7.
+</pistes_deja_identifiees>
+
+<livrable_schema>
+Livrable transverse de la phase 0, à produire dans le même temps : **`schema-complet.sql`**, un fichier unique et autonome à la racine, que je peux coller tel quel dans l'éditeur SQL de Supabase.
+
+Ce fichier doit contenir, dans l'ordre d'exécution correct (dépendances de clés étrangères respectées) :
+- le `create table if not exists` de **toutes** les tables dont le code a besoin, colonnes complètes, types exacts, valeurs par défaut ;
+- les `alter table ... add column if not exists` pour les colonnes ajoutées par les lots de ce brief ;
+- les index et contraintes d'unicité ;
+- les policies RLS, avec un commentaire pour chacune expliquant qui a le droit de faire quoi et pourquoi ;
+- les `insert ... on conflict do nothing` pour les lignes de référence (par exemple les quatre lignes de `automations`).
+
+Contraintes impératives : **entièrement idempotent** — je dois pouvoir le rejouer autant de fois que je veux sans rien casser ni rien perdre. **Aucun `drop`, aucun `truncate`, aucun `alter` destructif.** Aucune donnée de production dedans.
+
+Accompagne-le d'une section dans `AUDIT.md` qui liste, table par table : le rôle de la table en une phrase, si elle existe déjà en base d'après l'export fourni, et si elle est lue directement par le front (donc si elle a besoin d'une policy `select`). Signale explicitement les tables que le code utilise mais que l'export ne montre pas — `transactions` en tête — sans conclure qu'elles manquent : l'export est tronqué.
+
+Si tu as besoin de l'export complet plutôt que du partiel, demande-le-moi en me donnant la requête exacte à lancer et la façon de l'exporter sans troncature.
+</livrable_schema>
+
+<livrable_phase_0>
+À la fin de la phase 0, donne-moi :
+- le nombre total de constats, ventilé par gravité ;
+- le nombre de bugs corrigés, ventilé par gravité ;
+- ce qui reste ouvert et pourquoi (information manquante de ma part, accès production nécessaire, etc.) ;
+- les trois problèmes les plus structurants que tu as trouvés, une phrase chacun.
+</livrable_phase_0>
+</phase_0>
+
+%%4 · Lot 1 — Vue d'ensemble%%
+<lot_1_vue_ensemble>
+
+<probleme>
+La vue d'ensemble (`renderDash()`, `index.html:2273`, section `#sec-dashboard` ligne 667) affiche aujourd'hui quatre tuiles : Clients (total sur la période) · En cours · CA réalisé · Conversion (nouveau → livré). Deux défauts :
+
+1. Le contenu. Le taux de conversion tourne sous les 10 % parce que le CRM compte tous les rendez-vous et tous les prospects contactés, dont beaucoup n'aboutissent jamais — c'est mathématiquement exact et commercialement démoralisant, et surtout ça ne pilote rien. Le camembert « Répartition des projets » affiche « Perdu » et « Contacté » pour la même raison.
+2. La forme. Tout est empilé en une seule colonne, pleine largeur : une rangée de tuiles, un graphique, deux graphiques, un graphique, un tableau. On scrolle beaucoup pour peu d'information.
+</probleme>
+
+<objectif>
+La vue d'ensemble ne parle plus que des clients qu'on a. On ne mesure plus ce qu'on a raté, on mesure ce qu'on est en train de faire et ce qui rentre. Les états `Perdu` et `Contacté` ne disparaissent pas du CRM — ils restent dans la fiche client, le pipeline et les filtres — ils disparaissent seulement de la vue d'ensemble.
+</objectif>
+
+<travail>
+1. Commence par relever, dans `AUDIT.md`, l'inventaire exact de ce que la vue d'ensemble affiche aujourd'hui : chaque tuile, chaque graphique, chaque tableau, avec la source de calcul de chaque chiffre (quelle table, quel champ, quel filtre). Tu en auras besoin pour garantir qu'aucune information utile n'est perdue au passage.
+
+2. Remplace la rangée de KPI par celle-ci, dans cet ordre :
+
+   - `CA encaissé` — tuile héro. Somme réelle des factures effectivement payées (`documents` dont `nom ilike 'Facture_%'` et `paid_at` non nul, champ `form_data.ttc`), sur l'exercice en cours. Même source que `refreshSidebarCA()` (`index.html:15897`) : un seul calcul, une seule vérité. Sous-titre : le montant encaissé sur les 30 derniers jours, avec la variation par rapport aux 30 jours précédents.
+   - `En production` — nombre de clients dont l'état est `En cours`, et somme des budgets des projets actifs correspondants. Sous-titre : combien d'entre eux ont une date de livraison estimée (`estim`) dépassée.
+   - `Signés, à démarrer` — clients dont un contrat est signé (`documents` avec `is_contract` ou `nom ilike 'Contrat_%'`, et `signed_at` non nul) mais dont l'avancement est à 0 %. C'est le carnet de commandes : du travail vendu, pas encore commencé. Sous-titre : le montant total.
+   - `Livrés` — clients à l'état `Livré` sur la période, et le CA correspondant.
+   - `Reste à encaisser` — total signé et facturé mais non payé, plus le signé pas encore facturé. Sous-titre : la part en retard (échéance dépassée).
+
+   **Règle absolue sur cette page** : aucune tuile, aucun graphique, aucune colonne ne mentionne les prospects contactés, les clients perdus, ni un taux de conversion. Ce n'est pas une préférence esthétique : ces indicateurs mesurent ce qui n'a pas abouti, alors que cette page sert à décider quoi faire aujourd'hui. Si tu croises un endroit du dashboard où l'un des trois réapparaît par un chemin détourné (légende, tooltip, sous-titre, tri), retire-le aussi.
+
+3. Remplace le camembert « Répartition des projets · par état » par un **entonnoir de production** horizontal : `Signé → Maquettes → Développement → Validation → Livré`, dérivé de `stages_state` (voir `getClientStages()` et `PROJECT_STAGES`, `index.html:3804`). Chaque palier affiche le nombre de projets qui y sont arrêtés et le montant correspondant. Un clic sur un palier filtre la liste clients sur ce palier. Cet entonnoir ne comporte ni « Perdu » ni « Contacté ».
+
+4. **De vrais graphiques, plus de camemberts.** Le dashboard actuel repose sur deux camemberts (`doughnut`) et deux graphiques à barres, et n'a aucune courbe d'évolution lisible. Un camembert répond à « comment ça se répartit », jamais à « est-ce que ça monte » — c'est la deuxième question qui compte ici. Refais le jeu de visualisations avec Chart.js, déjà chargé :
+
+   - **Courbe d'encaissement** (`line`, remplissage dégradé sous la courbe) — CA encaissé par mois sur douze mois glissants, basé sur les dates `paid_at` des factures. C'est le graphique principal de la page. Ajoute une seconde série en pointillé : le cumul depuis le début de l'exercice.
+   - **Barres empilées mensuelles** (`bar`, `stacked`) — encaissé / facturé non encaissé / signé non facturé, mois par mois. On lit d'un coup ce qui est rentré et ce qui traîne.
+   - **Entonnoir de production** — barres horizontales décroissantes, pas un camembert (voir le point 3).
+   - **Sparklines** dans les tuiles KPI — une micro-courbe de 40 px de haut en fond de tuile, sans axe ni légende, juste la tendance.
+   - **Avancement des projets actifs** — barres horizontales avec, sur le même axe, un repère de la date de livraison estimée, pour qu'un projet à 40 % à trois jours de l'échéance saute aux yeux.
+   - **Solde bancaire sur douze mois** (`line`) une fois le lot 2 terminé — les données seront en base.
+
+   Supprime les deux camemberts. Conserve le graphique de budget moyen par type de prestation si tu le juges utile, mais en barres horizontales et en zone secondaire.
+
+   Sur tous les graphiques : axes lisibles dans les deux thèmes, valeurs formatées en euros français, tooltip qui donne le chiffre exact, et aucune animation d'entrée au-delà de 300 ms.
+
+5. Passe la page en grille façon bento plutôt qu'en colonne unique. Sur ≥1200 px, une grille 12 colonnes ; à partir de 1024 px, 8 colonnes ; en dessous, une colonne. Disposition visée :
+
+   - rangée 1 : la tuile héro `CA encaissé` sur 5 colonnes (sparkline en fond), les quatre autres tuiles sur 7 colonnes en 2×2 ;
+   - rangée 2 : la courbe d'encaissement sur 12 colonnes — c'est le graphique principal, il a droit à la pleine largeur ;
+   - rangée 3 : « Et maintenant ? » sur 7 colonnes, « Prochains encaissements » sur 5 colonnes (échéances à venir + factures en attente, triées par date, avec montant et jours restants) ;
+   - rangée 4 : l'entonnoir de production, pleine largeur mais compact (une seule bande) ;
+   - rangée 5 : « Projets actifs » sur 7 colonnes — barres d'avancement avec repère d'échéance, nom du client, chef de projet — et « Charge de l'équipe » sur 5 colonnes : projets actifs par personne (`chef_projet` / `charge`) ;
+   - rangée 6 : les barres empilées mensuelles sur 7 colonnes, « Derniers clients » sur 5 colonnes en version compacte.
+
+   Le graphique d'évolution du CA existant (`renderCAChart()`, `index.html:2155`) bascule sur le CA **encaissé** (dates `paid_at`) et non plus sur les budgets des clients livrés : même exigence de vérité que la tuile héro. Garde les boutons de période.
+
+6. Densité et lisibilité : les tuiles ne font pas plus de 132 px de haut, les chiffres sont en `var(--mono)` avec `font-variant-numeric: tabular-nums`, chaque tuile porte un sous-titre qui donne le contexte (variation, dont-combien-en-retard), et chaque bloc a un état vide utile qui explique ce qu'il faut faire pour qu'il se remplisse — jamais un simple tiret.
+
+7. `renderDash()` fait déjà beaucoup. Découpe-la en fonctions de rendu par bloc (`_dashKpis()`, `_dashFunnel()`, `_dashEncaissements()`, `_dashCharge()`, …) appelées depuis `renderDash()`. Un seul niveau de découpage, pas d'usine.
+</travail>
+
+<garde_fou>
+Aucun chiffre affiché sur cette page ne doit être calculé deux fois de deux manières différentes. Si « CA encaissé » apparaît dans la sidebar, dans la vue d'ensemble et dans le module comptabilité, il sort d'une seule fonction partagée. Si tu trouves des calculs divergents pendant l'audit, note-les et unifie-les.
+</garde_fou>
+
+<note_visuelle>
+Une capture de la vue d'ensemble actuelle peut être jointe au message : si c'est le cas, appuie-toi dessus pour le diagnostic visuel. Sinon, le code suffit — la disposition en colonne unique et les deux camemberts y sont explicites (`index.html:667-693`). Ne bloque pas là-dessus.
+</note_visuelle>
+
+</lot_1_vue_ensemble>
+
+%%5 · Lot 2 — Comptabilité%%
+<lot_2_comptabilite>
+
+C'est le lot le plus lourd et le plus prioritaire après la phase 0. Aujourd'hui le module comptabilité affiche le solde Qonto et rien d'autre : pas d'historique de mouvements, pas de CA encaissé, pas de TVA, pas d'échéances, pas de déclarations. Toutes ces pages dépendent de la même chaîne de données, et cette chaîne est rompue à sa source.
+
+<chaine_de_dependance>
+Comprends d'abord la chaîne, sinon tu corrigeras des symptômes :
+
+`qonto_sync` insère les transactions → le front les lit via `loadComptaTransactions()` → `autoMatchPayments()` rapproche les virements des factures → une facture rapprochée reçoit `paid_at` → `paid_at` alimente le CA encaissé, la TVA collectée, la trésorerie et les signaux du dashboard.
+
+Si l'insertion des transactions échoue, tout ce qui est en aval affiche zéro sans jamais afficher d'erreur. C'est exactement le symptôme constaté.
+</chaine_de_dependance>
+
+<t1_synchronisation>
+**2.1 — Faire entrer les mouvements en base.**
+
+Dans `qonto_sync` (`api.php:3977`) :
+
+- `api.php:4084-4086` : l'identifiant retenu est `$t['id'] ?? $t['transaction_id']`, puis toute valeur qui n'est pas un UUID strict est écartée par un `continue` silencieux. L'API Qonto v2 renvoie un `transaction_id` de la forme `organisation-slug-1-transaction-<uuid>`, qui n'est pas un UUID. Selon la réponse réelle de l'API, ce filtre peut écarter la totalité du lot. Corrige en conservant l'identifiant Qonto tel quel dans une colonne texte dédiée (`external_id`, unique) et en générant la clé primaire côté base — plutôt qu'en tentant de faire rentrer un identifiant Qonto dans une colonne `uuid`. Ajoute la migration correspondante.
+- Ne jette plus jamais une transaction en silence. Toute ligne écartée est comptée et remontée dans la réponse JSON (`skipped`, avec la raison), et affichée dans le toast de synchronisation.
+- `api.php:4095` : `transaction_date` doit avoir un repli robuste — `settled_at ?? emitted_at ?? updated_at ?? date du jour` — sinon les transactions en attente ont une date nulle et sont invisibles côté front, qui filtre sur cette date (`index.html:14062`).
+- Enrichis la cartographie des champs avec ce que Qonto fournit et que le CRM jette actuellement : `counterparty_iban`, `side`, `operation_type`, `vat_amount` / `vat_rate` quand ils sont présents, `attachment_ids`. L'IBAN de contrepartie est indispensable au rapprochement automatique demandé plus bas. Ajoute les colonnes par migration.
+- Vérifie la policy RLS de la table `transactions` : le front la lit directement avec la clé publishable. Sans policy `select`, la table renvoie un tableau vide sans erreur explicite — ce qui produit exactement le même symptôme qu'une synchronisation ratée. Si la policy manque, ajoute-la dans une migration ; si tu préfères ne pas exposer les mouvements bancaires à la clé publishable, fais passer la lecture par une action `api.php` dédiée et adapte `loadComptaTransactions()`.
+- Diagnostic visible : ajoute dans la vue d'ensemble comptabilité un encart « dernière synchronisation » indiquant la date, le nombre de transactions récupérées, insérées, ignorées, et le dernier message d'erreur Qonto s'il y en a eu un. Aujourd'hui l'utilisateur ne peut pas distinguer « pas de mouvement » de « synchronisation cassée ».
+- La synchronisation ne peut pas tourner en automatique parce que l'action exige une session admin. Ajoute une variante déclenchable par tâche planifiée, authentifiée par `cron_secret` comme `task_reminders_run` (`api.php:1939`) — même schéma, même vérification `hash_equals`. Documente dans le README la commande cron quotidienne à créer chez Infomaniak.
+</t1_synchronisation>
+
+<t2_categorisation>
+**2.2 — Une catégorisation qui apprend.**
+
+`categorizeTx()` (`api.php:422`) applique une liste figée de mots-clés. Un virement au libellé inconnu retombe sur `Revenu client` ou `Autre`, et l'utilisateur n'a aucun moyen de lui apprendre la bonne réponse : le mois suivant, le même libellé retombe dans le même trou.
+
+Ajoute une table de règles apprises, alimentée par l'usage :
+
+- Nouvelle table `categorization_rules` (migration idempotente) : `id`, `match_type` (`counterparty` | `label` | `iban`), `pattern` (texte normalisé : majuscules, accents retirés, espaces multiples réduits), `category`, `client_id` (optionnel), `vat_rate` (optionnel), `flags` jsonb (par exemple `{"exclude_from_ca": true}`), `hit_count`, `created_by`, `created_at`.
+- Ordre de résolution dans `categorizeTx()` : règle apprise sur IBAN → règle apprise sur contrepartie → règle apprise sur libellé → règles par mots-clés existantes → repli sur le sens du montant. Ne supprime pas les règles par mots-clés existantes : elles restent le socle.
+- Dans « Banque → Mouvements » (`renderComptaMouvements()`, `index.html:15918`), chaque ligne devient éditable : changer la catégorie ouvre un petit sélecteur, et propose une case « appliquer à tous les mouvements portant ce libellé, maintenant et à l'avenir ». Cocher cette case crée la règle et relance la catégorisation sur l'historique.
+- La normalisation du libellé doit résister aux variations réelles d'un virement récurrent : suppression des dates, des numéros de séquence et des références qui changent d'un mois à l'autre. Écris cette normalisation dans une fonction unique, testable, utilisée à la fois pour créer la règle et pour la comparer.
+- Ajoute un écran « Règles » (sous-onglet de Banque) listant les règles apprises, leur nombre d'utilisations, et permettant de les modifier ou de les supprimer.
+</t2_categorisation>
+
+<t3_apports>
+**2.3 — Les apports en compte courant ne sont pas du chiffre d'affaires.**
+
+Chaque début de mois, Raphaël, Paloma et Célian virent chacun 50 € depuis leur compte personnel vers le compte pro, pour couvrir les charges. Ce sont trois virements entrants de 50 €, depuis trois banques différentes, dans les premiers jours du mois. Aujourd'hui `categorizeTx()` les classe en `Revenu client` (montant positif, libellé inconnu) : ils gonflent le CA, ils gonflent la TVA collectée, et ils polluent la file « à matcher ».
+
+Données réelles observées côté Qonto (août 2026) — utilise-les pour construire et tester la règle :
+
+    Libellé de contrepartie          Banque (BIC)      Référence du virement
+    M. SOULET CELIAN                 AGRIFRPP847       M. SOULET CELIAN
+    MLE PALOMA MORIO                 CMCIFRPPXXX       VIR DE MLE PALOMA MORIO
+    M. CHAIN RAPHAEL                 AGRIFRPP817       (vide)
+
+Trois observations qui comptent :
+- Les libellés ne sont pas normalisés entre banques : civilité variable (`M.`, `MLE`), ordre nom/prénom inversé d'une ligne à l'autre, préfixe `VIR DE` sur l'une d'elles, référence vide sur une autre. Une comparaison de chaîne brute échouera. C'est exactement le cas d'usage de la fonction de normalisation demandée au lot 2.2.
+- Le montant et la période sont un signal fort et stable : 50 € entrants dans les cinq premiers jours du mois, depuis un IBAN de particulier. Utilise-le comme corroboration, jamais comme critère unique — un client peut virer 50 €.
+- **Qonto a déjà mal classé l'un des trois** : le virement de Célian est catégorisé « Chiffre d'affaires » côté Qonto, les deux autres n'ont aucune catégorie. Ne fais donc jamais confiance à la catégorie renvoyée par l'API Qonto pour décider ce qui entre dans le CA : c'est un indice, pas une source de vérité. La catégorie Elevora est calculée par le CRM.
+
+Travail à faire :
+- Ajoute une catégorie `Apport en compte courant` et un drapeau `exclude_from_ca` sur la transaction (colonne booléenne, par migration).
+- Toute transaction portant ce drapeau est exclue du CA encaissé, de la TVA collectée, du graphique d'évolution du CA et de la file « à matcher ». Elle reste visible dans les mouvements et dans la trésorerie — c'est bien de l'argent qui entre sur le compte.
+- Crée un écran de configuration « Comptes des associés » : une ligne par associé (nom, IBAN émetteur, libellé caractéristique), saisissable depuis l'interface. **Les IBAN se saisissent dans le CRM, jamais dans le code ni dans un fichier du dépôt** — ce sont des coordonnées bancaires personnelles, et un dépôt git en garde la trace indéfiniment. Stocke-les comme des règles de catégorisation avec `flags.exclude_from_ca = true`, pas dans une table parallèle. Ces trois lignes seront saisies à la main une fois l'écran en place.
+- Ajoute dans la trésorerie une ligne distincte « apports des associés » sur la période, pour que le montant reste lisible et ne se fonde pas dans le reste.
+</t3_apports>
+
+<t4_rapprochement>
+**2.4 — Rapprochement virement ↔ facture.**
+
+`autoMatchPayments()` (`api.php:451`) exige deux conditions cumulatives : montant TTC strictement égal, **et** nom du client contenu dans le libellé de la contrepartie. Sinon il abandonne. Sur des virements bancaires réels — où le libellé contient le nom d'une personne physique et pas la raison sociale — cela ne matche presque jamais.
+
+Améliore le moteur, par ordre de confiance décroissante :
+
+1. **IBAN.** Ajoute une colonne `iban` sur la table `clients` et le champ correspondant dans le formulaire client (section informations administratives, à côté du SIRET). Ajoute-le à la liste blanche des champs autorisés dans `save_client` (`api.php:2008`). Si l'IBAN de la contrepartie du virement correspond à l'IBAN d'un client, le client est identifié avec certitude — confiance 100. Le nom du libellé devient alors un indice secondaire, plus une condition bloquante.
+2. **Montant exact + client identifié** → confiance 90.
+3. **Montant partiel + client identifié** → c'est le cas le plus important et il n'est pas géré aujourd'hui. Une facture de 10 000 € réglée en trois versements produit trois virements dont aucun n'est égal au TTC. Ajoute une colonne `amount_applied` sur `payment_matches` et une notion de solde restant sur la facture : une facture n'est marquée `paid_at` que lorsque la somme des rapprochements atteint son TTC (à 1 € près). Tant qu'elle est partiellement payée, elle apparaît comme telle, avec le reste à payer.
+4. **Ordre des versements.** Quand un client identifié a plusieurs factures ou plusieurs échéances ouvertes, le rapprochement va à la plus ancienne non soldée. C'est la règle attendue : si la facture n° 1 est déjà réglée, un nouveau virement du même client s'impute sur la facture n° 2. Applique la même logique aux échéances d'un échéancier de projet (voir le lot 4).
+5. **Tolérance de date** : un virement daté jusqu'à 60 jours après l'émission de la facture reste candidat. Au-delà, il passe en rapprochement manuel.
+6. **Ambiguïté** : quand deux candidats restent également plausibles, ne tranche jamais. La transaction part dans « à matcher » avec les candidats pré-classés par score, pour un clic de validation.
+
+Dans « À matcher » (`renderComptaMatch()`, `index.html:16485`), le rapprochement manuel doit lui aussi apprendre : au moment de la validation, propose « retenir l'IBAN de ce virement pour ce client » et « catégoriser automatiquement les prochains virements de ce libellé ».
+</t4_rapprochement>
+
+<t5_tva>
+**2.5 — Une TVA calculée sur des faits, pas sur une moyenne.**
+
+`renderComptaTVA()` (`index.html:16068`) estime la TVA déductible en appliquant 20 % à *toutes* les dépenses de l'exercice. C'est faux dans plusieurs cas réels, dont un déjà rencontré : un client belge (Robin, 450 €) sur lequel rien n'est dû à l'État français.
+
+- Ajoute sur chaque transaction : `vat_rate` (0, 5.5, 10, 20, ou libre), `vat_amount` (calculé, ou saisi manuellement), et `vat_note` (texte libre : « client belge — autoliquidation »). Reprends `vat_amount` / `vat_rate` de Qonto quand l'API les fournit, sinon applique 20 % par défaut — mais rends la valeur modifiable ligne par ligne depuis les mouvements.
+- La TVA déductible devient la somme des `vat_amount` réels, pas une estimation globale. Affiche explicitement, à côté du total, combien de transactions utilisent encore le taux par défaut : c'est la mesure de fiabilité du chiffre.
+- La TVA collectée continue de se calculer sur les factures payées, mais elle doit exclure les transactions marquées `exclude_from_ca` (apports) et les factures dont la TVA n'est pas applicable (`tva_applicable` dans `form_data`).
+- Ajoute un régime par transaction : `soumis` / `exonéré` / `autoliquidation` / `hors champ`. Le libellé du régime apparaît dans le détail TVA, et l'export de la déclaration le ventile.
+- Conserve l'avertissement existant sur le caractère estimatif du module et l'obligation de faire valider par un expert-comptable. Renforce-le plutôt que l'inverse : plus le chiffre paraît précis, plus l'avertissement compte.
+</t5_tva>
+
+<t6_recurrences>
+**2.6 — Détection automatique des récurrences.**
+
+Le CRM doit reconnaître seul qu'une dépense revient tous les mois. Aucune IA n'est nécessaire : c'est de la détection de motif sur des données que le CRM possède déjà.
+
+- Écris un détecteur qui regroupe les transactions par contrepartie normalisée et cherche : au moins 3 occurrences, écart de montant inférieur à 5 %, intervalle régulier (mensuel ±3 jours, trimestriel ±5 jours, annuel ±10 jours).
+- Chaque motif détecté est proposé dans un écran « Récurrences détectées » : intitulé, montant moyen, périodicité, prochaine date attendue, nombre d'occurrences observées. Un bouton crée l'entrée correspondante dans `echeances` (le mécanisme d'abonnement existe déjà — voir `migration-phase8-abonnements.sql` et `autoMatchEcheances()`, `api.php:970`).
+- Le détecteur signale aussi les récurrences **manquantes** : un abonnement attendu le 5 du mois qui n'est pas arrivé le 8 devient une alerte. C'est plus utile que la détection elle-même.
+- Applique la détection aux entrées comme aux sorties : un abonnement de maintenance client encaissé chaque mois est une récurrence entrante.
+</t6_recurrences>
+
+<t7_echeances_declarations>
+**2.7 — Échéances et Déclarations, aujourd'hui vides.**
+
+`renderComptaEcheances()` (`index.html:16395`) s'appuie sur `getFiscalDeadlines()`, et `renderDeclarations()` (`index.html:19468`) sur la table `fiscal`. Vérifie d'abord si ces pages sont vides parce qu'aucune donnée n'existe, ou parce que le calcul échoue. Traite le vrai problème, pas le symptôme.
+
+- Le calendrier fiscal d'une SAS au réel simplifié, exercice 1er avril → 31 mars, doit être pré-rempli et recalculé chaque année : déclaration CA12 (dans les 3 mois de la clôture, soit le 30 juin), acomptes de TVA de juillet et décembre (55 % et 40 % de la TVA N-1, aucun acompte si la TVA N-1 est inférieure ou égale à 1 000 € — et aucun acompte sur le premier exercice), CFE (15 décembre), liasse fiscale et IS, échéances URSSAF selon la périodicité choisie.
+- Chaque échéance porte : intitulé, date, montant estimé, base de calcul (explicitée : « 55 % de la TVA due au titre de l'exercice précédent »), statut (`à venir` / `à payer` / `payée`), et le rattachement au mouvement bancaire quand le paiement est détecté.
+- Le rappel doit partir : `fiscal_reminders_run` existe déjà (`api.php:4446`) et attend un cron. Voir le bloc `<taches_planifiees>` ci-dessous.
+- « Déclarations » liste les déclarations passées et à venir avec leur statut, un espace pour attacher le justificatif déposé, et le montant réellement payé.
+</t7_echeances_declarations>
+
+<t8_registre>
+**2.8 — Registre de numérotation.**
+
+Cette page (`renderComptaRegistre()`, `index.html:14341`) répond à une obligation légale française : la numérotation des devis et des factures doit être continue, chronologique, sans trou ni doublon. Sans comptable externe, c'est au CRM de garantir cette continuité et de la rendre vérifiable. Vérifie qu'elle fonctionne : détection des trous, détection des doublons, ordre chronologique cohérent avec les numéros, et alerte quand une facture est créée hors séquence. Si la détection est incomplète, complète-la ; ajoute un bouton d'export du registre de l'exercice.
+</t8_registre>
+
+<t9_vue_compta>
+**2.9 — Vue d'ensemble comptabilité.**
+
+Une fois la chaîne réparée, `renderComptaDashboard()` (`index.html:15447`) doit répondre en un écran à cinq questions : combien j'ai sur le compte, combien j'ai encaissé sur l'exercice, combien on me doit, combien je dois (TVA, échéances, charges à venir), et qu'est-ce qui attend une action de ma part. Ajoute la courbe d'évolution du solde bancaire sur douze mois glissants (données déjà disponibles une fois les transactions en base) et la ventilation des dépenses par catégorie sur la période.
+</t9_vue_compta>
+
+<taches_planifiees>
+**Information confirmée par Elevora : aucune tâche planifiée n'est configurée aujourd'hui chez Infomaniak.** Aucune.
+
+Conséquence directe, à mesurer avant de coder quoi que ce soit d'autre : tout ce qui devait tourner tout seul dans ce CRM ne tourne pas. Ni les rappels de tâches assignées (`task_reminders_run`), ni les emails clients automatiques — renouvellements et relances impayés (`client_emails_run`) —, ni les rappels d'échéances fiscales (`fiscal_reminders_run`). Les automatisations affichées comme « actives » dans l'écran Automatisations ne se sont jamais déclenchées : l'interrupteur est bien à ON, mais personne n'appuie sur le bouton. Corrige aussi cet affichage : une automatisation activée dont le cron n'a jamais appelé le CRM doit le dire, pas afficher « ACTIF depuis le … » comme si elle fonctionnait.
+
+Produis un fichier **`CRONS.md`** à la racine, contenant pour chaque tâche planifiée à créer :
+- l'action concernée et ce qu'elle fait, en une phrase ;
+- la fréquence recommandée et l'heure conseillée (les envois clients ne partent pas à 3 h du matin) ;
+- **la commande exacte à coller** dans le panneau Infomaniak, avec l'URL complète, la méthode, l'en-tête `Content-Type` et le corps JSON, en laissant `<cron_secret>` comme marqueur à remplacer ;
+- le comportement attendu au premier lancement, pour que je puisse vérifier que ça a marché.
+
+Quatre tâches au minimum : `task_reminders_run` (quotidien, matin), `client_emails_run` (quotidien, matin), `fiscal_reminders_run` (quotidien), et la nouvelle synchronisation Qonto authentifiée par `cron_secret` (quotidien, tôt — pour que la comptabilité soit à jour avant l'ouverture du CRM).
+
+Ajoute aussi un témoin de bonne santé : chaque exécution de cron écrit sa date et son résultat, et l'écran Automatisations affiche « dernière exécution : … ». Sans ça, on se retrouvera exactement dans la situation actuelle — un système qui semble marcher et qui ne tourne pas.
+</taches_planifiees>
+
+<information_manquante>
+Si une information te manque pour faire ce lot correctement — schéma exact d'une table, réponse réelle de l'API Qonto, format d'un libellé de virement, taux applicable dans un cas particulier — dis-le explicitement, corrige d'abord tout ce qui ne dépend pas de cette information, et regroupe tes questions en une seule liste à la fin du lot. Ne bloque pas le lot entier sur une question.
+</information_manquante>
+
+</lot_2_comptabilite>
+
+%%6 · Lot 3 — Création d'un membre d'équipe%%
+<lot_3_equipe>
+
+<symptome>
+La création d'un compte dans Administration → Équipe échoue. Message affiché sous le formulaire, en rouge :
+
+    Erreur réseau : Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+
+Contexte de reproduction : formulaire « Ajouter un membre » rempli normalement — nom complet, email `contact@elevora-agency.com`, mot de passe long, rôle Standard, case « Compte actif » cochée. Le bouton « Créer le compte » déclenche l'erreur immédiatement. Le comportement est identique quel que soit le rôle choisi.
+</symptome>
+
+<lecture_du_message>
+Ce message est plus informatif qu'il n'en a l'air, et il oriente le diagnostic bien plus précisément qu'une erreur applicative.
+
+`equipeApi()` (`index.html:18361`) fait `await r.json()` sur la réponse d'`api.php`. Le parseur échoue sur `<!DOCTYPE`, donc **le serveur a renvoyé une page HTML, pas du JSON**. Or `api.php` envoie `Content-Type: application/json` dès la ligne 60 et n'émet jamais de HTML — même son filet de sécurité en cas d'erreur fatale (`register_shutdown_function`, `api.php:29`) renvoie du JSON.
+
+Autrement dit : **la réponse ne vient pas du chemin normal d'`api.php`.** Le libellé « Erreur réseau » affiché par le CRM est trompeur — il n'y a pas de problème de réseau, il y a une réponse HTML là où on attend du JSON. Trois familles de causes, à départager par observation et non par déduction :
+
+1. **Une page d'erreur du serveur.** PHP meurt avant d'avoir pu écrire quoi que ce soit (erreur fatale non rattrapable, dépassement de `memory_limit`, timeout au niveau du serveur web et non de PHP), et Infomaniak sert sa page d'erreur 500 ou 503 en HTML.
+2. **Un filtrage en amont de PHP.** Un WAF ou un `mod_security` d'hébergement mutualisé intercepte la requête et renvoie une page de blocage HTML. Un POST JSON contenant un champ nommé `password` et une adresse email est un déclencheur classique de règle générique. Ce serait cohérent avec le fait que `users_list` (lecture, aucun champ sensible) passe alors que `user_create` échoue.
+3. **Une redirection.** La requête est redirigée (règle `.htaccess`, forçage HTTPS/www, page de maintenance) et le navigateur suit la redirection jusqu'à une page HTML.
+
+`users_list` fonctionne — la page Équipe s'affiche et liste les comptes. C'est la même session, le même jeton CSRF, le même endpoint. Ce qui change entre les deux actions : la méthode reste POST, mais le corps contient un mot de passe, et le code appelle `password_hash(..., PASSWORD_BCRYPT, ['cost' => 12])` puis un `POST` vers Supabase. Concentre-toi là-dessus.
+</lecture_du_message>
+
+<protocole_de_diagnostic>
+Ne devine pas : va chercher la réponse brute. Dans cet ordre.
+
+1. **Regarde la réponse.** Onglet Réseau du navigateur, requête `api.php` du clic sur « Créer le compte » : relève le **code de statut HTTP** et le **corps de la réponse**. Le titre de la page HTML renvoyée nomme presque toujours le coupable (« 500 Internal Server Error », « 403 Forbidden », « Service Unavailable », une page Infomaniak, une page de blocage WAF). Cette seule information tranche entre les trois hypothèses. Si tu ne peux pas la produire toi-même, dis-moi précisément quoi ouvrir et quoi te recopier.
+2. **Regarde le journal PHP.** `error_log` est utilisé par le filet de sécurité d'`api.php`. Une erreur fatale y laisse une trace horodatée avec fichier et ligne.
+3. **Isole le maillon.** Ajoute temporairement une action de diagnostic minimale — même garde de session et de rôle que `user_create`, mais qui se contente de renvoyer `['ok' => true]` sans toucher au mot de passe ni à Supabase. Si elle passe, le blocage est dans le traitement du mot de passe ou dans l'appel Supabase. Si elle échoue elle aussi, le blocage est en amont de PHP. Supprime cette action une fois le diagnostic posé.
+4. **Puis seulement, vérifie l'insertion Supabase.** La table `users` existe et contient bien `active`, `created_at`, `prefs` (confirmé par l'export de schéma). Vérifie les colonnes attendues par le code (`name`, `email`, `password_hash`, `role`, `active`, `avatar_url`, `color`), la contrainte d'unicité sur l'email, et la policy RLS d'insertion — sachant que l'insertion utilise `$CONFIG['supabase_key']`, dont il faut établir s'il s'agit de la clé service ou de la clé publishable. Une clé publishable face à une table sans policy `insert` échouerait proprement en JSON, pas en HTML : ce serait donc une seconde panne à corriger, pas celle-ci.
+</protocole_de_diagnostic>
+
+<contournement_a_ne_pas_faire>
+Ne « corrige » pas ce bug en rattrapant l'exception de parsing pour afficher un message plus joli. Le message deviendrait présentable et le compte ne se créerait toujours pas. Le message d'erreur doit être amélioré (voir plus bas), mais après la correction de la cause, pas à sa place.
+</contournement_a_ne_pas_faire>
+
+<travail>
+- Corrige la cause réelle. Si la correction passe par une migration SQL (policy ou colonne manquante), écris-la et indique-moi précisément quoi exécuter dans Supabase.
+- Rends l'erreur exploitable. Aujourd'hui `equipeApi()` fait `await r.json()` sans garde : toute réponse non-JSON produit un message de parseur JavaScript incompréhensible, étiqueté « Erreur réseau » alors que le réseau va très bien. Corrige ce point dans `equipeApi()` (et partout où le même motif existe) : lis d'abord le corps en texte, tente le parsing, et si ce n'est pas du JSON, remonte le **code HTTP** et les 200 premiers caractères de la réponse. Un développeur doit pouvoir diagnostiquer depuis le message affiché.
+- Les messages doivent être en français et dire quoi faire. Distingue au minimum : email déjà utilisé, mot de passe trop court, droits insuffisants, table ou colonne manquante, réponse serveur invalide (avec son code HTTP), panne réseau réelle.
+- Traite le même chemin pour `user_update` et `user_delete` : ils partagent la même mécanique et probablement les mêmes causes.
+- Une fois corrigé, teste le cycle complet dans le harnais : créer un compte standard, se connecter avec, vérifier que les sections réservées aux administrateurs lui sont bien masquées, le passer administrateur, le désactiver, le supprimer. Vérifie aussi les garde-fous existants : impossible de retirer son propre rôle admin, impossible de se désactiver soi-même, impossible de supprimer le dernier administrateur actif.
+</travail>
+
+</lot_3_equipe>
+
+%%7 · Lot 4 — Étapes de paiement dans le projet%%
+<lot_4_etapes_paiement>
+
+<situation>
+`PROJECT_STAGES` (`index.html:3804`) est une constante figée de six étapes : Premier RDV, Maquettes, Validation maquettes, Développement, Validation finale, Livraison. Les paliers d'avancement (5, 15, 25, 75, 90, 100 %) sont codés en dur.
+
+Le contrat, lui, connaît déjà l'échéancier : `assembleContratData()` (`index.html:10135`) construit `acompte`, `verse2` et `solde` en pourcentages, avec les montants correspondants, depuis les champs `ct-acompte`, `ct-verse2` et le calcul `100 − acompte − verse2`. Il existe aussi une case « prévoir un acompte » (`ct-acompte-enabled`) pour les contrats sans acompte. Cette information n'est jamais transmise au suivi de projet.
+</situation>
+
+<objectif>
+Quand un contrat est généré depuis le CRM, l'échéancier qu'il contient crée automatiquement les étapes de paiement correspondantes, **au sein de la même liste d'étapes** que les étapes de production. Un projet à trois versements affiche donc trois étapes de paiement, intercalées au bon moment entre les étapes de production, et pas dans un bloc à part.
+</objectif>
+
+<travail>
+1. **Persiste l'échéancier.** Au moment où le contrat est enregistré, écris dans `documents.form_data` un objet `echeancier` explicite : un tableau d'objets `{ ordre, libelle, pourcentage, montant, declencheur }`, où `declencheur` vaut `signature`, `validation_maquettes`, `livraison` ou une étape nommée. Ne te contente pas de stocker les trois pourcentages : le nombre de versements doit pouvoir varier (1, 2, 3 ou plus).
+
+2. **Rends le nombre de versements paramétrable dans l'atelier contrat.** Aujourd'hui la structure est figée à trois lignes (acompte / 2e versement / solde). Remplace-la par une liste de versements que l'on ajoute ou retire, avec contrôle que la somme fait 100 %. L'acompte à 30 % reste la valeur par défaut proposée, pas une valeur imposée — le code utilise aujourd'hui 40 % dans l'atelier contrat (`ct-acompte`) et 30 % dans le devis (`acompte_pct`) : unifie sur 30 % par défaut et signale-moi l'incohérence que tu corriges.
+
+3. **Génère les étapes.** `PROJECT_STAGES` devient une fonction `getProjectStages(project)` qui part du socle de production et y insère les étapes de paiement issues de l'échéancier du contrat, au rang défini par leur déclencheur :
+   - `Paiement de l'acompte — 30 % · 3 000 €` juste après la signature, avant les maquettes ;
+   - `Paiement du 2e versement — 40 % · 4 000 €` après la validation des maquettes ;
+   - `Paiement du solde — 30 % · 3 000 €` juste avant ou après la livraison, selon le déclencheur du contrat.
+   Les pourcentages d'avancement sont recalculés pour rester répartis sur l'ensemble des étapes. Un projet sans contrat, ou avec un contrat sans acompte, garde exactement le comportement actuel : c'est le repli, et il ne doit pas régresser.
+
+4. **Relie l'étape au réel.** Une étape de paiement se coche automatiquement quand le rapprochement bancaire du lot 2 détecte le versement correspondant (montant et ordre attendus, client identifié par IBAN). Elle reste cochable à la main. Quand elle se coche automatiquement, l'historique du client le note avec le montant et la date de valeur.
+
+5. **Compatibilité.** `stages_state` stocke des identifiants d'étapes en JSON. Les projets existants ne doivent pas perdre leur avancement : les identifiants de production restent identiques, les étapes de paiement portent de nouveaux identifiants (`paiement_1`, `paiement_2`, …). `getClientStages()` (`index.html:3813`) et `toggleStage()` (`index.html:3871`) doivent gérer les deux cas sans migration de données.
+
+6. **Contrats non générés par le CRM.** Si un contrat a été signé hors CRM et importé en PDF, l'échéancier n'est pas connu. Dans ce cas seulement, propose une lecture du document par l'IA (l'intégration Anthropic existe déjà, voir `contrat_generate`, `api.php:5155`) pour en extraire le nombre de versements et leurs pourcentages — avec validation humaine obligatoire avant création des étapes. Ne fais jamais dépendre le cas nominal d'un appel IA : quand le contrat vient du CRM, les chiffres sont déjà là, en clair, et il faut les lire directement.
+</travail>
+
+</lot_4_etapes_paiement>
+
+%%8 · Lot 5 — Nettoyage visuel%%
+<lot_5_visuel>
+
+<emojis>
+Plus aucun emoji dans l'interface. Décompte de départ (à vérifier et compléter) : environ 140 emojis dans `index.html`, 28 dans `client.html`, 6 dans `api.php` — dont ceux des étapes de projet (`PROJECT_STAGES`, `index.html:3804`), ceux des priorités de notification (`NOTIF_PRIORITY_ICON`, `index.html:17348`), ceux des propositions commerciales, des toasts, des modales de confirmation, et des emails transactionnels.
+
+Le remplacement est déjà commencé et l'outil existe : `ELV_ICONS` (`index.html:6156`) est un jeu d'icônes Lucide en SVG, appelé par `icon(name, size)` (`index.html:6191`), documenté dans le code comme destiné à « remplacer progressivement les emoji et symboles Unicode ». Termine ce travail.
+
+- Chaque emoji est remplacé par un appel `icon()`. Complète `ELV_ICONS` avec les tracés manquants — reste sur Lucide (licence ISC), même style de tracé, `stroke-width: 2`, viewBox 24.
+- Traite aussi les glyphes typographiques utilisés comme icônes : `⬇️` (boutons de téléchargement), `🗑️`, `✕`, `✓`, `↻`, `▾`, `⚠`, `⏳`, `✉`, `✍`, `⊕`. Les flèches typographiques dans du texte courant (`→` dans une phrase) peuvent rester ; celles qui servent d'icône dans un bouton passent en SVG.
+- Les emojis des emails transactionnels (`api.php`, `👋` dans les rappels de tâche notamment) partent aussi : ce sont des messages envoyés à des clients.
+- Vérifie qu'aucun `aria-label` ni `title` ne perd son sens au passage : un bouton dont le contenu devient un SVG décoratif (`aria-hidden="true"`) doit porter un `aria-label` explicite.
+</emojis>
+
+<bouton_telechargement>
+Le bouton de téléchargement dans la liste des documents d'une fiche client est un caractère `↓` nu (`index.html:4007`, et deux variantes lignes 4541 et 4597, plus une occurrence dans la vue Documents ligne 4700). Refais-le proprement : icône `download` du jeu Lucide, zone cliquable d'au moins 32×32 px, fond discret, état survol et état focus visibles, `aria-label="Télécharger le document"`, et un état de chargement pendant le téléchargement (le fichier peut être décompressé à la volée, ce qui prend un instant). Harmonise les quatre occurrences sur un composant unique.
+</bouton_telechargement>
+
+<coherence>
+Profite du passage pour uniformiser ce que tu croises : mêmes rayons de bordure, mêmes hauteurs de bouton, mêmes espacements verticaux entre sections, même style d'état vide. Ne lance pas de refonte au-delà : tu touches ce que tu croises en remplaçant les icônes, pas plus.
+</coherence>
+
+</lot_5_visuel>
+
+%%9 · Lot 6 — Notifications%%
+<lot_6_notifications>
+
+<probleme>
+Les notifications sont une liste plate, filtrable uniquement par priorité (urgent / important / info / neutre). Le classement par priorité ne suffit pas : à cinquante notifications, on a cinquante lignes triées différemment ; à cinq cents, la page est inutilisable. Le problème n'est pas le tri, c'est qu'une notification par événement est le mauvais grain.
+
+Par ailleurs, la modale « voir tout » (`renderAllNotifsModal()`, `index.html:17846`) n'affiche qu'une partie de ce que montre le panneau latéral — voir la phase 0.
+</probleme>
+
+<principe>
+Une notification n'est pas un journal d'événements, c'est une file d'attente d'attention. Trois axes la rendent tenable dans la durée : le regroupement par objet, la catégorisation par nature, et une fin de vie automatique.
+</principe>
+
+<travail>
+1. **Regroupement par objet.** Le grain n'est plus l'événement mais l'objet concerné : un client, une facture, un projet, une tâche. Toutes les notifications rattachées au même objet forment un fil unique, replié par défaut, affichant la plus récente et un compteur (« Maximus · 4 »). Déplier montre le détail chronologique. Cinquante notifications sur cinq clients deviennent cinq lignes.
+
+2. **Catégories par nature**, en plus de la priorité (elles se croisent, elles ne se remplacent pas) :
+   - `Argent` — facture payée, impayé, virement à rapprocher, échéance fiscale, apport détecté ;
+   - `Production` — étape franchie, livraison en retard, projet sans mouvement depuis N jours, validation client en attente ;
+   - `Clients` — devis consulté, contrat signé, message reçu, document déposé par le client ;
+   - `Équipe` — tâche assignée, tâche en retard, tâche terminée ;
+   - `Système` — synchronisation Qonto, envoi d'email en échec, tâche planifiée non exécutée.
+   Chaque catégorie a son compteur dans l'en-tête du panneau et son filtre. La priorité reste, et c'est elle qui pilote la couleur et l'ordre à l'intérieur d'une catégorie.
+
+3. **Axe temporel.** Sections `Aujourd'hui`, `Cette semaine`, `Plus ancien`. Au-delà de 30 jours, une notification lue part dans une archive consultable, pas dans la liste principale.
+
+4. **Anti-doublon.** Chaque notification porte une clé métier `dedupe_key` (par exemple `facture_impayee:<id_facture>`). Une notification déjà présente avec la même clé est **mise à jour** (date, contenu, compteur d'occurrences), jamais dupliquée. C'est ce qui empêche l'accumulation à la source. Ajoute la colonne par migration, et l'index unique correspondant.
+
+5. **Actionnable ou informatif.** Une notification actionnable reste tant que la condition qui l'a produite est vraie, et disparaît d'elle-même quand elle est résolue — c'est déjà le comportement des signaux du moteur, généralise-le. Une notification informative se marque lue à l'ouverture du panneau et s'archive ensuite. Chaque notification actionnable porte le bouton de l'action correspondante : relancer, ouvrir la fiche, rapprocher le virement, marquer payé.
+
+6. **Réunifie les sources.** Le panneau et la modale « voir tout » doivent afficher exactement le même ensemble : notifications en base, notifications compta générées dynamiquement, et signaux du moteur. Une seule fonction construit la liste, les deux vues la rendent différemment.
+
+7. **Volume.** Ajoute « tout marquer comme lu » par catégorie et par fil, et une pagination ou un défilement infini sur l'archive. Vérifie que le panneau reste fluide à 500 notifications dans le harnais de test.
+</travail>
+
+</lot_6_notifications>
+
+%%10 · Lot 7 — Historique client%%
+<lot_7_historique>
+
+`loadHistory()` (`index.html:3974`) affiche les 30 dernières entrées de `client_history`, en liste continue, sans pagination ni regroupement. Sur un client suivi depuis plusieurs mois, c'est illisible, et tout ce qui dépasse la trentième ligne est inaccessible.
+
+- Regroupe par période, avec un sélecteur `Jour · Semaine · Mois`. En vue Jour : un en-tête par date (« Aujourd'hui », « Hier », puis la date), les événements dessous. En vue Semaine : un en-tête par semaine avec la plage de dates et le nombre d'événements. En vue Mois : un en-tête par mois, replié par défaut au-delà du mois courant.
+- Supprime le plafond de 30 en le remplaçant par un chargement progressif : les 50 dernières entrées, puis « charger plus » qui remonte dans le temps par tranches. Ne charge jamais tout d'un coup.
+- Ajoute un filtre par type d'événement, en réutilisant les types déjà journalisés par `logClientEvent()` et `logHist()` : étapes, documents, paiements, emails, notes. La liste des types se construit depuis les données présentes, pas depuis une énumération figée.
+- Chaque entrée affiche l'heure, l'auteur quand il est connu (`created_by`), et une icône de type. Les entrées système et les entrées humaines se distinguent visuellement.
+- Applique le même traitement à la timeline de la fiche client (`renderProfileTimeline()`, `index.html:6711`) si elle souffre du même défaut — vérifie avant.
+
+</lot_7_historique>
+
+%%11 · Lot 8 — Les suppressions%%
+<lot_8_suppressions>
+
+Ce sont les seules suppressions demandées dans tout ce document. Partout ailleurs, tu ajoutes ou tu corriges.
+
+1. **Export CSV clients sur la page Rapports.** Le bouton `index.html:781`, dans l'en-tête de la section « Rapports & exports ». Supprime le bouton uniquement. Le bouton CSV de la section Clients (`index.html:757`) reste, et la fonction `exportCSVDirect()` (`index.html:12745`) reste puisqu'elle le sert encore.
+
+2. **Tuile « CA potentiel » dans la sidebar.** `index.html:579`, l'élément `#sb-ca`, alimenté depuis `index.html:1912-1913` puis mis à jour lignes 2669 et 5859. Remplace-la par **« Reste à encaisser »** : total signé et facturé mais non payé, plus le signé pas encore facturé — le même chiffre que la tuile correspondante de la vue d'ensemble, calculé par la même fonction. « CA encaissé » (`#sb-ca-reel`) reste au-dessus et devient le chiffre principal, mis à jour en temps réel après chaque rapprochement bancaire et chaque passage de facture en payée.
+
+   Vérifie les trois points de mise à jour de `#sb-ca` avant de supprimer : ils doivent tous pointer vers le nouveau calcul, pas rester orphelins.
+
+3. **Les indicateurs de conversion et de clients perdus, partout où ils apparaissent.** Pas seulement sur la vue d'ensemble : aussi les colonnes « Taux conv. » et « Perdus » du tableau par source dans Rapports & statistiques (`renderStats()`, `index.html:13847`), et tout indicateur équivalent que tu croiserais ailleurs.
+
+   La raison, pour que tu appliques la règle et pas seulement la lettre : Elevora ne fait pas d'acquisition de masse. Un taux de conversion a du sens quand on mesure un tunnel à fort volume ; sur une agence qui traite quelques dizaines de dossiers par an, il ne mesure qu'une chose déjà connue — que beaucoup de rendez-vous n'aboutissent pas — et il ne déclenche aucune décision. Il occupe donc de la place au détriment de chiffres qui, eux, pilotent quelque chose.
+
+   Ce qui reste dans Rapports : le nombre de clients par source, les livrés, les en cours, le CA généré, le budget moyen. La colonne « Perdus » disparaît, la colonne « Taux conv. » disparaît, et la barre de progression qui l'accompagne avec.
+
+4. **Emojis** — traité au lot 5.
+
+5. **Le sélecteur de modèle IA** — traité au lot 10.
+
+</lot_8_suppressions>
+
+%%12 · Lot 9 — Moteur de signaux%%
+<lot_9_signaux>
+
+<constat_a_verifier>
+Le bloc « Et maintenant ? » de la vue d'ensemble affiche « Rien d'urgent » depuis deux mois, ce qui n'est pas crédible. Ce bloc n'est pas une IA, contrairement à ce qu'on pourrait croire : `renderEtMaintenant()` (`index.html:6505`) affiche le résultat de `computeSignals()` (`index.html:6392`), un moteur de règles déterministe en JavaScript — le commentaire du code le dit explicitement : « Toutes les règles sont en code, avec seuils réglables — l'IA ne décide jamais de l'urgence ». Aucun appel à l'API Anthropic n'intervient ici.
+
+Commence donc par déterminer *pourquoi* il ne renvoie rien : le moteur trouve-t-il réellement zéro signal, ou échoue-t-il en silence ? `fetchSignalsData()` (`index.html:6358`) charge quatre sources en parallèle et rattrape chaque erreur en renvoyant un tableau vide. Si les documents, échéances, tâches ou événements ne remontent pas — droits RLS, table absente, requête en erreur — le moteur reçoit du vide et conclut légitimement qu'il n'y a rien à faire. Vérifie les quatre sources une par une, dans le harnais de test, avec un jeu de données qui *devrait* déclencher chaque règle.
+</constat_a_verifier>
+
+<huit_regles_actuelles>
+Le moteur couvre aujourd'hui : devis sans réponse, contrat non signé, facture impayée, encaissement prévu, échéance en retard, tâche en retard, rapport de période à générer, maintenance à proposer après livraison, prospect « Nouveau » depuis 7 jours. Les seuils sont réglables dans Mon profil (`SIGNAL_DEFAULTS`, `index.html:6327`).
+</huit_regles_actuelles>
+
+<regles_a_ajouter>
+Ces règles manquent et couvrent des situations qui arrivent réellement :
+- projet actif dont la date de livraison estimée (`estim`) est dépassée, avec le nombre de jours de retard ;
+- projet actif sans aucun mouvement depuis N jours (ni étape franchie, ni document, ni événement) — le projet qui s'endort ;
+- projet livré sans facture de solde émise ;
+- facture partiellement payée dont le solde traîne (dépend du lot 2) ;
+- virement non rapproché depuis plus de 7 jours (dépend du lot 2) ;
+- échéance fiscale à moins de 30 jours dont le montant n'est pas provisionné ;
+- récurrence attendue non arrivée (dépend du lot 2) ;
+- client livré sans cas client enregistré dans la bibliothèque — une référence commerciale qu'on perd.
+
+Chaque nouvelle règle suit la structure existante : `key` stable pour le report « rappelle-moi dans 3 jours », `severity` 1 à 3, `icon`, `clientId`, `label`, `sub`, et une `action` exploitable en un clic.
+</regles_a_ajouter>
+
+<sante_du_moteur>
+Ajoute un indicateur de santé : si l'une des quatre sources de `fetchSignalsData()` a échoué, le bloc doit le dire (« 1 source indisponible — les alertes peuvent être incomplètes ») au lieu d'afficher « Rien d'urgent ». Un moteur d'alerte qui ne sait pas signaler sa propre panne est pire qu'inutile : il rassure à tort.
+</sante_du_moteur>
+
+</lot_9_signaux>
+
+%%13 · Lot 10 — Politique de modèle IA%%
+<lot_10_modeles>
+
+<decision>
+Décision prise par Elevora, à appliquer : **toutes les générations IA du CRM tournent sur Claude Haiku 4.5, et le choix du modèle disparaît de l'interface.**
+
+Le raisonnement est solide et vérifiable dans le code : les rulebooks de `getRulebook()` (`api.php:817`) sont extrêmement contraints — schéma JSON de sortie imposé clé par clé, grille de prix fournie en référence, règles de TVA par pays énumérées, longueurs de champs bornées, interdiction explicite d'inventer des lignes. Ce ne sont pas des tâches de raisonnement ouvert, ce sont des tâches de remplissage structuré à partir de faits injectés. Un petit modèle y est bon, et c'est déjà ce qui est utilisé en pratique.
+</decision>
+
+<travail>
+1. **Supprime le sélecteur de modèle de l'interface** : `_AI_MODELS` et le menu associé (`index.html:1684-1790`), la préférence `localStorage.elevora_ai_model`, et le paramètre `model` envoyé par chaque appel (`proposition_generate`, `devis_generate`, `contrat_generate`, `rapport_generate`, `ai_refine`, `rdv_brief_generate`, `notif_angle_generate`, `proposition_refine`). Plus aucune décision de modèle côté utilisateur.
+
+2. **Fais de Haiku le défaut dur côté serveur.** Dans `resolveAnthropicModel()` (`api.php:1167`) et dans chaque action de génération, la valeur de repli devient `claude-haiku-4-5`. Attention : le code utilise aujourd'hui `claude-haiku-4-5-20251001` — l'identifiant à jour est `claude-haiku-4-5`, **sans suffixe de date**. Corrige-le partout. Les autres valeurs de repli pointent vers `claude-sonnet-4-6` : remplace-les toutes.
+
+3. **Garde une soupape côté configuration, pas côté interface.** Les clés `$CONFIG['anthropic_model_contrat']`, `anthropic_model_devis`, `anthropic_model_proposition` et `anthropic_model_rapport` existent déjà dans `elevora-secrets.php` et sont lues avant le repli. Conserve exactement ce mécanisme : Célia n'a jamais à choisir, mais si la qualité d'une action précise décevait, une seule ligne dans le fichier de secrets suffit à basculer cette action-là sur un modèle plus capable. Documente ces quatre clés dans le README avec les identifiants valides (`claude-haiku-4-5`, `claude-sonnet-5`, `claude-opus-5`).
+
+4. **C'est la condition qui rend l'ensemble sûr — traite-la comme telle.** Le code extrait aujourd'hui le JSON des réponses IA à la main : `strpos($text, '{')` / `strrpos($text, '}')` puis `json_decode` (voir `contrat_generate`, `api.php:5186-5190`, et le même motif dans les cinq autres générations). C'est fragile avec n'importe quel modèle, et c'est le principal risque quand on descend en gamme. Remplace-le par les **sorties structurées** de l'API : déclare un schéma JSON par type de document dans `output_config.format`, et l'API garantit une réponse conforme. Un schéma par document : proposition, devis, contrat, rapport, brief de rendez-vous, angle de notification.
+
+   C'est le vrai levier. Un petit modèle contraint par un schéma est plus fiable qu'un grand modèle dont on parse la sortie à la pince. Fais ce point **avant** de basculer les modèles, pas après : il doit être en place quand la bascule a lieu.
+
+5. **Surveille le plafond de contexte.** Haiku 4.5 a une fenêtre de 200 000 tokens, contre 1 million pour les modèles supérieurs. Deux actions grossissent avec la base clients : `rapport_generate` (`api.php:5331`) et `buildClientContext()`. À l'échelle actuelle d'Elevora, aucun risque. Ajoute quand même un garde-fou : compte les tokens du contexte avant l'appel (`/v1/messages/count_tokens`), et si le contexte dépasse 150 000 tokens, agrège ou tronque proprement en le signalant dans la réponse — plutôt que de laisser l'API refuser la requête sans explication utilisable.
+
+6. **Rends la bascule vérifiable.** Journalise pour chaque appel IA : action, modèle réellement utilisé, tokens d'entrée et de sortie, durée, et succès ou échec du parsing. Une petite table `ai_log` suffit. Sans cette trace, personne ne saura si une baisse de qualité vient du modèle, du prompt ou des données.
+</travail>
+
+<a_ne_pas_faire>
+Ne renforce pas les rulebooks « pour compenser un modèle plus petit ». Ils sont déjà denses et bien écrits ; les alourdir dégraderait le résultat au lieu de l'améliorer. Si une génération déçoit après la bascule, l'ordre de traitement est : d'abord le schéma de sortie structurée, ensuite les faits injectés dans le contexte, et seulement en dernier recours le modèle de cette action précise via la configuration.
+</a_ne_pas_faire>
+
+</lot_10_modeles>
+
+%%14 · Hors périmètre%%
+<hors_scope>
+Ne fais pas ces choses, même si elles te paraissent souhaitables :
+
+- Aucune migration de stack. Pas de Next.js, pas de React, pas de bundler, pas de TypeScript, pas de découpage d'`index.html` en modules ES. Le fichier unique est un choix assumé de déploiement (FTP sur Infomaniak, pas de build).
+- Aucune refonte de la charte graphique. Les variables CSS existantes (`--accent`, `--bg2`, `--text3`, …), la palette et les deux thèmes clair/sombre restent tels quels.
+- Aucune modification des sections Clients, Pipeline, Tâches, ni du fond des Rapports & statistiques : elles fonctionnent et conviennent. Tu y corriges les bugs relevés en phase 0, tu y remplaces les emojis au lot 5, tu n'y changes rien d'autre.
+- Aucune modification de l'espace client (`client.html`) au-delà des corrections de bugs et du remplacement des emojis.
+- Aucune suppression de table, de colonne ou de donnée. Aucune migration destructive.
+- Aucun envoi d'email réel pendant tes tests. Le protocole existe déjà : tant qu'une automatisation n'est pas activée, tout part vers l'adresse de test préfixé `[TEST]` (voir `migration-phase12-14-automations.sql` et `automation_test_run`, `api.php:1998`). Respecte-le.
+- Aucun appel réel à l'API Qonto en écriture, et aucune manipulation du compte bancaire.
+</hors_scope>
+
+%%15 · Ce qui définit « terminé »%%
+<definition_of_done>
+Le travail est terminé quand tous les points suivants sont vrais.
+
+Phase 0 :
+- `AUDIT.md` liste tous les constats avec fichier, ligne, gravité et statut.
+- Tous les P0 et P1 sont corrigés, ou explicitement documentés comme bloqués avec la raison.
+- Le décompte final m'est donné : constats par gravité, corrections par gravité, restant ouvert.
+
+Schéma et tâches planifiées :
+- `schema-complet.sql` existe, est idempotent, se rejoue sans erreur, et couvre toutes les tables dont le code a besoin.
+- `CRONS.md` existe et donne quatre commandes prêtes à coller.
+
+Vue d'ensemble :
+- Les cinq nouvelles tuiles affichent des chiffres justes sur le jeu de données de test, vérifiables à la main.
+- `rg -i "conversion|perdus"` ne renvoie plus rien sur la vue d'ensemble ni sur Rapports & statistiques.
+- Les deux camemberts ont disparu, et la page comporte au moins une courbe d'évolution lisible.
+- La grille bento tient en 1440 px, 1024 px et 375 px sans chevauchement ni débordement horizontal.
+
+Comptabilité :
+- Une synchronisation Qonto sur le jeu de test insère les mouvements, les affiche dans « Mouvements », et le compteur « récupérées / insérées / ignorées » est cohérent.
+- Une transaction dont la catégorie est corrigée à la main, avec « appliquer aux suivantes », est bien recatégorisée automatiquement lors de l'import suivant du même libellé.
+- Un apport d'associé n'apparaît ni dans le CA encaissé, ni dans la TVA collectée, ni dans « à matcher ».
+- Une facture réglée en trois versements passe par « partiellement payée » puis « payée », et un quatrième virement du même client s'impute sur la facture suivante.
+- Une dépense passée à 0 % de TVA fait baisser la TVA déductible du montant attendu.
+- Le détecteur de récurrences reconnaît un abonnement mensuel présent trois fois dans le jeu de test et signale une occurrence manquante.
+
+Équipe :
+- La création, la modification et la suppression d'un compte fonctionnent, et les trois garde-fous existants tiennent.
+- Chaque cas d'échec affiche un message en français qui dit quoi faire.
+
+Étapes de paiement :
+- Un contrat à trois versements génère trois étapes de paiement intercalées dans la liste unique des étapes.
+- Un projet sans contrat garde exactement les six étapes actuelles et son avancement.
+- Un projet existant ne perd pas son `stages_state`.
+
+Visuel :
+- `rg` ne trouve plus aucun emoji dans `index.html`, `client.html` et `api.php`.
+- Le bouton de téléchargement est identique aux quatre endroits et accessible au clavier.
+
+Notifications :
+- Cinquante notifications sur cinq clients s'affichent en cinq fils repliés.
+- Le panneau et la modale « voir tout » affichent le même ensemble.
+- Deux occurrences du même événement produisent une notification mise à jour, pas deux lignes.
+
+Historique :
+- Le regroupement Jour / Semaine / Mois fonctionne et le chargement progressif remonte au-delà de 30 entrées.
+
+Signaux :
+- Le jeu de test déclenche au moins une fois chacune des règles, anciennes et nouvelles.
+- Une source de données en panne produit un avertissement, jamais « Rien d'urgent ».
+
+Modèle IA :
+- Aucun choix de modèle n'est possible depuis l'interface.
+- Toutes les générations tournent sur `claude-haiku-4-5`, et plus aucune occurrence de `claude-sonnet-4-6` ni de `claude-haiku-4-5-20251001` ne subsiste.
+- Chaque génération déclare un schéma de sortie structuré ; le parsing manuel du JSON par `strpos`/`strrpos` a disparu.
+- Une génération de devis, de contrat et de rapport produit un JSON conforme au schéma sur le jeu de test.
+
+Général :
+- Un commit par changement logique, historique lisible.
+- Toute migration SQL est écrite, idempotente, et listée dans `PROGRESS.md` avec l'ordre d'exécution.
+- Le harnais de test et les fichiers temporaires sont supprimés ou isolés hors du dossier déployé.
+- `PROGRESS.md` est à jour.
+</definition_of_done>
+
+%%16 · Questions à me poser%%
+<questions>
+
+<ce_que_tu_as_deja>
+Pour t'éviter de les redemander, voici ce qui est déjà tranché ou fourni :
+- **Le message d'erreur de la création de compte** : il est reproduit au lot 3, avec son contexte de reproduction.
+- **L'export du schéma Supabase** : fourni avec ce brief, mais tronqué à 99 lignes par la console SQL. Redemande-le si tu as besoin du complet, en me donnant la requête et la méthode d'export exactes.
+- **Les tâches planifiées Infomaniak** : aucune n'existe. C'est confirmé, ne perds pas de temps à chercher.
+- **Les IBAN des trois associés** : ils seront saisis dans l'interface une fois l'écran « Comptes des associés » en place. Les libellés et BIC nécessaires à la règle de détection sont au lot 2.3.
+- **Le choix du modèle IA** : tranché, voir le lot 10. N'ouvre pas ce débat.
+- **La forme exacte des réponses de l'API Qonto** : à traiter en direct, au moment du lot 2. Demande-la-moi précisément à ce moment-là.
+</ce_que_tu_as_deja>
+
+Regroupe tes autres questions plutôt que de me les poser au fil de l'eau, et ne bloque jamais un lot entier sur une question : traite d'abord tout ce qui n'en dépend pas.
+
+Pose-les à ces trois moments :
+1. à la fin de la phase 0, avec le rapport d'audit ;
+2. à la fin du lot 2, qui est celui où il te manquera le plus d'informations métier (structure exacte des tables comptables, format réel des libellés Qonto, taux applicables aux cas particuliers) ;
+3. à la fin de l'ensemble, pour ce qui reste ouvert.
+
+Si tu as besoin d'une donnée réelle que je suis le seul à avoir — un extrait de réponse de l'API Qonto, le message d'erreur exact d'un écran, le schéma d'une table Supabase — demande-la précisément : dis-moi quoi ouvrir, où, et ce que je dois te copier.
+</questions>
+
+%%17 · Premier pas%%
+<demarrage>
+Commence maintenant par la phase 0. Ne modifie aucun fichier avant d'avoir produit la carte du CRM et les quatre inventaires statiques dans `AUDIT.md`.
+</demarrage>
+</script>
+
+<script>
+(function(){
+  var raw = document.getElementById('src').textContent;
+  var parts = raw.split(/^%%(.+?)%%$/m);
+  var out = document.getElementById('render');
+  var toc = document.getElementById('toc');
+  var html = '';
+  var i;
+  for(i = 1; i < parts.length; i += 2){
+    var title = parts[i].trim();
+    var body = parts[i+1].replace(/^\n+/, '').replace(/\n+$/, '');
+    var idx = title.indexOf('·');
+    var num = idx > -1 ? title.slice(0, idx).trim() : String((i+1)/2);
+    var lbl = idx > -1 ? title.slice(idx+1).trim() : title;
+    var anchor = 's' + num.replace(/\W+/g,'');
+    html += '<section class="sec" id="' + anchor + '">'
+          + '<div class="sec-head"><span class="sec-num">' + esc(num) + '</span>'
+          + '<h2 class="sec-title">' + esc(lbl) + '</h2></div>'
+          + '<pre class="block" data-part="' + num + '">' + esc(body) + '</pre></section>';
+    toc.innerHTML += '<li><a href="#' + anchor + '">' + esc(lbl) + '</a></li>';
+  }
+  out.innerHTML = html;
+
+  function esc(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function collect(filter){
+    var blocks = document.querySelectorAll('pre.block');
+    var arr = [];
+    for(var k = 0; k < blocks.length; k++){
+      var p = blocks[k].getAttribute('data-part');
+      if(filter && filter.indexOf(p) === -1) continue;
+      arr.push(blocks[k].textContent);
+    }
+    return arr.join('\n\n');
+  }
+
+  function put(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(flash, fallback);
+    } else fallback();
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); flash(); } catch(e){}
+      document.body.removeChild(ta);
+    }
+  }
+  function flash(){
+    var t = document.getElementById('toast');
+    t.classList.add('on');
+    setTimeout(function(){ t.classList.remove('on'); }, 1700);
+  }
+
+  window.copyAll = function(){ put(collect(null)); };
+  window.copyOne = function(){ put(collect(['0','1','2','3'])); };
+})();
+</script>

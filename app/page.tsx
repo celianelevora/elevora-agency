@@ -45,7 +45,7 @@ export default function HomePage() {
           {
             question: 'Combien coûte un site avec Elevora ?',
             answer:
-              "Nos sites démarrent à 600 € TTC pour une landing page, 750 € TTC pour un site vitrine et 2 000 € TTC pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
+              "Nos sites démarrent à 500 € HT pour une landing page, 625 € HT pour un site vitrine et 1 700 € HT pour une boutique en ligne. Les applications et outils de gestion sur mesure font l'objet d'un devis. Le tarif final dépend du périmètre — on le cadre ensemble, sans coût caché.",
           },
           {
             question: 'Proposez-vous un paiement en plusieurs fois ?',

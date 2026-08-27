@@ -105,7 +105,7 @@ export default function LandingClient() {
         lead="Idéale pour une campagne, un lancement, un événement. Chaque élément est pensé pour transformer le visiteur en lead, puis en client."
         primary={{ label: 'Créer ma landing page', href: '/contact' }}
         secondary={{ label: 'Voir nos réalisations', href: '/realisations' }}
-        tags={['Copywriting', 'A/B test', 'À partir de 600 € TTC']}
+        tags={['Copywriting', 'A/B test', 'À partir de 500 € HT']}
       />
 
       {/* 2 — LE PRINCIPE (img-2 blush) — manifeste centré */}
@@ -174,9 +174,9 @@ export default function LandingClient() {
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>À partir de</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>600</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>500</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein)', marginBottom: '0.08em' }}>€</span>
-                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>TTC</span>
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>HT</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'var(--line-strong)' }} aria-hidden />

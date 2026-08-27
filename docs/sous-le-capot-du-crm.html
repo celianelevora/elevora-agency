@@ -1,0 +1,510 @@
+<title>Sous le capot du CRM</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&f[]=jetbrains-mono@400,500&display=swap">
+<style>
+  :root{
+    --bg:#0b0b0f; --bg2:#131319; --bg3:#1a1a22; --bg4:#22222c;
+    --line:#26262f; --line2:#33333f;
+    --ink:#eceaf2; --ink2:#a5a2b5; --ink3:#6f6c80;
+    --blue:#4d8fd6; --blue-dim:rgba(77,143,214,.12);
+    --rose:#d94a86; --rose-dim:rgba(217,74,134,.12);
+    --green:#3ed19a; --green-dim:rgba(62,209,154,.11);
+    --amber:#e8b04b; --amber-dim:rgba(232,176,75,.11);
+    --red:#f0685f; --red-dim:rgba(240,104,95,.11);
+    --font:'Satoshi',ui-sans-serif,system-ui,sans-serif;
+    --display:'Clash Display','Satoshi',ui-sans-serif,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--ink);font-family:var(--font);
+    margin:0;padding:0 1.25rem 6rem;line-height:1.65;font-size:15.5px;
+    -webkit-font-smoothing:antialiased
+  }
+  .wrap{max-width:920px;margin:0 auto}
+
+  header{padding:4rem 0 2rem;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);margin-bottom:1rem}
+  h1{font-family:var(--display);font-size:clamp(2.1rem,5.5vw,3.3rem);font-weight:600;line-height:1.05;letter-spacing:-.025em;margin:0 0 .9rem}
+  .lede{font-size:1.02rem;color:var(--ink2);max-width:62ch;margin:0}
+
+  h2{
+    font-family:var(--display);font-size:1.5rem;font-weight:600;letter-spacing:-.02em;
+    margin:3.4rem 0 .3rem;scroll-margin-top:1rem
+  }
+  h2 .n{font-family:var(--mono);font-size:.62em;color:var(--blue);margin-right:.6rem;font-weight:400}
+  .sub{color:var(--ink3);font-size:14px;margin:0 0 1.4rem}
+  h3{font-family:var(--display);font-size:1.08rem;font-weight:600;margin:2rem 0 .5rem;letter-spacing:-.01em}
+  p{margin:0 0 1rem}
+  strong{color:#fff;font-weight:700}
+  em{color:var(--ink);font-style:italic}
+  ul,ol{padding-left:1.25rem;margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  code{font-family:var(--mono);font-size:.86em;background:var(--bg4);padding:.13em .42em;border-radius:4px;color:#c9d8ea}
+  a{color:var(--blue)}
+
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:1.3rem 1.5rem;margin:1.2rem 0}
+  .card.green{border-left:3px solid var(--green)}
+  .card.amber{border-left:3px solid var(--amber)}
+  .card.red{border-left:3px solid var(--red)}
+  .card.blue{border-left:3px solid var(--blue)}
+  .card h3{margin-top:0}
+  .card > :last-child{margin-bottom:0}
+
+  .verdict{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.6rem 0}
+  @media(max-width:700px){.verdict{grid-template-columns:1fr}}
+  .verdict .card{margin:0}
+  .big{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1;letter-spacing:-.03em;margin-bottom:.35rem}
+  .big.g{color:var(--green)} .big.b{color:var(--blue)}
+
+  table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:14px}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th{
+    text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--ink3);font-weight:500;
+    padding:.55rem .7rem;border-bottom:1px solid var(--line2);white-space:nowrap
+  }
+  td{padding:.7rem;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+  td:first-child{color:var(--ink);font-weight:500;min-width:190px}
+  tr:last-child td{border-bottom:none}
+  .tag{
+    display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:500;
+    padding:.2rem .5rem;border-radius:5px;white-space:nowrap
+  }
+  .tag.code{background:var(--green-dim);color:var(--green)}
+  .tag.ia{background:var(--rose-dim);color:var(--rose)}
+  .tag.mix{background:var(--blue-dim);color:var(--blue)}
+  .tag.no{background:var(--bg4);color:var(--ink3)}
+
+  .chain{margin:1.4rem 0;font-family:var(--mono);font-size:12.5px;line-height:2.1}
+  .chain .step{
+    display:inline-block;padding:.28rem .6rem;border-radius:6px;
+    background:var(--bg3);border:1px solid var(--line2);color:var(--ink2)
+  }
+  .chain .step.broken{background:var(--red-dim);border-color:rgba(240,104,95,.4);color:#ff9b94}
+  .chain .arr{color:var(--ink3);margin:0 .35rem}
+
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:.3rem 1.1rem;font-size:14px;margin:.8rem 0 0}
+  .kv dt{font-family:var(--mono);font-size:11.5px;color:var(--ink3);padding-top:.22rem;white-space:nowrap}
+  .kv dd{margin:0;color:var(--ink2)}
+
+  nav.toc{margin:2.4rem 0 0;padding:1.2rem 1.4rem;background:var(--bg2);border:1px solid var(--line);border-radius:12px}
+  nav.toc h3{margin:0 0 .7rem;font-size:.95rem}
+  nav.toc ol{margin:0;padding-left:1.3rem;columns:2;column-gap:2rem;font-size:14px}
+  nav.toc li{margin-bottom:.28rem;break-inside:avoid}
+  nav.toc a{color:var(--ink2);text-decoration:none}
+  nav.toc a:hover{color:var(--blue)}
+  @media(max-width:640px){nav.toc ol{columns:1}}
+
+  footer{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Elevora Agency · note d'analyse</div>
+  <h1>Sous le capot du CRM</h1>
+  <p class="lede">Réponses à tes questions, après lecture du code déployé&nbsp;: à quoi servent les modules que tu ne reconnais plus, pourquoi la comptabilité est vide, et ce qui relève du code plutôt que de l'API Claude.</p>
+</header>
+
+<nav class="toc">
+  <h3>Sommaire</h3>
+  <ol>
+    <li><a href="#s1">La réponse courte</a></li>
+    <li><a href="#s2">Fonctionnalité par fonctionnalité</a></li>
+    <li><a href="#s3">Les trois modules oubliés</a></li>
+    <li><a href="#s4">« Et maintenant ? » n'est pas une IA</a></li>
+    <li><a href="#s5">Pourquoi la compta est vide</a></li>
+    <li><a href="#s6">L'erreur « Erreur réseau » décodée</a></li>
+    <li><a href="#s7">Ce que je propose pour la vue d'ensemble</a></li>
+    <li><a href="#s8">Ce que je propose pour les notifications</a></li>
+    <li><a href="#s9">Tout faire tourner sur Haiku</a></li>
+    <li><a href="#s10">Ce que Claude Code va te demander</a></li>
+  </ol>
+</nav>
+
+<h2 id="s1"><span class="n">01</span>La réponse courte</h2>
+<p class="sub">Tu m'as demandé si le CRM peut tout faire seul, ou s'il faut forcément l'API de Claude.</p>
+
+<div class="verdict">
+  <div class="card green">
+    <div class="big g">~90 %</div>
+    <p style="margin:0;font-size:14.5px"><strong>Du code, pas de l'IA.</strong> Catégoriser un virement, reconnaître un abonnement mensuel, rapprocher un paiement d'une facture, calculer la TVA, générer les étapes de paiement depuis un contrat, déclencher une alerte&nbsp;: tout ça, ce sont des règles. Déterministes, gratuites, instantanées, vérifiables.</p>
+  </div>
+  <div class="card">
+    <div class="big b">~10 %</div>
+    <p style="margin:0;font-size:14.5px"><strong>De l'IA, vraiment.</strong> Lire un contrat PDF signé hors CRM, rédiger un rapport mensuel en français, écrire une relance sur mesure, proposer une catégorie pour un libellé jamais vu. Là où il faut comprendre du texte libre ou en produire.</p>
+  </div>
+</div>
+
+<div class="card blue">
+  <h3>La règle de partage</h3>
+  <p><strong>Le code décide, l'IA rédige.</strong> Aucun chiffre affiché dans le CRM ne doit sortir d'un appel à l'API&nbsp;: un montant de TVA, un rapprochement bancaire, un CA encaissé doivent être reproductibles à l'euro près, deux fois de suite, et explicables ligne par ligne. Une IA est excellente pour transformer ces chiffres en phrases — elle n'a rien à faire dans leur calcul.</p>
+  <p style="margin-bottom:0">Corollaire pratique&nbsp;: quand une automatisation te paraît « intelligente », commence par te demander si une règle suffirait. Neuf fois sur dix, oui — et cette règle-là ne coûte rien, ne tombe jamais en panne d'API, et ne se trompe pas différemment d'un mois sur l'autre.</p>
+</div>
+
+<h2 id="s2"><span class="n">02</span>Fonctionnalité par fonctionnalité</h2>
+<p class="sub">Tout ce que tu as demandé, classé par ce qui le fait tourner.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Ce que tu demandes</th><th>Moteur</th><th>Pourquoi</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Catégoriser les dépenses Qonto</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Le CRM le fait déjà (<code>categorizeTx</code>, ~140 mots-clés). Ce qui manque n'est pas de l'intelligence, c'est une mémoire&nbsp;: une table de règles apprises quand tu corriges une catégorie à la main.</td>
+    </tr>
+    <tr>
+      <td>Se souvenir d'un virement catégorisé le mois dernier</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Comparaison de libellé normalisé. Une ligne en base, un index. Aucune raison d'appeler un modèle pour reconnaître une chaîne de caractères qu'on a déjà vue.</td>
+    </tr>
+    <tr>
+      <td>Identifier les apports des associés (les 50 € × 3)</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Trois IBAN émetteurs connus, un drapeau <code>exclude_from_ca</code>. Il faut juste que ce drapeau existe et soit respecté partout où on calcule du CA.</td>
+    </tr>
+    <tr>
+      <td>Rattacher un virement à la bonne facture</td>
+      <td><span class="tag code">Code</span></td>
+      <td>IBAN du client, puis montant, puis ordre chronologique des factures ouvertes. Le CRM le fait déjà mais exige que le nom du client apparaisse dans le libellé — ce qui n'arrive quasiment jamais sur un vrai virement.</td>
+    </tr>
+    <tr>
+      <td>Savoir que c'est la facture n° 2 parce que la n° 1 est réglée</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Un tri par date d'émission sur les factures non soldées du client. Aucune ambiguïté à lever.</td>
+    </tr>
+    <tr>
+      <td>Détecter une récurrence (abonnement, charge mensuelle)</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Détection de motif&nbsp;: même contrepartie, montant stable à 5 % près, intervalle régulier, trois occurrences. Un algorithme de vingt lignes, et il ne se trompe pas.</td>
+    </tr>
+    <tr>
+      <td>Calculer TVA collectée et TVA déductible</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Somme. Ce qui manque, c'est un taux par transaction au lieu des 20 % forfaitaires appliqués aujourd'hui à toutes les dépenses — et la possibilité de le corriger à la main (le cas Robin, client belge).</td>
+    </tr>
+    <tr>
+      <td>Étapes de paiement générées depuis le contrat</td>
+      <td><span class="tag code">Code</span></td>
+      <td>C'est le point que je veux souligner&nbsp;: <strong>le contrat est généré par le CRM</strong>, et l'échéancier existe déjà en clair dans le formulaire (champs acompte / 2ᵉ versement / solde). Il n'y a rien à « lire », juste à transmettre au suivi de projet.</td>
+    </tr>
+    <tr>
+      <td>Lire un contrat PDF signé hors CRM</td>
+      <td><span class="tag ia">API Claude</span></td>
+      <td>Là, oui&nbsp;: texte libre, formulations variables, aucune structure garantie. Avec validation humaine avant de créer quoi que ce soit.</td>
+    </tr>
+    <tr>
+      <td>Alertes « Et maintenant ? »</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Déjà un moteur de règles. Voir la section 4 — ce n'est pas une IA, et ça n'a pas besoin de l'être.</td>
+    </tr>
+    <tr>
+      <td>Regrouper et catégoriser les notifications</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Regroupement par objet, clé d'unicité, archivage automatique. De la structure de données.</td>
+    </tr>
+    <tr>
+      <td>Nouvelles statistiques de la vue d'ensemble</td>
+      <td><span class="tag code">Code</span></td>
+      <td>Agrégations sur des données déjà en base.</td>
+    </tr>
+    <tr>
+      <td>Rapport mensuel rédigé</td>
+      <td><span class="tag ia">API Claude</span></td>
+      <td>Déjà branché (<code>rapport_generate</code>). Les chiffres sont calculés par le code et injectés tels quels&nbsp;; l'IA ne fait que les mettre en récit. C'est exactement le bon partage.</td>
+    </tr>
+    <tr>
+      <td>Devis, contrats, propositions</td>
+      <td><span class="tag ia">API Claude</span></td>
+      <td>Déjà branché. Rédaction de texte commercial&nbsp;: c'est son terrain.</td>
+    </tr>
+    <tr>
+      <td>Relances clients</td>
+      <td><span class="tag mix">Mixte</span></td>
+      <td>Le déclenchement est une règle (J+3, J+8, J+15). Le texte peut être un gabarit fixe — ils existent déjà et sont bons — ou une rédaction sur mesure quand le contexte le mérite.</td>
+    </tr>
+    <tr>
+      <td>Proposer une catégorie pour un libellé jamais vu</td>
+      <td><span class="tag mix">Mixte</span></td>
+      <td>Le seul endroit où l'IA apporte vraiment quelque chose en compta&nbsp;: une <em>suggestion</em> sur les libellés que les règles ne reconnaissent pas, que tu valides d'un clic — et qui devient alors une règle. Optionnel, et pour quelques centimes par mois.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="s3"><span class="n">03</span>Les trois modules oubliés</h2>
+<p class="sub">Ce que font Cas clients, Dette technique, Automatisations — et le Registre n°.</p>
+
+<div class="card">
+  <h3>Cas clients</h3>
+  <p><strong>Une bibliothèque de réalisations à montrer en rendez-vous.</strong> Chaque entrée porte le nom du projet, le client, le lien vers le site livré, le secteur d'activité, les fonctionnalités clés (réservation, paiement, multilingue…), deux ou trois phrases de contexte à raconter, et une ou deux captures d'écran. On filtre par secteur et par fonctionnalité, et on ouvre en mode présentation plein écran.</p>
+  <p>L'usage prévu&nbsp;: en rendez-vous avec un ostéopathe, tu filtres sur « santé », tu sors les deux sites du secteur, tu les montres. C'est un argumentaire commercial rangé, pas un outil de gestion.</p>
+  <dl class="kv">
+    <dt>Table</dt><dd><code>case_studies</code> — <code>migration-phase10-cas-clients.sql</code></dd>
+    <dt>Statut</dt><dd>Le code est complet. Si l'écran est vide, c'est soit que la table n'a jamais été créée dans Supabase, soit qu'aucune réalisation n'a été saisie. Le message d'erreur du CRM distingue les deux cas.</dd>
+    <dt>Verdict</dt><dd>À garder. C'est cinq minutes de saisie par projet livré, et ça se paie au premier rendez-vous.</dd>
+  </dl>
+</div>
+
+<div class="card">
+  <h3>Dette technique</h3>
+  <p><strong>Un radar de vieillissement sur les sites que vous avez livrés.</strong> Pour chaque site&nbsp;: le framework et sa version, la dernière version stable disponible, le nombre de vulnérabilités connues par niveau de gravité (critique, élevée, modérée, faible), un statut (à jour / à surveiller / à mettre à jour), et la date du dernier scan.</p>
+  <p>Le point à comprendre&nbsp;: <strong>le CRM ne scanne rien lui-même.</strong> Il est hébergé sur Infomaniak et n'a aucun accès aux dépôts de code des sites livrés. Le scan tourne ailleurs — c'est le rôle de <code>dette-scan.js</code>, un script à lancer depuis un poste qui a accès aux projets — et il pousse ses résultats dans la base. Le CRM ne fait qu'afficher, en indiquant toujours la date du dernier scan pour ne jamais faire croire qu'une information est fraîche.</p>
+  <dl class="kv">
+    <dt>Table</dt><dd><code>dette_technique</code> — <code>migration-phase11-dette-technique.sql</code></dd>
+    <dt>Statut</dt><dd>Vide tant que le script n'a jamais été lancé. C'est le comportement normal, pas une panne.</dd>
+    <dt>Verdict</dt><dd>Utile le jour où vous avez dix sites en maintenance. À trois ou quatre, une relance manuelle par trimestre suffit — mais le lancer coûte une commande, autant le faire.</dd>
+  </dl>
+</div>
+
+<div class="card">
+  <h3>Automatisations</h3>
+  <p><strong>Le tableau de bord des quatre emails automatiques du CRM</strong>, avec un interrupteur par email et un journal des envois.</p>
+  <ul>
+    <li><strong>Bilan de livraison</strong> — envoyé à la main depuis la fiche d'un projet livré.</li>
+    <li><strong>Renouvellement J-30</strong> — email amical trente jours avant la date anniversaire d'un abonnement.</li>
+    <li><strong>Relance impayé J+3</strong> — rappel cordial trois jours après l'échéance d'une facture.</li>
+    <li><strong>Relance impayé J+8</strong> — relance ferme&nbsp;: montant, moyen de paiement, rappel des pénalités légales.</li>
+  </ul>
+  <p>La mise en demeure à J+15 existe aussi, mais elle n'est <em>jamais</em> envoyée automatiquement&nbsp;: elle est générée en brouillon, relue et envoyée à la main. C'est une décision volontaire du code, et elle est juste.</p>
+  <p>Le garde-fou est bien conçu&nbsp;: tant qu'une automatisation n'est pas explicitement activée, tous ses envois partent vers l'adresse de test avec le préfixe <code>[TEST]</code>. Aucun client ne peut recevoir un email tant que tu n'as pas validé le rendu.</p>
+  <div class="card amber" style="margin-top:1rem">
+    <p style="margin:0"><strong>Le point qui compte&nbsp;:</strong> ces automatisations tournent via une <em>tâche planifiée</em> (un cron chez Infomaniak) qui appelle <code>client_emails_run</code> tous les jours. Si ce cron n'a jamais été créé, rien ne part — même une automatisation marquée « active ». C'est la première chose à vérifier. Même remarque pour les rappels de tâches (<code>task_reminders_run</code>) et les rappels fiscaux (<code>fiscal_reminders_run</code>).</p>
+  </div>
+  <dl class="kv">
+    <dt>Tables</dt><dd><code>automations</code>, <code>email_log</code>, <code>relances</code> — <code>migration-phase12-14-automations.sql</code></dd>
+    <dt>Verdict</dt><dd>À garder et à faire vraiment tourner. Une relance J+3 automatique récupère plus d'argent qu'un tableau de bord.</dd>
+  </dl>
+</div>
+
+<div class="card">
+  <h3>Registre n° — tu demandais à quoi ça sert</h3>
+  <p>C'est une <strong>obligation légale française</strong>, pas un gadget. La numérotation des devis et des factures doit être <em>continue, chronologique, sans trou et sans doublon</em>. Un contrôle fiscal commence souvent par là&nbsp;: une facture manquante dans la séquence, c'est une présomption de recette dissimulée.</p>
+  <p style="margin-bottom:0">Comme Elevora n'a pas de comptable externe qui tiendrait ce registre, c'est le CRM qui garantit la continuité et la rend vérifiable d'un coup d'œil. L'écran liste les numéros émis dans l'exercice et signale les anomalies. Ne le supprime pas — c'est même la page à sortir en premier si l'administration demande quelque chose.</p>
+</div>
+
+<h2 id="s4"><span class="n">04</span>« Et maintenant ? » n'est pas une IA</h2>
+<p class="sub">Le bloc en haut de la vue d'ensemble qui affiche « Rien d'urgent » depuis deux mois.</p>
+
+<p>Il n'y a <strong>aucun appel à l'API Claude</strong> derrière ce bloc. C'est un moteur de règles écrit en JavaScript, dans <code>index.html</code>, et le commentaire du code est explicite&nbsp;: <em>« Toutes les règles sont en code, avec seuils réglables — l'IA ne décide jamais de l'urgence. »</em></p>
+
+<p>C'est un bon choix, et il faut le garder. Une alerte doit être reproductible et explicable&nbsp;: si le CRM te dit « relance Maximus », tu dois pouvoir savoir que c'est parce que le devis est parti il y a 11 jours et que le seuil est à 5. Une IA qui « sent » qu'il faut relancer ne te donne pas ça, coûte de l'argent à chaque affichage, et change d'avis d'un jour à l'autre.</p>
+
+<h3>Neuf règles existent aujourd'hui</h3>
+<p>Devis sans réponse · contrat non signé · facture impayée · encaissement prévu · échéance en retard · tâche en retard · rapport de période à générer · maintenance à proposer après une livraison · prospect resté « Nouveau » depuis 7 jours. Les seuils sont réglables dans Mon profil.</p>
+
+<h3>Pourquoi il ne dit rien</h3>
+<p>Deux hypothèses, et il faut trancher avant de « réparer » quoi que ce soit&nbsp;:</p>
+<ol>
+  <li><strong>Il n'a rien à dire.</strong> Possible si aucun devis n'est parti récemment et qu'aucune facture n'est en attente.</li>
+  <li><strong>Il ne reçoit rien.</strong> Bien plus probable. Le moteur charge quatre sources en parallèle — documents, échéances, tâches, événements clients — et <em>chaque erreur est rattrapée en silence par un tableau vide</em>. Si une table est inaccessible (droits RLS, table absente, requête en erreur), le moteur reçoit du vide et conclut, légitimement, qu'il n'y a rien à faire.</li>
+</ol>
+
+<div class="card red">
+  <p style="margin:0">Dans les deux cas, le vrai défaut est le même&nbsp;: <strong>ce moteur ne sait pas signaler sa propre panne.</strong> Une source morte et « tout va bien » produisent exactement le même écran. C'est le pire comportement possible pour un système d'alerte — il rassure à tort. Le brief demande d'ajouter un indicateur de santé&nbsp;: « 1 source indisponible, les alertes peuvent être incomplètes » au lieu de « Rien d'urgent ».</p>
+</div>
+
+<h3>Ce qui manque comme règles</h3>
+<p>Huit situations qui arrivent réellement et que le moteur ne couvre pas&nbsp;: livraison estimée dépassée, projet actif sans aucun mouvement depuis N jours, projet livré sans facture de solde, facture partiellement payée dont le solde traîne, virement non rapproché depuis plus d'une semaine, échéance fiscale proche non provisionnée, récurrence attendue qui n'arrive pas, client livré sans cas client enregistré. Toutes sont des règles. Aucune ne demande d'IA.</p>
+
+<h2 id="s5"><span class="n">05</span>Pourquoi la compta est vide</h2>
+<p class="sub">Le solde Qonto s'affiche, et rien d'autre. Ce n'est pas cinq pannes, c'est une seule.</p>
+
+<p>Toutes les pages comptables dépendent de la même chaîne. Elle est rompue à sa source, et chaque maillon en aval affiche zéro <em>sans jamais afficher d'erreur</em>.</p>
+
+<div class="chain">
+  <span class="step broken">Qonto → transactions en base</span><span class="arr">→</span><span class="step">lecture front</span><span class="arr">→</span><span class="step">rapprochement facture</span><span class="arr">→</span><span class="step">facture marquée payée</span><span class="arr">→</span><span class="step">CA encaissé · TVA · trésorerie · alertes</span>
+</div>
+
+<p>Le solde, lui, s'affiche parce qu'il est lu directement sur l'API Qonto au moment de la synchronisation, sans passer par la base. D'où le symptôme trompeur&nbsp;: « la clé API marche » — oui, l'authentification marche. C'est l'enregistrement des mouvements qui échoue.</p>
+
+<h3>Trois causes candidates, par ordre de probabilité</h3>
+<ol>
+  <li><strong>Les transactions sont écartées à l'insertion.</strong> Le code n'accepte que des identifiants au format UUID strict et ignore silencieusement tout le reste — or l'API Qonto renvoie un identifiant de la forme <code>organisation-slug-1-transaction-…</code>, qui n'en est pas un. Un seul <code>continue</code>, aucun message, zéro ligne insérée.</li>
+  <li><strong>La date est nulle.</strong> Une transaction encore en attente n'a pas de date de règlement&nbsp;; le front filtre sur cette date et l'exclut définitivement de l'affichage.</li>
+  <li><strong>Le RLS bloque la lecture.</strong> Le front lit la table <code>transactions</code> directement avec la clé publique de Supabase. Sans policy de lecture, PostgREST renvoie un tableau vide — sans erreur. Symptôme rigoureusement identique à une synchronisation ratée.</li>
+</ol>
+
+<p>Répare ce maillon, et la TVA collectée, le CA encaissé, la trésorerie, les échéances et une partie des alertes se remplissent d'eux-mêmes. C'est pour ça que le lot 2 du brief est le plus long&nbsp;: c'est le seul qui débloque les autres.</p>
+
+<div class="card amber">
+  <h3>Et une cause de fond, plus gênante que les trois autres</h3>
+  <p style="margin-bottom:0">La synchronisation Qonto <strong>exige une session administrateur ouverte</strong>. Elle ne peut donc pas tourner en tâche planifiée&nbsp;: elle ne se déclenche que quand quelqu'un clique. Tant que ce n'est pas corrigé, la comptabilité est à jour uniquement les jours où tu ouvres le CRM et penses à cliquer sur « Synchroniser ». Le brief demande une variante déclenchable par cron, sur le même modèle que les rappels de tâches qui, eux, sont déjà faits correctement.</p>
+</div>
+
+<h2 id="s6"><span class="n">06</span>L'erreur « Erreur réseau » décodée</h2>
+<p class="sub">Celle qui bloque la création d'un membre d'équipe. Elle en dit plus qu'elle n'en a l'air.</p>
+
+<p>Le message affiché est&nbsp;:</p>
+<div class="card" style="font-family:var(--mono);font-size:13px;color:#ff9b94;padding:1rem 1.3rem">Erreur réseau&nbsp;: Unexpected token '&lt;', "&lt;!DOCTYPE "... is not valid JSON</div>
+
+<p>Traduction&nbsp;: le CRM attendait du JSON et a reçu une <strong>page HTML</strong>. Le mot «&nbsp;réseau&nbsp;» est ajouté par le CRM lui-même et il est trompeur — ta connexion va très bien.</p>
+
+<p>Ce qui rend ce détail décisif&nbsp;: <code>api.php</code> ne produit <em>jamais</em> de HTML. Il déclare son type de contenu en JSON dès sa soixantième ligne, et même son filet de sécurité en cas de crash renvoie du JSON. Donc la réponse que reçoit le navigateur <strong>ne vient pas du chemin normal d'<code>api.php</code></strong>. Trois familles de causes&nbsp;:</p>
+
+<ol>
+  <li><strong>Une page d'erreur du serveur.</strong> PHP meurt avant d'avoir pu écrire quoi que ce soit, et Infomaniak sert sa page 500 ou 503 en HTML.</li>
+  <li><strong>Un filtrage en amont de PHP.</strong> Un pare-feu applicatif d'hébergement mutualisé intercepte la requête et renvoie une page de blocage. Un envoi contenant un champ <code>password</code> et une adresse email est un déclencheur classique de règle générique — et ça collerait avec le fait que l'affichage de la liste des comptes, lui, fonctionne parfaitement.</li>
+  <li><strong>Une redirection.</strong> Une règle serveur renvoie la requête ailleurs, et le navigateur suit jusqu'à une page HTML.</li>
+</ol>
+
+<p>La bonne nouvelle&nbsp;: c'est diagnosticable en trente secondes. Il suffit d'ouvrir l'onglet Réseau du navigateur, de refaire le clic, et de regarder le <strong>code HTTP</strong> et le <strong>titre de la page renvoyée</strong> — «&nbsp;500 Internal Server Error&nbsp;», «&nbsp;403 Forbidden&nbsp;», une page Infomaniak, une page de blocage. Ce seul élément tranche entre les trois hypothèses. Le brief donne le protocole complet à Claude Code, dans l'ordre.</p>
+
+<div class="card amber">
+  <p style="margin:0"><strong>Un défaut plus large, révélé au passage&nbsp;:</strong> le CRM appelle <code>await r.json()</code> sans jamais vérifier que la réponse <em>est</em> du JSON. Résultat&nbsp;: n'importe quelle réponse serveur inattendue, n'importe où dans l'application, produit un message de parseur JavaScript incompréhensible étiqueté «&nbsp;Erreur réseau&nbsp;». Ce n'est pas qu'un problème d'esthétique&nbsp;: pendant deux mois, ce message t'a envoyée chercher un problème de connexion là où il y avait un problème de serveur.</p>
+</div>
+
+<h2 id="s7"><span class="n">07</span>Ce que je propose pour la vue d'ensemble</h2>
+<p class="sub">Tu m'as demandé d'y réfléchir. Voici le raisonnement, avant les chiffres.</p>
+
+<p>Le taux de conversion à 8 % n'est pas un mauvais chiffre&nbsp;: c'est un chiffre qui ne pilote rien. Il mesure le passé — combien de gens tu as approchés — alors que ce que tu ouvres le matin doit te dire quoi faire aujourd'hui. Une vue d'ensemble utile répond à trois questions&nbsp;: <em>combien d'argent est rentré, sur quoi je travaille, et qu'est-ce qui m'attend.</em> Ni « qui j'ai raté », ni « combien j'ai contacté ».</p>
+
+<h3>Les cinq chiffres</h3>
+<div class="scroll">
+<table>
+  <thead><tr><th>Tuile</th><th>Ce qu'elle mesure</th><th>Pourquoi celle-là</th></tr></thead>
+  <tbody>
+    <tr><td>CA encaissé</td><td>Somme des factures réellement payées sur l'exercice</td><td>Le seul chiffre qui ne ment pas. Il remplace « CA réalisé », aujourd'hui calculé sur les budgets annoncés — de l'argent espéré, pas encaissé.</td></tr>
+    <tr><td>En production</td><td>Clients en cours, et budget des projets actifs</td><td>Ta charge réelle. Le sous-titre indique combien sont en retard sur la date de livraison estimée.</td></tr>
+    <tr><td>Signés, à démarrer</td><td>Contrat signé, avancement à 0 %</td><td>Ton carnet de commandes. C'est le chiffre qui te dit si tu peux prospecter tranquille ou s'il faut s'y remettre.</td></tr>
+    <tr><td>Livrés</td><td>Projets livrés sur la période, et leur CA</td><td>Ce que vous avez produit. Une mesure de production, pas de conversion.</td></tr>
+    <tr><td>Reste à encaisser</td><td>Signé et facturé mais non payé, plus signé pas encore facturé</td><td>Remplace « CA potentiel » dans la barre latérale. Même famille de chiffre, mais celui-là est adossé à des contrats signés — pas à des espoirs.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Et aucun taux de conversion nulle part</strong> — pas seulement retiré du dashboard. Le tableau par source, dans Rapports & statistiques, en affiche aussi un, avec une colonne « Perdus » à côté. Les deux partent. Le reste de Rapports ne bouge pas.</p>
+
+<h3>La forme</h3>
+<p>Le problème que tu décris — « c'est très linéaire, tout en longueur » — vient d'une mise en page en colonne unique&nbsp;: chaque bloc prend toute la largeur, l'un sous l'autre. Le brief demande une grille façon bento&nbsp;: tuiles compactes en haut, deux blocs côte à côte ensuite, densité choisie plutôt que subie.</p>
+
+<p>Et tu as raison sur les graphiques&nbsp;: aujourd'hui la page repose sur <strong>deux camemberts</strong> et deux histogrammes, et n'a pas une seule courbe d'évolution lisible. Un camembert répond à «&nbsp;comment ça se répartit&nbsp;», jamais à «&nbsp;est-ce que ça monte&nbsp;» — et c'est la deuxième question qui compte quand on ouvre son CRM le matin. Le brief demande&nbsp;:</p>
+
+<ul>
+  <li>une <strong>courbe d'encaissement</strong> sur douze mois glissants, en graphique principal pleine largeur, avec le cumul de l'exercice en seconde série&nbsp;;</li>
+  <li>des <strong>barres empilées mensuelles</strong> — encaissé / facturé non encaissé / signé non facturé&nbsp;;</li>
+  <li>l'<strong>entonnoir de production</strong> (Signé → Maquettes → Développement → Validation → Livré) en barres horizontales, qui remplace le camembert «&nbsp;par état&nbsp;» et montre <em>où</em> les projets s'arrêtent&nbsp;;</li>
+  <li>des <strong>sparklines</strong> en fond de tuile, pour la tendance sans encombrer&nbsp;;</li>
+  <li>l'<strong>avancement des projets</strong> avec un repère de date de livraison sur le même axe — un projet à 40&nbsp;% à trois jours de l'échéance doit sauter aux yeux&nbsp;;</li>
+  <li>la <strong>courbe du solde bancaire</strong> sur douze mois, une fois la compta réparée.</li>
+</ul>
+
+<p>Les deux camemberts disparaissent. Et la courbe de CA bascule sur les encaissements réels au lieu des budgets annoncés.</p>
+
+<h2 id="s8"><span class="n">08</span>Ce que je propose pour les notifications</h2>
+<p class="sub">Ton diagnostic est juste&nbsp;: trier par importance ne suffira pas.</p>
+
+<p>Le vrai problème n'est pas le tri, c'est le grain. Une notification par événement, ça ne tient pas dans la durée&nbsp;: à cinq cents notifications, aucun tri ne sauve une liste plate. Trois changements la rendent tenable indéfiniment.</p>
+
+<div class="card">
+  <h3>1 · Regrouper par objet, pas par événement</h3>
+  <p style="margin-bottom:0">Le grain devient le client, la facture, le projet — pas l'événement. Toutes les notifications d'un même objet forment un fil replié&nbsp;: « <strong>Maximus · 4</strong> », qui montre la plus récente et se déplie au clic. Cinquante notifications sur cinq clients deviennent cinq lignes. C'est le changement qui règle 80 % du problème.</p>
+</div>
+
+<div class="card">
+  <h3>2 · Catégoriser par nature, en plus de la priorité</h3>
+  <p>Les deux axes se croisent, ils ne se remplacent pas. La priorité pilote la couleur et l'ordre&nbsp;; la nature pilote le filtre.</p>
+  <ul style="margin-bottom:0">
+    <li><strong>Argent</strong> — facture payée, impayé, virement à rapprocher, échéance fiscale</li>
+    <li><strong>Production</strong> — étape franchie, livraison en retard, projet endormi, validation en attente</li>
+    <li><strong>Clients</strong> — devis consulté, contrat signé, message reçu, document déposé</li>
+    <li><strong>Équipe</strong> — tâche assignée, en retard, terminée</li>
+    <li><strong>Système</strong> — synchronisation Qonto, email en échec, tâche planifiée non exécutée</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>3 · Donner une fin de vie</h3>
+  <p>Une notification <em>actionnable</em> reste tant que la condition qui l'a produite est vraie, et disparaît d'elle-même quand elle est résolue. Une notification <em>informative</em> se marque lue à l'ouverture du panneau, puis s'archive au bout de trente jours.</p>
+  <p style="margin-bottom:0">Et surtout&nbsp;: une clé d'unicité par événement métier. Le même impayé signalé trois jours de suite met à jour sa notification au lieu d'en créer trois. C'est ce qui empêche l'accumulation <em>à la source</em>, plutôt que de la subir puis d'essayer de la trier.</p>
+</div>
+
+<p>Point annexe trouvé au passage&nbsp;: la modale « voir toutes les notifications » n'affiche qu'une partie de ce que montre le panneau latéral — elle ignore les notifications comptables et les signaux du moteur. Deux sources, deux vues, deux résultats différents. C'est corrigé dans le brief.</p>
+
+<h2 id="s9"><span class="n">09</span>Tout faire tourner sur Haiku</h2>
+<p class="sub">Ta question&nbsp;: est-ce qu'on peut mettre le modèle le moins cher partout, et supprimer le choix ?</p>
+
+<div class="card green">
+  <h3>Oui. Et ton raisonnement est exact.</h3>
+  <p style="margin-bottom:0">Je suis allé relire les <em>rulebooks</em> du CRM pour vérifier ce que tu avances, et c'est confirmé&nbsp;: ce sont des cadres extrêmement serrés. Schéma JSON de sortie imposé clé par clé, grille de prix fournie en référence, règles de TVA énumérées pays par pays avec l'article du CGI, longueurs de champs bornées («&nbsp;ne dépasse jamais la longueur d'un champ de référence, sinon le texte déborde de la slide&nbsp;»), interdiction explicite d'inventer une ligne d'ajustement. Ce ne sont pas des tâches de raisonnement ouvert. Ce sont des tâches de <strong>remplissage structuré à partir de faits injectés</strong> — et un petit modèle y est bon.</p>
+</div>
+
+<p>Donc&nbsp;: modèle unique, imposé côté serveur, sélecteur retiré de l'interface. C'est dans le brief, en lot 10.</p>
+
+<p>Mais il y a une contrepartie, et elle compte plus que le choix du modèle lui-même.</p>
+
+<div class="card red">
+  <h3>Le vrai risque n'est pas le modèle, c'est la façon dont le code lit sa réponse</h3>
+  <p>Aujourd'hui, le CRM récupère le JSON produit par l'IA <strong>à la pince</strong>&nbsp;: il cherche la première accolade ouvrante, la dernière accolade fermante, et tente de décoder ce qu'il y a entre les deux. Si le modèle ajoute une phrase, oublie une virgule ou tronque sa sortie, la génération échoue avec «&nbsp;Réponse IA illisible, réessaie&nbsp;».</p>
+  <p style="margin-bottom:0">C'est fragile avec <em>n'importe quel</em> modèle, et c'est précisément ce qui se dégrade quand on descend en gamme. La correction s'appelle les <strong>sorties structurées</strong>&nbsp;: on déclare le schéma JSON attendu dans la requête, et l'API garantit une réponse conforme. Un petit modèle contraint par un schéma est plus fiable qu'un grand modèle dont on parse la sortie à la main. C'est ce qui rend la bascule sûre — et le brief demande de le faire <em>avant</em> de basculer, pas après.</p>
+</div>
+
+<h3>Les deux autres points de vigilance</h3>
+<ul>
+  <li><strong>La fenêtre de contexte.</strong> Haiku 4.5 lit 200&nbsp;000 tokens, contre 1 million pour les modèles supérieurs. Deux générations grossissent avec la base clients&nbsp;: le rapport IA et le contexte client injecté dans les devis. À l'échelle d'Elevora aujourd'hui, aucun risque — mais c'est un plafond réel, pas théorique. Le brief demande de compter les tokens avant l'appel et de gérer le dépassement proprement plutôt que de le découvrir en panne.</li>
+  <li><strong>La soupape.</strong> Elle existe déjà et personne ne l'a remarquée&nbsp;: le fichier de secrets accepte quatre clés (<code>anthropic_model_contrat</code>, <code>anthropic_model_devis</code>, <code>anthropic_model_proposition</code>, <code>anthropic_model_rapport</code>) lues avant la valeur par défaut. Tu ne choisis jamais rien dans l'interface, mais si la qualité d'une génération précise décevait, une ligne dans ce fichier bascule <em>cette action-là</em> sur un modèle plus capable. C'est le bon endroit pour ce réglage&nbsp;: une décision d'exploitation, pas une case à cocher qu'on se repose à chaque devis.</li>
+</ul>
+
+<div class="card amber">
+  <p style="margin:0">Et un réflexe à éviter&nbsp;: <strong>ne pas alourdir les rulebooks «&nbsp;pour compenser&nbsp;»</strong>. Ils sont déjà denses et bien écrits. Les rallonger dégraderait le résultat plutôt que de l'améliorer. Si une génération déçoit, l'ordre de traitement est&nbsp;: le schéma de sortie d'abord, les faits injectés ensuite, le modèle en dernier recours.</p>
+</div>
+
+<h3>Ce que ça change en argent</h3>
+<p>Le CRM est <strong>déjà branché</strong> sur l'API Anthropic — la clé est en place, les appels fonctionnent, rien n'est à installer.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Modèle</th><th>Identifiant</th><th>Entrée / M tokens</th><th>Sortie / M tokens</th><th>Pour quoi</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Haiku 4.5 <span class="tag code">retenu</span></td><td><code>claude-haiku-4-5</code></td><td>1 $</td><td>5 $</td><td>Tout&nbsp;: devis, contrats, propositions, rapports, classification</td></tr>
+    <tr><td>Claude Sonnet 5</td><td><code>claude-sonnet-5</code></td><td>3 $</td><td>15 $</td><td>Soupape, par action, via le fichier de secrets</td></tr>
+    <tr><td>Claude Opus 5</td><td><code>claude-opus-5</code></td><td>5 $</td><td>25 $</td><td>Soupape, si une action précise décevait vraiment</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Ce que ça donne à votre volume réel, tout en Haiku&nbsp;:</p>
+<ul>
+  <li><strong>Générer un devis ou un contrat</strong>&nbsp;: environ <strong>1,5 centime</strong> pièce.</li>
+  <li><strong>Suggérer une catégorie pour un virement inconnu</strong>&nbsp;: environ <strong>0,05 centime</strong>. Cent transactions par mois&nbsp;: quelques centimes.</li>
+  <li><strong>Générer un rapport mensuel rédigé</strong>&nbsp;: environ <strong>4 centimes</strong>.</li>
+  <li><strong>Lire un contrat PDF signé hors CRM</strong>&nbsp;: environ <strong>2 centimes</strong>.</li>
+</ul>
+
+<p>Soit, à votre rythme, <strong>bien moins d'un euro par mois</strong>. Ce qui confirme la conclusion&nbsp;: le coût n'a jamais été l'argument. Passer tout en Haiku est une bonne décision parce que la tâche s'y prête, pas parce que ça économise de l'argent — l'économie est réelle mais marginale en valeur absolue.</p>
+
+<p>Et l'argument contre l'IA <em>sur la comptabilité</em> n'est pas financier non plus&nbsp;: il est de fiabilité. Un chiffre comptable doit être reproductible à l'euro près, deux fois de suite. Une règle l'est par construction ; un modèle, quel qu'il soit, ne l'est pas.</p>
+
+<div class="card blue">
+  <h3>Deux identifiants périmés dans le code</h3>
+  <p style="margin-bottom:0">Le CRM appelle Haiku avec un suffixe de date qui n'a plus cours&nbsp;: l'identifiant exact est <code>claude-haiku-4-5</code>, sans rien après. Et toutes ses valeurs de repli pointent vers <code>claude-sonnet-4-6</code>, une génération précédente — donc les appels qui ne précisent pas de modèle partent aujourd'hui sur un modèle trois fois plus cher que celui que tu crois utiliser. C'est corrigé dans le lot 10 du brief.</p>
+</div>
+
+<h2 id="s10"><span class="n">10</span>Ce que Claude Code va te demander</h2>
+<p class="sub">Presque tout est déjà réglé. Il ne reste que deux points.</p>
+
+<h3>Réglé — le brief le contient déjà</h3>
+<ul>
+  <li><strong>Le message d'erreur de la création de compte</strong> — intégré au lot 3, avec le protocole de diagnostic complet.</li>
+  <li><strong>Les crons Infomaniak</strong> — tu as confirmé qu'aucun n'existe. Le brief le pose comme un fait et demande un fichier <code>CRONS.md</code> avec les quatre commandes prêtes à coller.</li>
+  <li><strong>Les trois associés</strong> — les libellés et BIC nécessaires à la règle de détection sont dans le brief. Les IBAN eux-mêmes se saisiront dans l'interface&nbsp;: ce sont des coordonnées bancaires personnelles, et un dépôt git en garde la trace pour toujours.</li>
+  <li><strong>Le choix du modèle IA</strong> — tranché, lot 10. Le brief dit explicitement à Claude Code de ne pas rouvrir le débat.</li>
+</ul>
+
+<h3>Il reste deux points</h3>
+<ol>
+  <li><strong>L'export du schéma Supabase est tronqué.</strong> Celui que tu as envoyé s'arrête à 99 lignes — la console SQL plafonne l'affichage. Il couvre 20 tables, et <code>transactions</code> n'y figure pas… ce qui ne prouve rien, puisqu'il est incomplet. Relance la requête en exportant en CSV plutôt qu'en lisant à l'écran, ou ajoute <code>order by table_name, ordinal_position</code> et récupère-la en plusieurs fois. Claude Code te redemandera l'export complet, et il produira en retour un <code>schema-complet.sql</code> unique à recoller dans Supabase — c'est ce que tu voulais.</li>
+  <li><strong>Un exemple réel de réponse de l'API Qonto.</strong> Une seule transaction, anonymisée, suffit à confirmer le format exact des identifiants — et c'est ce qui décide de la correction principale du lot 2. À traiter au moment venu, pas maintenant.</li>
+</ol>
+
+<div class="card blue">
+  <h3>Une découverte au passage</h3>
+  <p style="margin-bottom:0">Ton schéma contient une table <code>expense_categories</code>, avec une colonne <code>case_sensitive</code> — visiblement une table de correspondance mot-clé → catégorie. Elle n'est <strong>utilisée nulle part</strong> dans le code&nbsp;: zéro occurrence dans <code>api.php</code> comme dans <code>index.html</code>. Un chantier commencé puis abandonné. C'est exactement la fonctionnalité demandée au lot 2 (la catégorisation qui apprend)&nbsp;: le brief demande à Claude Code de regarder ce qu'elle contient avant d'en créer une nouvelle.</p>
+</div>
+
+<footer>
+  Note d'analyse rédigée par Claude d'après la lecture du CRM déployé (<code>index.html</code>, <code>api.php</code>, <code>client.html</code>, <code>templates.js</code>, migrations SQL).
+  Tarifs API Anthropic à jour de juin 2026. Document interne — Elevora Agency.
+</footer>
+</div>

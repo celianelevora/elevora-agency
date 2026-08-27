@@ -9,12 +9,12 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: { absolute: "Tarifs création de site web — Elevora | Devis gratuit" },
   description:
-    "Tarifs Elevora : landing dès 600 € TTC, site vitrine 750 € TTC, e-commerce 2 000 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
+    "Tarifs Elevora : landing dès 500 € HT, site vitrine 625 € HT, e-commerce 1 700 € HT. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
   alternates: { canonical: "/tarifs" },
   openGraph: {
     title: "Tarifs création de site web — Elevora | Devis gratuit",
     description:
-      "Tarifs Elevora : landing dès 600 € TTC, site vitrine 750 € TTC, e-commerce 2 000 € TTC. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
+      "Tarifs Elevora : landing dès 500 € HT, site vitrine 625 € HT, e-commerce 1 700 € HT. Applications et outils de gestion sur devis. Devis gratuit sous 5 jours.",
     url: "https://elevora-agency.com/tarifs",
     type: "website",
   },
@@ -25,21 +25,21 @@ const POINTS = [
     name: "Landing page",
     desc: "Une page, un seul objectif : convertir vos visiteurs.",
     from: "À partir de",
-    amount: "600 € TTC",
+    amount: "500 € HT",
     href: "/services/landing-page",
   },
   {
     name: "Site vitrine",
     desc: "Votre présence pro : design sur mesure, SEO natif, back-office simple.",
     from: "À partir de",
-    amount: "750 € TTC",
+    amount: "625 € HT",
     href: "/services/site-vitrine",
   },
   {
     name: "Site e-commerce",
     desc: "Boutique complète : catalogue, paiement Stripe, stocks, livraison.",
     from: "À partir de",
-    amount: "2 000 € TTC",
+    amount: "1 700 € HT",
     href: "/services/site-ecommerce",
   },
   {

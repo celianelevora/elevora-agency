@@ -4,7 +4,7 @@ import { serviceSchema, breadcrumbSchema } from '@/lib/seo';
 import VitrineClient from './VitrineClient';
 
 const description =
-  "Site vitrine sur mesure pour indépendants et PME. Design unique, SEO natif, back-office simple. À partir de 750 € TTC. Agence Elevora, Nantes.";
+  "Site vitrine sur mesure pour indépendants et PME. Design unique, SEO natif, back-office simple. À partir de 625 € HT. Agence Elevora, Nantes.";
 
 export const metadata: Metadata = {
   title: { absolute: 'Création de site vitrine sur mesure | Elevora' },

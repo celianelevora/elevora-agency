@@ -4,7 +4,7 @@ import { serviceSchema, breadcrumbSchema } from '@/lib/seo';
 import LandingClient from './LandingClient';
 
 const description =
-  "Landing page optimisée conversion : copywriting, tracking, A/B test, connexion CRM. Idéale pour campagnes et lancements. À partir de 600 € TTC. Elevora, Nantes.";
+  "Landing page optimisée conversion : copywriting, tracking, A/B test, connexion CRM. Idéale pour campagnes et lancements. À partir de 500 € HT. Elevora, Nantes.";
 
 export const metadata: Metadata = {
   title: { absolute: 'Création de landing page qui convertit | Elevora' },

@@ -73,7 +73,7 @@ const INCLUS = [
 const TARIF_NOTE = 'Paiement en deux fois : 30 % à la commande, le solde à la livraison. Devis ferme, sans engagement.';
 
 const FAQ = [
-  { q: 'Que comprend exactement le tarif de 750 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro. Aucun coût caché.' },
+  { q: 'Que comprend exactement le tarif de 625 € ?', a: 'Tout ce qu’il faut pour être en ligne : design sur mesure, jusqu’à 6 pages, SEO natif, back-office, nom de domaine, e-mail pro. Aucun coût caché.' },
   { q: 'Pourrai-je modifier mon site moi-même ?', a: 'Oui. On livre un back-office simple et on vous forme à sa prise en main. Vous changez vos textes, vos photos et vos actualités sans jamais toucher au code.' },
   { q: 'Combien de temps avant la mise en ligne ?', a: 'Comptez 4 à 8 semaines entre le lancement et la mise en ligne, selon la rapidité des allers-retours et la fourniture de vos contenus.' },];
 
@@ -124,7 +124,7 @@ export default function VitrineClient() {
         lead="Le digne représentant de votre activité sur le web. Conçu pour rassurer, convaincre et retenir, dès le premier regard."
         primary={{ label: 'Démarrer mon projet', href: '/contact' }}
         secondary={{ label: 'Voir nos réalisations', href: '/realisations' }}
-        tags={['Design sur mesure', 'SEO natif', 'À partir de 750 € TTC']}
+        tags={['Design sur mesure', 'SEO natif', 'À partir de 625 € HT']}
         below={
           <>
             <div style={{ maxWidth: 820, marginBottom: 66 }}>
@@ -246,9 +246,9 @@ export default function VitrineClient() {
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'rgba(234,233,238,.55)', fontWeight: 600 }}>À partir de</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein-bright)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 000</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(82px,12vw,150px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein-bright)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>625</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein-bright)', marginBottom: '0.08em' }}>€</span>
-                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'rgba(234,233,238,.55)', marginBottom: '0.9em', marginLeft: 4 }}>TTC</span>
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'rgba(234,233,238,.55)', marginBottom: '0.9em', marginLeft: 4 }}>HT</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'rgba(234,233,238,.3)' }} aria-hidden />

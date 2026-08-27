@@ -111,7 +111,7 @@ function HeroPourQui() {
             </motion.div>
           </motion.div>
           <motion.div variants={item} style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginTop: 40 }}>
-            {['Stripe', 'Stocks & commandes', 'À partir de 2 000 € TTC'].map((t) => (
+            {['Stripe', 'Stocks & commandes', 'À partir de 1 700 € HT'].map((t) => (
               <motion.span key={t} whileHover={{ y: -4, scale: 1.06, backgroundColor: 'rgba(255,255,255,.85)' }} whileTap={{ scale: 0.94 }} transition={{ type: 'spring', stiffness: 420, damping: 20 }} style={{ fontSize: 12.5, letterSpacing: '.02em', padding: '8px 16px', borderRadius: 999, cursor: 'default', color: 'var(--ink-soft)', border: '0.5px solid var(--line)', background: 'rgba(255,255,255,.5)', backdropFilter: 'blur(8px)' }}>{t}</motion.span>
             ))}
           </motion.div>
@@ -218,9 +218,9 @@ export default function EcommerceClient() {
             <Reveal delay={0.1}>
               <div style={{ fontSize: 13, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontWeight: 600 }}>À partir de</div>
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 6 }}>
-                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(80px,12vw,148px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 500</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(80px,12vw,148px)', fontWeight: 500, letterSpacing: '-0.02em', color: 'var(--klein)', lineHeight: 0.82, fontVariantNumeric: 'lining-nums' }}>1 700</span>
                 <span style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(34px,4.5vw,54px)', fontWeight: 500, color: 'var(--klein)', marginBottom: '0.08em' }}>€</span>
-                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>TTC</span>
+                <span style={{ fontFamily: 'var(--sans)', fontSize: 13, fontWeight: 600, letterSpacing: '.14em', color: 'var(--ink-muted)', marginBottom: '0.9em', marginLeft: 4 }}>HT</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 22 }}>
                 <span style={{ width: 34, height: 1, background: 'var(--line-strong)' }} aria-hidden />
